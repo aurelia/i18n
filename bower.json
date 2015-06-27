@@ -1,0 +1,20 @@
+{
+  "name": "aurelia-i18n",
+  "version": "0.1.0",
+  "description": "A plugin that provides i18n support.",
+  "keywords": [
+    "aurelia",
+    "i18n",
+    "plugin"
+  ],
+  "homepage": "http://aurelia.io",
+  "license": "MIT",
+  "authors": [
+    "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/aurelia/i18n"
+  },
+  "dependencies": { }
+}
