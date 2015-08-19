@@ -5,6 +5,7 @@
   "keywords": [
     "aurelia",
     "i18n",
+    "internationalization",
     "plugin"
   ],
   "homepage": "http://aurelia.io",
@@ -24,11 +25,19 @@
     "directories": {
       "lib": "dist/amd"
     },
-    "dependencies": { },
+    "dependencies": {
+      "Intl.js": "github:andyearnshaw/Intl.js@^0.1.4",
+      "aurelia-event-aggregator": "github:aurelia/event-aggregator@^0.7.0",
+      "aurelia-loader-default": "github:aurelia/loader-default@^0.9.5",
+      "aurelia-templating": "github:aurelia/templating@^0.14.4",
+      "i18next": "github:i18next/i18next@^1.9.0"
+    },
     "devDependencies": {
-      "babel": "npm:babel-core@^5.1.13",
-      "babel-runtime": "npm:babel-runtime@^5.1.13",
-      "core-js": "npm:core-js@^0.9.5"
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.9.2",
+      "babel": "npm:babel-core@^5.6.4",
+      "babel-runtime": "npm:babel-runtime@^5.6.4",
+      "core-js": "npm:core-js@^0.9.17",
+      "text": "github:systemjs/plugin-text@^0.0.2"
     }
   },
   "devDependencies": {
@@ -48,7 +57,7 @@
     "karma-coverage": "^0.3.1",
     "karma-jasmine": "^0.3.5",
     "karma-jasmine-ajax": "git://github.com/martingust/karma-jasmine-ajax.git",
-    "karma-jspm": "^1.1.5",
+    "karma-jspm": "^2.0.1-beta.2",
     "object.assign": "^1.0.3",
     "require-dir": "^0.1.0",
     "run-sequence": "^1.0.2",
