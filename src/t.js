@@ -24,7 +24,7 @@ export class TCustomAttribute {
   }
 
   valueChanged(){
-    if(this.element.parentElement !== undefined) {
+    if(this.element.parentElement !== undefined && this.element.parentElement !== null) {
       this.service.updateTranslations(this.element.parentElement);
     }
   }
