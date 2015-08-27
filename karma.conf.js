@@ -10,18 +10,27 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jspm', 'jasmine-ajax', 'jasmine'],
+    frameworks: ['jspm', 'jasmine'],
 
     jspm: {
       // Edit this to your needs
-      loadFiles: ['test/**/*.js'],
-      serveFiles : ['src/**/*.js']
+      loadFiles: ['test/unit/**/*.js'],
+      serveFiles : ['src/**/*.js','test/unit/fixtures/**/*']
     },
 
 
     // list of files / patterns to load in the browser
-    files: [],
+    files: [
+      {pattern: 'test/unit/fixtures/**/*.html', included: false},
+      // dont pre-load just serve if requested
+      {pattern: 'test/unit/fixtures/**/*.jpg', watched: false, included: false, served: true}
+    ],
 
+    // proxy test images, map the same placeholder to different requests
+    proxies: {
+      '/testimage-english.jpg': '/base/test/unit/fixtures/placeholder.jpg',
+      '/testimage-german.jpg': '/base/test/unit/fixtures/placeholder.jpg'
+    },
 
     // list of files to exclude
     exclude: [
@@ -31,7 +40,7 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'test/**/*.js': ['babel'],
+      'test/unit/**/*.js': ['babel'],
       'src/**/*.js': ['babel']
     },
     'babelPreprocessor': {
@@ -39,13 +48,13 @@ module.exports = function(config) {
         sourceMap: 'inline',
         modules: 'system',
         moduleIds: false,
-        loose: "all",
         optional: [
-          "es7.decorators"
+          "runtime",
+          "es7.decorators",
+          "es7.classProperties"
         ]
       }
     },
-
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
