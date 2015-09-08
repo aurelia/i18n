@@ -23,8 +23,8 @@ export class TCustomAttribute {
     this.service = i18n;
   }
 
-  valueChanged(){
-    if(this.element.parentElement !== undefined && this.element.parentElement !== null) {
+  valueChanged() {
+    if (this.element.parentElement !== undefined && this.element.parentElement !== null) {
       this.service.updateTranslations(this.element.parentElement);
     }
   }

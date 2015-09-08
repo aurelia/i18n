@@ -62,7 +62,8 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
 
   function configure(frameworkConfig, cb) {
     if (cb === undefined || typeof cb !== 'function') {
-      throw 'You need to provide a callback method to properly configure the library';
+      var errorMsg = 'You need to provide a callback method to properly configure the library';
+      throw errorMsg;
     }
 
     frameworkConfig.globalResources('./t');

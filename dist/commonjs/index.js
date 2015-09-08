@@ -86,7 +86,8 @@ Object.defineProperty(exports, 'EventAggregator', {
 
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
-    throw 'You need to provide a callback method to properly configure the library';
+    var errorMsg = 'You need to provide a callback method to properly configure the library';
+    throw errorMsg;
   }
 
   frameworkConfig.globalResources('./t');

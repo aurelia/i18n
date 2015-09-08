@@ -57,7 +57,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
         return new Promise(function (resolve) {
           var oldLocale = _this.getLocale();
           _this.i18next.setLng(locale, function (tr) {
-            _this.ea.publish("i18n:locale:changed", { oldValue: oldLocale, newValue: locale });
+            _this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
             resolve(tr);
           });
         });
@@ -101,17 +101,17 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
     }, {
       key: 'updateTranslations',
       value: function updateTranslations(el) {
-
-        var i, l;
+        var i = undefined;
+        var l = undefined;
 
         var selector = [].concat(this.i18next.options.attributes);
-        for (i = 0, l = selector.length; i < l; i++) selector[i] = "[" + selector[i] + "]";
-        selector = selector.join(",");
+        for (i = 0, l = selector.length; i < l; i++) selector[i] = '[' + selector[i] + ']';
+        selector = selector.join(',');
 
         var nodes = el.querySelectorAll(selector);
         for (i = 0, l = nodes.length; i < l; i++) {
           var node = nodes[i];
-          var keys;
+          var keys = undefined;
 
           for (var i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
             keys = node.getAttribute(this.i18next.options.attributes[i2]);
@@ -120,7 +120,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
 
           if (!keys) continue;
 
-          keys = keys.split(";");
+          keys = keys.split(';');
           var _iteratorNormalCompletion = true;
           var _didIteratorError = false;
           var _iteratorError = undefined;
@@ -131,10 +131,10 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
 
               var re = /\[([a-z]*)\]/g;
 
-              var m;
-              var attr = "text";
+              var m = undefined;
+              var attr = 'text';
 
-              if (node.nodeName == "IMG") attr = "src";
+              if (node.nodeName === 'IMG') attr = 'src';
 
               while ((m = re.exec(key)) !== null) {
                 if (m.index === re.lastIndex) {

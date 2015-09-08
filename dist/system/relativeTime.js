@@ -32,7 +32,7 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
           var trans = translations['default'] || translations;
 
           Object.keys(trans).map(function (key) {
-            var translation = trans[key]['translation'];
+            var translation = trans[key].translation;
             var options = i18n.i18next.options;
 
             if (options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
@@ -53,9 +53,9 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
 
             var timeDiff = this.getTimeDiffDescription(diff, 'year', 31104000000);
             if (!timeDiff) {
-              var timeDiff = this.getTimeDiffDescription(diff, 'month', 2592000000);
+              timeDiff = this.getTimeDiffDescription(diff, 'month', 2592000000);
               if (!timeDiff) {
-                var timeDiff = this.getTimeDiffDescription(diff, 'day', 86400000);
+                timeDiff = this.getTimeDiffDescription(diff, 'day', 86400000);
                 if (!timeDiff) {
                   timeDiff = this.getTimeDiffDescription(diff, 'hour', 3600000);
                   if (!timeDiff) {
@@ -78,13 +78,13 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
           value: function getTimeDiffDescription(diff, unit, timeDivisor) {
             var unitAmount = (diff / timeDivisor).toFixed(0);
             if (unitAmount > 0) {
-              return this.service.tr(unit, { count: parseInt(unitAmount), context: 'ago' });
+              return this.service.tr(unit, { count: parseInt(unitAmount, 10), context: 'ago' });
             } else if (unitAmount < 0) {
               var abs = Math.abs(unitAmount);
               return this.service.tr(unit, { count: abs, context: 'in' });
-            } else {
-              return null;
             }
+
+            return null;
           }
         }]);
 

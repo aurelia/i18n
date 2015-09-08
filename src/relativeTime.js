@@ -9,11 +9,11 @@ export class RelativeTime {
     let trans = translations.default || translations;
 
     Object.keys(trans).map( (key) => {
-      let translation = trans[key]['translation'];
+      let translation = trans[key].translation;
       let options = i18n.i18next.options;
 
-      if(options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
-        for(let subkey in translation) {
+      if (options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
+        for (let subkey in translation) {
           translation[subkey] = translation[subkey].replace('__count__', options.interpolationPrefix + 'count' + options.interpolationSuffix);
         }
       }
@@ -22,16 +22,15 @@ export class RelativeTime {
     });
   }
 
-  getRelativeTime(time)
-  {
-    var now = new Date();
-    var diff = now.getTime() - time.getTime();
+  getRelativeTime(time) {
+    let now = new Date();
+    let diff = now.getTime() - time.getTime();
 
-    var timeDiff = this.getTimeDiffDescription(diff, 'year', 31104000000);
+    let timeDiff = this.getTimeDiffDescription(diff, 'year', 31104000000);
     if (!timeDiff) {
-      var timeDiff = this.getTimeDiffDescription(diff, 'month', 2592000000);
+      timeDiff = this.getTimeDiffDescription(diff, 'month', 2592000000);
       if (!timeDiff) {
-        var timeDiff = this.getTimeDiffDescription(diff, 'day', 86400000);
+        timeDiff = this.getTimeDiffDescription(diff, 'day', 86400000);
         if (!timeDiff) {
           timeDiff = this.getTimeDiffDescription(diff, 'hour', 3600000);
           if (!timeDiff) {
@@ -50,16 +49,15 @@ export class RelativeTime {
     return timeDiff;
   }
 
-  getTimeDiffDescription(diff, unit, timeDivisor)
-  {
-    var unitAmount = (diff / timeDivisor).toFixed(0);
+  getTimeDiffDescription(diff, unit, timeDivisor) {
+    let unitAmount = (diff / timeDivisor).toFixed(0);
     if (unitAmount > 0) {
-      return this.service.tr(unit, { count: parseInt(unitAmount), context: 'ago' });
+      return this.service.tr(unit, { count: parseInt(unitAmount, 10), context: 'ago' });
     } else if (unitAmount < 0) {
-      var abs = Math.abs(unitAmount);
+      let abs = Math.abs(unitAmount);
       return this.service.tr(unit, { count: abs, context: 'in'});
-    } else {
-      return null;
     }
+
+    return null;
   }
 }

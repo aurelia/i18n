@@ -6,14 +6,17 @@ System.register([], function (_export) {
     setters: [],
     execute: function () {
       extend = function extend(destination, source) {
-        for (var property in source) destination[property] = source[property];
-        return destination;
+        for (var property in source) {
+          destination[property] = source[property];
+        }return destination;
       };
 
       _export('extend', extend);
 
       assignObjectToKeys = function assignObjectToKeys(root, obj) {
-        if (obj === undefined || obj === null) return obj;
+        if (obj === undefined || obj === null) {
+          return obj;
+        }
 
         var opts = {};
 
