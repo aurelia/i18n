@@ -1,25 +1,19 @@
-System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/class-call-check', 'babel-runtime/core-js/promise', 'babel-runtime/core-js/object/assign', 'babel-runtime/core-js/get-iterator', 'i18next', './utils'], function (_export) {
-  var _createClass, _classCallCheck, _Promise, _Object$assign, _getIterator, i18n, assignObjectToKeys, I18N;
+System.register(['i18next', './utils'], function (_export) {
+  'use strict';
+
+  var i18n, assignObjectToKeys, I18N;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
-    setters: [function (_babelRuntimeHelpersCreateClass) {
-      _createClass = _babelRuntimeHelpersCreateClass['default'];
-    }, function (_babelRuntimeHelpersClassCallCheck) {
-      _classCallCheck = _babelRuntimeHelpersClassCallCheck['default'];
-    }, function (_babelRuntimeCoreJsPromise) {
-      _Promise = _babelRuntimeCoreJsPromise['default'];
-    }, function (_babelRuntimeCoreJsObjectAssign) {
-      _Object$assign = _babelRuntimeCoreJsObjectAssign['default'];
-    }, function (_babelRuntimeCoreJsGetIterator) {
-      _getIterator = _babelRuntimeCoreJsGetIterator['default'];
-    }, function (_i18next) {
+    setters: [function (_i18next) {
       i18n = _i18next['default'];
     }, function (_utils) {
       assignObjectToKeys = _utils.assignObjectToKeys;
     }],
     execute: function () {
-      'use strict';
-
       I18N = (function () {
         function I18N(ea) {
           _classCallCheck(this, I18N);
@@ -61,7 +55,7 @@ System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/cl
           value: function setLocale(locale) {
             var _this = this;
 
-            return new _Promise(function (resolve) {
+            return new Promise(function (resolve) {
               var oldLocale = _this.getLocale();
               _this.i18next.setLng(locale, function (tr) {
                 _this.ea.publish("i18n:locale:changed", { oldValue: oldLocale, newValue: locale });
@@ -90,7 +84,7 @@ System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/cl
             var fullOptions = this.globalVars;
 
             if (options !== undefined) {
-              fullOptions = _Object$assign(_Object$assign({}, this.globalVars), options);
+              fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
             }
 
             return this.i18next.t(key, assignObjectToKeys('', fullOptions));
@@ -133,7 +127,7 @@ System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/cl
               var _iteratorError = undefined;
 
               try {
-                for (var _iterator = _getIterator(keys), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                   var key = _step.value;
 
                   var re = /\[([a-z]*)\]/g;

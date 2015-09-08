@@ -1,12 +1,16 @@
-define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/class-call-check', 'babel-runtime/core-js/object/keys', './i18n', './defaultTranslations/relative.time'], function (exports, _babelRuntimeHelpersCreateClass, _babelRuntimeHelpersClassCallCheck, _babelRuntimeCoreJsObjectKeys, _i18n, _defaultTranslationsRelativeTime) {
+define(['exports', './i18n', './defaultTranslations/relative.time'], function (exports, _i18n, _defaultTranslationsRelativeTime) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
 
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
   var RelativeTime = (function () {
-    (0, _babelRuntimeHelpersCreateClass['default'])(RelativeTime, null, [{
+    _createClass(RelativeTime, null, [{
       key: 'inject',
       value: function inject() {
         return [_i18n.I18N];
@@ -16,13 +20,13 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
     function RelativeTime(i18n) {
       var _this = this;
 
-      (0, _babelRuntimeHelpersClassCallCheck['default'])(this, RelativeTime);
+      _classCallCheck(this, RelativeTime);
 
       this.service = i18n;
 
       var trans = _defaultTranslationsRelativeTime['default'] || _defaultTranslationsRelativeTime;
 
-      (0, _babelRuntimeCoreJsObjectKeys['default'])(trans).map(function (key) {
+      Object.keys(trans).map(function (key) {
         var translation = trans[key]['translation'];
         var options = i18n.i18next.options;
 
@@ -36,7 +40,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
       });
     }
 
-    (0, _babelRuntimeHelpersCreateClass['default'])(RelativeTime, [{
+    _createClass(RelativeTime, [{
       key: 'getRelativeTime',
       value: function getRelativeTime(time) {
         var now = new Date();
@@ -78,6 +82,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
         }
       }
     }]);
+
     return RelativeTime;
   })();
 

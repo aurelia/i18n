@@ -1,12 +1,16 @@
-define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/class-call-check', './relativeTime'], function (exports, _babelRuntimeHelpersCreateClass, _babelRuntimeHelpersClassCallCheck, _relativeTime) {
+define(['exports', './relativeTime'], function (exports, _relativeTime) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
 
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
   var RtValueConverter = (function () {
-    (0, _babelRuntimeHelpersCreateClass['default'])(RtValueConverter, null, [{
+    _createClass(RtValueConverter, null, [{
       key: 'inject',
       value: function inject() {
         return [_relativeTime.RelativeTime];
@@ -14,17 +18,18 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
     }]);
 
     function RtValueConverter(relativeTime) {
-      (0, _babelRuntimeHelpersClassCallCheck['default'])(this, RtValueConverter);
+      _classCallCheck(this, RtValueConverter);
 
       this.service = relativeTime;
     }
 
-    (0, _babelRuntimeHelpersCreateClass['default'])(RtValueConverter, [{
+    _createClass(RtValueConverter, [{
       key: 'toView',
       value: function toView(value) {
         return this.service.getRelativeTime(value);
       }
     }]);
+
     return RtValueConverter;
   })();
 

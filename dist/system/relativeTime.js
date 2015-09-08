@@ -1,21 +1,19 @@
-System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/class-call-check', 'babel-runtime/core-js/object/keys', './i18n', './defaultTranslations/relative.time'], function (_export) {
-  var _createClass, _classCallCheck, _Object$keys, I18N, translations, RelativeTime;
+System.register(['./i18n', './defaultTranslations/relative.time'], function (_export) {
+  'use strict';
+
+  var I18N, translations, RelativeTime;
+
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
-    setters: [function (_babelRuntimeHelpersCreateClass) {
-      _createClass = _babelRuntimeHelpersCreateClass['default'];
-    }, function (_babelRuntimeHelpersClassCallCheck) {
-      _classCallCheck = _babelRuntimeHelpersClassCallCheck['default'];
-    }, function (_babelRuntimeCoreJsObjectKeys) {
-      _Object$keys = _babelRuntimeCoreJsObjectKeys['default'];
-    }, function (_i18n) {
+    setters: [function (_i18n) {
       I18N = _i18n.I18N;
     }, function (_defaultTranslationsRelativeTime) {
       translations = _defaultTranslationsRelativeTime;
     }],
     execute: function () {
-      'use strict';
-
       RelativeTime = (function () {
         _createClass(RelativeTime, null, [{
           key: 'inject',
@@ -33,7 +31,7 @@ System.register(['babel-runtime/helpers/create-class', 'babel-runtime/helpers/cl
 
           var trans = translations['default'] || translations;
 
-          _Object$keys(trans).map(function (key) {
+          Object.keys(trans).map(function (key) {
             var translation = trans[key]['translation'];
             var options = i18n.i18next.options;
 

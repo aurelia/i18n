@@ -1,7 +1,5 @@
 'use strict';
 
-var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
-
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
@@ -16,7 +14,7 @@ var assignObjectToKeys = function assignObjectToKeys(root, obj) {
 
   var opts = {};
 
-  _Object$keys(obj).map(function (key) {
+  Object.keys(obj).map(function (key) {
     if (typeof obj[key] === 'object') {
       extend(opts, assignObjectToKeys(key, obj[key]));
     } else {

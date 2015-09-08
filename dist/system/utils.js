@@ -1,13 +1,10 @@
-System.register(['babel-runtime/core-js/object/keys'], function (_export) {
-  var _Object$keys, extend, assignObjectToKeys;
+System.register([], function (_export) {
+  'use strict';
 
+  var extend, assignObjectToKeys;
   return {
-    setters: [function (_babelRuntimeCoreJsObjectKeys) {
-      _Object$keys = _babelRuntimeCoreJsObjectKeys['default'];
-    }],
+    setters: [],
     execute: function () {
-      'use strict';
-
       extend = function extend(destination, source) {
         for (var property in source) destination[property] = source[property];
         return destination;
@@ -20,7 +17,7 @@ System.register(['babel-runtime/core-js/object/keys'], function (_export) {
 
         var opts = {};
 
-        _Object$keys(obj).map(function (key) {
+        Object.keys(obj).map(function (key) {
           if (typeof obj[key] === 'object') {
             extend(opts, assignObjectToKeys(key, obj[key]));
           } else {

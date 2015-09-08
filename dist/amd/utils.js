@@ -1,4 +1,4 @@
-define(['exports', 'babel-runtime/core-js/object/keys'], function (exports, _babelRuntimeCoreJsObjectKeys) {
+define(['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -15,7 +15,7 @@ define(['exports', 'babel-runtime/core-js/object/keys'], function (exports, _bab
 
     var opts = {};
 
-    (0, _babelRuntimeCoreJsObjectKeys['default'])(obj).map(function (key) {
+    Object.keys(obj).map(function (key) {
       if (typeof obj[key] === 'object') {
         extend(opts, assignObjectToKeys(key, obj[key]));
       } else {

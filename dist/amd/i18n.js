@@ -1,15 +1,22 @@
-define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/class-call-check', 'babel-runtime/core-js/promise', 'babel-runtime/core-js/object/assign', 'babel-runtime/core-js/get-iterator', 'i18next', 'babel-runtime/helpers/interop-require-default', './utils'], function (exports, _babelRuntimeHelpersCreateClass, _babelRuntimeHelpersClassCallCheck, _babelRuntimeCoreJsPromise, _babelRuntimeCoreJsObjectAssign, _babelRuntimeCoreJsGetIterator, _i18next, _babelRuntimeHelpersInteropRequireDefault, _utils) {
+define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
     value: true
   });
 
-  var _i18n = (0, _babelRuntimeHelpersInteropRequireDefault['default'])(_i18next);
+  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+  var _i18n = _interopRequireDefault(_i18next);
 
   var I18N = (function () {
     function I18N(ea) {
-      (0, _babelRuntimeHelpersClassCallCheck['default'])(this, I18N);
+      _classCallCheck(this, I18N);
+
       this.globalVars = {};
 
       this.i18next = _i18n['default'];
@@ -23,7 +30,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
       }
     }
 
-    (0, _babelRuntimeHelpersCreateClass['default'])(I18N, [{
+    _createClass(I18N, [{
       key: 'setup',
       value: function setup(options) {
         var defaultOptions = {
@@ -47,7 +54,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
       value: function setLocale(locale) {
         var _this = this;
 
-        return new _babelRuntimeCoreJsPromise['default'](function (resolve) {
+        return new Promise(function (resolve) {
           var oldLocale = _this.getLocale();
           _this.i18next.setLng(locale, function (tr) {
             _this.ea.publish("i18n:locale:changed", { oldValue: oldLocale, newValue: locale });
@@ -76,7 +83,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
         var fullOptions = this.globalVars;
 
         if (options !== undefined) {
-          fullOptions = (0, _babelRuntimeCoreJsObjectAssign['default'])((0, _babelRuntimeCoreJsObjectAssign['default'])({}, this.globalVars), options);
+          fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
         }
 
         return this.i18next.t(key, (0, _utils.assignObjectToKeys)('', fullOptions));
@@ -119,7 +126,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
           var _iteratorError = undefined;
 
           try {
-            for (var _iterator = (0, _babelRuntimeCoreJsGetIterator['default'])(keys), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
               var key = _step.value;
 
               var re = /\[([a-z]*)\]/g;
@@ -177,6 +184,7 @@ define(['exports', 'babel-runtime/helpers/create-class', 'babel-runtime/helpers/
         }
       }
     }]);
+
     return I18N;
   })();
 
