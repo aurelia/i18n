@@ -15,7 +15,7 @@ module.exports = function(config) {
     jspm: {
       // Edit this to your needs
       loadFiles: ['test/unit/**/*.js'],
-      serveFiles : ['src/**/*.js','test/unit/fixtures/**/*']
+      serveFiles: ['src/**/*.js', 'test/unit/fixtures/**/*']
     },
 
 
@@ -49,9 +49,9 @@ module.exports = function(config) {
         modules: 'system',
         moduleIds: false,
         optional: [
-          "runtime",
-          "es7.decorators",
-          "es7.classProperties"
+          'runtime',
+          'es7.decorators',
+          'es7.classProperties'
         ]
       }
     },
