@@ -26,7 +26,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
   - [Rendering relative time](#rendering-relative-time)
 - [CLI Integration](#cli-integration)
 - [Running the unit tests](#running-the-unit-tests)
-  
+
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -190,12 +190,12 @@ export class MyDemoVM {
   constructor(i18n,element,ea) {
     this.i18n = i18n;
     this.element = element;
-	   
+
 	  ea.subscribe('i18n:locale:changed', payload => {
 	    this.i18n.updateTranslations(this.element);
 	  });
   }
-  
+
   attached(){
     this.i18n.updateTranslations(this.element);
   }
@@ -262,14 +262,14 @@ When the locale changes it will set the `innerHTML` to the translated value of `
 
 #### Using nested and combined translations
 
-In order to combine two or more translations, just include them with the `$t(yourkey)` markup 
+In order to combine two or more translations, just include them with the `$t(yourkey)` markup
 
 ```markup
 <span t="$t(title) $t(subtitle)">Title subtitle</span>
 ```
 
 Nested keys may also be referenced and will be properly translated:
- 
+
 ```javascript
 {
   "translation": {
@@ -278,7 +278,7 @@ Nested keys may also be referenced and will be properly translated:
     ...
   }
 }
-``` 
+```
 
 ```markup
 <span t="nested_referencing">Nested text</span>
@@ -300,6 +300,32 @@ You may specify a default value for images as well. In order to do so just defin
 <img data-src="path/to/image.jpg" t="home.image" />
 ```
 This will be picked up by the CLI when translations are extracted from the source files. (see the section on [CLI Integration](#cli-integration))
+
+#### Passing parameters to the attribute
+In order to use parameters for replaceable parts in your translation key, you can provide an additional `t-params` attribute and bind it to the object containing the replacement values.
+
+```javascript
+// Translation file
+{
+  "paramstest": "Some text with <strong>__content__</strong>"
+}
+```
+
+```markup
+<!-- View -->
+<span t.="[html]paramstest" t-params.bind="params"></span>
+```
+
+```javascript
+// ViewModel
+class MyVM {
+  params = { content: 'ABC' }
+
+  [...]
+}
+```
+
+> The object passed to `t-params` is a complex object explained [in the next section](#complex-objects-for-variables)
 
 ### Translating with the TValueConverter
 In order to do translations in a more declarative way from within your HTML markup you can use a custom ValueConverter named `t`. It takes exactly the same `options` as the code translation method `tr` but of course provides the key automatically.
@@ -398,22 +424,22 @@ export class MyDemoVM {
   static inject = [I18N];
 	constructor(i18n) {
 	  this.i18n = i18n;
-	    
+
 	  // create a NumberFormat with German locale
     var nf = this.i18n.nf(undefined, 'de');
 	  var result = nf.format(123456.123);
-		
+
 	  console.log(result);
 	  // output => 123.456,123
 
-		
+
 	  // create a NumberFormat with currency options
 	  var nf = this.i18n.NumberFormat({ style: 'currency', currency: 'EUR' }, 'de');
 
 	  var result = nf.format(123456.123);
-		
+
 	  console.log(result);
-	  // output => 123.456,123 €  	  
+	  // output => 123.456,123 ï¿½  	  
 	}
 	...
 }
@@ -458,15 +484,15 @@ export class MyDemoVM {
   static inject = [I18N];
 	constructor(i18n) {
 	  this.i18n = i18n;
-	    
+
 	  // create a DateTimeFormat with German locale
     var df = this.i18n.df(undefined, 'de');
 	  var result = df.format(new Date(2000, 0, 1, 0,0,1))
-		
+
 	  console.log(result);
 	  // output => 1.1.2000
 
-		
+
 	  // create a DateTime with time and 2-digit display
 	  var options = {
       year: 'numeric', month: '2-digit', day: '2-digit',
@@ -476,7 +502,7 @@ export class MyDemoVM {
 	  var df = this.i18n.df(options, 'de');
 
 	  var result = df.format(new Date(2000, 0, 1, 0,0,1));
-		
+
 	  console.log(result);
 	  // output => 01.01.2000 00:00:01  	  
 	}
@@ -521,10 +547,10 @@ export class MyDemoVM {
   static inject = [I18N];
 	constructor(relativeTime) {
 	  this.rt = relativeTime;
-	    
+
 	  var myDate = new Date();
     myDate.setHours(myDate.getHours() - 2);
-		
+
 	  console.log(result);
 	  // output => 2 hours ago  	  
 	}
@@ -532,7 +558,7 @@ export class MyDemoVM {
 }
 ```
 
-This is also tied in to the currentLocale of the library so changing that one will also translate relative time messages. Take a look at the file `src/defaultTranslations/relative.time.js` for available 
+This is also tied in to the currentLocale of the library so changing that one will also translate relative time messages. Take a look at the file `src/defaultTranslations/relative.time.js` for available
 translations. If you're missing yours I welcome you to provide a PR so everybody can benefit from it.
 
 A more declarative approach is to use the RtValueConverter directly in your HTML markup. It's not taking any additional parameters so just drop it in and you're good to go:
