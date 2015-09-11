@@ -110,49 +110,58 @@ export class I18N {
       if (!keys) continue;
 
       //split the keys into multiple keys separated by a ;
-      keys = keys.split(';');
-      for (let key of keys) {
-        // remove the optional attribute
-        let re = /\[([a-z]*)\]/g;
+      this.updateValue(node, keys);
+    }
+  }
 
-        let m;
-        let attr = 'text';
-        //set default attribute to src if this is an image node
-        if (node.nodeName === 'IMG') attr = 'src';
+  updateValue(node, value, params) {
+    if (value === null || value === undefined) {
+      return;
+    }
 
-        //check if a attribute was specified in the key
-        while ((m = re.exec(key)) !== null) {
-          if (m.index === re.lastIndex) {
-            re.lastIndex++;
-          }
-          if (m) {
-            key = key.replace(m[0], '');
-            attr = m[1];
-          }
+    let keys = value.split(';');
+
+    for (let key of keys) {
+      // remove the optional attribute
+      let re = /\[([a-z]*)\]/g;
+
+      let m;
+      let attr = 'text';
+      //set default attribute to src if this is an image node
+      if (node.nodeName === 'IMG') attr = 'src';
+
+      //check if a attribute was specified in the key
+      while ((m = re.exec(key)) !== null) {
+        if (m.index === re.lastIndex) {
+          re.lastIndex++;
         }
-
-        if (!node._textContent) node._textContent = node.textContent;
-        if (!node._innerHTML) node._innerHTML = node.innerHTML;
-
-        //handle various attributes
-        //anything other than text,prepend,append or html will be added as an attribute on the element.
-        switch (attr) {
-        case 'text':
-          node.textContent = this.tr(key);
-          break;
-        case 'prepend':
-          node.innerHTML = this.tr(key) + node._innerHTML.trim();
-          break;
-        case 'append':
-          node.innerHTML = node._innerHTML.trim() + this.tr(key);
-          break;
-        case 'html':
-          node.innerHTML = this.tr(key);
-          break;
-        default: //normal html attribute
-          node.setAttribute(attr, this.tr(key));
-          break;
+        if (m) {
+          key = key.replace(m[0], '');
+          attr = m[1];
         }
+      }
+
+      if (!node._textContent) node._textContent = node.textContent;
+      if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+      //handle various attributes
+      //anything other than text,prepend,append or html will be added as an attribute on the element.
+      switch (attr) {
+      case 'text':
+        node.textContent = this.tr(key, params);
+        break;
+      case 'prepend':
+        node.innerHTML = this.tr(key, params) + node._innerHTML.trim();
+        break;
+      case 'append':
+        node.innerHTML = node._innerHTML.trim() + this.tr(key, params);
+        break;
+      case 'html':
+        node.innerHTML = this.tr(key, params);
+        break;
+      default: //normal html attribute
+        node.setAttribute(attr, this.tr(key, params));
+        break;
       }
     }
   }

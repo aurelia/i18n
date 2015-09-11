@@ -1,5 +1,6 @@
 import {I18N} from './i18n';
 import {customAttribute} from 'aurelia-templating';
+import {Optional} from 'aurelia-dependency-injection';
 
 
 export class TValueConverter {
@@ -13,19 +14,50 @@ export class TValueConverter {
   }
 }
 
+@customAttribute('t-params')
+export class TParamsCustomAttribute {
+  static inject = [Element];
+  service;
+
+  constructor(element) {
+    this.element = element;
+  }
+
+  valueChanged(newValue, oldValue) {
+
+  }
+}
+
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [Element, I18N];
+  static inject = [Element, I18N, Optional.of(TParamsCustomAttribute)];
 
-  constructor(element, i18n) {
+  constructor(element, i18n, tparams) {
     this.element = element;
     this.service = i18n;
+    this.params = tparams;
   }
 
-  valueChanged() {
-    if (this.element.parentElement !== undefined && this.element.parentElement !== null) {
-      this.service.updateTranslations(this.element.parentElement);
+  bind() {
+    if (this.params) {
+      this.params.valueChanged = (newParams, oldParams) => {
+        this.paramsChanged(this.value, newParams, oldParams);
+      };
     }
+
+    setTimeout( () => {
+      let p = this.params !== null ? this.params.value : undefined;
+      this.service.updateValue(this.element, this.value, p);
+    });
+  }
+
+  paramsChanged(newValue, newParams, oldParams) {
+    this.service.updateValue(this.element, newValue, newParams);
+  }
+
+  valueChanged(newValue) {
+    let p = this.params !== null ? this.params.value : undefined;
+    this.service.updateValue(this.element, newValue, p);
   }
 }

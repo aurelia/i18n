@@ -68,6 +68,12 @@ Object.defineProperty(exports, 'TCustomAttribute', {
     return _t.TCustomAttribute;
   }
 });
+Object.defineProperty(exports, 'TParamsCustomAttribute', {
+  enumerable: true,
+  get: function get() {
+    return _t.TParamsCustomAttribute;
+  }
+});
 
 var _baseI18n = require('./base-i18n');
 

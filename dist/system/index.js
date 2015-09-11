@@ -55,6 +55,8 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './
       _export('TValueConverter', _t.TValueConverter);
 
       _export('TCustomAttribute', _t.TCustomAttribute);
+
+      _export('TParamsCustomAttribute', _t.TParamsCustomAttribute);
     }, function (_baseI18n) {
       _export('BaseI18N', _baseI18n.BaseI18N);
     }],

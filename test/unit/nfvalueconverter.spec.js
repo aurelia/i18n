@@ -3,11 +3,19 @@ import {NfValueConverter} from '../../src/nf';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('nfvalueconverter tests', () => {
-  
+
   var sut, nfvc;
   beforeEach(function() {
     sut = new I18N(new EventAggregator());
     nfvc = new NfValueConverter(sut);
+
+    sut.setup({
+      lng : 'en',
+      getAsync : false,
+      sendMissing : false,
+      fallbackLng : 'en',
+      debug : false
+    });
   });
 
   it('should display number in the setup locale format by default', () => {

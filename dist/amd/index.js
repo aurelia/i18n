@@ -47,6 +47,12 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
       return _t.TCustomAttribute;
     }
   });
+  Object.defineProperty(exports, 'TParamsCustomAttribute', {
+    enumerable: true,
+    get: function get() {
+      return _t.TParamsCustomAttribute;
+    }
+  });
   Object.defineProperty(exports, 'BaseI18N', {
     enumerable: true,
     get: function get() {

@@ -120,65 +120,75 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
 
           if (!keys) continue;
 
-          keys = keys.split(';');
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
+          this.updateValue(node, keys);
+        }
+      }
+    }, {
+      key: 'updateValue',
+      value: function updateValue(node, value, params) {
+        if (value === null || value === undefined) {
+          return;
+        }
 
-          try {
-            for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var key = _step.value;
+        var keys = value.split(';');
 
-              var re = /\[([a-z]*)\]/g;
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
 
-              var m = undefined;
-              var attr = 'text';
+        try {
+          for (var _iterator = keys[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var key = _step.value;
 
-              if (node.nodeName === 'IMG') attr = 'src';
+            var re = /\[([a-z]*)\]/g;
 
-              while ((m = re.exec(key)) !== null) {
-                if (m.index === re.lastIndex) {
-                  re.lastIndex++;
-                }
-                if (m) {
-                  key = key.replace(m[0], '');
-                  attr = m[1];
-                }
+            var m = undefined;
+            var attr = 'text';
+
+            if (node.nodeName === 'IMG') attr = 'src';
+
+            while ((m = re.exec(key)) !== null) {
+              if (m.index === re.lastIndex) {
+                re.lastIndex++;
               }
-
-              if (!node._textContent) node._textContent = node.textContent;
-              if (!node._innerHTML) node._innerHTML = node.innerHTML;
-
-              switch (attr) {
-                case 'text':
-                  node.textContent = this.tr(key);
-                  break;
-                case 'prepend':
-                  node.innerHTML = this.tr(key) + node._innerHTML.trim();
-                  break;
-                case 'append':
-                  node.innerHTML = node._innerHTML.trim() + this.tr(key);
-                  break;
-                case 'html':
-                  node.innerHTML = this.tr(key);
-                  break;
-                default:
-                  node.setAttribute(attr, this.tr(key));
-                  break;
+              if (m) {
+                key = key.replace(m[0], '');
+                attr = m[1];
               }
             }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
+
+            if (!node._textContent) node._textContent = node.textContent;
+            if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+            switch (attr) {
+              case 'text':
+                node.textContent = this.tr(key, params);
+                break;
+              case 'prepend':
+                node.innerHTML = this.tr(key, params) + node._innerHTML.trim();
+                break;
+              case 'append':
+                node.innerHTML = node._innerHTML.trim() + this.tr(key, params);
+                break;
+              case 'html':
+                node.innerHTML = this.tr(key, params);
+                break;
+              default:
+                node.setAttribute(attr, this.tr(key, params));
+                break;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator['return']) {
+              _iterator['return']();
+            }
           } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator['return']) {
-                _iterator['return']();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
+            if (_didIteratorError) {
+              throw _iteratorError;
             }
           }
         }

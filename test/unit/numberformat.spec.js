@@ -32,7 +32,8 @@ describe('numberformat tests', () => {
     var nf = sut.nf();
     var testNumber = 123456.789;
 
-    expect(nf.format(testNumber)).toEqual('123,456.789');
+    var result = nf.format(testNumber);
+    expect(result).toEqual('123,456.789');
   });
 
   it('should display number in the previously modified locale', (done) => {

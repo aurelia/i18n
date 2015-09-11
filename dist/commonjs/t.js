@@ -12,6 +12,8 @@ var _i18n = require('./i18n');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaDependencyInjection = require('aurelia-dependency-injection');
+
 var TValueConverter = (function () {
   _createClass(TValueConverter, null, [{
     key: 'inject',
@@ -38,26 +40,72 @@ var TValueConverter = (function () {
 
 exports.TValueConverter = TValueConverter;
 
-var TCustomAttribute = (function () {
-  _createClass(TCustomAttribute, null, [{
+var TParamsCustomAttribute = (function () {
+  _createClass(TParamsCustomAttribute, null, [{
     key: 'inject',
-    value: [Element, _i18n.I18N],
+    value: [Element],
     enumerable: true
   }]);
 
-  function TCustomAttribute(element, i18n) {
+  function TParamsCustomAttribute(element) {
+    _classCallCheck(this, _TParamsCustomAttribute);
+
+    this.element = element;
+  }
+
+  _createClass(TParamsCustomAttribute, [{
+    key: 'valueChanged',
+    value: function valueChanged(newValue, oldValue) {}
+  }]);
+
+  var _TParamsCustomAttribute = TParamsCustomAttribute;
+  TParamsCustomAttribute = (0, _aureliaTemplating.customAttribute)('t-params')(TParamsCustomAttribute) || TParamsCustomAttribute;
+  return TParamsCustomAttribute;
+})();
+
+exports.TParamsCustomAttribute = TParamsCustomAttribute;
+
+var TCustomAttribute = (function () {
+  _createClass(TCustomAttribute, null, [{
+    key: 'inject',
+    value: [Element, _i18n.I18N, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
+    enumerable: true
+  }]);
+
+  function TCustomAttribute(element, i18n, tparams) {
     _classCallCheck(this, _TCustomAttribute);
 
     this.element = element;
     this.service = i18n;
+    this.params = tparams;
   }
 
   _createClass(TCustomAttribute, [{
-    key: 'valueChanged',
-    value: function valueChanged() {
-      if (this.element.parentElement !== undefined && this.element.parentElement !== null) {
-        this.service.updateTranslations(this.element.parentElement);
+    key: 'bind',
+    value: function bind() {
+      var _this = this;
+
+      if (this.params) {
+        this.params.valueChanged = function (newParams, oldParams) {
+          _this.paramsChanged(_this.value, newParams, oldParams);
+        };
       }
+
+      setTimeout(function () {
+        var p = _this.params !== null ? _this.params.value : undefined;
+        _this.service.updateValue(_this.element, _this.value, p);
+      });
+    }
+  }, {
+    key: 'paramsChanged',
+    value: function paramsChanged(newValue, newParams, oldParams) {
+      this.service.updateValue(this.element, newValue, newParams);
+    }
+  }, {
+    key: 'valueChanged',
+    value: function valueChanged(newValue) {
+      var p = this.params !== null ? this.params.value : undefined;
+      this.service.updateValue(this.element, newValue, p);
     }
   }]);
 
