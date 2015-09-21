@@ -71,7 +71,7 @@ System.register(['i18next', './utils'], function (_export) {
         }, {
           key: 'nf',
           value: function nf(options, locales) {
-            return new this.Intl.NumberFormat(locales || this.getLocale(), options);
+            return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
           }
         }, {
           key: 'df',

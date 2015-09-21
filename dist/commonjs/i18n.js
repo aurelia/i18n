@@ -73,7 +73,7 @@ var I18N = (function () {
   }, {
     key: 'nf',
     value: function nf(options, locales) {
-      return new this.Intl.NumberFormat(locales || this.getLocale(), options);
+      return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
     }
   }, {
     key: 'df',

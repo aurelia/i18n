@@ -70,7 +70,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
     }, {
       key: 'nf',
       value: function nf(options, locales) {
-        return new this.Intl.NumberFormat(locales || this.getLocale(), options);
+        return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
       }
     }, {
       key: 'df',

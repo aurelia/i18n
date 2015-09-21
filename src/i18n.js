@@ -53,7 +53,7 @@ export class I18N {
   }
 
   nf(options, locales) {
-    return new this.Intl.NumberFormat(locales || this.getLocale(), options);
+    return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
   df(options, locales) {
