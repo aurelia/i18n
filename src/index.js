@@ -31,8 +31,10 @@ export function configure(frameworkConfig, cb) {
   frameworkConfig.postTask(() => {
     let resources = frameworkConfig.container.get(ViewResources);
     let htmlBehaviorResource = resources.getAttribute('t');
-
-    instance.i18next.options.attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
+    let attributes = instance.i18next.options.attributes;
+    
+    if(attributes)
+      attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
   });
 
   return ret;
