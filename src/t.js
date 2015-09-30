@@ -49,7 +49,6 @@ export class TCustomAttribute {
     }
 
     let p = this.params !== null ? this.params.value : undefined;
-
     this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
       this.service.updateValue(this.element, this.value, p);
     });
