@@ -1,4 +1,5 @@
 import {I18N} from './i18n';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute} from 'aurelia-templating';
 import {Optional} from 'aurelia-dependency-injection';
 
@@ -31,12 +32,13 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [Element, I18N, Optional.of(TParamsCustomAttribute)];
+  static inject = [Element, I18N, EventAggregator, Optional.of(TParamsCustomAttribute)];
 
-  constructor(element, i18n, tparams) {
+  constructor(element, i18n, ea, tparams) {
     this.element = element;
     this.service = i18n;
     this.params = tparams;
+    this.ea = ea;
   }
 
   bind() {
@@ -46,8 +48,13 @@ export class TCustomAttribute {
       };
     }
 
+    let p = this.params !== null ? this.params.value : undefined;
+
+    this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
+      this.service.updateValue(this.element, this.value, p);
+    });
+
     setTimeout( () => {
-      let p = this.params !== null ? this.params.value : undefined;
       this.service.updateValue(this.element, this.value, p);
     });
   }
@@ -59,5 +66,9 @@ export class TCustomAttribute {
   valueChanged(newValue) {
     let p = this.params !== null ? this.params.value : undefined;
     this.service.updateValue(this.element, newValue, p);
+  }
+
+  unbind() {
+    this.subscription();
   }
 }

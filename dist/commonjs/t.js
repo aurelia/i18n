@@ -10,6 +10,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var _i18n = require('./i18n');
 
+var _aureliaEventAggregator = require('aurelia-event-aggregator');
+
 var _aureliaTemplating = require('aurelia-templating');
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
@@ -68,16 +70,17 @@ exports.TParamsCustomAttribute = TParamsCustomAttribute;
 var TCustomAttribute = (function () {
   _createClass(TCustomAttribute, null, [{
     key: 'inject',
-    value: [Element, _i18n.I18N, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
+    value: [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
     enumerable: true
   }]);
 
-  function TCustomAttribute(element, i18n, tparams) {
+  function TCustomAttribute(element, i18n, ea, tparams) {
     _classCallCheck(this, _TCustomAttribute);
 
     this.element = element;
     this.service = i18n;
     this.params = tparams;
+    this.ea = ea;
   }
 
   _createClass(TCustomAttribute, [{
@@ -91,8 +94,13 @@ var TCustomAttribute = (function () {
         };
       }
 
+      var p = this.params !== null ? this.params.value : undefined;
+
+      this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
+        _this.service.updateValue(_this.element, _this.value, p);
+      });
+
       setTimeout(function () {
-        var p = _this.params !== null ? _this.params.value : undefined;
         _this.service.updateValue(_this.element, _this.value, p);
       });
     }
@@ -106,6 +114,11 @@ var TCustomAttribute = (function () {
     value: function valueChanged(newValue) {
       var p = this.params !== null ? this.params.value : undefined;
       this.service.updateValue(this.element, newValue, p);
+    }
+  }, {
+    key: 'unbind',
+    value: function unbind() {
+      this.subscription();
     }
   }]);
 

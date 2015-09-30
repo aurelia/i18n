@@ -1,4 +1,4 @@
-define(['exports', './i18n', 'aurelia-templating', 'aurelia-dependency-injection'], function (exports, _i18n, _aureliaTemplating, _aureliaDependencyInjection) {
+define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-dependency-injection'], function (exports, _i18n, _aureliaEventAggregator, _aureliaTemplating, _aureliaDependencyInjection) {
   'use strict';
 
   Object.defineProperty(exports, '__esModule', {
@@ -63,16 +63,17 @@ define(['exports', './i18n', 'aurelia-templating', 'aurelia-dependency-injection
   var TCustomAttribute = (function () {
     _createClass(TCustomAttribute, null, [{
       key: 'inject',
-      value: [Element, _i18n.I18N, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
+      value: [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
       enumerable: true
     }]);
 
-    function TCustomAttribute(element, i18n, tparams) {
+    function TCustomAttribute(element, i18n, ea, tparams) {
       _classCallCheck(this, _TCustomAttribute);
 
       this.element = element;
       this.service = i18n;
       this.params = tparams;
+      this.ea = ea;
     }
 
     _createClass(TCustomAttribute, [{
@@ -86,8 +87,13 @@ define(['exports', './i18n', 'aurelia-templating', 'aurelia-dependency-injection
           };
         }
 
+        var p = this.params !== null ? this.params.value : undefined;
+
+        this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
+          _this.service.updateValue(_this.element, _this.value, p);
+        });
+
         setTimeout(function () {
-          var p = _this.params !== null ? _this.params.value : undefined;
           _this.service.updateValue(_this.element, _this.value, p);
         });
       }
@@ -101,6 +107,11 @@ define(['exports', './i18n', 'aurelia-templating', 'aurelia-dependency-injection
       value: function valueChanged(newValue) {
         var p = this.params !== null ? this.params.value : undefined;
         this.service.updateValue(this.element, newValue, p);
+      }
+    }, {
+      key: 'unbind',
+      value: function unbind() {
+        this.subscription();
       }
     }]);
 

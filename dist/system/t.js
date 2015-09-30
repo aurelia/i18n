@@ -1,7 +1,7 @@
-System.register(['./i18n', 'aurelia-templating', 'aurelia-dependency-injection'], function (_export) {
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-dependency-injection'], function (_export) {
   'use strict';
 
-  var I18N, customAttribute, Optional, TValueConverter, TParamsCustomAttribute, TCustomAttribute;
+  var I18N, EventAggregator, customAttribute, Optional, TValueConverter, TParamsCustomAttribute, TCustomAttribute;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -10,6 +10,8 @@ System.register(['./i18n', 'aurelia-templating', 'aurelia-dependency-injection']
   return {
     setters: [function (_i18n) {
       I18N = _i18n.I18N;
+    }, function (_aureliaEventAggregator) {
+      EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplating) {
       customAttribute = _aureliaTemplating.customAttribute;
     }, function (_aureliaDependencyInjection) {
@@ -70,16 +72,17 @@ System.register(['./i18n', 'aurelia-templating', 'aurelia-dependency-injection']
       TCustomAttribute = (function () {
         _createClass(TCustomAttribute, null, [{
           key: 'inject',
-          value: [Element, I18N, Optional.of(TParamsCustomAttribute)],
+          value: [Element, I18N, EventAggregator, Optional.of(TParamsCustomAttribute)],
           enumerable: true
         }]);
 
-        function TCustomAttribute(element, i18n, tparams) {
+        function TCustomAttribute(element, i18n, ea, tparams) {
           _classCallCheck(this, _TCustomAttribute);
 
           this.element = element;
           this.service = i18n;
           this.params = tparams;
+          this.ea = ea;
         }
 
         _createClass(TCustomAttribute, [{
@@ -93,8 +96,13 @@ System.register(['./i18n', 'aurelia-templating', 'aurelia-dependency-injection']
               };
             }
 
+            var p = this.params !== null ? this.params.value : undefined;
+
+            this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
+              _this.service.updateValue(_this.element, _this.value, p);
+            });
+
             setTimeout(function () {
-              var p = _this.params !== null ? _this.params.value : undefined;
               _this.service.updateValue(_this.element, _this.value, p);
             });
           }
@@ -108,6 +116,11 @@ System.register(['./i18n', 'aurelia-templating', 'aurelia-dependency-injection']
           value: function valueChanged(newValue) {
             var p = this.params !== null ? this.params.value : undefined;
             this.service.updateValue(this.element, newValue, p);
+          }
+        }, {
+          key: 'unbind',
+          value: function unbind() {
+            this.subscription();
           }
         }]);
 
