@@ -108,8 +108,13 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.postTask(function () {
     var resources = frameworkConfig.container.get(_aureliaTemplating.ViewResources);
     var htmlBehaviorResource = resources.getAttribute('t');
+    var attributes = instance.i18next.options.attributes;
 
-    instance.i18next.options.attributes.forEach(function (alias) {
+    if (!attributes) {
+      attributes = ['t', 'i18n'];
+    }
+
+    attributes.forEach(function (alias) {
       return resources.registerAttribute(alias, htmlBehaviorResource, 't');
     });
   });

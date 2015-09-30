@@ -31,8 +31,14 @@ export function configure(frameworkConfig, cb) {
   frameworkConfig.postTask(() => {
     let resources = frameworkConfig.container.get(ViewResources);
     let htmlBehaviorResource = resources.getAttribute('t');
+    let attributes = instance.i18next.options.attributes;
 
-    instance.i18next.options.attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
+    // Register default attributes if none provided
+    if (!attributes) {
+      attributes = ['t', 'i18n'];
+    }
+
+    attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
   });
 
   return ret;

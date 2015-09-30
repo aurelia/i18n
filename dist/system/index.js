@@ -23,8 +23,13 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './
     frameworkConfig.postTask(function () {
       var resources = frameworkConfig.container.get(ViewResources);
       var htmlBehaviorResource = resources.getAttribute('t');
+      var attributes = instance.i18next.options.attributes;
 
-      instance.i18next.options.attributes.forEach(function (alias) {
+      if (!attributes) {
+        attributes = ['t', 'i18n'];
+      }
+
+      attributes.forEach(function (alias) {
         return resources.registerAttribute(alias, htmlBehaviorResource, 't');
       });
     });
