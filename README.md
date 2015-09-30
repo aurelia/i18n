@@ -586,6 +586,8 @@ There will be a command line tool that can create `translation.json` files for y
 
 ## Dependencies
 
+* [i18next](https://github.com/i18next/i18next)
+* aurelia-dependency-injection
 * aurelia-event-aggregator
 * aurelia-loader-default
 * aurelia-templating
