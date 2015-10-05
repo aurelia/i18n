@@ -9,7 +9,7 @@ export class BaseI18N {
     this.i18n = i18n;
     this.element = element;
 
-    this.__i18nDisposer = ea.subscribe('i18n:locale:changed', payload => {
+    this.__i18nDisposer = ea.subscribe('i18n:locale:changed', () => {
       this.i18n.updateTranslations(this.element);
     });
   }

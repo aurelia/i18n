@@ -27,7 +27,7 @@ var BaseI18N = (function () {
     this.i18n = i18n;
     this.element = element;
 
-    this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function (payload) {
+    this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function () {
       _this.i18n.updateTranslations(_this.element);
     });
   }

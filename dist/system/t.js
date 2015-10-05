@@ -1,7 +1,7 @@
-System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-dependency-injection'], function (_export) {
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './utils'], function (_export) {
   'use strict';
 
-  var I18N, EventAggregator, customAttribute, Optional, TValueConverter, TParamsCustomAttribute, TCustomAttribute;
+  var I18N, EventAggregator, customAttribute, LazyOptional, TValueConverter, TParamsCustomAttribute, TCustomAttribute;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -14,8 +14,8 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplating) {
       customAttribute = _aureliaTemplating.customAttribute;
-    }, function (_aureliaDependencyInjection) {
-      Optional = _aureliaDependencyInjection.Optional;
+    }, function (_utils) {
+      LazyOptional = _utils.LazyOptional;
     }],
     execute: function () {
       TValueConverter = (function () {
@@ -59,7 +59,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
 
         _createClass(TParamsCustomAttribute, [{
           key: 'valueChanged',
-          value: function valueChanged(newValue, oldValue) {}
+          value: function valueChanged() {}
         }]);
 
         var _TParamsCustomAttribute = TParamsCustomAttribute;
@@ -72,7 +72,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       TCustomAttribute = (function () {
         _createClass(TCustomAttribute, null, [{
           key: 'inject',
-          value: [Element, I18N, EventAggregator, Optional.of(TParamsCustomAttribute)],
+          value: [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)],
           enumerable: true
         }]);
 
@@ -81,8 +81,8 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
 
           this.element = element;
           this.service = i18n;
-          this.params = tparams;
           this.ea = ea;
+          this.lazyParams = tparams;
         }
 
         _createClass(TCustomAttribute, [{
@@ -90,25 +90,28 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
           value: function bind() {
             var _this = this;
 
-            if (this.params) {
-              this.params.valueChanged = function (newParams, oldParams) {
-                _this.paramsChanged(_this.value, newParams, oldParams);
-              };
-            }
-
-            var p = this.params !== null ? this.params.value : undefined;
-
-            this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-              _this.service.updateValue(_this.element, _this.value, p);
-            });
+            this.params = this.lazyParams();
 
             setTimeout(function () {
-              _this.service.updateValue(_this.element, _this.value, p);
+              if (_this.params) {
+                _this.params.valueChanged = function (newParams, oldParams) {
+                  _this.paramsChanged(_this.value, newParams, oldParams);
+                };
+              }
+
+              var p = _this.params !== null ? _this.params.value : undefined;
+              _this.subscription = _this.ea.subscribe('i18n:locale:changed', function () {
+                _this.service.updateValue(_this.element, _this.value, p);
+              });
+
+              setTimeout(function () {
+                _this.service.updateValue(_this.element, _this.value, p);
+              });
             });
           }
         }, {
           key: 'paramsChanged',
-          value: function paramsChanged(newValue, newParams, oldParams) {
+          value: function paramsChanged(newValue, newParams) {
             this.service.updateValue(this.element, newValue, newParams);
           }
         }, {

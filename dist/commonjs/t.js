@@ -14,7 +14,7 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
-var _aureliaDependencyInjection = require('aurelia-dependency-injection');
+var _utils = require('./utils');
 
 var TValueConverter = (function () {
   _createClass(TValueConverter, null, [{
@@ -57,7 +57,7 @@ var TParamsCustomAttribute = (function () {
 
   _createClass(TParamsCustomAttribute, [{
     key: 'valueChanged',
-    value: function valueChanged(newValue, oldValue) {}
+    value: function valueChanged() {}
   }]);
 
   var _TParamsCustomAttribute = TParamsCustomAttribute;
@@ -70,7 +70,7 @@ exports.TParamsCustomAttribute = TParamsCustomAttribute;
 var TCustomAttribute = (function () {
   _createClass(TCustomAttribute, null, [{
     key: 'inject',
-    value: [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _aureliaDependencyInjection.Optional.of(TParamsCustomAttribute)],
+    value: [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)],
     enumerable: true
   }]);
 
@@ -79,8 +79,8 @@ var TCustomAttribute = (function () {
 
     this.element = element;
     this.service = i18n;
-    this.params = tparams;
     this.ea = ea;
+    this.lazyParams = tparams;
   }
 
   _createClass(TCustomAttribute, [{
@@ -88,25 +88,28 @@ var TCustomAttribute = (function () {
     value: function bind() {
       var _this = this;
 
-      if (this.params) {
-        this.params.valueChanged = function (newParams, oldParams) {
-          _this.paramsChanged(_this.value, newParams, oldParams);
-        };
-      }
-
-      var p = this.params !== null ? this.params.value : undefined;
-
-      this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-        _this.service.updateValue(_this.element, _this.value, p);
-      });
+      this.params = this.lazyParams();
 
       setTimeout(function () {
-        _this.service.updateValue(_this.element, _this.value, p);
+        if (_this.params) {
+          _this.params.valueChanged = function (newParams, oldParams) {
+            _this.paramsChanged(_this.value, newParams, oldParams);
+          };
+        }
+
+        var p = _this.params !== null ? _this.params.value : undefined;
+        _this.subscription = _this.ea.subscribe('i18n:locale:changed', function () {
+          _this.service.updateValue(_this.element, _this.value, p);
+        });
+
+        setTimeout(function () {
+          _this.service.updateValue(_this.element, _this.value, p);
+        });
       });
     }
   }, {
     key: 'paramsChanged',
-    value: function paramsChanged(newValue, newParams, oldParams) {
+    value: function paramsChanged(newValue, newParams) {
       this.service.updateValue(this.element, newValue, newParams);
     }
   }, {

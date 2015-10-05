@@ -1,7 +1,7 @@
 import {I18N} from './i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute} from 'aurelia-templating';
-import {Optional} from 'aurelia-dependency-injection';
+import {LazyOptional} from './utils';
 
 
 export class TValueConverter {
@@ -24,7 +24,7 @@ export class TParamsCustomAttribute {
     this.element = element;
   }
 
-  valueChanged(newValue, oldValue) {
+  valueChanged() {
 
   }
 }
@@ -32,33 +32,37 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [Element, I18N, EventAggregator, Optional.of(TParamsCustomAttribute)];
+  static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
 
   constructor(element, i18n, ea, tparams) {
     this.element = element;
     this.service = i18n;
-    this.params = tparams;
     this.ea = ea;
+    this.lazyParams = tparams;
   }
 
   bind() {
-    if (this.params) {
-      this.params.valueChanged = (newParams, oldParams) => {
-        this.paramsChanged(this.value, newParams, oldParams);
-      };
-    }
-
-    let p = this.params !== null ? this.params.value : undefined;
-    this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
-      this.service.updateValue(this.element, this.value, p);
-    });
+    this.params = this.lazyParams();
 
     setTimeout( () => {
-      this.service.updateValue(this.element, this.value, p);
+      if (this.params) {
+        this.params.valueChanged = (newParams, oldParams) => {
+          this.paramsChanged(this.value, newParams, oldParams);
+        };
+      }
+
+      let p = this.params !== null ? this.params.value : undefined;
+      this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
+        this.service.updateValue(this.element, this.value, p);
+      });
+
+      setTimeout( () => {
+        this.service.updateValue(this.element, this.value, p);
+      });
     });
   }
 
-  paramsChanged(newValue, newParams, oldParams) {
+  paramsChanged(newValue, newParams) {
     this.service.updateValue(this.element, newValue, newParams);
   }
 
