@@ -86,6 +86,19 @@ jspm install aurelia-i18n
   }
 ```
 
+> You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
+and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
+containing the different namespaces as well as the default namespace.
+```
+instance.setup({
+  ...
+  ns: { 
+    namespaces: ['translation','nav'],
+    defaultNs: 'translation'
+  }
+});
+```
+
 ## How to use this plugin
 i18next translations work by setting up an active locale, which you've setup above in the init phase with the property `lng`.
 
