@@ -27,10 +27,10 @@
     },
     "dependencies": {
       "Intl.js": "github:andyearnshaw/Intl.js@^0.1.4",
-      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.10.1",
-      "aurelia-event-aggregator": "github:aurelia/event-aggregator@^0.8.0",
-      "aurelia-loader-default": "github:aurelia/loader-default@^0.10.0",
-      "aurelia-templating": "github:aurelia/templating@^0.15.3",
+      "aurelia-dependency-injection": "github:aurelia/dependency-injection@^0.11.0",
+      "aurelia-event-aggregator": "github:aurelia/event-aggregator@^0.9.0",
+      "aurelia-loader-default": "github:aurelia/loader-default@^0.11.0",
+      "aurelia-templating": "github:aurelia/templating@^0.16.0",
       "i18next": "github:i18next/i18next@^1.9.0"
     },
     "devDependencies": {
