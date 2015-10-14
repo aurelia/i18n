@@ -1,17 +1,18 @@
-import {initialize} from 'aurelia-pal-browser';
+import {initialize, DOM} from 'aurelia-pal-browser';
 import {TCustomAttribute, TParamsCustomAttribute} from '../../src/t';
 import {Container} from 'aurelia-dependency-injection';
 import {templatingEngine} from 'aurelia-templating';
 import {I18N} from '../../src/i18n';
 
-xdescribe('testing i18n attributes', () => {
+initialize();
+
+describe('testing i18n attributes', () => {
   let container;
 
   beforeEach(() => {
-    initialize();
-
-    container = new Container().makeGlobal();
-    container.registerInstance(Element, '<div>');
+    container = new Container();
+    let element = DOM.createElement('div');
+    container.registerInstance(DOM.Element, element);
 
     templatingEngine.initialize(container);
   });
@@ -38,12 +39,14 @@ xdescribe('testing i18n attributes', () => {
 
     let i18nAttribute = templatingEngine.createModelForUnitTest(TCustomAttribute);
     spyOn(i18nAttribute, 'paramsChanged').and.callThrough();
-
-    paramsAttribute.value = 'foo';
+    i18nAttribute.bind();
 
     setTimeout(() => {
-      expect(i18nAttribute.paramsChanged).toHaveBeenCalledWith(undefined, 'foo', undefined);
-      done();
+      paramsAttribute.value = 'foo';
+      setTimeout( () => {
+        expect(i18nAttribute.paramsChanged).toHaveBeenCalledWith(undefined, 'foo', undefined);
+        done();
+      });
     });
   });
 });
