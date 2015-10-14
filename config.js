@@ -1,25 +1,25 @@
 System.config({
-  "defaultJSExtensions": true,
-  "transpiler": "babel",
-  "babelOptions": {
+  defaultJSExtensions: true,
+  transpiler: "babel",
+  babelOptions: {
     "optional": [
       "es7.decorators",
       "es7.classProperties"
     ]
   },
-  "paths": {
+  paths: {
     "aurelia-i18n/*": "dist\\system/*js",
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
-  }
-});
+  },
 
-System.config({
-  "map": {
+  map: {
     "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
     "aurelia-dependency-injection": "github:aurelia/dependency-injection@0.11.0",
     "aurelia-event-aggregator": "github:aurelia/event-aggregator@0.9.0",
     "aurelia-loader-default": "github:aurelia/loader-default@0.11.0",
+    "aurelia-pal": "github:aurelia/pal@0.2.0",
+    "aurelia-pal-browser": "github:aurelia/pal-browser@0.2.0",
     "aurelia-templating": "github:aurelia/templating@0.16.0",
     "babel": "npm:babel-core@5.8.23",
     "babel-runtime": "npm:babel-runtime@5.8.20",
@@ -53,6 +53,9 @@ System.config({
     "github:aurelia/metadata@0.9.0": {
       "aurelia-pal": "github:aurelia/pal@0.2.0",
       "core-js": "npm:core-js@0.9.18"
+    },
+    "github:aurelia/pal-browser@0.2.0": {
+      "aurelia-pal": "github:aurelia/pal@0.2.0"
     },
     "github:aurelia/task-queue@0.8.0": {
       "aurelia-pal": "github:aurelia/pal@0.2.0"
@@ -100,4 +103,3 @@ System.config({
     }
   }
 });
-

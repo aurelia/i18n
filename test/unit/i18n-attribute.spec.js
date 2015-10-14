@@ -1,14 +1,19 @@
+import {initialize} from 'aurelia-pal-browser';
 import {TCustomAttribute, TParamsCustomAttribute} from '../../src/t';
 import {Container} from 'aurelia-dependency-injection';
 import {templatingEngine} from 'aurelia-templating';
 import {I18N} from '../../src/i18n';
 
-describe('testing i18n attributes', () => {
+xdescribe('testing i18n attributes', () => {
   let container;
 
   beforeEach(() => {
+    initialize();
+
     container = new Container().makeGlobal();
     container.registerInstance(Element, '<div>');
+
+    templatingEngine.initialize(container);
   });
 
 
