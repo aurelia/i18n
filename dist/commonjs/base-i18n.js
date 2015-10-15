@@ -40,7 +40,7 @@ var BaseI18N = (function () {
   }, {
     key: 'detached',
     value: function detached() {
-      this.__i18nDisposer();
+      this.__i18nDisposer.dispose();
     }
   }]);
 

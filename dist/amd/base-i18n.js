@@ -37,7 +37,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator'], function (exports, _i1
     }, {
       key: 'detached',
       value: function detached() {
-        this.__i18nDisposer();
+        this.__i18nDisposer.dispose();
       }
     }]);
 

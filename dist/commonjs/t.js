@@ -121,7 +121,7 @@ var TCustomAttribute = (function () {
   }, {
     key: 'unbind',
     value: function unbind() {
-      this.subscription();
+      this.subscription.dispose();
     }
   }]);
 

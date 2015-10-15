@@ -1,3 +1,12 @@
+### 0.2.6 (2015-10-15)
+
+
+#### Bug Fixes
+
+* **event-aggregator:** dispose ea subscriptions correctly ([c387adbf](http://github.com/aurelia/i18n/commit/c387adbf4d41957bb06f64104c1073bca4507c9a))
+* **tests:** fix unit tests ([203a3ce6](http://github.com/aurelia/i18n/commit/203a3ce63db9f3c912b732d9473e17ce001e3726))
+
+
 ### 0.2.5 (2015-10-14)
 
 

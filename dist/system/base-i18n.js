@@ -42,7 +42,7 @@ System.register(['./i18n', 'aurelia-event-aggregator'], function (_export) {
         }, {
           key: 'detached',
           value: function detached() {
-            this.__i18nDisposer();
+            this.__i18nDisposer.dispose();
           }
         }]);
 

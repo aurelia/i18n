@@ -123,7 +123,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './
         }, {
           key: 'unbind',
           value: function unbind() {
-            this.subscription();
+            this.subscription.dispose();
           }
         }]);
 
