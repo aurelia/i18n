@@ -19,6 +19,6 @@ export class BaseI18N {
   }
 
   detached() {
-    this.__i18nDisposer();
+    this.__i18nDisposer.dispose();
   }
 }
