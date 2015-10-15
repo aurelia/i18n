@@ -72,6 +72,6 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    this.subscription();
+    this.subscription.dispose();
   }
 }
