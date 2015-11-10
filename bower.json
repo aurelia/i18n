@@ -16,5 +16,13 @@
     "type": "git",
     "url": "http://github.com/aurelia/i18n"
   },
-  "dependencies": {}
+  "dependencies": {
+    "aurelia-dependency-injection": "^0.12.0",
+    "aurelia-event-aggregator": "^0.10.0",
+    "aurelia-loader-default": "^0.12.0",
+    "aurelia-pal": "^0.3.0",
+    "aurelia-templating": "^0.17.0",
+    "Intl.js": "andyearnshaw/Intl.js@^0.1.4",
+    "i18next": "i18next/i18next@^1.9.0"
+  }
 }
