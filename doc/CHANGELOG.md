@@ -1,3 +1,11 @@
+## 0.3.0 (2015-11-10)
+
+
+#### Bug Fixes
+
+* **all:** update to latest templating engine and DI ([a49941af](http://github.com/aurelia/i18n/commit/a49941af8eef97998f5d1a1299ba6880ad7af85d))
+
+
 ### 0.2.6 (2015-10-15)
 
 
