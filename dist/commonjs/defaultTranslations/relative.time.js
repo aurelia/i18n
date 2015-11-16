@@ -1,9 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-exports['default'] = {
+exports.__esModule = true;
+var translations = {
   ar: {
     translation: {
       'now': 'الآن',
@@ -231,4 +229,4 @@ exports['default'] = {
     }
   }
 };
-module.exports = exports['default'];
+exports.translations = translations;

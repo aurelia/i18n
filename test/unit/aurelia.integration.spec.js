@@ -1,4 +1,4 @@
-import {configure} from '../../src/index';
+import {configure} from '../../src/aurelia-i18n';
 
 describe('testing aurelia configure routine', () => {
 

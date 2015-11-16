@@ -34,17 +34,13 @@ System.register(['./i18n', 'aurelia-event-aggregator'], function (_export) {
           });
         }
 
-        _createClass(BaseI18N, [{
-          key: 'attached',
-          value: function attached() {
-            this.i18n.updateTranslations(this.element);
-          }
-        }, {
-          key: 'detached',
-          value: function detached() {
-            this.__i18nDisposer.dispose();
-          }
-        }]);
+        BaseI18N.prototype.attached = function attached() {
+          this.i18n.updateTranslations(this.element);
+        };
+
+        BaseI18N.prototype.detached = function detached() {
+          this.__i18nDisposer.dispose();
+        };
 
         return BaseI18N;
       })();

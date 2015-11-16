@@ -1,7 +1,8 @@
-define(['exports', 'module'], function (exports, module) {
+define(['exports'], function (exports) {
   'use strict';
 
-  module.exports = {
+  exports.__esModule = true;
+  var translations = {
     ar: {
       translation: {
         'now': 'الآن',
@@ -229,4 +230,5 @@ define(['exports', 'module'], function (exports, module) {
       }
     }
   };
+  exports.translations = translations;
 });

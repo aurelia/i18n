@@ -1,19 +1,17 @@
-import {I18N} from './i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ViewResources} from 'aurelia-templating';
 
-export {I18N} from './i18n';
-export {RelativeTime} from './relativeTime';
-export {DfValueConverter} from './df';
-export {NfValueConverter} from './nf';
-export {RtValueConverter} from './rt';
-export {TValueConverter} from './t';
-export {TCustomAttribute} from './t';
-export {TParamsCustomAttribute} from './t';
-export {BaseI18N} from './base-i18n';
-export {EventAggregator} from 'aurelia-event-aggregator';
+import {I18N} from './i18n';
+import {RelativeTime} from './relativeTime';
+import {DfValueConverter} from './df';
+import {NfValueConverter} from './nf';
+import {RtValueConverter} from './rt';
+import {TValueConverter} from './t';
+import {TCustomAttribute} from './t';
+import {TParamsCustomAttribute} from './t';
+import {BaseI18N} from './base-i18n';
 
-export function configure(frameworkConfig, cb) {
+function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
     let errorMsg = 'You need to provide a callback method to properly configure the library';
     throw errorMsg;
@@ -43,3 +41,17 @@ export function configure(frameworkConfig, cb) {
 
   return ret;
 }
+
+export {
+  configure,
+  I18N,
+  RelativeTime,
+  DfValueConverter,
+  NfValueConverter,
+  RtValueConverter,
+  TValueConverter,
+  TCustomAttribute,
+  TParamsCustomAttribute,
+  BaseI18N,
+  EventAggregator
+};

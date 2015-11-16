@@ -1,8 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
+exports.__esModule = true;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -32,17 +30,13 @@ var BaseI18N = (function () {
     });
   }
 
-  _createClass(BaseI18N, [{
-    key: 'attached',
-    value: function attached() {
-      this.i18n.updateTranslations(this.element);
-    }
-  }, {
-    key: 'detached',
-    value: function detached() {
-      this.__i18nDisposer.dispose();
-    }
-  }]);
+  BaseI18N.prototype.attached = function attached() {
+    this.i18n.updateTranslations(this.element);
+  };
+
+  BaseI18N.prototype.detached = function detached() {
+    this.__i18nDisposer.dispose();
+  };
 
   return BaseI18N;
 })();

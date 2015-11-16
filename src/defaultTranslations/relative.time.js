@@ -1,5 +1,5 @@
 /*eslint no-irregular-whitespace: 0*/
-export default {
+export const translations = {
   ar: {
     translation: {
       'now': 'الآن',

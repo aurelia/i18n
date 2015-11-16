@@ -1,5 +1,5 @@
 import {I18N} from './i18n';
-import * as translations from  './defaultTranslations/relative.time';
+import {translations} from  './defaultTranslations/relative.time';
 
 export class RelativeTime {
   static inject() { return [I18N]; }

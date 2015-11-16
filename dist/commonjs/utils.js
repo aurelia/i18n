@@ -1,10 +1,6 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+exports.__esModule = true;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
@@ -44,27 +40,23 @@ var LazyOptional = (function () {
     this.key = key;
   }
 
-  _createClass(LazyOptional, [{
-    key: 'get',
-    value: function get(container) {
-      var _this = this;
+  LazyOptional.prototype.get = function get(container) {
+    var _this = this;
 
-      return function () {
-        if (container.hasResolver(_this.key, false)) {
-          return container.get(_this.key);
-        }
-        return null;
-      };
-    }
-  }], [{
-    key: 'of',
-    value: function of(key) {
-      return new LazyOptional(key);
-    }
-  }]);
+    return function () {
+      if (container.hasResolver(_this.key, false)) {
+        return container.get(_this.key);
+      }
+      return null;
+    };
+  };
+
+  LazyOptional.of = function of(key) {
+    return new LazyOptional(key);
+  };
 
   var _LazyOptional = LazyOptional;
-  LazyOptional = (0, _aureliaDependencyInjection.resolver)()(LazyOptional) || LazyOptional;
+  LazyOptional = _aureliaDependencyInjection.resolver()(LazyOptional) || LazyOptional;
   return LazyOptional;
 })();
 
