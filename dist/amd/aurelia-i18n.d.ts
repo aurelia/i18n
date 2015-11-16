@@ -3,6 +3,7 @@ declare module 'aurelia-i18n' {
   import { resolver }  from 'aurelia-dependency-injection';
   import { EventAggregator }  from 'aurelia-event-aggregator';
   import { customAttribute, ViewResources }  from 'aurelia-templating';
+  import { DefaultLoader }  from 'aurelia-loader-default';
   
   /*eslint no-irregular-whitespace: 0*/
   export const translations: any;
@@ -17,7 +18,7 @@ declare module 'aurelia-i18n' {
   /*eslint no-cond-assign: 0*/
   export class I18N {
     globalVars: any;
-    constructor(ea: any);
+    constructor(ea: any, loader: any);
     setup(options: any): any;
     setLocale(locale: any): any;
     getLocale(): any;

@@ -6,14 +6,17 @@ export class I18N {
 
   globalVars = {};
 
-  constructor(ea) {
+  constructor(ea, loader) {
     this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
 
     // check whether Intl is available, otherwise load the polyfill
+    let i18nName = loader.normalizeSync('aurelia-i18n');
+    let intlName = loader.normalizeSync('Intl.js', i18nName);
+
     if (window.Intl === undefined) {
-      System.import('Intl').then( (poly) => {
+      loader.loadModule(intlName).then( (poly) => {
         window.Intl = poly;
       });
     }

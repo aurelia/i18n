@@ -18,6 +18,8 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaLoaderDefault = require('aurelia-loader-default');
+
 var translations = {
   ar: {
     translation: {
@@ -305,7 +307,7 @@ var LazyOptional = (function () {
 exports.LazyOptional = LazyOptional;
 
 var I18N = (function () {
-  function I18N(ea) {
+  function I18N(ea, loader) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
@@ -314,8 +316,11 @@ var I18N = (function () {
     this.ea = ea;
     this.Intl = window.Intl;
 
+    var i18nName = loader.normalizeSync('aurelia-i18n');
+    var intlName = loader.normalizeSync('Intl.js', i18nName);
+
     if (window.Intl === undefined) {
-      System['import']('Intl').then(function (poly) {
+      loader.loadModule(intlName).then(function (poly) {
         window.Intl = poly;
       });
     }
@@ -741,6 +746,8 @@ var RtValueConverter = (function () {
 
 exports.RtValueConverter = RtValueConverter;
 
+console.log(_aureliaLoaderDefault.DefaultLoader);
+
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
     var errorMsg = 'You need to provide a callback method to properly configure the library';
@@ -751,7 +758,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./nf');
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
-  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator));
+
+  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   var ret = cb(instance);

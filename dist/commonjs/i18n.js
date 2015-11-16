@@ -13,7 +13,7 @@ var _i18next2 = _interopRequireDefault(_i18next);
 var _utils = require('./utils');
 
 var I18N = (function () {
-  function I18N(ea) {
+  function I18N(ea, loader) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
@@ -22,8 +22,11 @@ var I18N = (function () {
     this.ea = ea;
     this.Intl = window.Intl;
 
+    var i18nName = loader.normalizeSync('aurelia-i18n');
+    var intlName = loader.normalizeSync('Intl.js', i18nName);
+
     if (window.Intl === undefined) {
-      System['import']('Intl').then(function (poly) {
+      loader.loadModule(intlName).then(function (poly) {
         window.Intl = poly;
       });
     }

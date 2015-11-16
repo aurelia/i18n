@@ -1,7 +1,7 @@
-System.register(['aurelia-event-aggregator', 'aurelia-templating', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
+System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
   'use strict';
 
-  var EventAggregator, ViewResources, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
+  var EventAggregator, ViewResources, DefaultLoader, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
 
   function configure(frameworkConfig, cb) {
     if (cb === undefined || typeof cb !== 'function') {
@@ -13,7 +13,8 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', './i18n', './
     frameworkConfig.globalResources('./nf');
     frameworkConfig.globalResources('./df');
     frameworkConfig.globalResources('./rt');
-    var instance = new I18N(frameworkConfig.container.get(EventAggregator));
+
+    var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
     frameworkConfig.container.registerInstance(I18N, instance);
 
     var ret = cb(instance);
@@ -40,6 +41,8 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', './i18n', './
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplating) {
       ViewResources = _aureliaTemplating.ViewResources;
+    }, function (_aureliaLoaderDefault) {
+      DefaultLoader = _aureliaLoaderDefault.DefaultLoader;
     }, function (_i18n) {
       I18N = _i18n.I18N;
     }, function (_relativeTime) {
@@ -58,6 +61,9 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', './i18n', './
       BaseI18N = _baseI18n.BaseI18N;
     }],
     execute: function () {
+
+      console.log(DefaultLoader);
+
       _export('configure', configure);
 
       _export('I18N', I18N);

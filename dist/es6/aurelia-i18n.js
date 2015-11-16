@@ -1,5 +1,8 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ViewResources} from 'aurelia-templating';
+import {DefaultLoader} from 'aurelia-loader-default';
+
+console.log(DefaultLoader);
 
 import {I18N} from './i18n';
 import {RelativeTime} from './relativeTime';
@@ -21,7 +24,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./nf');
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator));
+
+  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   let ret = cb(instance);

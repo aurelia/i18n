@@ -6,6 +6,8 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaLoaderDefault = require('aurelia-loader-default');
+
 var _i18n = require('./i18n');
 
 var _relativeTime = require('./relativeTime');
@@ -20,6 +22,8 @@ var _t = require('./t');
 
 var _baseI18n = require('./base-i18n');
 
+console.log(_aureliaLoaderDefault.DefaultLoader);
+
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
     var errorMsg = 'You need to provide a callback method to properly configure the library';
@@ -30,7 +34,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./nf');
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
-  var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator));
+
+  var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader));
   frameworkConfig.container.registerInstance(_i18n.I18N, instance);
 
   var ret = cb(instance);

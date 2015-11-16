@@ -2,6 +2,7 @@ import i18n from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute,ViewResources} from 'aurelia-templating';
+import {DefaultLoader} from 'aurelia-loader-default';
 
 /*eslint no-irregular-whitespace: 0*/
 export const translations = {
@@ -282,14 +283,17 @@ export class I18N {
 
   globalVars = {};
 
-  constructor(ea) {
+  constructor(ea, loader) {
     this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
 
     // check whether Intl is available, otherwise load the polyfill
+    let i18nName = loader.normalizeSync('aurelia-i18n');
+    let intlName = loader.normalizeSync('Intl.js', i18nName);
+
     if (window.Intl === undefined) {
-      System.import('Intl').then( (poly) => {
+      loader.loadModule(intlName).then( (poly) => {
         window.Intl = poly;
       });
     }
@@ -635,6 +639,8 @@ export class RtValueConverter {
   }
 }
 
+console.log(DefaultLoader);
+
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
     let errorMsg = 'You need to provide a callback method to properly configure the library';
@@ -645,7 +651,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./nf');
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator));
+
+  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   let ret = cb(instance);
