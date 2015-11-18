@@ -2,6 +2,8 @@ import i18n from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute,ViewResources} from 'aurelia-templating';
+import {SignalBindingBehavior,BindingSignaler} from 'aurelia-templating-resources';
+import {ValueConverter} from 'aurelia-binding';
 import {DefaultLoader} from 'aurelia-loader-default';
 
 /*eslint no-irregular-whitespace: 0*/
@@ -283,10 +285,11 @@ export class I18N {
 
   globalVars = {};
 
-  constructor(ea, loader) {
+  constructor(ea, loader, signaler) {
     this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
+    this.signaler = signaler;
 
     // check whether Intl is available, otherwise load the polyfill
     let i18nName = loader.normalizeSync('aurelia-i18n');
@@ -323,6 +326,7 @@ export class I18N {
       let oldLocale = this.getLocale();
       this.i18next.setLng(locale, tr => {
         this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        this.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
@@ -628,6 +632,37 @@ export class TCustomAttribute {
   }
 }
 
+export class TBindingBehavior {
+  static inject = [SignalBindingBehavior];
+
+  constructor(signalBindingBehavior) {
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  bind(binding, source) {
+    // bind the signal behavior
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    // rewrite the expression to use the TValueConverter.
+    // pass through any args to the binding behavior to the TValueConverter
+    let sourceExpression = binding.sourceExpression;
+    let expression = sourceExpression.expression;
+    sourceExpression.expression = new ValueConverter(
+      expression,
+      't',
+      sourceExpression.args,
+      [expression, ...sourceExpression.args]);
+  }
+
+  unbind(binding, source) {
+    // undo the expression rewrite
+    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
+
+    // unbind the signal behavior
+    this.signalBindingBehavior.unbind(binding, source);
+  }
+}
+
 export class RtValueConverter {
   static inject() { return [RelativeTime]; }
   constructor(relativeTime) {
@@ -638,8 +673,6 @@ export class RtValueConverter {
     return this.service.getRelativeTime(value);
   }
 }
-
-console.log(DefaultLoader);
 
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
@@ -652,7 +685,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
 
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
+  let instance = new I18N(frameworkConfig.container.get(EventAggregator),
+    frameworkConfig.container.get(DefaultLoader), frameworkConfig.container.get(BindingSignaler));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   let ret = cb(instance);
@@ -681,6 +715,7 @@ export {
   NfValueConverter,
   RtValueConverter,
   TValueConverter,
+  TBindingBehavior,
   TCustomAttribute,
   TParamsCustomAttribute,
   BaseI18N,

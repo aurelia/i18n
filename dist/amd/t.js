@@ -1,4 +1,4 @@
-define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaTemplating, _utils) {
+define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaTemplating, _aureliaTemplatingResources, _aureliaBinding, _utils) {
   'use strict';
 
   exports.__esModule = true;
@@ -107,4 +107,36 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
   })();
 
   exports.TCustomAttribute = TCustomAttribute;
+
+  var TBindingBehavior = (function () {
+    _createClass(TBindingBehavior, null, [{
+      key: 'inject',
+      value: [_aureliaTemplatingResources.SignalBindingBehavior],
+      enumerable: true
+    }]);
+
+    function TBindingBehavior(signalBindingBehavior) {
+      _classCallCheck(this, TBindingBehavior);
+
+      this.signalBindingBehavior = signalBindingBehavior;
+    }
+
+    TBindingBehavior.prototype.bind = function bind(binding, source) {
+      this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+      var sourceExpression = binding.sourceExpression;
+      var expression = sourceExpression.expression;
+      sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
+    };
+
+    TBindingBehavior.prototype.unbind = function unbind(binding, source) {
+      binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
+
+      this.signalBindingBehavior.unbind(binding, source);
+    };
+
+    return TBindingBehavior;
+  })();
+
+  exports.TBindingBehavior = TBindingBehavior;
 });

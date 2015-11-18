@@ -1,7 +1,7 @@
-System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
+System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
   'use strict';
 
-  var EventAggregator, ViewResources, DefaultLoader, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
+  var EventAggregator, ViewResources, DefaultLoader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
 
   function configure(frameworkConfig, cb) {
     if (cb === undefined || typeof cb !== 'function') {
@@ -14,7 +14,7 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
     frameworkConfig.globalResources('./df');
     frameworkConfig.globalResources('./rt');
 
-    var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
+    var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader), frameworkConfig.container.get(BindingSignaler));
     frameworkConfig.container.registerInstance(I18N, instance);
 
     var ret = cb(instance);
@@ -43,6 +43,8 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
       ViewResources = _aureliaTemplating.ViewResources;
     }, function (_aureliaLoaderDefault) {
       DefaultLoader = _aureliaLoaderDefault.DefaultLoader;
+    }, function (_aureliaTemplatingResources) {
+      BindingSignaler = _aureliaTemplatingResources.BindingSignaler;
     }, function (_i18n) {
       I18N = _i18n.I18N;
     }, function (_relativeTime) {
@@ -55,15 +57,13 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
       RtValueConverter = _rt.RtValueConverter;
     }, function (_t) {
       TValueConverter = _t.TValueConverter;
+      TBindingBehavior = _t.TBindingBehavior;
       TCustomAttribute = _t.TCustomAttribute;
       TParamsCustomAttribute = _t.TParamsCustomAttribute;
     }, function (_baseI18n) {
       BaseI18N = _baseI18n.BaseI18N;
     }],
     execute: function () {
-
-      console.log(DefaultLoader);
-
       _export('configure', configure);
 
       _export('I18N', I18N);
@@ -77,6 +77,8 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
       _export('RtValueConverter', RtValueConverter);
 
       _export('TValueConverter', TValueConverter);
+
+      _export('TBindingBehavior', TBindingBehavior);
 
       _export('TCustomAttribute', TCustomAttribute);
 

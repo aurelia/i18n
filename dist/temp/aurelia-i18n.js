@@ -18,6 +18,10 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaTemplatingResources = require('aurelia-templating-resources');
+
+var _aureliaBinding = require('aurelia-binding');
+
 var _aureliaLoaderDefault = require('aurelia-loader-default');
 
 var translations = {
@@ -307,7 +311,7 @@ var LazyOptional = (function () {
 exports.LazyOptional = LazyOptional;
 
 var I18N = (function () {
-  function I18N(ea, loader) {
+  function I18N(ea, loader, signaler) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
@@ -315,6 +319,7 @@ var I18N = (function () {
     this.i18next = _i18next2['default'];
     this.ea = ea;
     this.Intl = window.Intl;
+    this.signaler = signaler;
 
     var i18nName = loader.normalizeSync('aurelia-i18n');
     var intlName = loader.normalizeSync('Intl.js', i18nName);
@@ -351,6 +356,7 @@ var I18N = (function () {
       var oldLocale = _this2.getLocale();
       _this2.i18next.setLng(locale, function (tr) {
         _this2.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        _this2.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
@@ -726,6 +732,38 @@ var TCustomAttribute = (function () {
 
 exports.TCustomAttribute = TCustomAttribute;
 
+var TBindingBehavior = (function () {
+  _createClass(TBindingBehavior, null, [{
+    key: 'inject',
+    value: [_aureliaTemplatingResources.SignalBindingBehavior],
+    enumerable: true
+  }]);
+
+  function TBindingBehavior(signalBindingBehavior) {
+    _classCallCheck(this, TBindingBehavior);
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  TBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  TBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
+
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return TBindingBehavior;
+})();
+
+exports.TBindingBehavior = TBindingBehavior;
+
 var RtValueConverter = (function () {
   RtValueConverter.inject = function inject() {
     return [RelativeTime];
@@ -746,8 +784,6 @@ var RtValueConverter = (function () {
 
 exports.RtValueConverter = RtValueConverter;
 
-console.log(_aureliaLoaderDefault.DefaultLoader);
-
 function configure(frameworkConfig, cb) {
   if (cb === undefined || typeof cb !== 'function') {
     var errorMsg = 'You need to provide a callback method to properly configure the library';
@@ -759,7 +795,7 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
 
-  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader));
+  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   var ret = cb(instance);
@@ -788,6 +824,7 @@ exports.DfValueConverter = DfValueConverter;
 exports.NfValueConverter = NfValueConverter;
 exports.RtValueConverter = RtValueConverter;
 exports.TValueConverter = TValueConverter;
+exports.TBindingBehavior = TBindingBehavior;
 exports.TCustomAttribute = TCustomAttribute;
 exports.TParamsCustomAttribute = TParamsCustomAttribute;
 exports.BaseI18N = BaseI18N;
