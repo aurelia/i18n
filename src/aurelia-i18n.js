@@ -2,8 +2,6 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {ViewResources} from 'aurelia-templating';
 import {DefaultLoader} from 'aurelia-loader-default';
 
-console.log(DefaultLoader);
-
 import {I18N} from './i18n';
 import {RelativeTime} from './relativeTime';
 import {DfValueConverter} from './df';
