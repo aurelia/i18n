@@ -13,7 +13,7 @@ System.register(['i18next', './utils'], function (_export) {
     }],
     execute: function () {
       I18N = (function () {
-        function I18N(ea, loader) {
+        function I18N(ea, loader, signaler) {
           _classCallCheck(this, I18N);
 
           this.globalVars = {};
@@ -21,6 +21,7 @@ System.register(['i18next', './utils'], function (_export) {
           this.i18next = i18n;
           this.ea = ea;
           this.Intl = window.Intl;
+          this.signaler = signaler;
 
           var i18nName = loader.normalizeSync('aurelia-i18n');
           var intlName = loader.normalizeSync('Intl.js', i18nName);
@@ -57,6 +58,7 @@ System.register(['i18next', './utils'], function (_export) {
             var oldLocale = _this.getLocale();
             _this.i18next.setLng(locale, function (tr) {
               _this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+              _this.signaler.signal('aurelia-translation-signal');
               resolve(tr);
             });
           });

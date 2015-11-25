@@ -6,10 +6,11 @@ export class I18N {
 
   globalVars = {};
 
-  constructor(ea, loader) {
+  constructor(ea, loader, signaler) {
     this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
+    this.signaler = signaler;
 
     // check whether Intl is available, otherwise load the polyfill
     let i18nName = loader.normalizeSync('aurelia-i18n');
@@ -46,6 +47,7 @@ export class I18N {
       let oldLocale = this.getLocale();
       this.i18next.setLng(locale, tr => {
         this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        this.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });

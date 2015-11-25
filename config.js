@@ -17,6 +17,7 @@ System.config({
 System.config({
   "map": {
     "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
+    "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.0.1",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1",

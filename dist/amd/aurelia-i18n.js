@@ -1,9 +1,7 @@
-define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoaderDefault, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
+define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoaderDefault, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
   'use strict';
 
   exports.__esModule = true;
-
-  console.log(_aureliaLoaderDefault.DefaultLoader);
 
   function configure(frameworkConfig, cb) {
     if (cb === undefined || typeof cb !== 'function') {
@@ -16,7 +14,7 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
     frameworkConfig.globalResources('./df');
     frameworkConfig.globalResources('./rt');
 
-    var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader));
+    var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
     frameworkConfig.container.registerInstance(_i18n.I18N, instance);
 
     var ret = cb(instance);
@@ -45,6 +43,7 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
   exports.NfValueConverter = _nf.NfValueConverter;
   exports.RtValueConverter = _rt.RtValueConverter;
   exports.TValueConverter = _t.TValueConverter;
+  exports.TBindingBehavior = _t.TBindingBehavior;
   exports.TCustomAttribute = _t.TCustomAttribute;
   exports.TParamsCustomAttribute = _t.TParamsCustomAttribute;
   exports.BaseI18N = _baseI18n.BaseI18N;

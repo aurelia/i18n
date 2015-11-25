@@ -1,8 +1,7 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ViewResources} from 'aurelia-templating';
 import {DefaultLoader} from 'aurelia-loader-default';
-
-console.log(DefaultLoader);
+import {BindingSignaler} from 'aurelia-templating-resources';
 
 import {I18N} from './i18n';
 import {RelativeTime} from './relativeTime';
@@ -10,6 +9,7 @@ import {DfValueConverter} from './df';
 import {NfValueConverter} from './nf';
 import {RtValueConverter} from './rt';
 import {TValueConverter} from './t';
+import {TBindingBehavior} from './t';
 import {TCustomAttribute} from './t';
 import {TParamsCustomAttribute} from './t';
 import {BaseI18N} from './base-i18n';
@@ -25,7 +25,8 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./df');
   frameworkConfig.globalResources('./rt');
 
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(DefaultLoader));
+  let instance = new I18N(frameworkConfig.container.get(EventAggregator),
+    frameworkConfig.container.get(DefaultLoader), frameworkConfig.container.get(BindingSignaler));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   let ret = cb(instance);
@@ -54,6 +55,7 @@ export {
   NfValueConverter,
   RtValueConverter,
   TValueConverter,
+  TBindingBehavior,
   TCustomAttribute,
   TParamsCustomAttribute,
   BaseI18N,

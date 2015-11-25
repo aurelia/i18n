@@ -12,6 +12,10 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
+var _aureliaTemplatingResources = require('aurelia-templating-resources');
+
+var _aureliaBinding = require('aurelia-binding');
+
 var _utils = require('./utils');
 
 var TValueConverter = (function () {
@@ -114,3 +118,35 @@ var TCustomAttribute = (function () {
 })();
 
 exports.TCustomAttribute = TCustomAttribute;
+
+var TBindingBehavior = (function () {
+  _createClass(TBindingBehavior, null, [{
+    key: 'inject',
+    value: [_aureliaTemplatingResources.SignalBindingBehavior],
+    enumerable: true
+  }]);
+
+  function TBindingBehavior(signalBindingBehavior) {
+    _classCallCheck(this, TBindingBehavior);
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  TBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  TBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
+
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return TBindingBehavior;
+})();
+
+exports.TBindingBehavior = TBindingBehavior;

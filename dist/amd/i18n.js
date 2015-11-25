@@ -10,7 +10,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
   var _i18n = _interopRequireDefault(_i18next);
 
   var I18N = (function () {
-    function I18N(ea, loader) {
+    function I18N(ea, loader, signaler) {
       _classCallCheck(this, I18N);
 
       this.globalVars = {};
@@ -18,6 +18,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
       this.i18next = _i18n['default'];
       this.ea = ea;
       this.Intl = window.Intl;
+      this.signaler = signaler;
 
       var i18nName = loader.normalizeSync('aurelia-i18n');
       var intlName = loader.normalizeSync('Intl.js', i18nName);
@@ -54,6 +55,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
         var oldLocale = _this.getLocale();
         _this.i18next.setLng(locale, function (tr) {
           _this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+          _this.signaler.signal('aurelia-translation-signal');
           resolve(tr);
         });
       });

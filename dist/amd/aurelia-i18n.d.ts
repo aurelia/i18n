@@ -3,6 +3,8 @@ declare module 'aurelia-i18n' {
   import { resolver }  from 'aurelia-dependency-injection';
   import { EventAggregator }  from 'aurelia-event-aggregator';
   import { customAttribute, ViewResources }  from 'aurelia-templating';
+  import { SignalBindingBehavior, BindingSignaler }  from 'aurelia-templating-resources';
+  import { ValueConverter }  from 'aurelia-binding';
   import { DefaultLoader }  from 'aurelia-loader-default';
   
   /*eslint no-irregular-whitespace: 0*/
@@ -18,7 +20,7 @@ declare module 'aurelia-i18n' {
   /*eslint no-cond-assign: 0*/
   export class I18N {
     globalVars: any;
-    constructor(ea: any, loader: any);
+    constructor(ea: any, loader: any, signaler: any);
     setup(options: any): any;
     setLocale(locale: any): any;
     getLocale(): any;
@@ -79,6 +81,12 @@ declare module 'aurelia-i18n' {
     paramsChanged(newValue: any, newParams: any): any;
     valueChanged(newValue: any): any;
     unbind(): any;
+  }
+  export class TBindingBehavior {
+    static inject: any;
+    constructor(signalBindingBehavior: any);
+    bind(binding: any, source: any): any;
+    unbind(binding: any, source: any): any;
   }
   export class RtValueConverter {
     static inject(): any;

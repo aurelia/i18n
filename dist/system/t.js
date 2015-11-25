@@ -1,7 +1,7 @@
-System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './utils'], function (_export) {
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export) {
   'use strict';
 
-  var I18N, EventAggregator, customAttribute, LazyOptional, TValueConverter, TParamsCustomAttribute, TCustomAttribute;
+  var I18N, EventAggregator, customAttribute, SignalBindingBehavior, ValueConverter, LazyOptional, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
 
   var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -14,6 +14,10 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplating) {
       customAttribute = _aureliaTemplating.customAttribute;
+    }, function (_aureliaTemplatingResources) {
+      SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
+    }, function (_aureliaBinding) {
+      ValueConverter = _aureliaBinding.ValueConverter;
     }, function (_utils) {
       LazyOptional = _utils.LazyOptional;
     }],
@@ -118,6 +122,38 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', './
       })();
 
       _export('TCustomAttribute', TCustomAttribute);
+
+      TBindingBehavior = (function () {
+        _createClass(TBindingBehavior, null, [{
+          key: 'inject',
+          value: [SignalBindingBehavior],
+          enumerable: true
+        }]);
+
+        function TBindingBehavior(signalBindingBehavior) {
+          _classCallCheck(this, TBindingBehavior);
+
+          this.signalBindingBehavior = signalBindingBehavior;
+        }
+
+        TBindingBehavior.prototype.bind = function bind(binding, source) {
+          this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+          var sourceExpression = binding.sourceExpression;
+          var expression = sourceExpression.expression;
+          sourceExpression.expression = new ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
+        };
+
+        TBindingBehavior.prototype.unbind = function unbind(binding, source) {
+          binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
+
+          this.signalBindingBehavior.unbind(binding, source);
+        };
+
+        return TBindingBehavior;
+      })();
+
+      _export('TBindingBehavior', TBindingBehavior);
     }
   };
 });
