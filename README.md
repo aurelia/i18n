@@ -24,6 +24,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
   - [Formatting dates via code](#formatting-dates-via-code)
   - [Formatting dates with DfValueConverter](#formatting-dates-with-dfvalueconverter)
   - [Rendering relative time](#rendering-relative-time)
+- [Bundling](#bundling)
 - [CLI Integration](#cli-integration)
 - [Running the unit tests](#running-the-unit-tests)
 
@@ -587,6 +588,36 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
   </ul>
 </div>
 ```
+
+## Bundling
+In case you experience issues with aurelia-i18n in a bundled app, try to set the setup parameter `getAsync` to false:
+
+```javascript
+  import {I18N} from 'aurelia-i18n';
+
+  export function configure(aurelia) {
+    aurelia.use
+      .standardConfiguration()
+      .developmentLogging()
+      .plugin('aurelia-i18n', (instance) => {
+        // adapt options to your needs (see http://i18next.com/pages/doc_init.html)
+        instance.setup({
+          resGetPath : 'locale/__lng__/__ns__.json',
+          lng : 'de',
+          attributes : ['t','i18n'],
+          getAsync : true,
+          sendMissing : false,
+          fallbackLng : 'en',
+          debug : false,
+		  getAsync: false <------------------------------ SET THIS IF YOU EXPERIENCE BUNDLING ISSUES
+        });
+      });
+
+    aurelia.start().then(a => a.setRoot());
+  }
+```  
+
+This forces i18next to load the given resources synchronously and thus can work around issues when the bundled app tries to access translations keys which aren't yet fully loaded.
 
 ## CLI Integration
 
