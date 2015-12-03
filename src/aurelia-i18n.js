@@ -34,7 +34,7 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.postTask(() => {
     let resources = frameworkConfig.container.get(ViewResources);
     let htmlBehaviorResource = resources.getAttribute('t');
-	let htmlParamsResource   = resources.getAttribute('t-params');
+    let htmlParamsResource   = resources.getAttribute('t-params');
 
     let attributes = instance.i18next.options.attributes;
 
@@ -44,7 +44,7 @@ function configure(frameworkConfig, cb) {
     }
 
     attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
-	attributes.forEach(alias => resources.registerAttribute(alias+"-params", htmlParamsResource, 't-params');
+    attributes.forEach(alias => resources.registerAttribute(alias+"-params", htmlParamsResource, 't-params');
   });
 
   return ret;
