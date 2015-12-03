@@ -22,6 +22,7 @@
     "aurelia-loader-default": "^1.0.0-beta.1",
     "aurelia-pal": "^1.0.0-beta.1",
     "aurelia-templating": "^1.0.0-beta.1",
+    "aurelia-templating-resources": "^1.0.0-beta.1.0.2",
     "Intl.js": "andyearnshaw/Intl.js@^0.1.4",
     "i18next": "i18next/i18next@^1.9.0"
   }
