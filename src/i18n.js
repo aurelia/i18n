@@ -1,6 +1,5 @@
 /*eslint no-cond-assign: 0*/
 import i18n from 'i18next';
-import {assignObjectToKeys} from './utils';
 
 export class I18N {
 

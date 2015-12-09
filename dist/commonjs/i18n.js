@@ -10,8 +10,6 @@ var _i18next = require('i18next');
 
 var _i18next2 = _interopRequireDefault(_i18next);
 
-var _utils = require('./utils');
-
 var I18N = (function () {
   function I18N(ea, loader, signaler) {
     _classCallCheck(this, I18N);
@@ -83,7 +81,7 @@ var I18N = (function () {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, _utils.assignObjectToKeys('', fullOptions));
+    return this.i18next.t(key, fullOptions);
   };
 
   I18N.prototype.registerGlobalVariable = function registerGlobalVariable(key, value) {

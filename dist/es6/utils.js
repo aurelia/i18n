@@ -1,8 +1,10 @@
 import {resolver} from 'aurelia-dependency-injection';
 
 export let extend = (destination, source) => {
-  for (let property in source)
+  for (let property in source) {
     destination[property] = source[property];
+  }
+
   return destination;
 };
 

@@ -1,6 +1,5 @@
 /*eslint no-cond-assign: 0*/
 import i18n from 'i18next';
-import {assignObjectToKeys} from './utils';
 
 export class I18N {
 
@@ -72,7 +71,7 @@ export class I18N {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, assignObjectToKeys('', fullOptions));
+    return this.i18next.t(key, fullOptions);
   }
 
   registerGlobalVariable(key, value) {

@@ -13,7 +13,9 @@ System.register(['aurelia-dependency-injection'], function (_export) {
       extend = function extend(destination, source) {
         for (var property in source) {
           destination[property] = source[property];
-        }return destination;
+        }
+
+        return destination;
       };
 
       _export('extend', extend);

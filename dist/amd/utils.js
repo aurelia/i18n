@@ -8,7 +8,9 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
   var extend = function extend(destination, source) {
     for (var property in source) {
       destination[property] = source[property];
-    }return destination;
+    }
+
+    return destination;
   };
 
   exports.extend = extend;
