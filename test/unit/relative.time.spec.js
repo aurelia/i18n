@@ -1,5 +1,7 @@
 import {I18N} from '../../src/i18n';
 import {RelativeTime} from '../../src/relativeTime';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('testing relative time support', () => {
@@ -7,7 +9,7 @@ describe('testing relative time support', () => {
   var sut, i18n;
 
   beforeEach( () => {
-    i18n = new I18N(new EventAggregator());
+    i18n = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     i18n.setup({
       lng : 'en',
       getAsync : false,
@@ -98,7 +100,7 @@ describe('testing relative time support', () => {
   });
 
   it('should respect interpolation settings', () => {
-    var customInterpolationSettings = new I18N();
+    var customInterpolationSettings = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     customInterpolationSettings.setup({
       lng : 'en',
       getAsync : false,

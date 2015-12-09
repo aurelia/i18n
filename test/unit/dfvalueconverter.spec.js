@@ -1,4 +1,6 @@
 import {I18N} from '../../src/i18n';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {DfValueConverter} from '../../src/df';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -7,7 +9,7 @@ describe('dfvalueconverter tests', () => {
   var sut, dfvc;
 
   beforeEach(() => {
-    sut = new I18N(new EventAggregator());
+    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     dfvc = new DfValueConverter(sut);
   });
 

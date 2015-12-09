@@ -1,4 +1,6 @@
 import {I18N} from '../../src/i18n';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {NfValueConverter} from '../../src/nf';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -6,7 +8,7 @@ describe('nfvalueconverter tests', () => {
 
   var sut, nfvc;
   beforeEach(function() {
-    sut = new I18N(new EventAggregator());
+    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     nfvc = new NfValueConverter(sut);
 
     sut.setup({
@@ -33,7 +35,7 @@ describe('nfvalueconverter tests', () => {
 
   it('should display number as currency',() => {
     var testNumber = 123456.789;
-    expect(nfvc.toView(testNumber,{ style: 'currency', currency: 'JPY' }, 'de')).toBe('123.456,789 ¥');
+    expect(nfvc.toView(testNumber,{ style: 'currency', currency: 'JPY' }, 'de')).toBe('123.457 ¥');
   });
 
 });

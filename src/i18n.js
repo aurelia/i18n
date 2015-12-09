@@ -72,7 +72,7 @@ export class I18N {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, assignObjectToKeys('', fullOptions));
+    return this.i18next.t(key, fullOptions);
   }
 
   registerGlobalVariable(key, value) {

@@ -1,4 +1,6 @@
 import {I18N} from '../../src/i18n';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('numberformat tests', () => {
@@ -17,7 +19,7 @@ describe('numberformat tests', () => {
       }
     };
 
-    sut = new I18N(new EventAggregator());
+    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     sut.setup({
       resStore: resources,
       lng : 'en',
@@ -51,7 +53,7 @@ describe('numberformat tests', () => {
     var nf = sut.nf({ style: 'currency', currency: 'EUR' }, 'de');
     var testNumber = 123456.789;
 
-    expect(nf.format(testNumber)).toBe('123.456,789 €');
+    expect(nf.format(testNumber)).toBe('123.456,79 €');
   });
 
 });

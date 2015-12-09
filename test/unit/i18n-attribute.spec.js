@@ -1,18 +1,33 @@
 import {DOM} from 'aurelia-pal';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {initialize} from 'aurelia-pal-browser';
 import {TCustomAttribute, TParamsCustomAttribute} from '../../src/t';
 import {Container} from 'aurelia-dependency-injection';
 import {TemplatingEngine} from 'aurelia-templating';
 import {I18N} from '../../src/i18n';
+import {EventAggregator} from 'aurelia-event-aggregator';
 
 initialize();
 
 describe('testing i18n attributes', () => {
   let container;
   let templatingEngine;
+  let sut;
 
   beforeEach(() => {
+    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
+    sut.setup({
+      resStore: {},
+      lng : 'en',
+      getAsync : false,
+      sendMissing : false,
+      fallbackLng : 'en',
+      debug : false
+    });
+    
     container = new Container();
+    container.registerInstance(I18N, sut);
     container.registerInstance(DOM.Element, DOM.createElement('div'));
     templatingEngine = container.get(TemplatingEngine);
   });
