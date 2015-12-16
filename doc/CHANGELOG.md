@@ -1,3 +1,18 @@
+### 0.4.4 (2015-12-16)
+
+
+#### Bug Fixes
+
+* **all:** add missing dependencies ([73370c8f](http://github.com/aurelia/i18n/commit/73370c8fb75cf1e024fd6c22c616752c1b4a11a3))
+* **lint:** fixes linter issues and adds build ([1f60c4f5](http://github.com/aurelia/i18n/commit/1f60c4f522bc4b22225d1b7a4d52ad7028e2873e))
+* **tr:** fixes object flattening ([2fba7fbb](http://github.com/aurelia/i18n/commit/2fba7fbb589b4b2e6cfe1216ebc57b6e4eb3cbdf))
+
+
+#### Features
+
+* **signaling:** provides TBindingBehavior ([d9877eea](http://github.com/aurelia/i18n/commit/d9877eea7f5de73e75f5fa00a6c39a8613ce40ab))
+
+
 ### 0.4.3 (2015-12-09)
 
 
