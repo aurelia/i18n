@@ -45,8 +45,9 @@ export class TCustomAttribute {
 
   bind() {
     this.params = this.lazyParams();
+    this.timers = [];
 
-    setTimeout( () => {
+    this.timers.push(setTimeout( () => {
       if (this.params) {
         this.params.valueChanged = (newParams, oldParams) => {
           this.paramsChanged(this.value, newParams, oldParams);
@@ -58,10 +59,10 @@ export class TCustomAttribute {
         this.service.updateValue(this.element, this.value, p);
       });
 
-      setTimeout( () => {
+      this.timers.push(setTimeout( () => {
         this.service.updateValue(this.element, this.value, p);
-      });
-    });
+      }));
+    }));
   }
 
   paramsChanged(newValue, newParams) {
@@ -74,7 +75,12 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    this.subscription.dispose();
+    // Clear timers so that we do not run unecessary code after unbinding
+    this.timers.forEach(t => clearTimeout(t));
+    // If unbind is called before timeout for subscription is triggered, subscription will be undefined
+    if (this.subscription) {
+      this.subscription.dispose();
+    }
   }
 }
 
