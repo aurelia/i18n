@@ -1,4 +1,6 @@
 import {I18N} from '../../src/i18n';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('feature verification pluralization', () => {
@@ -17,7 +19,7 @@ describe('feature verification pluralization', () => {
       }
     };
 
-    sut = new I18N(new EventAggregator());
+    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     sut.setup({
       resStore: resources,
       lng : 'en',

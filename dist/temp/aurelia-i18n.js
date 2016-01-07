@@ -257,7 +257,9 @@ exports.translations = translations;
 var extend = function extend(destination, source) {
   for (var property in source) {
     destination[property] = source[property];
-  }return destination;
+  }
+
+  return destination;
 };
 
 exports.extend = extend;
@@ -381,7 +383,7 @@ var I18N = (function () {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, assignObjectToKeys('', fullOptions));
+    return this.i18next.t(key, fullOptions);
   };
 
   I18N.prototype.registerGlobalVariable = function registerGlobalVariable(key, value) {

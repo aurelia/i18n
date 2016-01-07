@@ -1,4 +1,6 @@
 import {I18N} from '../../src/i18n';
+import {DefaultLoader} from 'aurelia-loader-default';
+import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('testing i18n translation update', () => {
@@ -37,7 +39,7 @@ describe('testing i18n translation update', () => {
     };
 
     ea  = new EventAggregator();
-    sut = new I18N(ea);
+    sut = new I18N(ea, new DefaultLoader(), new BindingSignaler());
     sut.setup({
       resStore: resources,
       lng: 'en',
@@ -66,7 +68,7 @@ describe('testing i18n translation update', () => {
 
   it('should not update translations if no attributes defined in options', (done) => {
     ea  = new EventAggregator();
-    sut = new I18N(ea);
+    sut = new I18N(ea, new DefaultLoader(), new BindingSignaler());
     sut.setup({
       resStore: resources,
       lng: 'en',

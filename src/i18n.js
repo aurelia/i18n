@@ -1,6 +1,5 @@
 /*eslint no-cond-assign: 0*/
 import i18n from 'i18next';
-import {assignObjectToKeys} from './utils';
 
 export class I18N {
 
@@ -23,7 +22,7 @@ export class I18N {
     }
   }
 
-  setup(options) {
+  setup(options?) {
     const defaultOptions = {
       resGetPath: 'locale/__lng__/__ns__.json',
       lng: 'en',
@@ -57,22 +56,22 @@ export class I18N {
     return this.i18next.lng();
   }
 
-  nf(options, locales) {
+  nf(options?, locales?) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  df(options, locales) {
+  df(options?, locales?) {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  tr(key, options) {
+  tr(key, options?) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, assignObjectToKeys('', fullOptions));
+    return this.i18next.t(key, fullOptions);
   }
 
   registerGlobalVariable(key, value) {

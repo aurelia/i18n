@@ -1,15 +1,13 @@
-System.register(['i18next', './utils'], function (_export) {
+System.register(['i18next'], function (_export) {
   'use strict';
 
-  var i18n, assignObjectToKeys, I18N;
+  var i18n, I18N;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [function (_i18next) {
       i18n = _i18next['default'];
-    }, function (_utils) {
-      assignObjectToKeys = _utils.assignObjectToKeys;
     }],
     execute: function () {
       I18N = (function () {
@@ -83,7 +81,7 @@ System.register(['i18next', './utils'], function (_export) {
             fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
           }
 
-          return this.i18next.t(key, assignObjectToKeys('', fullOptions));
+          return this.i18next.t(key, fullOptions);
         };
 
         I18N.prototype.registerGlobalVariable = function registerGlobalVariable(key, value) {

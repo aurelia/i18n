@@ -1,4 +1,4 @@
-define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
+define(['exports', 'i18next'], function (exports, _i18next) {
   'use strict';
 
   exports.__esModule = true;
@@ -80,7 +80,7 @@ define(['exports', 'i18next', './utils'], function (exports, _i18next, _utils) {
         fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
       }
 
-      return this.i18next.t(key, _utils.assignObjectToKeys('', fullOptions));
+      return this.i18next.t(key, fullOptions);
     };
 
     I18N.prototype.registerGlobalVariable = function registerGlobalVariable(key, value) {

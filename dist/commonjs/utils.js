@@ -9,7 +9,9 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 var extend = function extend(destination, source) {
   for (var property in source) {
     destination[property] = source[property];
-  }return destination;
+  }
+
+  return destination;
 };
 
 exports.extend = extend;

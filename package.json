@@ -1,6 +1,6 @@
 {
   "name": "aurelia-i18n",
-  "version": "0.4.2",
+  "version": "0.4.4",
   "description": "A plugin that provides i18n support.",
   "keywords": [
     "aurelia",
@@ -34,6 +34,7 @@
       "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-beta.1",
       "aurelia-pal": "npm:aurelia-pal@^1.0.0-beta.1",
       "aurelia-templating": "npm:aurelia-templating@^1.0.0-beta.1",
+      "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-beta.1.0.2",
       "i18next": "github:i18next/i18next@^1.9.0"
     },
     "devDependencies": {
@@ -49,7 +50,8 @@
     "aurelia-event-aggregator": "^1.0.0-beta.1",
     "aurelia-loader-default": "^1.0.0-beta.1",
     "aurelia-pal": "^1.0.0-beta.1",
-    "aurelia-templating": "^1.0.0-beta.1"
+    "aurelia-templating": "^1.0.0-beta.1",
+    "aurelia-templating-resources": "^1.0.0-beta.1.0.2"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.15",
