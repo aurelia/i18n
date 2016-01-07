@@ -19,13 +19,13 @@ describe('testing i18n attributes', () => {
     sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
     sut.setup({
       resStore: {},
-      lng : 'en',
-      getAsync : false,
-      sendMissing : false,
-      fallbackLng : 'en',
-      debug : false
+      lng: 'en',
+      getAsync: false,
+      sendMissing: false,
+      fallbackLng: 'en',
+      debug: false
     });
-    
+
     container = new Container();
     container.registerInstance(I18N, sut);
     container.registerInstance(DOM.Element, DOM.createElement('div'));

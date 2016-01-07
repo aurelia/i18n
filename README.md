@@ -318,6 +318,7 @@ This will be picked up by the CLI when translations are extracted from the sourc
 
 #### Passing parameters to the attribute
 In order to use parameters for replaceable parts in your translation key, you can provide an additional `t-params` attribute and bind it to the object containing the replacement values.
+Also note that for whatever attribute you registered, the corresponding \*-params attribute will get registered as well automatically.
 
 ```javascript
 // Translation file
@@ -328,7 +329,7 @@ In order to use parameters for replaceable parts in your translation key, you ca
 
 ```markup
 <!-- View -->
-<span t.="[html]paramstest" t-params.bind="params"></span>
+<span t="[html]paramstest" t-params.bind="params"></span>
 ```
 
 ```javascript
