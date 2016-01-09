@@ -6,7 +6,7 @@
   "flags": {},
   "children": [
     {
-      "id": 55,
+      "id": 54,
       "name": "BaseI18N",
       "kind": 128,
       "kindString": "Class",
@@ -15,7 +15,7 @@
       },
       "children": [
         {
-          "id": 57,
+          "id": 56,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -24,14 +24,14 @@
           },
           "signatures": [
             {
-              "id": 58,
+              "id": 57,
               "name": "new BaseI18N",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 59,
+                  "id": 58,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -42,7 +42,7 @@
                   }
                 },
                 {
-                  "id": 60,
+                  "id": 59,
                   "name": "element",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -53,7 +53,7 @@
                   }
                 },
                 {
-                  "id": 61,
+                  "id": 60,
                   "name": "ea",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -67,14 +67,14 @@
               "type": {
                 "type": "reference",
                 "name": "BaseI18N",
-                "id": 55,
+                "id": 54,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 56,
+          "id": 55,
           "name": "inject",
           "kind": 1024,
           "kindString": "Property",
@@ -88,7 +88,7 @@
           }
         },
         {
-          "id": 62,
+          "id": 61,
           "name": "attached",
           "kind": 2048,
           "kindString": "Method",
@@ -97,7 +97,7 @@
           },
           "signatures": [
             {
-              "id": 63,
+              "id": 62,
               "name": "attached",
               "kind": 4096,
               "kindString": "Call signature",
@@ -110,7 +110,7 @@
           ]
         },
         {
-          "id": 64,
+          "id": 63,
           "name": "detached",
           "kind": 2048,
           "kindString": "Method",
@@ -119,7 +119,7 @@
           },
           "signatures": [
             {
-              "id": 65,
+              "id": 64,
               "name": "detached",
               "kind": 4096,
               "kindString": "Call signature",
@@ -137,28 +137,28 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            57
+            56
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            56
+            55
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            62,
-            64
+            61,
+            63
           ]
         }
       ]
     },
     {
-      "id": 66,
+      "id": 65,
       "name": "DfValueConverter",
       "kind": 128,
       "kindString": "Class",
@@ -167,7 +167,7 @@
       },
       "children": [
         {
-          "id": 69,
+          "id": 68,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -176,14 +176,14 @@
           },
           "signatures": [
             {
-              "id": 70,
+              "id": 69,
               "name": "new DfValueConverter",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 71,
+                  "id": 70,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -197,14 +197,14 @@
               "type": {
                 "type": "reference",
                 "name": "DfValueConverter",
-                "id": 66,
+                "id": 65,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 72,
+          "id": 71,
           "name": "toView",
           "kind": 2048,
           "kindString": "Method",
@@ -213,14 +213,14 @@
           },
           "signatures": [
             {
-              "id": 73,
+              "id": 72,
               "name": "toView",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 74,
+                  "id": 73,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -231,7 +231,7 @@
                   }
                 },
                 {
-                  "id": 75,
+                  "id": 74,
                   "name": "formatOptions",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -242,7 +242,7 @@
                   }
                 },
                 {
-                  "id": 76,
+                  "id": 75,
                   "name": "locale",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -253,7 +253,7 @@
                   }
                 },
                 {
-                  "id": 77,
+                  "id": 76,
                   "name": "dateFormat",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -272,7 +272,7 @@
           ]
         },
         {
-          "id": 67,
+          "id": 66,
           "name": "inject",
           "kind": 2048,
           "kindString": "Method",
@@ -282,7 +282,7 @@
           },
           "signatures": [
             {
-              "id": 68,
+              "id": 67,
               "name": "inject",
               "kind": 4096,
               "kindString": "Call signature",
@@ -300,15 +300,15 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            69
+            68
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            72,
-            67
+            71,
+            66
           ]
         }
       ]
@@ -351,17 +351,6 @@
                 },
                 {
                   "id": 18,
-                  "name": "loader",
-                  "kind": 32768,
-                  "kindString": "Parameter",
-                  "flags": {},
-                  "type": {
-                    "type": "instrinct",
-                    "name": "any"
-                  }
-                },
-                {
-                  "id": 19,
                   "name": "signaler",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -395,7 +384,7 @@
           }
         },
         {
-          "id": 32,
+          "id": 31,
           "name": "df",
           "kind": 2048,
           "kindString": "Method",
@@ -404,14 +393,14 @@
           },
           "signatures": [
             {
-              "id": 33,
+              "id": 32,
               "name": "df",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 34,
+                  "id": 33,
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -424,7 +413,7 @@
                   }
                 },
                 {
-                  "id": 35,
+                  "id": 34,
                   "name": "locales",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -445,7 +434,7 @@
           ]
         },
         {
-          "id": 26,
+          "id": 25,
           "name": "getLocale",
           "kind": 2048,
           "kindString": "Method",
@@ -454,7 +443,7 @@
           },
           "signatures": [
             {
-              "id": 27,
+              "id": 26,
               "name": "getLocale",
               "kind": 4096,
               "kindString": "Call signature",
@@ -467,7 +456,7 @@
           ]
         },
         {
-          "id": 28,
+          "id": 27,
           "name": "nf",
           "kind": 2048,
           "kindString": "Method",
@@ -476,14 +465,14 @@
           },
           "signatures": [
             {
-              "id": 29,
+              "id": 28,
               "name": "nf",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 30,
+                  "id": 29,
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -496,7 +485,7 @@
                   }
                 },
                 {
-                  "id": 31,
+                  "id": 30,
                   "name": "locales",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -517,7 +506,7 @@
           ]
         },
         {
-          "id": 40,
+          "id": 39,
           "name": "registerGlobalVariable",
           "kind": 2048,
           "kindString": "Method",
@@ -526,14 +515,14 @@
           },
           "signatures": [
             {
-              "id": 41,
+              "id": 40,
               "name": "registerGlobalVariable",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 42,
+                  "id": 41,
                   "name": "key",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -544,7 +533,7 @@
                   }
                 },
                 {
-                  "id": 43,
+                  "id": 42,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -563,7 +552,7 @@
           ]
         },
         {
-          "id": 23,
+          "id": 22,
           "name": "setLocale",
           "kind": 2048,
           "kindString": "Method",
@@ -572,14 +561,14 @@
           },
           "signatures": [
             {
-              "id": 24,
+              "id": 23,
               "name": "setLocale",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 25,
+                  "id": 24,
                   "name": "locale",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -598,7 +587,7 @@
           ]
         },
         {
-          "id": 20,
+          "id": 19,
           "name": "setup",
           "kind": 2048,
           "kindString": "Method",
@@ -607,14 +596,14 @@
           },
           "signatures": [
             {
-              "id": 21,
+              "id": 20,
               "name": "setup",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 22,
+                  "id": 21,
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -635,7 +624,7 @@
           ]
         },
         {
-          "id": 36,
+          "id": 35,
           "name": "tr",
           "kind": 2048,
           "kindString": "Method",
@@ -644,14 +633,14 @@
           },
           "signatures": [
             {
-              "id": 37,
+              "id": 36,
               "name": "tr",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 38,
+                  "id": 37,
                   "name": "key",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -662,7 +651,7 @@
                   }
                 },
                 {
-                  "id": 39,
+                  "id": 38,
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -683,7 +672,7 @@
           ]
         },
         {
-          "id": 44,
+          "id": 43,
           "name": "unregisterGlobalVariable",
           "kind": 2048,
           "kindString": "Method",
@@ -692,14 +681,14 @@
           },
           "signatures": [
             {
-              "id": 45,
+              "id": 44,
               "name": "unregisterGlobalVariable",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 46,
+                  "id": 45,
                   "name": "key",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -718,7 +707,7 @@
           ]
         },
         {
-          "id": 47,
+          "id": 46,
           "name": "updateTranslations",
           "kind": 2048,
           "kindString": "Method",
@@ -727,7 +716,7 @@
           },
           "signatures": [
             {
-              "id": 48,
+              "id": 47,
               "name": "updateTranslations",
               "kind": 4096,
               "kindString": "Call signature",
@@ -738,7 +727,7 @@
               },
               "parameters": [
                 {
-                  "id": 49,
+                  "id": 48,
                   "name": "el",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -760,7 +749,7 @@
           ]
         },
         {
-          "id": 50,
+          "id": 49,
           "name": "updateValue",
           "kind": 2048,
           "kindString": "Method",
@@ -769,14 +758,14 @@
           },
           "signatures": [
             {
-              "id": 51,
+              "id": 50,
               "name": "updateValue",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 52,
+                  "id": 51,
                   "name": "node",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -787,7 +776,7 @@
                   }
                 },
                 {
-                  "id": 53,
+                  "id": 52,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -798,7 +787,7 @@
                   }
                 },
                 {
-                  "id": 54,
+                  "id": 53,
                   "name": "params",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -836,16 +825,16 @@
           "title": "Methods",
           "kind": 2048,
           "children": [
-            32,
-            26,
-            28,
-            40,
-            23,
-            20,
-            36,
-            44,
-            47,
-            50
+            31,
+            25,
+            27,
+            39,
+            22,
+            19,
+            35,
+            43,
+            46,
+            49
           ]
         }
       ]
@@ -987,7 +976,7 @@
       ]
     },
     {
-      "id": 78,
+      "id": 77,
       "name": "NfValueConverter",
       "kind": 128,
       "kindString": "Class",
@@ -996,7 +985,7 @@
       },
       "children": [
         {
-          "id": 81,
+          "id": 80,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1005,14 +994,14 @@
           },
           "signatures": [
             {
-              "id": 82,
+              "id": 81,
               "name": "new NfValueConverter",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 83,
+                  "id": 82,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1026,14 +1015,14 @@
               "type": {
                 "type": "reference",
                 "name": "NfValueConverter",
-                "id": 78,
+                "id": 77,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 84,
+          "id": 83,
           "name": "toView",
           "kind": 2048,
           "kindString": "Method",
@@ -1042,14 +1031,14 @@
           },
           "signatures": [
             {
-              "id": 85,
+              "id": 84,
               "name": "toView",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 86,
+                  "id": 85,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1060,7 +1049,7 @@
                   }
                 },
                 {
-                  "id": 87,
+                  "id": 86,
                   "name": "formatOptions",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1071,7 +1060,7 @@
                   }
                 },
                 {
-                  "id": 88,
+                  "id": 87,
                   "name": "locale",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1082,7 +1071,7 @@
                   }
                 },
                 {
-                  "id": 89,
+                  "id": 88,
                   "name": "numberFormat",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1101,7 +1090,7 @@
           ]
         },
         {
-          "id": 79,
+          "id": 78,
           "name": "inject",
           "kind": 2048,
           "kindString": "Method",
@@ -1111,7 +1100,7 @@
           },
           "signatures": [
             {
-              "id": 80,
+              "id": 79,
               "name": "inject",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1129,21 +1118,21 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            81
+            80
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            84,
-            79
+            83,
+            78
           ]
         }
       ]
     },
     {
-      "id": 90,
+      "id": 89,
       "name": "RelativeTime",
       "kind": 128,
       "kindString": "Class",
@@ -1152,7 +1141,7 @@
       },
       "children": [
         {
-          "id": 93,
+          "id": 92,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1161,14 +1150,14 @@
           },
           "signatures": [
             {
-              "id": 94,
+              "id": 93,
               "name": "new RelativeTime",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 95,
+                  "id": 94,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1182,14 +1171,14 @@
               "type": {
                 "type": "reference",
                 "name": "RelativeTime",
-                "id": 90,
+                "id": 89,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 96,
+          "id": 95,
           "name": "getRelativeTime",
           "kind": 2048,
           "kindString": "Method",
@@ -1198,14 +1187,14 @@
           },
           "signatures": [
             {
-              "id": 97,
+              "id": 96,
               "name": "getRelativeTime",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 98,
+                  "id": 97,
                   "name": "time",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1224,7 +1213,7 @@
           ]
         },
         {
-          "id": 99,
+          "id": 98,
           "name": "getTimeDiffDescription",
           "kind": 2048,
           "kindString": "Method",
@@ -1233,14 +1222,14 @@
           },
           "signatures": [
             {
-              "id": 100,
+              "id": 99,
               "name": "getTimeDiffDescription",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 101,
+                  "id": 100,
                   "name": "diff",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1251,7 +1240,7 @@
                   }
                 },
                 {
-                  "id": 102,
+                  "id": 101,
                   "name": "unit",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1262,7 +1251,7 @@
                   }
                 },
                 {
-                  "id": 103,
+                  "id": 102,
                   "name": "timeDivisor",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1281,7 +1270,7 @@
           ]
         },
         {
-          "id": 91,
+          "id": 90,
           "name": "inject",
           "kind": 2048,
           "kindString": "Method",
@@ -1291,7 +1280,7 @@
           },
           "signatures": [
             {
-              "id": 92,
+              "id": 91,
               "name": "inject",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1309,22 +1298,22 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            93
+            92
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            96,
-            99,
-            91
+            95,
+            98,
+            90
           ]
         }
       ]
     },
     {
-      "id": 154,
+      "id": 153,
       "name": "RtValueConverter",
       "kind": 128,
       "kindString": "Class",
@@ -1333,7 +1322,7 @@
       },
       "children": [
         {
-          "id": 157,
+          "id": 156,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1342,14 +1331,14 @@
           },
           "signatures": [
             {
-              "id": 158,
+              "id": 157,
               "name": "new RtValueConverter",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 159,
+                  "id": 158,
                   "name": "relativeTime",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1363,14 +1352,14 @@
               "type": {
                 "type": "reference",
                 "name": "RtValueConverter",
-                "id": 154,
+                "id": 153,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 160,
+          "id": 159,
           "name": "toView",
           "kind": 2048,
           "kindString": "Method",
@@ -1379,14 +1368,14 @@
           },
           "signatures": [
             {
-              "id": 161,
+              "id": 160,
               "name": "toView",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 162,
+                  "id": 161,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1405,7 +1394,7 @@
           ]
         },
         {
-          "id": 155,
+          "id": 154,
           "name": "inject",
           "kind": 2048,
           "kindString": "Method",
@@ -1415,7 +1404,7 @@
           },
           "signatures": [
             {
-              "id": 156,
+              "id": 155,
               "name": "inject",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1433,21 +1422,21 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            157
+            156
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            160,
-            155
+            159,
+            154
           ]
         }
       ]
     },
     {
-      "id": 141,
+      "id": 140,
       "name": "TBindingBehavior",
       "kind": 128,
       "kindString": "Class",
@@ -1456,7 +1445,7 @@
       },
       "children": [
         {
-          "id": 143,
+          "id": 142,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1465,14 +1454,14 @@
           },
           "signatures": [
             {
-              "id": 144,
+              "id": 143,
               "name": "new TBindingBehavior",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 145,
+                  "id": 144,
                   "name": "signalBindingBehavior",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1486,14 +1475,14 @@
               "type": {
                 "type": "reference",
                 "name": "TBindingBehavior",
-                "id": 141,
+                "id": 140,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 142,
+          "id": 141,
           "name": "inject",
           "kind": 1024,
           "kindString": "Property",
@@ -1507,7 +1496,7 @@
           }
         },
         {
-          "id": 146,
+          "id": 145,
           "name": "bind",
           "kind": 2048,
           "kindString": "Method",
@@ -1516,14 +1505,14 @@
           },
           "signatures": [
             {
-              "id": 147,
+              "id": 146,
               "name": "bind",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 148,
+                  "id": 147,
                   "name": "binding",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1534,7 +1523,7 @@
                   }
                 },
                 {
-                  "id": 149,
+                  "id": 148,
                   "name": "source",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1553,7 +1542,7 @@
           ]
         },
         {
-          "id": 150,
+          "id": 149,
           "name": "unbind",
           "kind": 2048,
           "kindString": "Method",
@@ -1562,14 +1551,14 @@
           },
           "signatures": [
             {
-              "id": 151,
+              "id": 150,
               "name": "unbind",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 152,
+                  "id": 151,
                   "name": "binding",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1580,7 +1569,7 @@
                   }
                 },
                 {
-                  "id": 153,
+                  "id": 152,
                   "name": "source",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1604,28 +1593,28 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            143
+            142
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            142
+            141
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            146,
-            150
+            145,
+            149
           ]
         }
       ]
     },
     {
-      "id": 122,
+      "id": 121,
       "name": "TCustomAttribute",
       "kind": 128,
       "kindString": "Class",
@@ -1634,7 +1623,7 @@
       },
       "children": [
         {
-          "id": 124,
+          "id": 123,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1643,14 +1632,14 @@
           },
           "signatures": [
             {
-              "id": 125,
+              "id": 124,
               "name": "new TCustomAttribute",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 126,
+                  "id": 125,
                   "name": "element",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1661,7 +1650,7 @@
                   }
                 },
                 {
-                  "id": 127,
+                  "id": 126,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1672,7 +1661,7 @@
                   }
                 },
                 {
-                  "id": 128,
+                  "id": 127,
                   "name": "ea",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1683,7 +1672,7 @@
                   }
                 },
                 {
-                  "id": 129,
+                  "id": 128,
                   "name": "tparams",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1697,14 +1686,14 @@
               "type": {
                 "type": "reference",
                 "name": "TCustomAttribute",
-                "id": 122,
+                "id": 121,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 123,
+          "id": 122,
           "name": "inject",
           "kind": 1024,
           "kindString": "Property",
@@ -1718,7 +1707,7 @@
           }
         },
         {
-          "id": 130,
+          "id": 129,
           "name": "bind",
           "kind": 2048,
           "kindString": "Method",
@@ -1727,7 +1716,7 @@
           },
           "signatures": [
             {
-              "id": 131,
+              "id": 130,
               "name": "bind",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1740,7 +1729,7 @@
           ]
         },
         {
-          "id": 132,
+          "id": 131,
           "name": "paramsChanged",
           "kind": 2048,
           "kindString": "Method",
@@ -1749,14 +1738,14 @@
           },
           "signatures": [
             {
-              "id": 133,
+              "id": 132,
               "name": "paramsChanged",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 134,
+                  "id": 133,
                   "name": "newValue",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1767,7 +1756,7 @@
                   }
                 },
                 {
-                  "id": 135,
+                  "id": 134,
                   "name": "newParams",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1786,7 +1775,7 @@
           ]
         },
         {
-          "id": 139,
+          "id": 138,
           "name": "unbind",
           "kind": 2048,
           "kindString": "Method",
@@ -1795,7 +1784,7 @@
           },
           "signatures": [
             {
-              "id": 140,
+              "id": 139,
               "name": "unbind",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1808,7 +1797,7 @@
           ]
         },
         {
-          "id": 136,
+          "id": 135,
           "name": "valueChanged",
           "kind": 2048,
           "kindString": "Method",
@@ -1817,14 +1806,14 @@
           },
           "signatures": [
             {
-              "id": 137,
+              "id": 136,
               "name": "valueChanged",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 138,
+                  "id": 137,
                   "name": "newValue",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1848,30 +1837,30 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            124
+            123
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            123
+            122
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            130,
-            132,
-            139,
-            136
+            129,
+            131,
+            138,
+            135
           ]
         }
       ]
     },
     {
-      "id": 114,
+      "id": 113,
       "name": "TParamsCustomAttribute",
       "kind": 128,
       "kindString": "Class",
@@ -1880,7 +1869,7 @@
       },
       "children": [
         {
-          "id": 117,
+          "id": 116,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -1889,14 +1878,14 @@
           },
           "signatures": [
             {
-              "id": 118,
+              "id": 117,
               "name": "new TParamsCustomAttribute",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 119,
+                  "id": 118,
                   "name": "element",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -1910,14 +1899,14 @@
               "type": {
                 "type": "reference",
                 "name": "TParamsCustomAttribute",
-                "id": 114,
+                "id": 113,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 116,
+          "id": 115,
           "name": "service",
           "kind": 1024,
           "kindString": "Property",
@@ -1930,7 +1919,7 @@
           }
         },
         {
-          "id": 115,
+          "id": 114,
           "name": "inject",
           "kind": 1024,
           "kindString": "Property",
@@ -1944,7 +1933,7 @@
           }
         },
         {
-          "id": 120,
+          "id": 119,
           "name": "valueChanged",
           "kind": 2048,
           "kindString": "Method",
@@ -1953,7 +1942,7 @@
           },
           "signatures": [
             {
-              "id": 121,
+              "id": 120,
               "name": "valueChanged",
               "kind": 4096,
               "kindString": "Call signature",
@@ -1971,28 +1960,28 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            117
+            116
           ]
         },
         {
           "title": "Properties",
           "kind": 1024,
           "children": [
-            116,
-            115
+            115,
+            114
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            120
+            119
           ]
         }
       ]
     },
     {
-      "id": 104,
+      "id": 103,
       "name": "TValueConverter",
       "kind": 128,
       "kindString": "Class",
@@ -2001,7 +1990,7 @@
       },
       "children": [
         {
-          "id": 107,
+          "id": 106,
           "name": "constructor",
           "kind": 512,
           "kindString": "Constructor",
@@ -2010,14 +1999,14 @@
           },
           "signatures": [
             {
-              "id": 108,
+              "id": 107,
               "name": "new TValueConverter",
               "kind": 16384,
               "kindString": "Constructor signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 109,
+                  "id": 108,
                   "name": "i18n",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -2031,14 +2020,14 @@
               "type": {
                 "type": "reference",
                 "name": "TValueConverter",
-                "id": 104,
+                "id": 103,
                 "moduleName": "\"aurelia-i18n\""
               }
             }
           ]
         },
         {
-          "id": 110,
+          "id": 109,
           "name": "toView",
           "kind": 2048,
           "kindString": "Method",
@@ -2047,14 +2036,14 @@
           },
           "signatures": [
             {
-              "id": 111,
+              "id": 110,
               "name": "toView",
               "kind": 4096,
               "kindString": "Call signature",
               "flags": {},
               "parameters": [
                 {
-                  "id": 112,
+                  "id": 111,
                   "name": "value",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -2065,7 +2054,7 @@
                   }
                 },
                 {
-                  "id": 113,
+                  "id": 112,
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
@@ -2084,7 +2073,7 @@
           ]
         },
         {
-          "id": 105,
+          "id": 104,
           "name": "inject",
           "kind": 2048,
           "kindString": "Method",
@@ -2094,7 +2083,7 @@
           },
           "signatures": [
             {
-              "id": 106,
+              "id": 105,
               "name": "inject",
               "kind": 4096,
               "kindString": "Call signature",
@@ -2112,21 +2101,21 @@
           "title": "Constructors",
           "kind": 512,
           "children": [
-            107
+            106
           ]
         },
         {
           "title": "Methods",
           "kind": 2048,
           "children": [
-            110,
-            105
+            109,
+            104
           ]
         }
       ]
     },
     {
-      "id": 165,
+      "id": 164,
       "name": "assignObjectToKeys",
       "kind": 32,
       "kindString": "Variable",
@@ -2139,7 +2128,7 @@
       }
     },
     {
-      "id": 164,
+      "id": 163,
       "name": "extend",
       "kind": 32,
       "kindString": "Variable",
@@ -2152,7 +2141,7 @@
       }
     },
     {
-      "id": 163,
+      "id": 162,
       "name": "translations",
       "kind": 32,
       "kindString": "Variable",
@@ -2170,26 +2159,26 @@
       "title": "Classes",
       "kind": 128,
       "children": [
-        55,
-        66,
+        54,
+        65,
         13,
         3,
-        78,
-        90,
-        154,
-        141,
-        122,
-        114,
-        104
+        77,
+        89,
+        153,
+        140,
+        121,
+        113,
+        103
       ]
     },
     {
       "title": "Variables",
       "kind": 32,
       "children": [
-        165,
         164,
-        163
+        163,
+        162
       ]
     }
   ]

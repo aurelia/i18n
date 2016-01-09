@@ -313,7 +313,7 @@ var LazyOptional = (function () {
 exports.LazyOptional = LazyOptional;
 
 var I18N = (function () {
-  function I18N(ea, loader, signaler) {
+  function I18N(ea, signaler) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
@@ -322,15 +322,6 @@ var I18N = (function () {
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
-
-    var i18nName = loader.normalizeSync('aurelia-i18n');
-    var intlName = loader.normalizeSync('Intl.js', i18nName);
-
-    if (window.Intl === undefined) {
-      loader.loadModule(intlName).then(function (poly) {
-        window.Intl = poly;
-      });
-    }
   }
 
   I18N.prototype.setup = function setup(options) {
@@ -793,18 +784,8 @@ var RtValueConverter = (function () {
 
 exports.RtValueConverter = RtValueConverter;
 
-function configure(frameworkConfig, cb) {
-  if (cb === undefined || typeof cb !== 'function') {
-    var errorMsg = 'You need to provide a callback method to properly configure the library';
-    throw errorMsg;
-  }
-
-  frameworkConfig.globalResources('./t');
-  frameworkConfig.globalResources('./nf');
-  frameworkConfig.globalResources('./df');
-  frameworkConfig.globalResources('./rt');
-
-  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
+function registerI18N(frameworkConfig, cb) {
+  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   var ret = cb(instance);
@@ -812,6 +793,7 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.postTask(function () {
     var resources = frameworkConfig.container.get(_aureliaTemplating.ViewResources);
     var htmlBehaviorResource = resources.getAttribute('t');
+    var htmlParamsResource = resources.getAttribute('t-params');
     var attributes = instance.i18next.options.attributes;
 
     if (!attributes) {
@@ -827,6 +809,39 @@ function configure(frameworkConfig, cb) {
   });
 
   return ret;
+}
+
+function configure(frameworkConfig, cb) {
+  if (cb === undefined || typeof cb !== 'function') {
+    var errorMsg = 'You need to provide a callback method to properly configure the library';
+    throw errorMsg;
+  }
+
+  frameworkConfig.globalResources('./t');
+  frameworkConfig.globalResources('./nf');
+  frameworkConfig.globalResources('./df');
+  frameworkConfig.globalResources('./rt');
+
+  if (window.Intl === undefined) {
+    var _ret = (function () {
+      var loader = frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader);
+
+      return {
+        v: loader.normalize('aurelia-i18n').then(function (i18nName) {
+          return loader.normalize('Intl.js', i18nName).then(function (intlName) {
+            return loader.loadModule(intlName).then(function (poly) {
+              window.Intl = poly;
+              return registerI18N(frameworkConfig, cb);
+            });
+          });
+        })
+      };
+    })();
+
+    if (typeof _ret === 'object') return _ret.v;
+  }
+
+  return Promise.resolve(registerI18N(frameworkConfig, cb));
 }
 
 exports.configure = configure;

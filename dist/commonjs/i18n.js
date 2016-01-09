@@ -11,7 +11,7 @@ var _i18next = require('i18next');
 var _i18next2 = _interopRequireDefault(_i18next);
 
 var I18N = (function () {
-  function I18N(ea, loader, signaler) {
+  function I18N(ea, signaler) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
@@ -20,15 +20,6 @@ var I18N = (function () {
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
-
-    var i18nName = loader.normalizeSync('aurelia-i18n');
-    var intlName = loader.normalizeSync('Intl.js', i18nName);
-
-    if (window.Intl === undefined) {
-      loader.loadModule(intlName).then(function (poly) {
-        window.Intl = poly;
-      });
-    }
   }
 
   I18N.prototype.setup = function setup(options) {
