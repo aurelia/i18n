@@ -1,25 +1,24 @@
 import {I18N} from '../../src/i18n';
-import {DefaultLoader} from 'aurelia-loader-default';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('datetimeformat tests', () => {
 
-  var sut;
+  let sut;
 
   beforeEach(() => {
-    var resources = {
+    let resources = {
       en: {
         translation: {
-          "lives": "__count__ life remaining",
-          "lives_plural": "__count__ lives remaining",
-          "lives_indefinite": "a life remaining",
-          "lives_plural_indefinite": "some lives remaining"
+          'lives': '__count__ life remaining',
+          'lives_plural': '__count__ lives remaining',
+          'lives_indefinite': 'a life remaining',
+          'lives_plural_indefinite': 'some lives remaining'
         }
       }
     };
 
-    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
+    sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
       resStore: resources,
       lng: 'en',
@@ -31,16 +30,16 @@ describe('datetimeformat tests', () => {
   });
 
   it('should display only the date in the setup locale format by default', () => {
-    var df = sut.df();
-    var testDate = new Date(2000, 0, 1, 0,0,1);
+    let df = sut.df();
+    let testDate = new Date(2000, 0, 1, 0, 0, 1);
 
     expect(df.format(testDate)).toEqual('1/1/2000');
   });
 
   it('should display date in the previously modified locale', (done) => {
     sut.setLocale('de').then( () => {
-      var df = sut.df();
-      var testDate = new Date(2000, 0, 1, 0,0,1);
+      let df = sut.df();
+      let testDate = new Date(2000, 0, 1, 0, 0, 1);
 
       expect(df.format(testDate)).toEqual('1.1.2000');
 
@@ -49,13 +48,13 @@ describe('datetimeformat tests', () => {
   });
 
   it('should display datetime',() => {
-    var options = {
+    let options = {
       year: 'numeric', month: '2-digit', day: '2-digit',
       hour: '2-digit', minute: '2-digit', second: '2-digit',
       hour12: false
     };
-    var df = sut.df(options, 'de');
-    var testDate = new Date(2000, 0, 1, 0,0,1);
+    let df = sut.df(options, 'de');
+    let testDate = new Date(2000, 0, 1, 0, 0, 1);
 
     expect(df.format(testDate)).toEqual('01.01.2000, 00:00:01');
   });

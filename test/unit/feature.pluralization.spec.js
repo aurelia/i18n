@@ -1,32 +1,31 @@
 import {I18N} from '../../src/i18n';
-import {DefaultLoader} from 'aurelia-loader-default';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('feature verification pluralization', () => {
 
-  var sut;
+  let sut;
 
   beforeEach( () => {
-    var resources = {
+    let resources = {
       en: {
         translation: {
-          "lives": "__count__ life remaining",
-          "lives_plural": "__count__ lives remaining",
-          "lives_indefinite": "a life remaining",
-          "lives_plural_indefinite": "some lives remaining"
+          'lives': '__count__ life remaining',
+          'lives_plural': '__count__ lives remaining',
+          'lives_indefinite': 'a life remaining',
+          'lives_plural_indefinite': 'some lives remaining'
         }
       }
     };
 
-    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
+    sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
       resStore: resources,
-      lng : 'en',
-      getAsync : false,
-      sendMissing : false,
-      fallbackLng : 'en',
-      debug : false
+      lng: 'en',
+      getAsync: false,
+      sendMissing: false,
+      fallbackLng: 'en',
+      debug: false
     });
   });
 

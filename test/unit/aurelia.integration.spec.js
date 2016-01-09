@@ -30,7 +30,7 @@ describe('testing aurelia configure routine', () => {
   });
 
   it('should throw custom error message if no callback is provided', () => {
-  expect(() => { configure(frameworkConfig); })
+    expect(() => { configure(frameworkConfig); })
       .toThrow('You need to provide a callback method to properly configure the library');
   });
 });

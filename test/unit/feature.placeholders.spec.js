@@ -1,31 +1,30 @@
 import {I18N} from '../../src/i18n';
-import {DefaultLoader} from 'aurelia-loader-default';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('feature verification placeholders', () => {
 
-  var sut;
+  let sut;
 
   beforeEach( () => {
-    var resources = {
+    let resources = {
       en: {
         translation: {
-          "demo": "__framework__ is the __quality__ framework in the world",
-          "curlies": "using curlies is {difficulty}",
-          "es6interpolation": "you can use ${type} as well"
+          'demo': '__framework__ is the __quality__ framework in the world',
+          'curlies': 'using curlies is {difficulty}',
+          'es6interpolation': 'you can use ${type} as well'
         }
       }
     };
 
-    sut = new I18N(new EventAggregator(), new DefaultLoader(), new BindingSignaler());
+    sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
       resStore: resources,
-      lng : 'en',
-      getAsync : false,
-      sendMissing : false,
-      fallbackLng : 'en',
-      debug : false
+      lng: 'en',
+      getAsync: false,
+      sendMissing: false,
+      fallbackLng: 'en',
+      debug: false
     });
   });
 
@@ -34,13 +33,13 @@ describe('feature verification placeholders', () => {
   });
 
   it('should use curly variable handles', () => {
-    var options = { difficulty: 'easy', interpolationPrefix: '{', interpolationSuffix: '}'};
+    let options = { difficulty: 'easy', interpolationPrefix: '{', interpolationSuffix: '}'};
 
     expect(sut.tr('curlies', options)).toBe('using curlies is easy');
   });
 
   it('should use es6 interpolation variable handles', () => {
-    var options = { type: 'interpolation', interpolationPrefix: '${', interpolationSuffix: '}'};
+    let options = { type: 'interpolation', interpolationPrefix: '${', interpolationSuffix: '}'};
 
     expect(sut.tr('es6interpolation', options)).toBe('you can use interpolation as well');
   });

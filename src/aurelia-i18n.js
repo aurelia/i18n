@@ -14,19 +14,8 @@ import {TCustomAttribute} from './t';
 import {TParamsCustomAttribute} from './t';
 import {BaseI18N} from './base-i18n';
 
-function configure(frameworkConfig, cb) {
-  if (cb === undefined || typeof cb !== 'function') {
-    let errorMsg = 'You need to provide a callback method to properly configure the library';
-    throw errorMsg;
-  }
-
-  frameworkConfig.globalResources('./t');
-  frameworkConfig.globalResources('./nf');
-  frameworkConfig.globalResources('./df');
-  frameworkConfig.globalResources('./rt');
-
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator),
-    frameworkConfig.container.get(DefaultLoader), frameworkConfig.container.get(BindingSignaler));
+function registerI18N(frameworkConfig, cb) {
+  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
   frameworkConfig.container.registerInstance(I18N, instance);
 
   let ret = cb(instance);
@@ -47,6 +36,34 @@ function configure(frameworkConfig, cb) {
   });
 
   return ret;
+}
+
+function configure(frameworkConfig, cb): Promise<void> {
+  if (cb === undefined || typeof cb !== 'function') {
+    let errorMsg = 'You need to provide a callback method to properly configure the library';
+    throw errorMsg;
+  }
+
+  frameworkConfig.globalResources('./t');
+  frameworkConfig.globalResources('./nf');
+  frameworkConfig.globalResources('./df');
+  frameworkConfig.globalResources('./rt');
+
+  // check whether Intl is available, otherwise load the polyfill
+  if (window.Intl === undefined) {
+    let loader = frameworkConfig.container.get(DefaultLoader);
+
+    return loader.normalize('aurelia-i18n').then((i18nName) => {
+      return loader.normalize('Intl.js', i18nName).then((intlName) => {
+        return loader.loadModule(intlName).then((poly) => {
+          window.Intl = poly;
+          return registerI18N(frameworkConfig, cb);
+        });
+      });
+    });
+  }
+
+  return Promise.resolve(registerI18N(frameworkConfig, cb));
 }
 
 export {
