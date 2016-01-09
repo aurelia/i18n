@@ -80,8 +80,9 @@ var TCustomAttribute = (function () {
     var _this = this;
 
     this.params = this.lazyParams();
+    this.timers = [];
 
-    setTimeout(function () {
+    this.timers.push(setTimeout(function () {
       if (_this.params) {
         _this.params.valueChanged = function (newParams, oldParams) {
           _this.paramsChanged(_this.value, newParams, oldParams);
@@ -93,10 +94,10 @@ var TCustomAttribute = (function () {
         _this.service.updateValue(_this.element, _this.value, p);
       });
 
-      setTimeout(function () {
+      _this.timers.push(setTimeout(function () {
         _this.service.updateValue(_this.element, _this.value, p);
-      });
-    });
+      }));
+    }));
   };
 
   TCustomAttribute.prototype.paramsChanged = function paramsChanged(newValue, newParams) {
@@ -109,7 +110,13 @@ var TCustomAttribute = (function () {
   };
 
   TCustomAttribute.prototype.unbind = function unbind() {
-    this.subscription.dispose();
+    this.timers.forEach(function (t) {
+      return clearTimeout(t);
+    });
+
+    if (this.subscription) {
+      this.subscription.dispose();
+    }
   };
 
   var _TCustomAttribute = TCustomAttribute;

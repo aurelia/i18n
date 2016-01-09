@@ -415,7 +415,9 @@
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"
@@ -426,7 +428,9 @@
                   "name": "locales",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"
@@ -483,7 +487,9 @@
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"
@@ -494,7 +500,9 @@
                   "name": "locales",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"
@@ -610,7 +618,9 @@
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"
@@ -656,7 +666,9 @@
                   "name": "options",
                   "kind": 32768,
                   "kindString": "Parameter",
-                  "flags": {},
+                  "flags": {
+                    "isOptional": true
+                  },
                   "type": {
                     "type": "instrinct",
                     "name": "any"

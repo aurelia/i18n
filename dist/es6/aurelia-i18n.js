@@ -42,6 +42,7 @@ function configure(frameworkConfig, cb) {
     }
 
     attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
+    attributes.forEach(alias => resources.registerAttribute(alias + '-params', htmlParamsResource, 't-params'));
   });
 
   return ret;

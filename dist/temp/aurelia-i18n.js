@@ -695,8 +695,9 @@ var TCustomAttribute = (function () {
     var _this5 = this;
 
     this.params = this.lazyParams();
+    this.timers = [];
 
-    setTimeout(function () {
+    this.timers.push(setTimeout(function () {
       if (_this5.params) {
         _this5.params.valueChanged = function (newParams, oldParams) {
           _this5.paramsChanged(_this5.value, newParams, oldParams);
@@ -708,10 +709,10 @@ var TCustomAttribute = (function () {
         _this5.service.updateValue(_this5.element, _this5.value, p);
       });
 
-      setTimeout(function () {
+      _this5.timers.push(setTimeout(function () {
         _this5.service.updateValue(_this5.element, _this5.value, p);
-      });
-    });
+      }));
+    }));
   };
 
   TCustomAttribute.prototype.paramsChanged = function paramsChanged(newValue, newParams) {
@@ -724,7 +725,13 @@ var TCustomAttribute = (function () {
   };
 
   TCustomAttribute.prototype.unbind = function unbind() {
-    this.subscription.dispose();
+    this.timers.forEach(function (t) {
+      return clearTimeout(t);
+    });
+
+    if (this.subscription) {
+      this.subscription.dispose();
+    }
   };
 
   var _TCustomAttribute = TCustomAttribute;
@@ -813,6 +820,9 @@ function configure(frameworkConfig, cb) {
 
     attributes.forEach(function (alias) {
       return resources.registerAttribute(alias, htmlBehaviorResource, 't');
+    });
+    attributes.forEach(function (alias) {
+      return resources.registerAttribute(alias + '-params', htmlParamsResource, 't-params');
     });
   });
 

@@ -21,12 +21,12 @@ declare module 'aurelia-i18n' {
   export class I18N {
     globalVars: any;
     constructor(ea: any, loader: any, signaler: any);
-    setup(options: any): any;
+    setup(options?: any): any;
     setLocale(locale: any): any;
     getLocale(): any;
-    nf(options: any, locales: any): any;
-    df(options: any, locales: any): any;
-    tr(key: any, options: any): any;
+    nf(options?: any, locales?: any): any;
+    df(options?: any, locales?: any): any;
+    tr(key: any, options?: any): any;
     registerGlobalVariable(key: any, value: any): any;
     unregisterGlobalVariable(key: any): any;
     

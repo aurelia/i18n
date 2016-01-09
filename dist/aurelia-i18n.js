@@ -304,7 +304,7 @@ export class I18N {
     }
   }
 
-  setup(options) {
+  setup(options?) {
     const defaultOptions = {
       resGetPath: 'locale/__lng__/__ns__.json',
       lng: 'en',
@@ -338,15 +338,15 @@ export class I18N {
     return this.i18next.lng();
   }
 
-  nf(options, locales) {
+  nf(options?, locales?) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  df(options, locales) {
+  df(options?, locales?) {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  tr(key, options) {
+  tr(key, options?) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
@@ -601,8 +601,9 @@ export class TCustomAttribute {
 
   bind() {
     this.params = this.lazyParams();
+    this.timers = [];
 
-    setTimeout( () => {
+    this.timers.push(setTimeout( () => {
       if (this.params) {
         this.params.valueChanged = (newParams, oldParams) => {
           this.paramsChanged(this.value, newParams, oldParams);
@@ -614,10 +615,10 @@ export class TCustomAttribute {
         this.service.updateValue(this.element, this.value, p);
       });
 
-      setTimeout( () => {
+      this.timers.push(setTimeout( () => {
         this.service.updateValue(this.element, this.value, p);
-      });
-    });
+      }));
+    }));
   }
 
   paramsChanged(newValue, newParams) {
@@ -630,7 +631,12 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    this.subscription.dispose();
+    // Clear timers so that we do not run unecessary code after unbinding
+    this.timers.forEach(t => clearTimeout(t));
+    // If unbind is called before timeout for subscription is triggered, subscription will be undefined
+    if (this.subscription) {
+      this.subscription.dispose();
+    }
   }
 }
 
@@ -704,6 +710,7 @@ function configure(frameworkConfig, cb) {
     }
 
     attributes.forEach(alias => resources.registerAttribute(alias, htmlBehaviorResource, 't'));
+    attributes.forEach(alias => resources.registerAttribute(alias + '-params', htmlParamsResource, 't-params'));
   });
 
   return ret;

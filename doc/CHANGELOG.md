@@ -1,3 +1,17 @@
+## 0.4.5 (2016-01-08)
+
+
+#### Bug Fixes
+
+* **i18n:** marked optional arguments ([cc9b48b4](http://github.com/aurelia/i18n/commit/cc9b48b4c81fa4300ba130d800f8bf03b0483624))
+* **unbind:** Clear timers and dispose subscription only if really subscribed ([ee497706](http://github.com/aurelia/i18n/commit/ee497706ad247b7ea8a74382737c4308b024d1c1))
+
+
+#### Features
+
+* **signaling:** add alias for t-params ([3fd242f2](http://github.com/aurelia/i18n/commit/3fd242f24eb320b2dad9b4ad22048f778635ef66))
+
+
 ### 0.4.4 (2015-12-16)
 
 
