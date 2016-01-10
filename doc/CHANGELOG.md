@@ -1,3 +1,12 @@
+### 0.4.6 (2016-01-09)
+
+
+#### Bug Fixes
+
+* **normalize:** replace normalizeSync with normalize ([466e6ae5](http://github.com/aurelia/i18n/commit/466e6ae5ce974f023f94a43dacd89c999e9b0959))
+* **params:** add missing htmlParamsResource ([cfb058f5](http://github.com/aurelia/i18n/commit/cfb058f5627cb25e31eed760d1b9503ab8648bfb))
+
+
 ## 0.4.5 (2016-01-08)
 
 

@@ -3,18 +3,8 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
 
   exports.__esModule = true;
 
-  function configure(frameworkConfig, cb) {
-    if (cb === undefined || typeof cb !== 'function') {
-      var errorMsg = 'You need to provide a callback method to properly configure the library';
-      throw errorMsg;
-    }
-
-    frameworkConfig.globalResources('./t');
-    frameworkConfig.globalResources('./nf');
-    frameworkConfig.globalResources('./df');
-    frameworkConfig.globalResources('./rt');
-
-    var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
+  function registerI18N(frameworkConfig, cb) {
+    var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
     frameworkConfig.container.registerInstance(_i18n.I18N, instance);
 
     var ret = cb(instance);
@@ -22,6 +12,7 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
     frameworkConfig.postTask(function () {
       var resources = frameworkConfig.container.get(_aureliaTemplating.ViewResources);
       var htmlBehaviorResource = resources.getAttribute('t');
+      var htmlParamsResource = resources.getAttribute('t-params');
       var attributes = instance.i18next.options.attributes;
 
       if (!attributes) {
@@ -37,6 +28,39 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
     });
 
     return ret;
+  }
+
+  function configure(frameworkConfig, cb) {
+    if (cb === undefined || typeof cb !== 'function') {
+      var errorMsg = 'You need to provide a callback method to properly configure the library';
+      throw errorMsg;
+    }
+
+    frameworkConfig.globalResources('./t');
+    frameworkConfig.globalResources('./nf');
+    frameworkConfig.globalResources('./df');
+    frameworkConfig.globalResources('./rt');
+
+    if (window.Intl === undefined) {
+      var _ret = (function () {
+        var loader = frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader);
+
+        return {
+          v: loader.normalize('aurelia-i18n').then(function (i18nName) {
+            return loader.normalize('Intl.js', i18nName).then(function (intlName) {
+              return loader.loadModule(intlName).then(function (poly) {
+                window.Intl = poly;
+                return registerI18N(frameworkConfig, cb);
+              });
+            });
+          })
+        };
+      })();
+
+      if (typeof _ret === 'object') return _ret.v;
+    }
+
+    return Promise.resolve(registerI18N(frameworkConfig, cb));
   }
 
   exports.configure = configure;
