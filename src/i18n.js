@@ -1,5 +1,5 @@
 /*eslint no-cond-assign: 0*/
-import i18n from 'i18next';
+import * as i18n from 'i18next';
 
 export class I18N {
 
