@@ -711,7 +711,7 @@ To run the unit tests, first ensure that you have followed the steps above in or
 2. Ensure that [jspm](http://jspm.io/) is installed. If you need to install it, use the following commnand:
 
   ```shell
-  npm install -g jspm@beta
+  npm install -g jspm
   ```
 3. Install the client-side dependencies with jspm:
 
