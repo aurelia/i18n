@@ -45,24 +45,19 @@ export class TCustomAttribute {
 
   bind() {
     this.params = this.lazyParams();
-    this.timers = [];
 
-    this.timers.push(setTimeout( () => {
-      if (this.params) {
-        this.params.valueChanged = (newParams, oldParams) => {
-          this.paramsChanged(this.value, newParams, oldParams);
-        };
-      }
+    if (this.params) {
+      this.params.valueChanged = (newParams, oldParams) => {
+        this.paramsChanged(this.value, newParams, oldParams);
+      };
+    }
 
-      let p = this.params !== null ? this.params.value : undefined;
-      this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
-        this.service.updateValue(this.element, this.value, p);
-      });
+    let p = this.params !== null ? this.params.value : undefined;
+    this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
+      this.service.updateValue(this.element, this.value, p);
+    });
 
-      this.timers.push(setTimeout( () => {
-        this.service.updateValue(this.element, this.value, p);
-      }));
-    }));
+    this.service.updateValue(this.element, this.value, p);
   }
 
   paramsChanged(newValue, newParams) {
@@ -75,8 +70,6 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    // Clear timers so that we do not run unecessary code after unbinding
-    this.timers.forEach(t => clearTimeout(t));
     // If unbind is called before timeout for subscription is triggered, subscription will be undefined
     if (this.subscription) {
       this.subscription.dispose();
