@@ -19,39 +19,43 @@
     "type": "git",
     "url": "http://github.com/aurelia/i18n"
   },
-  "jspmNodeConversion": false,
   "jspm": {
+    "registry": "npm",
+    "jspmPackage": true,
     "main": "aurelia-i18n",
     "format": "amd",
     "directories": {
-      "lib": "dist/amd"
+      "dist": "dist/amd"
     },
     "dependencies": {
       "Intl.js": "github:andyearnshaw/Intl.js@^0.1.4",
-      "aurelia-binding": "npm:aurelia-binding@^1.0.0-beta.1.0.1",
-      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@^1.0.0-beta.1",
-      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@^1.0.0-beta.1",
-      "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-beta.1",
-      "aurelia-pal": "npm:aurelia-pal@^1.0.0-beta.1",
-      "aurelia-templating": "npm:aurelia-templating@^1.0.0-beta.1",
-      "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-beta.1.0.2",
       "i18next": "github:i18next/i18next@^1.9.0"
     },
+    "peerDependencies": {
+      "aurelia-binding": "^1.0.0-beta.1.1.0",
+      "aurelia-dependency-injection": "^1.0.0-beta.1.1.2",
+      "aurelia-event-aggregator": "^1.0.0-beta.1.1.0",
+      "aurelia-loader-default": "^1.0.0-beta.1.1.1",
+      "aurelia-pal": "^1.0.0-beta.1.1.1",
+      "aurelia-templating": "^1.0.0-beta.1.1.0",
+      "aurelia-templating-resources": "^1.0.0-beta.1.1.0"
+    },
     "devDependencies": {
-      "aurelia-pal-browser": "npm:aurelia-pal-browser@^1.0.0-beta.1",
-      "babel": "npm:babel-core@^5.6.4",
-      "babel-runtime": "npm:babel-runtime@^5.6.4",
-      "core-js": "npm:core-js@^1.2.6",
+      "aurelia-pal-browser": "^1.0.0-beta.1.1.2",
+      "babel": "babel-core@^5.8.24",
+      "babel-runtime": "^5.8.24",
+      "core-js": "^2.0.3",
       "text": "github:systemjs/plugin-text@^0.0.2"
     }
   },
-  "dependencies": {
-    "aurelia-dependency-injection": "^1.0.0-beta.1",
-    "aurelia-event-aggregator": "^1.0.0-beta.1",
-    "aurelia-loader-default": "^1.0.0-beta.1",
-    "aurelia-pal": "^1.0.0-beta.1",
-    "aurelia-templating": "^1.0.0-beta.1",
-    "aurelia-templating-resources": "^1.0.0-beta.1.0.2"
+  "peerDependencies": {
+    "aurelia-binding": "^1.0.0-beta.1.1.0",
+    "aurelia-dependency-injection": "^1.0.0-beta.1.1.2",
+    "aurelia-event-aggregator": "^1.0.0-beta.1.1.0",
+    "aurelia-loader-default": "^1.0.0-beta.1.1.1",
+    "aurelia-pal": "^1.0.0-beta.1.1.1",
+    "aurelia-templating": "^1.0.0-beta.1.1.0",
+    "aurelia-templating-resources": "^1.0.0-beta.1.1.0"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.15",
