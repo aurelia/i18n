@@ -1,3 +1,18 @@
+### 0.4.7 (2016-01-29)
+
+
+#### Bug Fixes
+
+* **attribute:** removed timeout usage ([019fd7bd](http://github.com/aurelia/i18n/commit/019fd7bd6b21f917f8e59b2adda81e5c5784d1e0))
+* **i18next:** missing default export ([3aafbded](http://github.com/aurelia/i18n/commit/3aafbdeda6c1653efe7aa4db3dcebd74df2ededa))
+
+
+#### Features
+
+* **all:** update jspm meta; core-js; aurelia deps ([8360ceaf](http://github.com/aurelia/i18n/commit/8360ceaf4426efde40bfa9222663c0c21d6d2dcc))
+* **unformat:** unformat numbers using locale ([1da0817c](http://github.com/aurelia/i18n/commit/1da0817c4588059d67ef93d1606235f637f30d95))
+
+
 ### 0.4.6 (2016-01-09)
 
 

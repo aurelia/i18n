@@ -99,7 +99,15 @@ var translations = {
       'day_ago': '__count__ dag geleden',
       'day_ago_plural': '__count__ dagen geleden',
       'day_in': 'in __count__ dag',
-      'day_in_plural': 'in __count__ dagen'
+      'day_in_plural': 'in __count__ dagen',
+      'month_ago': '__count__ maand geleden',
+      'month_ago_plural': '__count__ maanden geleden',
+      'month_in': 'in __count__ maand',
+      'month_in_plural': 'in __count__ maanden',
+      'year_ago': '__count__ jaar geleden',
+      'year_ago_plural': '__count__ jaren geleden',
+      'year_in': 'in __count__ jaar',
+      'year_in_plural': 'in __count__ jaren'
     }
   },
   fr: {

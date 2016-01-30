@@ -2,13 +2,13 @@
 
 exports.__esModule = true;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _i18next = require('i18next');
 
-var _i18next2 = _interopRequireDefault(_i18next);
+var i18n = _interopRequireWildcard(_i18next);
 
 var I18N = (function () {
   function I18N(ea, signaler) {
@@ -16,7 +16,7 @@ var I18N = (function () {
 
     this.globalVars = {};
 
-    this.i18next = _i18next2['default'];
+    this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -33,10 +33,10 @@ var I18N = (function () {
       debug: false
     };
 
-    _i18next2['default'].init(options || defaultOptions);
+    i18n.init(options || defaultOptions);
 
-    if (_i18next2['default'].options.attributes instanceof String) {
-      _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+    if (i18n.options.attributes instanceof String) {
+      i18n.options.attributes = [i18n.options.attributes];
     }
   };
 
@@ -59,6 +59,18 @@ var I18N = (function () {
 
   I18N.prototype.nf = function nf(options, locales) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+  };
+
+  I18N.prototype.uf = function uf(number, locale) {
+    var nf = this.nf({}, locale || this.getLocale());
+    var comparer = nf.format(10000 / 3);
+
+    var thousandSeparator = comparer[1];
+    var decimalSeparator = comparer[5];
+
+    var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+
+    return Number(result);
   };
 
   I18N.prototype.df = function df(options, locales) {

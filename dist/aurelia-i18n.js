@@ -1,4 +1,4 @@
-import i18n from 'i18next';
+import * as i18n from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute,ViewResources} from 'aurelia-templating';
@@ -105,7 +105,15 @@ export const translations = {
       'day_ago': '__count__ dag geleden',
       'day_ago_plural': '__count__ dagen geleden',
       'day_in': 'in __count__ dag',
-      'day_in_plural': 'in __count__ dagen'
+      'day_in_plural': 'in __count__ dagen',
+      'month_ago': '__count__ maand geleden',
+      'month_ago_plural': '__count__ maanden geleden',
+      'month_in': 'in __count__ maand',
+      'month_in_plural': 'in __count__ maanden',
+      'year_ago': '__count__ jaar geleden',
+      'year_ago_plural': '__count__ jaren geleden',
+      'year_in': 'in __count__ jaar',
+      'year_in_plural': 'in __count__ jaren'
     }
   },
   fr: {
@@ -330,6 +338,24 @@ export class I18N {
 
   nf(options?, locales?) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+  }
+
+  uf(number, locale?) {
+    let nf = this.nf({}, locale || this.getLocale());
+    let comparer = nf.format(10000 / 3);
+
+    let thousandSeparator = comparer[1];
+    let decimalSeparator  = comparer[5];
+
+    // remove thousand seperator
+    let result = number.replace(thousandSeparator, '')
+      // remove non-numeric signs except -> , .
+      .replace(/[^\d.,-]/g, '')
+      // replace original decimalSeparator with english one
+      .replace(decimalSeparator, '.');
+
+    // return real number
+    return Number(result);
   }
 
   df(options?, locales?) {
@@ -591,24 +617,19 @@ export class TCustomAttribute {
 
   bind() {
     this.params = this.lazyParams();
-    this.timers = [];
 
-    this.timers.push(setTimeout( () => {
-      if (this.params) {
-        this.params.valueChanged = (newParams, oldParams) => {
-          this.paramsChanged(this.value, newParams, oldParams);
-        };
-      }
+    if (this.params) {
+      this.params.valueChanged = (newParams, oldParams) => {
+        this.paramsChanged(this.value, newParams, oldParams);
+      };
+    }
 
-      let p = this.params !== null ? this.params.value : undefined;
-      this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
-        this.service.updateValue(this.element, this.value, p);
-      });
+    let p = this.params !== null ? this.params.value : undefined;
+    this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
+      this.service.updateValue(this.element, this.value, p);
+    });
 
-      this.timers.push(setTimeout( () => {
-        this.service.updateValue(this.element, this.value, p);
-      }));
-    }));
+    this.service.updateValue(this.element, this.value, p);
   }
 
   paramsChanged(newValue, newParams) {
@@ -621,8 +642,6 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    // Clear timers so that we do not run unecessary code after unbinding
-    this.timers.forEach(t => clearTimeout(t));
     // If unbind is called before timeout for subscription is triggered, subscription will be undefined
     if (this.subscription) {
       this.subscription.dispose();

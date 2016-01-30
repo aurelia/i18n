@@ -84,24 +84,19 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
           var _this = this;
 
           this.params = this.lazyParams();
-          this.timers = [];
 
-          this.timers.push(setTimeout(function () {
-            if (_this.params) {
-              _this.params.valueChanged = function (newParams, oldParams) {
-                _this.paramsChanged(_this.value, newParams, oldParams);
-              };
-            }
+          if (this.params) {
+            this.params.valueChanged = function (newParams, oldParams) {
+              _this.paramsChanged(_this.value, newParams, oldParams);
+            };
+          }
 
-            var p = _this.params !== null ? _this.params.value : undefined;
-            _this.subscription = _this.ea.subscribe('i18n:locale:changed', function () {
-              _this.service.updateValue(_this.element, _this.value, p);
-            });
+          var p = this.params !== null ? this.params.value : undefined;
+          this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
+            _this.service.updateValue(_this.element, _this.value, p);
+          });
 
-            _this.timers.push(setTimeout(function () {
-              _this.service.updateValue(_this.element, _this.value, p);
-            }));
-          }));
+          this.service.updateValue(this.element, this.value, p);
         };
 
         TCustomAttribute.prototype.paramsChanged = function paramsChanged(newValue, newParams) {
@@ -114,10 +109,6 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
         };
 
         TCustomAttribute.prototype.unbind = function unbind() {
-          this.timers.forEach(function (t) {
-            return clearTimeout(t);
-          });
-
           if (this.subscription) {
             this.subscription.dispose();
           }

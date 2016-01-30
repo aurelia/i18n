@@ -4,13 +4,13 @@ exports.__esModule = true;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _i18next = require('i18next');
 
-var _i18next2 = _interopRequireDefault(_i18next);
+var i18n = _interopRequireWildcard(_i18next);
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
@@ -122,7 +122,15 @@ var translations = {
       'day_ago': '__count__ dag geleden',
       'day_ago_plural': '__count__ dagen geleden',
       'day_in': 'in __count__ dag',
-      'day_in_plural': 'in __count__ dagen'
+      'day_in_plural': 'in __count__ dagen',
+      'month_ago': '__count__ maand geleden',
+      'month_ago_plural': '__count__ maanden geleden',
+      'month_in': 'in __count__ maand',
+      'month_in_plural': 'in __count__ maanden',
+      'year_ago': '__count__ jaar geleden',
+      'year_ago_plural': '__count__ jaren geleden',
+      'year_in': 'in __count__ jaar',
+      'year_in_plural': 'in __count__ jaren'
     }
   },
   fr: {
@@ -318,7 +326,7 @@ var I18N = (function () {
 
     this.globalVars = {};
 
-    this.i18next = _i18next2['default'];
+    this.i18next = i18n;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -335,10 +343,10 @@ var I18N = (function () {
       debug: false
     };
 
-    _i18next2['default'].init(options || defaultOptions);
+    i18n.init(options || defaultOptions);
 
-    if (_i18next2['default'].options.attributes instanceof String) {
-      _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+    if (i18n.options.attributes instanceof String) {
+      i18n.options.attributes = [i18n.options.attributes];
     }
   };
 
@@ -361,6 +369,18 @@ var I18N = (function () {
 
   I18N.prototype.nf = function nf(options, locales) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+  };
+
+  I18N.prototype.uf = function uf(number, locale) {
+    var nf = this.nf({}, locale || this.getLocale());
+    var comparer = nf.format(10000 / 3);
+
+    var thousandSeparator = comparer[1];
+    var decimalSeparator = comparer[5];
+
+    var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+
+    return Number(result);
   };
 
   I18N.prototype.df = function df(options, locales) {
@@ -686,24 +706,19 @@ var TCustomAttribute = (function () {
     var _this5 = this;
 
     this.params = this.lazyParams();
-    this.timers = [];
 
-    this.timers.push(setTimeout(function () {
-      if (_this5.params) {
-        _this5.params.valueChanged = function (newParams, oldParams) {
-          _this5.paramsChanged(_this5.value, newParams, oldParams);
-        };
-      }
+    if (this.params) {
+      this.params.valueChanged = function (newParams, oldParams) {
+        _this5.paramsChanged(_this5.value, newParams, oldParams);
+      };
+    }
 
-      var p = _this5.params !== null ? _this5.params.value : undefined;
-      _this5.subscription = _this5.ea.subscribe('i18n:locale:changed', function () {
-        _this5.service.updateValue(_this5.element, _this5.value, p);
-      });
+    var p = this.params !== null ? this.params.value : undefined;
+    this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
+      _this5.service.updateValue(_this5.element, _this5.value, p);
+    });
 
-      _this5.timers.push(setTimeout(function () {
-        _this5.service.updateValue(_this5.element, _this5.value, p);
-      }));
-    }));
+    this.service.updateValue(this.element, this.value, p);
   };
 
   TCustomAttribute.prototype.paramsChanged = function paramsChanged(newValue, newParams) {
@@ -716,10 +731,6 @@ var TCustomAttribute = (function () {
   };
 
   TCustomAttribute.prototype.unbind = function unbind() {
-    this.timers.forEach(function (t) {
-      return clearTimeout(t);
-    });
-
     if (this.subscription) {
       this.subscription.dispose();
     }

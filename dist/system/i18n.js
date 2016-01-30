@@ -7,7 +7,7 @@ System.register(['i18next'], function (_export) {
 
   return {
     setters: [function (_i18next) {
-      i18n = _i18next['default'];
+      i18n = _i18next;
     }],
     execute: function () {
       I18N = (function () {
@@ -59,6 +59,18 @@ System.register(['i18next'], function (_export) {
 
         I18N.prototype.nf = function nf(options, locales) {
           return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+        };
+
+        I18N.prototype.uf = function uf(number, locale) {
+          var nf = this.nf({}, locale || this.getLocale());
+          var comparer = nf.format(10000 / 3);
+
+          var thousandSeparator = comparer[1];
+          var decimalSeparator = comparer[5];
+
+          var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+
+          return Number(result);
         };
 
         I18N.prototype.df = function df(options, locales) {

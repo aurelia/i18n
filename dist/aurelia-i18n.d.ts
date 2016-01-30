@@ -1,5 +1,5 @@
 declare module 'aurelia-i18n' {
-  import i18n from 'i18next';
+  import * as i18n from 'i18next';
   import { resolver }  from 'aurelia-dependency-injection';
   import { EventAggregator }  from 'aurelia-event-aggregator';
   import { customAttribute, ViewResources }  from 'aurelia-templating';
@@ -25,6 +25,7 @@ declare module 'aurelia-i18n' {
     setLocale(locale: any): any;
     getLocale(): any;
     nf(options?: any, locales?: any): any;
+    uf(number: any, locale?: any): any;
     df(options?: any, locales?: any): any;
     tr(key: any, options?: any): any;
     registerGlobalVariable(key: any, value: any): any;

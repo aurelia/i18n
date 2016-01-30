@@ -1,5 +1,5 @@
 /*eslint no-cond-assign: 0*/
-import i18n from 'i18next';
+import * as i18n from 'i18next';
 
 export class I18N {
 
@@ -48,6 +48,24 @@ export class I18N {
 
   nf(options?, locales?) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+  }
+
+  uf(number, locale?) {
+    let nf = this.nf({}, locale || this.getLocale());
+    let comparer = nf.format(10000 / 3);
+
+    let thousandSeparator = comparer[1];
+    let decimalSeparator  = comparer[5];
+
+    // remove thousand seperator
+    let result = number.replace(thousandSeparator, '')
+      // remove non-numeric signs except -> , .
+      .replace(/[^\d.,-]/g, '')
+      // replace original decimalSeparator with english one
+      .replace(decimalSeparator, '.');
+
+    // return real number
+    return Number(result);
   }
 
   df(options?, locales?) {

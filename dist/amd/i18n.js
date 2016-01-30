@@ -3,11 +3,7 @@ define(['exports', 'i18next'], function (exports, _i18next) {
 
   exports.__esModule = true;
 
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  var _i18n = _interopRequireDefault(_i18next);
 
   var I18N = (function () {
     function I18N(ea, signaler) {
@@ -15,7 +11,7 @@ define(['exports', 'i18next'], function (exports, _i18next) {
 
       this.globalVars = {};
 
-      this.i18next = _i18n['default'];
+      this.i18next = _i18next;
       this.ea = ea;
       this.Intl = window.Intl;
       this.signaler = signaler;
@@ -32,10 +28,10 @@ define(['exports', 'i18next'], function (exports, _i18next) {
         debug: false
       };
 
-      _i18n['default'].init(options || defaultOptions);
+      _i18next.init(options || defaultOptions);
 
-      if (_i18n['default'].options.attributes instanceof String) {
-        _i18n['default'].options.attributes = [_i18n['default'].options.attributes];
+      if (_i18next.options.attributes instanceof String) {
+        _i18next.options.attributes = [_i18next.options.attributes];
       }
     };
 
@@ -58,6 +54,18 @@ define(['exports', 'i18next'], function (exports, _i18next) {
 
     I18N.prototype.nf = function nf(options, locales) {
       return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
+    };
+
+    I18N.prototype.uf = function uf(number, locale) {
+      var nf = this.nf({}, locale || this.getLocale());
+      var comparer = nf.format(10000 / 3);
+
+      var thousandSeparator = comparer[1];
+      var decimalSeparator = comparer[5];
+
+      var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+
+      return Number(result);
     };
 
     I18N.prototype.df = function df(options, locales) {
