@@ -13,10 +13,11 @@ System.config({
   },
 
   map: {
-    "Intl.js": "github:andyearnshaw/Intl.js@0.1.4",
+    "Intl.js": "npm:intl@1.0.1",
     "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.1.1",
     "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.1.2",
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.1.0",
+    "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.1.0",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.1.1",
     "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1",
     "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.1.2",
@@ -110,6 +111,9 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:intl@1.0.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:path-browserify@0.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.2"
