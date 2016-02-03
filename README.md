@@ -26,6 +26,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
   - [Formatting dates with DfValueConverter](#formatting-dates-with-dfvalueconverter)
   - [Rendering relative time](#rendering-relative-time)
 - [Bundling](#bundling)
+- [Internationalization API Polyfill](#internationalization-api-polyfill)
 - [CLI Integration](#cli-integration)
 - [Running the unit tests](#running-the-unit-tests)
 
@@ -649,6 +650,12 @@ In case you experience issues with aurelia-i18n in a bundled app, try to set the
 ```  
 
 This forces i18next to load the given resources synchronously and thus can work around issues when the bundled app tries to access translations keys which aren't yet fully loaded.
+
+## Internationalization API Polyfill
+
+The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
+
+In case of bundling your app you should thus keep in mind that it will not be automatically included into the bundle. That means you have to manually adjust the bundle config to include the polyfill as well, if you intend to have your application run on browsers without full support. [related GitHub issue](https://github.com/aurelia/i18n/issues/61#issuecomment-178801842)
 
 ## CLI Integration
 
