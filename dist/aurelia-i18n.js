@@ -4,7 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute,ViewResources} from 'aurelia-templating';
 import {SignalBindingBehavior,BindingSignaler} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
-import {DefaultLoader} from 'aurelia-loader-default';
+import {Loader} from 'aurelia-loader';
 
 /*eslint no-irregular-whitespace: 0*/
 export const translations = {
@@ -728,7 +728,7 @@ function configure(frameworkConfig, cb): Promise<void> {
 
   // check whether Intl is available, otherwise load the polyfill
   if (window.Intl === undefined) {
-    let loader = frameworkConfig.container.get(DefaultLoader);
+    let loader = frameworkConfig.container.get(Loader);
 
     return loader.normalize('aurelia-i18n').then((i18nName) => {
       return loader.normalize('Intl.js', i18nName).then((intlName) => {

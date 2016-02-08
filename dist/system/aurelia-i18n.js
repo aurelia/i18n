@@ -1,7 +1,7 @@
-System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
+System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
   'use strict';
 
-  var EventAggregator, ViewResources, DefaultLoader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
+  var EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -43,7 +43,7 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
 
     if (window.Intl === undefined) {
       var _ret = (function () {
-        var loader = frameworkConfig.container.get(DefaultLoader);
+        var loader = frameworkConfig.container.get(Loader);
 
         return {
           v: loader.normalize('aurelia-i18n').then(function (i18nName) {
@@ -68,8 +68,8 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplating) {
       ViewResources = _aureliaTemplating.ViewResources;
-    }, function (_aureliaLoaderDefault) {
-      DefaultLoader = _aureliaLoaderDefault.DefaultLoader;
+    }, function (_aureliaLoader) {
+      Loader = _aureliaLoader.Loader;
     }, function (_aureliaTemplatingResources) {
       BindingSignaler = _aureliaTemplatingResources.BindingSignaler;
     }, function (_i18n) {

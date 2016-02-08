@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader-default', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoaderDefault, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
+define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
   'use strict';
 
   exports.__esModule = true;
@@ -43,7 +43,7 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
 
     if (window.Intl === undefined) {
       var _ret = (function () {
-        var loader = frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader);
+        var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
 
         return {
           v: loader.normalize('aurelia-i18n').then(function (i18nName) {

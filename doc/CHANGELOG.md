@@ -1,3 +1,11 @@
+### 0.4.9 (2016-02-08)
+
+
+#### Bug Fixes
+
+* **Intl.js:** update intl.js ([79d26ee7](http://github.com/aurelia/i18n/commit/79d26ee742479474a3a321c639328997e31ffbc3))
+
+
 ### 0.4.7 (2016-01-29)
 
 

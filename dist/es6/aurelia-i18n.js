@@ -1,6 +1,6 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {ViewResources} from 'aurelia-templating';
-import {DefaultLoader} from 'aurelia-loader-default';
+import {Loader} from 'aurelia-loader';
 import {BindingSignaler} from 'aurelia-templating-resources';
 
 import {I18N} from './i18n';
@@ -51,7 +51,7 @@ function configure(frameworkConfig, cb): Promise<void> {
 
   // check whether Intl is available, otherwise load the polyfill
   if (window.Intl === undefined) {
-    let loader = frameworkConfig.container.get(DefaultLoader);
+    let loader = frameworkConfig.container.get(Loader);
 
     return loader.normalize('aurelia-i18n').then((i18nName) => {
       return loader.normalize('Intl.js', i18nName).then((intlName) => {

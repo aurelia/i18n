@@ -6,7 +6,7 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
 
-var _aureliaLoaderDefault = require('aurelia-loader-default');
+var _aureliaLoader = require('aurelia-loader');
 
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
@@ -64,7 +64,7 @@ function configure(frameworkConfig, cb) {
 
   if (window.Intl === undefined) {
     var _ret = (function () {
-      var loader = frameworkConfig.container.get(_aureliaLoaderDefault.DefaultLoader);
+      var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
 
       return {
         v: loader.normalize('aurelia-i18n').then(function (i18nName) {

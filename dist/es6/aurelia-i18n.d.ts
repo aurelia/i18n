@@ -5,7 +5,7 @@ declare module 'aurelia-i18n' {
   import { customAttribute, ViewResources }  from 'aurelia-templating';
   import { SignalBindingBehavior, BindingSignaler }  from 'aurelia-templating-resources';
   import { ValueConverter }  from 'aurelia-binding';
-  import { DefaultLoader }  from 'aurelia-loader-default';
+  import { Loader }  from 'aurelia-loader';
   
   /*eslint no-irregular-whitespace: 0*/
   export const translations: any;
