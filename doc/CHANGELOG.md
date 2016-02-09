@@ -1,3 +1,11 @@
+### 0.4.10 (2016-02-09)
+
+
+#### Bug Fixes
+
+* **deps:** fixes intl dependency ([4e62d3cf](http://github.com/aurelia/i18n/commit/4e62d3cf227bf3d1555582b9ac66e5178aa69262))
+
+
 ### 0.4.9 (2016-02-08)
 
 
