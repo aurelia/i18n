@@ -63,4 +63,19 @@ describe('testing i18n attributes', () => {
       });
     });
   });
+
+  it('should raise value change on i18n custom attribute with dash in name', done => {
+    let i18nAttribute = templatingEngine.createViewModelForUnitTest(TCustomAttribute);
+    spyOn(i18nAttribute, 'valueChanged');
+
+    // disable DOM operations by mocking the specific function
+    spyOn(container.get(I18N), 'updateValue');
+
+    i18nAttribute.value = 'foo-bar';
+
+    setTimeout(() => {
+      expect(i18nAttribute.valueChanged).toHaveBeenCalledWith('foo-bar', undefined);
+      done();
+    });
+  });
 });
