@@ -425,7 +425,7 @@ export class I18N {
 
     for (let key of keys) {
       // remove the optional attribute
-      let re = /\[([a-z]*)\]/g;
+      let re = /\[([a-z\-]*)\]/g;
 
       let m;
       let attr = 'text';

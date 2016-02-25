@@ -135,7 +135,7 @@ define(['exports', 'i18next'], function (exports, _i18next) {
 
         var key = _ref;
 
-        var re = /\[([a-z]*)\]/g;
+        var re = /\[([a-z\-]*)\]/g;
 
         var m = undefined;
         var attr = 'text';

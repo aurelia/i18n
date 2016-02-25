@@ -140,7 +140,7 @@ System.register(['i18next'], function (_export) {
 
             var key = _ref;
 
-            var re = /\[([a-z]*)\]/g;
+            var re = /\[([a-z\-]*)\]/g;
 
             var m = undefined;
             var attr = 'text';
