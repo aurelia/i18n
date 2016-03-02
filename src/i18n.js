@@ -133,7 +133,8 @@ export class I18N {
 
     let keys = value.split(';');
 
-    for (let key of keys) {
+    for (let i = keys.length - 1; i >= 0; i--) {
+      let key = keys[i];
       // remove the optional attribute
       let re = /\[([a-z\-]*)\]/g;
 
