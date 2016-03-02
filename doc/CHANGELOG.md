@@ -1,3 +1,11 @@
+### 0.4.12 (2016-03-02)
+
+
+#### Bug Fixes
+
+* **for-of:** remove for of loop ([9c6c1417](http://github.com/aurelia/i18n/commit/9c6c14173e6236c100020d1e2bce4ff63ec94881))
+
+
 ### 0.4.11 (2016-02-25)
 
 
