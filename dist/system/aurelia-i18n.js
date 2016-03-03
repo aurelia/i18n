@@ -47,7 +47,7 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
 
         return {
           v: loader.normalize('aurelia-i18n').then(function (i18nName) {
-            return loader.normalize('Intl.js', i18nName).then(function (intlName) {
+            return loader.normalize('intl', i18nName).then(function (intlName) {
               return loader.loadModule(intlName).then(function (poly) {
                 window.Intl = poly;
                 return registerI18N(frameworkConfig, cb);

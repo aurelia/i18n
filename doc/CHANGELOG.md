@@ -1,3 +1,12 @@
+### 0.4.13 (2016-03-03)
+
+
+#### Bug Fixes
+
+* **normalize:** fix normalized name of intl ([f8701c55](http://github.com/aurelia/i18n/commit/f8701c5543a774950fb1b98e9022b0542f8dee8e))
+* **versions:** update dependencies ([67e7f9dc](http://github.com/aurelia/i18n/commit/67e7f9dc82818f90507de7ad3f6cedbeaac80eb5))
+
+
 ### 0.4.12 (2016-03-02)
 
 
