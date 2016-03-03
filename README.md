@@ -347,7 +347,7 @@ class MyVM {
 ### Translating with the TValueConverter
 In order to do translations in a more declarative way from within your HTML markup you can use a custom ValueConverter named `t`. It takes exactly the same `options` as the code translation method `tr` but of course provides the key automatically.
 
-You will find below a few examples of the available [i18next features](http://i18next.com/pages/doc_features.html)
+You will find below a few examples of the available [i18next features](http://i18next.com/translate/)
 
 ```html
 <template>
