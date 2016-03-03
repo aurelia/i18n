@@ -54,7 +54,7 @@ function configure(frameworkConfig, cb): Promise<void> {
     let loader = frameworkConfig.container.get(Loader);
 
     return loader.normalize('aurelia-i18n').then((i18nName) => {
-      return loader.normalize('Intl.js', i18nName).then((intlName) => {
+      return loader.normalize('intl', i18nName).then((intlName) => {
         return loader.loadModule(intlName).then((poly) => {
           window.Intl = poly;
           return registerI18N(frameworkConfig, cb);
