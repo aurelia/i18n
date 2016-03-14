@@ -1,4 +1,4 @@
-import * as i18n from 'i18next';
+import i18next from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {customAttribute,ViewResources} from 'aurelia-templating';
@@ -296,7 +296,7 @@ export class I18N {
   globalVars = {};
 
   constructor(ea, signaler) {
-    this.i18next = i18n;
+    this.i18next = i18next;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -304,27 +304,30 @@ export class I18N {
 
   setup(options?) {
     const defaultOptions = {
-      resGetPath: 'locale/__lng__/__ns__.json',
+      compatibilityAPI: 'v1',
+      compatibilityJSON: 'v1',
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       attributes: ['t', 'i18n'],
       fallbackLng: 'en',
       debug: false
     };
 
-    i18n.init(options || defaultOptions);
-
-    //make sure attributes is an array in case a string was provided
-    if (i18n.options.attributes instanceof String) {
-      i18n.options.attributes = [i18n.options.attributes];
-    }
+    return new Promise((resolve) => {
+      i18next.init(options || defaultOptions, (err, t) => {
+        //make sure attributes is an array in case a string was provided
+        if (i18next.options.attributes instanceof String) {
+          i18next.options.attributes = [i18next.options.attributes];
+        }
+        
+        resolve(this.i18next);
+      });
+    });
   }
 
   setLocale(locale) {
     return new Promise( resolve => {
       let oldLocale = this.getLocale();
-      this.i18next.setLng(locale, tr => {
+      this.i18next.changeLanguage(locale, (err, tr) => {
         this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
         this.signaler.signal('aurelia-translation-signal');
         resolve(tr);
@@ -333,7 +336,7 @@ export class I18N {
   }
 
   getLocale() {
-    return this.i18next.lng();
+    return this.i18next.language;
   }
 
   nf(options?, locales?) {
@@ -530,9 +533,9 @@ export class RelativeTime {
       let translation = trans[key].translation;
       let options = i18n.i18next.options;
 
-      if (options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
+      if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
         for (let subkey in translation) {
-          translation[subkey] = translation[subkey].replace('__count__', options.interpolationPrefix + 'count' + options.interpolationSuffix);
+          translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
         }
       }
 

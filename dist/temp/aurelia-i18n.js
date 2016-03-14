@@ -4,13 +4,13 @@ exports.__esModule = true;
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _i18next = require('i18next');
 
-var i18n = _interopRequireWildcard(_i18next);
+var _i18next2 = _interopRequireDefault(_i18next);
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
@@ -326,45 +326,50 @@ var I18N = (function () {
 
     this.globalVars = {};
 
-    this.i18next = i18n;
+    this.i18next = _i18next2['default'];
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
   }
 
   I18N.prototype.setup = function setup(options) {
+    var _this2 = this;
+
     var defaultOptions = {
-      resGetPath: 'locale/__lng__/__ns__.json',
+      compatibilityAPI: 'v1',
+      compatibilityJSON: 'v1',
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       attributes: ['t', 'i18n'],
       fallbackLng: 'en',
       debug: false
     };
 
-    i18n.init(options || defaultOptions);
+    return new Promise(function (resolve) {
+      _i18next2['default'].init(options || defaultOptions, function (err, t) {
+        if (_i18next2['default'].options.attributes instanceof String) {
+          _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+        }
 
-    if (i18n.options.attributes instanceof String) {
-      i18n.options.attributes = [i18n.options.attributes];
-    }
+        resolve(_this2.i18next);
+      });
+    });
   };
 
   I18N.prototype.setLocale = function setLocale(locale) {
-    var _this2 = this;
+    var _this3 = this;
 
     return new Promise(function (resolve) {
-      var oldLocale = _this2.getLocale();
-      _this2.i18next.setLng(locale, function (tr) {
-        _this2.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
-        _this2.signaler.signal('aurelia-translation-signal');
+      var oldLocale = _this3.getLocale();
+      _this3.i18next.changeLanguage(locale, function (err, tr) {
+        _this3.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        _this3.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
   };
 
   I18N.prototype.getLocale = function getLocale() {
-    return this.i18next.lng();
+    return this.i18next.language;
   };
 
   I18N.prototype.nf = function nf(options, locales) {
@@ -493,7 +498,7 @@ var BaseI18N = (function () {
   }]);
 
   function BaseI18N(i18n, element, ea) {
-    var _this3 = this;
+    var _this4 = this;
 
     _classCallCheck(this, BaseI18N);
 
@@ -501,7 +506,7 @@ var BaseI18N = (function () {
     this.element = element;
 
     this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function () {
-      _this3.i18n.updateTranslations(_this3.element);
+      _this4.i18n.updateTranslations(_this4.element);
     });
   }
 
@@ -568,7 +573,7 @@ var RelativeTime = (function () {
   };
 
   function RelativeTime(i18n) {
-    var _this4 = this;
+    var _this5 = this;
 
     _classCallCheck(this, RelativeTime);
 
@@ -580,13 +585,13 @@ var RelativeTime = (function () {
       var translation = trans[key].translation;
       var options = i18n.i18next.options;
 
-      if (options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
+      if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
         for (var subkey in translation) {
-          translation[subkey] = translation[subkey].replace('__count__', options.interpolationPrefix + 'count' + options.interpolationSuffix);
+          translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
         }
       }
 
-      _this4.service.i18next.addResources(key, 'translation', translation);
+      _this5.service.i18next.addResources(key, 'translation', translation);
     });
   }
 
@@ -693,19 +698,19 @@ var TCustomAttribute = (function () {
   }
 
   TCustomAttribute.prototype.bind = function bind() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.params = this.lazyParams();
 
     if (this.params) {
       this.params.valueChanged = function (newParams, oldParams) {
-        _this5.paramsChanged(_this5.value, newParams, oldParams);
+        _this6.paramsChanged(_this6.value, newParams, oldParams);
       };
     }
 
     var p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-      _this5.service.updateValue(_this5.element, _this5.value, p);
+      _this6.service.updateValue(_this6.element, _this6.value, p);
     });
 
     this.service.updateValue(this.element, this.value, p);

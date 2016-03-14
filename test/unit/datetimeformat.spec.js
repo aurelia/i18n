@@ -6,7 +6,7 @@ describe('datetimeformat tests', () => {
 
   let sut;
 
-  beforeEach(() => {
+  beforeEach((done) => {
     let resources = {
       en: {
         translation: {
@@ -20,13 +20,11 @@ describe('datetimeformat tests', () => {
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resStore: resources,
+      resources: resources,
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
       debug: false
-    });
+    }).then( (instance) => { done(); });
   });
 
   it('should display only the date in the setup locale format by default', () => {

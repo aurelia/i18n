@@ -11,8 +11,6 @@ describe('testing relative time support', () => {
     i18n = new I18N(new EventAggregator(), new BindingSignaler());
     i18n.setup({
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
       debug: false
     });

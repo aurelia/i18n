@@ -10,7 +10,7 @@ describe('feature verification placeholders', () => {
     let resources = {
       en: {
         translation: {
-          'demo': '__framework__ is the __quality__ framework in the world',
+          'demo': '{{framework}} is the {{quality}} framework in the world',
           'curlies': 'using curlies is {difficulty}',
           'es6interpolation': 'you can use ${type} as well'
         }
@@ -19,10 +19,8 @@ describe('feature verification placeholders', () => {
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resStore: resources,
+      resources: resources,
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
       debug: false
     });
@@ -32,14 +30,14 @@ describe('feature verification placeholders', () => {
     expect(sut.tr('demo', { framework: 'Aurelia', quality: 'best' })).toEqual('Aurelia is the best framework in the world');
   });
 
-  it('should use curly variable handles', () => {
-    let options = { difficulty: 'easy', interpolationPrefix: '{', interpolationSuffix: '}'};
+  it('should use single-curly variable handles', () => {
+    let options = { difficulty: 'easy', interpolation: { prefix: '{', suffix: '}' }};
 
     expect(sut.tr('curlies', options)).toBe('using curlies is easy');
   });
 
   it('should use es6 interpolation variable handles', () => {
-    let options = { type: 'interpolation', interpolationPrefix: '${', interpolationSuffix: '}'};
+    let options = { type: 'interpolation', interpolation: { prefix: '${', suffix: '}' }};
 
     expect(sut.tr('es6interpolation', options)).toBe('you can use interpolation as well');
   });

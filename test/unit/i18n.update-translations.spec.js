@@ -41,11 +41,9 @@ describe('testing i18n translation update', () => {
     ea  = new EventAggregator();
     sut = new I18N(ea, new BindingSignaler());
     sut.setup({
-      resStore: resources,
+      resources: resources,
       lng: 'en',
       attributes: ['t', 'data-i18n'],
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
       debug: false
     });

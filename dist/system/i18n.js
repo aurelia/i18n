@@ -1,13 +1,13 @@
 System.register(['i18next'], function (_export) {
   'use strict';
 
-  var i18n, I18N;
+  var i18next, I18N;
 
   function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
   return {
     setters: [function (_i18next) {
-      i18n = _i18next;
+      i18next = _i18next['default'];
     }],
     execute: function () {
       I18N = (function () {
@@ -16,45 +16,50 @@ System.register(['i18next'], function (_export) {
 
           this.globalVars = {};
 
-          this.i18next = i18n;
+          this.i18next = i18next;
           this.ea = ea;
           this.Intl = window.Intl;
           this.signaler = signaler;
         }
 
         I18N.prototype.setup = function setup(options) {
+          var _this = this;
+
           var defaultOptions = {
-            resGetPath: 'locale/__lng__/__ns__.json',
+            compatibilityAPI: 'v1',
+            compatibilityJSON: 'v1',
             lng: 'en',
-            getAsync: false,
-            sendMissing: false,
             attributes: ['t', 'i18n'],
             fallbackLng: 'en',
             debug: false
           };
 
-          i18n.init(options || defaultOptions);
+          return new Promise(function (resolve) {
+            i18next.init(options || defaultOptions, function (err, t) {
+              if (i18next.options.attributes instanceof String) {
+                i18next.options.attributes = [i18next.options.attributes];
+              }
 
-          if (i18n.options.attributes instanceof String) {
-            i18n.options.attributes = [i18n.options.attributes];
-          }
+              resolve(_this.i18next);
+            });
+          });
         };
 
         I18N.prototype.setLocale = function setLocale(locale) {
-          var _this = this;
+          var _this2 = this;
 
           return new Promise(function (resolve) {
-            var oldLocale = _this.getLocale();
-            _this.i18next.setLng(locale, function (tr) {
-              _this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
-              _this.signaler.signal('aurelia-translation-signal');
+            var oldLocale = _this2.getLocale();
+            _this2.i18next.changeLanguage(locale, function (err, tr) {
+              _this2.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+              _this2.signaler.signal('aurelia-translation-signal');
               resolve(tr);
             });
           });
         };
 
         I18N.prototype.getLocale = function getLocale() {
-          return this.i18next.lng();
+          return this.i18next.language;
         };
 
         I18N.prototype.nf = function nf(options, locales) {

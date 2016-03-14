@@ -12,9 +12,9 @@ export class RelativeTime {
       let translation = trans[key].translation;
       let options = i18n.i18next.options;
 
-      if (options.interpolationPrefix !== '__' || options.interpolationSuffix !== '__') {
+      if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
         for (let subkey in translation) {
-          translation[subkey] = translation[subkey].replace('__count__', options.interpolationPrefix + 'count' + options.interpolationSuffix);
+          translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
         }
       }
 

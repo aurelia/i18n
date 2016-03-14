@@ -1,5 +1,5 @@
 declare module 'aurelia-i18n' {
-  import * as i18n from 'i18next';
+  import i18next from 'i18next';
   import { resolver }  from 'aurelia-dependency-injection';
   import { EventAggregator }  from 'aurelia-event-aggregator';
   import { customAttribute, ViewResources }  from 'aurelia-templating';

@@ -28,6 +28,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
 - [Bundling](#bundling)
 - [Internationalization API Polyfill](#internationalization-api-polyfill)
 - [CLI Integration](#cli-integration)
+- [Migration to new i18next version](#migration-to-new-i18next-version)
 - [Running the unit tests](#running-the-unit-tests)
 
 
@@ -662,6 +663,12 @@ In case of bundling your app you should thus keep in mind that it will not be au
 There will be a command line tool that can create `translation.json` files for you by extracting the values from the html and javascript files.
 (coming soon)
 
+## Migration to new i18next version
+* Default interpolation is `{{` and `}}` instead of `__`
+* Options removed/changed: `{ sendMissing, getAsync, resStore => resources }`
+* plural_not_found won't be thrown but the given key if no plural is defined
+* indefinite plural was removed in v2 (`I have 1 apple` -> `I have one apple`)
+
 ## Polyfills
 
 * andyearnshaw/Intl.js
@@ -669,10 +676,12 @@ There will be a command line tool that can create `translation.json` files for y
 ## Dependencies
 
 * [i18next](https://github.com/i18next/i18next)
+* aurelia-binding
 * aurelia-dependency-injection
 * aurelia-event-aggregator
-* aurelia-loader-default
+* aurelia-loader
 * aurelia-templating
+* aurelia-templating-resources
 
 ## Used By
 

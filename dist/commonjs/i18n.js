@@ -2,13 +2,13 @@
 
 exports.__esModule = true;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _i18next = require('i18next');
 
-var i18n = _interopRequireWildcard(_i18next);
+var _i18next2 = _interopRequireDefault(_i18next);
 
 var I18N = (function () {
   function I18N(ea, signaler) {
@@ -16,45 +16,50 @@ var I18N = (function () {
 
     this.globalVars = {};
 
-    this.i18next = i18n;
+    this.i18next = _i18next2['default'];
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
   }
 
   I18N.prototype.setup = function setup(options) {
+    var _this = this;
+
     var defaultOptions = {
-      resGetPath: 'locale/__lng__/__ns__.json',
+      compatibilityAPI: 'v1',
+      compatibilityJSON: 'v1',
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       attributes: ['t', 'i18n'],
       fallbackLng: 'en',
       debug: false
     };
 
-    i18n.init(options || defaultOptions);
+    return new Promise(function (resolve) {
+      _i18next2['default'].init(options || defaultOptions, function (err, t) {
+        if (_i18next2['default'].options.attributes instanceof String) {
+          _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+        }
 
-    if (i18n.options.attributes instanceof String) {
-      i18n.options.attributes = [i18n.options.attributes];
-    }
+        resolve(_this.i18next);
+      });
+    });
   };
 
   I18N.prototype.setLocale = function setLocale(locale) {
-    var _this = this;
+    var _this2 = this;
 
     return new Promise(function (resolve) {
-      var oldLocale = _this.getLocale();
-      _this.i18next.setLng(locale, function (tr) {
-        _this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
-        _this.signaler.signal('aurelia-translation-signal');
+      var oldLocale = _this2.getLocale();
+      _this2.i18next.changeLanguage(locale, function (err, tr) {
+        _this2.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        _this2.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
   };
 
   I18N.prototype.getLocale = function getLocale() {
-    return this.i18next.lng();
+    return this.i18next.language;
   };
 
   I18N.prototype.nf = function nf(options, locales) {

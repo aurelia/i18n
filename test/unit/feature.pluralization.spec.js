@@ -10,8 +10,8 @@ describe('feature verification pluralization', () => {
     let resources = {
       en: {
         translation: {
-          'lives': '__count__ life remaining',
-          'lives_plural': '__count__ lives remaining',
+          'lives': '{{count}} life remaining',
+          'lives_plural': '{{count}} lives remaining',
           'lives_indefinite': 'a life remaining',
           'lives_plural_indefinite': 'some lives remaining'
         }
@@ -20,10 +20,8 @@ describe('feature verification pluralization', () => {
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resStore: resources,
+      resources: resources,
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
       debug: false
     });
@@ -37,15 +35,17 @@ describe('feature verification pluralization', () => {
     expect(sut.tr('lives', { count: 2 })).toEqual('2 lives remaining');
   });
 
-  it('should return unknown error if no plural is defined', () => {
-    expect(sut.tr('wrongtest', { count: 2 })).toContain('plural_not_found');
+  it('should return same key if no plural is defined', () => {
+    expect(sut.tr('wrongtest', { count: 2 })).toContain('wrongtest');
   });
 
-  it('should return singular indefinite translation', () => {
-    expect(sut.tr('lives', { count: 1, indefinite_article: true })).toEqual('a life remaining');
-  });
+  // xit('should return singular indefinite translation', () => {
+    // Not supported by i18next v2
+    // expect(sut.tr('lives', { count: 1, indefinite_article: true })).toEqual('a life remaining');
+  // });
 
-  it('should return plural indefinite translation', () => {
-    expect(sut.tr('lives', { count: 2, indefinite_article: true })).toEqual('some lives remaining');
-  });
+  // xit('should return plural indefinite translation', () => {
+    // Not supported by i18next v2
+    // expect(sut.tr('lives', { count: 2, indefinite_article: true })).toEqual('some lives remaining');
+  // });
 });
