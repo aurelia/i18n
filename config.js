@@ -18,6 +18,7 @@ System.config({
     "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-beta.1.1.1",
     "aurelia-loader": "npm:aurelia-loader@1.0.0-beta.1.1.1",
     "aurelia-pal-browser": "npm:aurelia-pal-browser@1.0.0-beta.1.1.4",
+    "aurelia-polyfills": "npm:aurelia-polyfills@1.0.0-beta.1.0.6",
     "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.1.4",
     "aurelia-templating-resources": "npm:aurelia-templating-resources@1.0.0-beta.1.1.3",
     "babel": "npm:babel-core@5.8.35",
@@ -62,6 +63,9 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1"
     },
     "npm:aurelia-pal-browser@1.0.0-beta.1.1.4": {
+      "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1"
+    },
+    "npm:aurelia-polyfills@1.0.0-beta.1.0.6": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1"
     },
     "npm:aurelia-task-queue@1.0.0-beta.1.1.1": {

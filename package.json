@@ -42,6 +42,7 @@
       "aurelia-dependency-injection": "^1.0.0-beta.1.1.4",
       "aurelia-event-aggregator": "^1.0.0-beta.1.1.0",
       "aurelia-loader": "^1.0.0-beta.1.1.0",
+      "aurelia-polyfills": "^1.0.0-beta.1.0.6",
       "aurelia-templating": "^1.0.0-beta.1.1.0",
       "aurelia-templating-resources": "^1.0.0-beta.1.1.0",
       "i18next": "^2.3.4",
