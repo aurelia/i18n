@@ -63,24 +63,30 @@ jspm install aurelia-i18n
   "friend_female": "A girlfriend"
 }
 ```
+6. NEW!: Install a backend plugin
+From v.2 you have to pick your own backend service. For this guide we're going to leverage the [XHR Plugin](https://github.com/i18next/i18next-xhr-backend)
+Install it in the root of your project via `jspm install npm:i18next-xhr-backend`.
 
-6.. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
+
+7. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
 
 ```javascript
   import {I18N} from 'aurelia-i18n';
+  import XHR from 'i18next-xhr-backend'; // <-- your previously installed backend plugin 
 
   export function configure(aurelia) {
     aurelia.use
       .standardConfiguration()
       .developmentLogging()
       .plugin('aurelia-i18n', (instance) => {
-        // adapt options to your needs (see http://i18next.com/pages/doc_init.html)
+        // register backend plugin
+        instance.i18next.use(XHR);
+        
+        // adapt options to your needs (see http://i18next.com/docs/options/)
         instance.setup({
-          resGetPath : 'locale/__lng__/__ns__.json',
+          loadPath: '/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
           lng : 'de',
           attributes : ['t','i18n'],
-          getAsync : true,
-          sendMissing : false,
           fallbackLng : 'en',
           debug : false
         });
@@ -665,9 +671,16 @@ There will be a command line tool that can create `translation.json` files for y
 
 ## Migration to new i18next version
 * Default interpolation is `{{` and `}}` instead of `__`
+* API Changes: Keep those in mind if you accessed the original i18next object and performed custom actions
+  the existing aurelia-i18n methods have been updated to use the new API
 * Options removed/changed: `{ sendMissing, getAsync, resStore => resources }`
 * plural_not_found won't be thrown but the given key if no plural is defined
 * indefinite plural was removed in v2 (`I have 1 apple` -> `I have one apple`)
+* No default backend
+
+The new version requires the user to define its own backend service. This was done in order to keep the core clean and easily upgradable.
+So from now on users of aurelia-i18n also need to setup their own backend service. In order to do so we can leverage a i18next plugin from [this list](http://i18next.com/docs/ecosystem/#backends)-
+Take a look at the updated [How to install this plugin?](#how-to-install-this-plugin) section.
 
 ## Polyfills
 
