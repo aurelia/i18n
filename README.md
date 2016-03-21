@@ -52,9 +52,9 @@ jspm install aurelia-i18n
 
 ```javascript
 {
-  "score": "Score: __score__",
-  "lives": "__count__ life remaining",
-  "lives_plural": "__count__ lives remaining",
+  "score": "Score: {{score}}",
+  "lives": "{{count}} life remaining",
+  "lives_plural": "{{count}} lives remaining",
   "lives_indefinite": "a life remaining",
   "lives_plural_indefinite": "some lives remaining",
   "friend": "A friend",
@@ -332,7 +332,7 @@ Also note that for whatever attribute you registered, the corresponding \*-param
 ```javascript
 // Translation file
 {
-  "paramstest": "Some text with <strong>__content__</strong>"
+  "paramstest": "Some text with <strong>{{content}}</strong>"
 }
 ```
 
@@ -439,7 +439,7 @@ Now we could easily pass min and max as separate variables but on the other hand
 var resources = {
   en: {
     translation: {
-      "complex": '__field__ should be between __threshold.min__ and __threshold.max__'
+      "complex": '{{field}} should be between {{threshold.min}} and {{threshold.max}}'
     }
   }
 };
