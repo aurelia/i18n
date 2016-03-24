@@ -28,7 +28,7 @@ export class I18N {
         if (i18next.options.attributes instanceof String) {
           i18next.options.attributes = [i18next.options.attributes];
         }
-        
+
         resolve(this.i18next);
       });
     });
