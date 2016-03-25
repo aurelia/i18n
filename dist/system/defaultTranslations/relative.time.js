@@ -1,11 +1,11 @@
-System.register([], function (_export) {
-  'use strict';
+'use strict';
 
+System.register([], function (_export, _context) {
   var translations;
   return {
     setters: [],
     execute: function () {
-      translations = {
+      _export('translations', translations = {
         ar: {
           translation: {
             'now': 'الآن',
@@ -240,7 +240,7 @@ System.register([], function (_export) {
             'day_in_plural': 'あと __count__ 日間'
           }
         }
-      };
+      });
 
       _export('translations', translations);
     }

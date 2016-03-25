@@ -1,3 +1,20 @@
+### 0.5.0 (2016-03-25)
+
+
+#### Bug Fixes
+
+* **deps:**
+  * added missing pal dependency ([451e7a1a](http://github.com/aurelia/i18n/commit/451e7a1add18adca536091f7ca2d882465318730))
+  * proper dependency order ([a7ea034e](http://github.com/aurelia/i18n/commit/a7ea034e62cb2f0ef8be8411ab8f68dd5f8cb2fe))
+* **installs:** prepare package.json and config.js ([a5d89539](http://github.com/aurelia/i18n/commit/a5d89539dd964f86baa2a6c3a94d9911e245e04e))
+* **polyfills:** added aurelia-polyfills ([a7656aec](http://github.com/aurelia/i18n/commit/a7656aec2d3e6b950b86ee49470ba7253da92ed2))
+
+
+#### Features
+
+* **i18next:** update to i18next v2 ([b5ca8caa](http://github.com/aurelia/i18n/commit/b5ca8caab5d7bdd3639bf75adb1bc748be3b8683))
+
+
 ### 0.4.13 (2016-03-03)
 
 

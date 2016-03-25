@@ -1,12 +1,15 @@
 'use strict';
 
-exports.__esModule = true;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DfValueConverter = undefined;
 
 var _i18n = require('./i18n');
 
-var DfValueConverter = (function () {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
     return [_i18n.I18N];
   };
@@ -24,6 +27,4 @@ var DfValueConverter = (function () {
   };
 
   return DfValueConverter;
-})();
-
-exports.DfValueConverter = DfValueConverter;
+}();

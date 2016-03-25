@@ -1,7 +1,7 @@
-System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export) {
-  'use strict';
+'use strict';
 
-  var EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N;
+System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export, _context) {
+  var EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, _typeof;
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -42,7 +42,7 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
     frameworkConfig.globalResources('./rt');
 
     if (window.Intl === undefined) {
-      var _ret = (function () {
+      var _ret = function () {
         var loader = frameworkConfig.container.get(Loader);
 
         return {
@@ -55,9 +55,9 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
             });
           })
         };
-      })();
+      }();
 
-      if (typeof _ret === 'object') return _ret.v;
+      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
     }
 
     return Promise.resolve(registerI18N(frameworkConfig, cb));
@@ -91,6 +91,12 @@ System.register(['aurelia-event-aggregator', 'aurelia-templating', 'aurelia-load
       BaseI18N = _baseI18n.BaseI18N;
     }],
     execute: function () {
+      _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+      };
+
       _export('configure', configure);
 
       _export('I18N', I18N);

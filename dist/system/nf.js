@@ -1,16 +1,20 @@
-System.register(['./i18n'], function (_export) {
-  'use strict';
+'use strict';
 
+System.register(['./i18n'], function (_export, _context) {
   var I18N, NfValueConverter;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_i18n) {
       I18N = _i18n.I18N;
     }],
     execute: function () {
-      NfValueConverter = (function () {
+      _export('NfValueConverter', NfValueConverter = function () {
         NfValueConverter.inject = function inject() {
           return [I18N];
         };
@@ -28,7 +32,7 @@ System.register(['./i18n'], function (_export) {
         };
 
         return NfValueConverter;
-      })();
+      }());
 
       _export('NfValueConverter', NfValueConverter);
     }

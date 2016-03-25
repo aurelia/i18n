@@ -1,11 +1,18 @@
 define(['exports', './i18n'], function (exports, _i18n) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.DfValueConverter = undefined;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-  var DfValueConverter = (function () {
+  var DfValueConverter = exports.DfValueConverter = function () {
     DfValueConverter.inject = function inject() {
       return [_i18n.I18N];
     };
@@ -23,7 +30,5 @@ define(['exports', './i18n'], function (exports, _i18n) {
     };
 
     return DfValueConverter;
-  })();
-
-  exports.DfValueConverter = DfValueConverter;
+  }();
 });

@@ -1,22 +1,19 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.BaseI18N = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _class, _temp;
 
 var _i18n = require('./i18n');
 
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
-var BaseI18N = (function () {
-  _createClass(BaseI18N, null, [{
-    key: 'inject',
-    value: [_i18n.I18N, Element, _aureliaEventAggregator.EventAggregator],
-    enumerable: true
-  }]);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
   function BaseI18N(i18n, element, ea) {
     var _this = this;
 
@@ -39,6 +36,4 @@ var BaseI18N = (function () {
   };
 
   return BaseI18N;
-})();
-
-exports.BaseI18N = BaseI18N;
+}(), _class.inject = [_i18n.I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);

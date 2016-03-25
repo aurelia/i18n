@@ -1,9 +1,9 @@
-import {I18N} from './i18n';
-import {EventAggregator} from 'aurelia-event-aggregator';
+var _class, _temp;
 
-export class BaseI18N {
+import { I18N } from './i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-  static inject = [I18N, Element, EventAggregator];
+export let BaseI18N = (_temp = _class = class BaseI18N {
 
   constructor(i18n, element, ea) {
     this.i18n = i18n;
@@ -21,4 +21,4 @@ export class BaseI18N {
   detached() {
     this.__i18nDisposer.dispose();
   }
-}
+}, _class.inject = [I18N, Element, EventAggregator], _temp);

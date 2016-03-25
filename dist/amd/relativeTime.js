@@ -1,11 +1,18 @@
-define(['exports', './i18n', './defaultTranslations/relative.time'], function (exports, _i18n, _defaultTranslationsRelativeTime) {
+define(['exports', './i18n', './defaultTranslations/relative.time'], function (exports, _i18n, _relative) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.RelativeTime = undefined;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-  var RelativeTime = (function () {
+  var RelativeTime = exports.RelativeTime = function () {
     RelativeTime.inject = function inject() {
       return [_i18n.I18N];
     };
@@ -17,7 +24,7 @@ define(['exports', './i18n', './defaultTranslations/relative.time'], function (e
 
       this.service = i18n;
 
-      var trans = _defaultTranslationsRelativeTime.translations['default'] || _defaultTranslationsRelativeTime.translations;
+      var trans = _relative.translations.default || _relative.translations;
 
       Object.keys(trans).map(function (key) {
         var translation = trans[key].translation;
@@ -73,7 +80,5 @@ define(['exports', './i18n', './defaultTranslations/relative.time'], function (e
     };
 
     return RelativeTime;
-  })();
-
-  exports.RelativeTime = RelativeTime;
+  }();
 });

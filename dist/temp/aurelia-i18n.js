@@ -1,12 +1,13 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfValueConverter = exports.DfValueConverter = exports.BaseI18N = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+var _dec, _class, _class3, _temp, _dec2, _class4, _class5, _temp2, _dec3, _class6, _class7, _temp3, _class8, _temp4;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _i18next = require('i18next');
 
@@ -22,9 +23,11 @@ var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
 
-var _aureliaLoader = require('aurelia-loader');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var translations = {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var translations = exports.translations = {
   ar: {
     translation: {
       'now': 'الآن',
@@ -261,8 +264,7 @@ var translations = {
   }
 };
 
-exports.translations = translations;
-var extend = function extend(destination, source) {
+var extend = exports.extend = function extend(destination, source) {
   for (var property in source) {
     destination[property] = source[property];
   }
@@ -270,8 +272,7 @@ var extend = function extend(destination, source) {
   return destination;
 };
 
-exports.extend = extend;
-var assignObjectToKeys = function assignObjectToKeys(root, obj) {
+var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKeys(root, obj) {
   if (obj === undefined || obj === null) {
     return obj;
   }
@@ -279,7 +280,7 @@ var assignObjectToKeys = function assignObjectToKeys(root, obj) {
   var opts = {};
 
   Object.keys(obj).map(function (key) {
-    if (typeof obj[key] === 'object') {
+    if (_typeof(obj[key]) === 'object') {
       extend(opts, assignObjectToKeys(key, obj[key]));
     } else {
       opts[root !== '' ? root + '.' + key : key] = obj[key];
@@ -289,11 +290,9 @@ var assignObjectToKeys = function assignObjectToKeys(root, obj) {
   return opts;
 };
 
-exports.assignObjectToKeys = assignObjectToKeys;
-
-var LazyOptional = (function () {
+var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjection.resolver)(), _dec(_class = function () {
   function LazyOptional(key) {
-    _classCallCheck(this, _LazyOptional);
+    _classCallCheck(this, LazyOptional);
 
     this.key = key;
   }
@@ -313,20 +312,16 @@ var LazyOptional = (function () {
     return new LazyOptional(key);
   };
 
-  var _LazyOptional = LazyOptional;
-  LazyOptional = _aureliaDependencyInjection.resolver()(LazyOptional) || LazyOptional;
   return LazyOptional;
-})();
+}()) || _class);
 
-exports.LazyOptional = LazyOptional;
-
-var I18N = (function () {
+var I18N = exports.I18N = function () {
   function I18N(ea, signaler) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
 
-    this.i18next = _i18next2['default'];
+    this.i18next = _i18next2.default;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -345,9 +340,9 @@ var I18N = (function () {
     };
 
     return new Promise(function (resolve) {
-      _i18next2['default'].init(options || defaultOptions, function (err, t) {
-        if (_i18next2['default'].options.attributes instanceof String) {
-          _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+      _i18next2.default.init(options || defaultOptions, function (err, t) {
+        if (_i18next2.default.options.attributes instanceof String) {
+          _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
         }
 
         resolve(_this2.i18next);
@@ -411,17 +406,18 @@ var I18N = (function () {
   };
 
   I18N.prototype.updateTranslations = function updateTranslations(el) {
-    var i = undefined;
-    var l = undefined;
+    var i = void 0;
+    var l = void 0;
 
     var selector = [].concat(this.i18next.options.attributes);
-    for (i = 0, l = selector.length; i < l; i++) selector[i] = '[' + selector[i] + ']';
-    selector = selector.join(',');
+    for (i = 0, l = selector.length; i < l; i++) {
+      selector[i] = '[' + selector[i] + ']';
+    }selector = selector.join(',');
 
     var nodes = el.querySelectorAll(selector);
     for (i = 0, l = nodes.length; i < l; i++) {
       var node = nodes[i];
-      var keys = undefined;
+      var keys = void 0;
 
       for (var i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(this.i18next.options.attributes[i2]);
@@ -447,7 +443,7 @@ var I18N = (function () {
 
       var re = /\[([a-z\-]*)\]/g;
 
-      var m = undefined;
+      var m = void 0;
       var attr = 'text';
 
       if (node.nodeName === 'IMG') attr = 'src';
@@ -486,17 +482,9 @@ var I18N = (function () {
   };
 
   return I18N;
-})();
+}();
 
-exports.I18N = I18N;
-
-var BaseI18N = (function () {
-  _createClass(BaseI18N, null, [{
-    key: 'inject',
-    value: [I18N, Element, _aureliaEventAggregator.EventAggregator],
-    enumerable: true
-  }]);
-
+var BaseI18N = exports.BaseI18N = (_temp = _class3 = function () {
   function BaseI18N(i18n, element, ea) {
     var _this4 = this;
 
@@ -519,11 +507,9 @@ var BaseI18N = (function () {
   };
 
   return BaseI18N;
-})();
+}(), _class3.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);
 
-exports.BaseI18N = BaseI18N;
-
-var DfValueConverter = (function () {
+var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
     return [I18N];
   };
@@ -541,11 +527,9 @@ var DfValueConverter = (function () {
   };
 
   return DfValueConverter;
-})();
+}();
 
-exports.DfValueConverter = DfValueConverter;
-
-var NfValueConverter = (function () {
+var NfValueConverter = exports.NfValueConverter = function () {
   NfValueConverter.inject = function inject() {
     return [I18N];
   };
@@ -563,11 +547,9 @@ var NfValueConverter = (function () {
   };
 
   return NfValueConverter;
-})();
+}();
 
-exports.NfValueConverter = NfValueConverter;
-
-var RelativeTime = (function () {
+var RelativeTime = exports.RelativeTime = function () {
   RelativeTime.inject = function inject() {
     return [I18N];
   };
@@ -579,7 +561,7 @@ var RelativeTime = (function () {
 
     this.service = i18n;
 
-    var trans = translations['default'] || translations;
+    var trans = translations.default || translations;
 
     Object.keys(trans).map(function (key) {
       var translation = trans[key].translation;
@@ -635,11 +617,9 @@ var RelativeTime = (function () {
   };
 
   return RelativeTime;
-})();
+}();
 
-exports.RelativeTime = RelativeTime;
-
-var TValueConverter = (function () {
+var TValueConverter = exports.TValueConverter = function () {
   TValueConverter.inject = function inject() {
     return [I18N];
   };
@@ -655,41 +635,22 @@ var TValueConverter = (function () {
   };
 
   return TValueConverter;
-})();
+}();
 
-exports.TValueConverter = TValueConverter;
-
-var TParamsCustomAttribute = (function () {
-  _createClass(TParamsCustomAttribute, null, [{
-    key: 'inject',
-    value: [Element],
-    enumerable: true
-  }]);
-
+var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class4 = (_temp2 = _class5 = function () {
   function TParamsCustomAttribute(element) {
-    _classCallCheck(this, _TParamsCustomAttribute);
+    _classCallCheck(this, TParamsCustomAttribute);
 
     this.element = element;
   }
 
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
-  var _TParamsCustomAttribute = TParamsCustomAttribute;
-  TParamsCustomAttribute = _aureliaTemplating.customAttribute('t-params')(TParamsCustomAttribute) || TParamsCustomAttribute;
   return TParamsCustomAttribute;
-})();
-
-exports.TParamsCustomAttribute = TParamsCustomAttribute;
-
-var TCustomAttribute = (function () {
-  _createClass(TCustomAttribute, null, [{
-    key: 'inject',
-    value: [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)],
-    enumerable: true
-  }]);
-
+}(), _class5.inject = [Element], _temp2)) || _class4);
+var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class6 = (_temp3 = _class7 = function () {
   function TCustomAttribute(element, i18n, ea, tparams) {
-    _classCallCheck(this, _TCustomAttribute);
+    _classCallCheck(this, TCustomAttribute);
 
     this.element = element;
     this.service = i18n;
@@ -731,20 +692,9 @@ var TCustomAttribute = (function () {
     }
   };
 
-  var _TCustomAttribute = TCustomAttribute;
-  TCustomAttribute = _aureliaTemplating.customAttribute('t')(TCustomAttribute) || TCustomAttribute;
   return TCustomAttribute;
-})();
-
-exports.TCustomAttribute = TCustomAttribute;
-
-var TBindingBehavior = (function () {
-  _createClass(TBindingBehavior, null, [{
-    key: 'inject',
-    value: [_aureliaTemplatingResources.SignalBindingBehavior],
-    enumerable: true
-  }]);
-
+}(), _class7.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp3)) || _class6);
+var TBindingBehavior = exports.TBindingBehavior = (_temp4 = _class8 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     _classCallCheck(this, TBindingBehavior);
 
@@ -766,11 +716,9 @@ var TBindingBehavior = (function () {
   };
 
   return TBindingBehavior;
-})();
+}(), _class8.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp4);
 
-exports.TBindingBehavior = TBindingBehavior;
-
-var RtValueConverter = (function () {
+var RtValueConverter = exports.RtValueConverter = function () {
   RtValueConverter.inject = function inject() {
     return [RelativeTime];
   };
@@ -786,79 +734,4 @@ var RtValueConverter = (function () {
   };
 
   return RtValueConverter;
-})();
-
-exports.RtValueConverter = RtValueConverter;
-
-function registerI18N(frameworkConfig, cb) {
-  var instance = new I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
-  frameworkConfig.container.registerInstance(I18N, instance);
-
-  var ret = cb(instance);
-
-  frameworkConfig.postTask(function () {
-    var resources = frameworkConfig.container.get(_aureliaTemplating.ViewResources);
-    var htmlBehaviorResource = resources.getAttribute('t');
-    var htmlParamsResource = resources.getAttribute('t-params');
-    var attributes = instance.i18next.options.attributes;
-
-    if (!attributes) {
-      attributes = ['t', 'i18n'];
-    }
-
-    attributes.forEach(function (alias) {
-      return resources.registerAttribute(alias, htmlBehaviorResource, 't');
-    });
-    attributes.forEach(function (alias) {
-      return resources.registerAttribute(alias + '-params', htmlParamsResource, 't-params');
-    });
-  });
-
-  return ret;
-}
-
-function configure(frameworkConfig, cb) {
-  if (cb === undefined || typeof cb !== 'function') {
-    var errorMsg = 'You need to provide a callback method to properly configure the library';
-    throw errorMsg;
-  }
-
-  frameworkConfig.globalResources('./t');
-  frameworkConfig.globalResources('./nf');
-  frameworkConfig.globalResources('./df');
-  frameworkConfig.globalResources('./rt');
-
-  if (window.Intl === undefined) {
-    var _ret = (function () {
-      var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
-
-      return {
-        v: loader.normalize('aurelia-i18n').then(function (i18nName) {
-          return loader.normalize('intl', i18nName).then(function (intlName) {
-            return loader.loadModule(intlName).then(function (poly) {
-              window.Intl = poly;
-              return registerI18N(frameworkConfig, cb);
-            });
-          });
-        })
-      };
-    })();
-
-    if (typeof _ret === 'object') return _ret.v;
-  }
-
-  return Promise.resolve(registerI18N(frameworkConfig, cb));
-}
-
-exports.configure = configure;
-exports.I18N = I18N;
-exports.RelativeTime = RelativeTime;
-exports.DfValueConverter = DfValueConverter;
-exports.NfValueConverter = NfValueConverter;
-exports.RtValueConverter = RtValueConverter;
-exports.TValueConverter = TValueConverter;
-exports.TBindingBehavior = TBindingBehavior;
-exports.TCustomAttribute = TCustomAttribute;
-exports.TParamsCustomAttribute = TParamsCustomAttribute;
-exports.BaseI18N = BaseI18N;
-exports.EventAggregator = _aureliaEventAggregator.EventAggregator;
+}();

@@ -1,7 +1,9 @@
-import {I18N} from './i18n';
+import { I18N } from './i18n';
 
-export class NfValueConverter {
-  static inject() { return [I18N]; }
+export let NfValueConverter = class NfValueConverter {
+  static inject() {
+    return [I18N];
+  }
   constructor(i18n) {
     this.service = i18n;
   }
@@ -11,4 +13,4 @@ export class NfValueConverter {
 
     return nf.format(value);
   }
-}
+};

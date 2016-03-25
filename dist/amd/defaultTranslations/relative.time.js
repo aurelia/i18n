@@ -1,8 +1,10 @@
 define(['exports'], function (exports) {
   'use strict';
 
-  exports.__esModule = true;
-  var translations = {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var translations = exports.translations = {
     ar: {
       translation: {
         'now': 'الآن',
@@ -238,5 +240,4 @@ define(['exports'], function (exports) {
       }
     }
   };
-  exports.translations = translations;
 });

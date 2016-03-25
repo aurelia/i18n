@@ -1,11 +1,18 @@
 define(['exports', './relativeTime'], function (exports, _relativeTime) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.RtValueConverter = undefined;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-  var RtValueConverter = (function () {
+  var RtValueConverter = exports.RtValueConverter = function () {
     RtValueConverter.inject = function inject() {
       return [_relativeTime.RelativeTime];
     };
@@ -21,7 +28,5 @@ define(['exports', './relativeTime'], function (exports, _relativeTime) {
     };
 
     return RtValueConverter;
-  })();
-
-  exports.RtValueConverter = RtValueConverter;
+  }();
 });

@@ -1,9 +1,13 @@
-System.register(['./i18n', './defaultTranslations/relative.time'], function (_export) {
-  'use strict';
+'use strict';
 
+System.register(['./i18n', './defaultTranslations/relative.time'], function (_export, _context) {
   var I18N, translations, RelativeTime;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_i18n) {
@@ -12,7 +16,7 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
       translations = _defaultTranslationsRelativeTime.translations;
     }],
     execute: function () {
-      RelativeTime = (function () {
+      _export('RelativeTime', RelativeTime = function () {
         RelativeTime.inject = function inject() {
           return [I18N];
         };
@@ -24,7 +28,7 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
 
           this.service = i18n;
 
-          var trans = translations['default'] || translations;
+          var trans = translations.default || translations;
 
           Object.keys(trans).map(function (key) {
             var translation = trans[key].translation;
@@ -80,7 +84,7 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
         };
 
         return RelativeTime;
-      })();
+      }());
 
       _export('RelativeTime', RelativeTime);
     }

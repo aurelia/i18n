@@ -1,4 +1,6 @@
-import {resolver} from 'aurelia-dependency-injection';
+var _dec, _class;
+
+import { resolver } from 'aurelia-dependency-injection';
 
 export let extend = (destination, source) => {
   for (let property in source) {
@@ -15,7 +17,7 @@ export let assignObjectToKeys = (root, obj) => {
 
   let opts = {};
 
-  Object.keys(obj).map( (key) => {
+  Object.keys(obj).map(key => {
     if (typeof obj[key] === 'object') {
       extend(opts, assignObjectToKeys(key, obj[key]));
     } else {
@@ -26,8 +28,7 @@ export let assignObjectToKeys = (root, obj) => {
   return opts;
 };
 
-@resolver()
-export class LazyOptional {
+export let LazyOptional = (_dec = resolver(), _dec(_class = class LazyOptional {
   constructor(key) {
     this.key = key;
   }
@@ -44,4 +45,4 @@ export class LazyOptional {
   static of(key) {
     return new LazyOptional(key);
   }
-}
+}) || _class);

@@ -1,6 +1,11 @@
 'use strict';
 
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtValueConverter = exports.NfValueConverter = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
@@ -63,7 +68,7 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./rt');
 
   if (window.Intl === undefined) {
-    var _ret = (function () {
+    var _ret = function () {
       var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
 
       return {
@@ -76,9 +81,9 @@ function configure(frameworkConfig, cb) {
           });
         })
       };
-    })();
+    }();
 
-    if (typeof _ret === 'object') return _ret.v;
+    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
   }
 
   return Promise.resolve(registerI18N(frameworkConfig, cb));

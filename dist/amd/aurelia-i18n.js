@@ -1,7 +1,16 @@
 define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtValueConverter = exports.NfValueConverter = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
+
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
@@ -42,7 +51,7 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
     frameworkConfig.globalResources('./rt');
 
     if (window.Intl === undefined) {
-      var _ret = (function () {
+      var _ret = function () {
         var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
 
         return {
@@ -55,9 +64,9 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
             });
           })
         };
-      })();
+      }();
 
-      if (typeof _ret === 'object') return _ret.v;
+      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
     }
 
     return Promise.resolve(registerI18N(frameworkConfig, cb));

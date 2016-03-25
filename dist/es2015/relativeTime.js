@@ -1,14 +1,16 @@
-import {I18N} from './i18n';
-import {translations} from  './defaultTranslations/relative.time';
+import { I18N } from './i18n';
+import { translations } from './defaultTranslations/relative.time';
 
-export class RelativeTime {
-  static inject() { return [I18N]; }
+export let RelativeTime = class RelativeTime {
+  static inject() {
+    return [I18N];
+  }
   constructor(i18n) {
     this.service = i18n;
 
     let trans = translations.default || translations;
 
-    Object.keys(trans).map( (key) => {
+    Object.keys(trans).map(key => {
       let translation = trans[key].translation;
       let options = i18n.i18next.options;
 
@@ -55,9 +57,9 @@ export class RelativeTime {
       return this.service.tr(unit, { count: parseInt(unitAmount, 10), context: 'ago' });
     } else if (unitAmount < 0) {
       let abs = Math.abs(unitAmount);
-      return this.service.tr(unit, { count: abs, context: 'in'});
+      return this.service.tr(unit, { count: abs, context: 'in' });
     }
 
     return null;
   }
-}
+};

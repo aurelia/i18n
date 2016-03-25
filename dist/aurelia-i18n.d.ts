@@ -1,11 +1,20 @@
 declare module 'aurelia-i18n' {
   import i18next from 'i18next';
-  import { resolver }  from 'aurelia-dependency-injection';
-  import { EventAggregator }  from 'aurelia-event-aggregator';
-  import { customAttribute, ViewResources }  from 'aurelia-templating';
-  import { SignalBindingBehavior, BindingSignaler }  from 'aurelia-templating-resources';
-  import { ValueConverter }  from 'aurelia-binding';
-  import { Loader }  from 'aurelia-loader';
+  import {
+    resolver
+  } from 'aurelia-dependency-injection';
+  import {
+    EventAggregator
+  } from 'aurelia-event-aggregator';
+  import {
+    customAttribute
+  } from 'aurelia-templating';
+  import {
+    SignalBindingBehavior
+  } from 'aurelia-templating-resources';
+  import {
+    ValueConverter
+  } from 'aurelia-binding';
   
   /*eslint no-irregular-whitespace: 0*/
   export const translations: any;

@@ -1,14 +1,17 @@
 'use strict';
 
-exports.__esModule = true;
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.RelativeTime = undefined;
 
 var _i18n = require('./i18n');
 
-var _defaultTranslationsRelativeTime = require('./defaultTranslations/relative.time');
+var _relative = require('./defaultTranslations/relative.time');
 
-var RelativeTime = (function () {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var RelativeTime = exports.RelativeTime = function () {
   RelativeTime.inject = function inject() {
     return [_i18n.I18N];
   };
@@ -20,7 +23,7 @@ var RelativeTime = (function () {
 
     this.service = i18n;
 
-    var trans = _defaultTranslationsRelativeTime.translations['default'] || _defaultTranslationsRelativeTime.translations;
+    var trans = _relative.translations.default || _relative.translations;
 
     Object.keys(trans).map(function (key) {
       var translation = trans[key].translation;
@@ -76,6 +79,4 @@ var RelativeTime = (function () {
   };
 
   return RelativeTime;
-})();
-
-exports.RelativeTime = RelativeTime;
+}();

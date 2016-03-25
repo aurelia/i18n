@@ -1,26 +1,36 @@
-System.register(['aurelia-dependency-injection'], function (_export) {
-  'use strict';
+'use strict';
 
-  var resolver, extend, assignObjectToKeys, LazyOptional;
+System.register(['aurelia-dependency-injection'], function (_export, _context) {
+  var resolver, _dec, _class, _typeof, extend, assignObjectToKeys, LazyOptional;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_aureliaDependencyInjection) {
       resolver = _aureliaDependencyInjection.resolver;
     }],
     execute: function () {
-      extend = function extend(destination, source) {
+      _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+      };
+
+      _export('extend', extend = function extend(destination, source) {
         for (var property in source) {
           destination[property] = source[property];
         }
 
         return destination;
-      };
+      });
 
       _export('extend', extend);
 
-      assignObjectToKeys = function assignObjectToKeys(root, obj) {
+      _export('assignObjectToKeys', assignObjectToKeys = function assignObjectToKeys(root, obj) {
         if (obj === undefined || obj === null) {
           return obj;
         }
@@ -28,7 +38,7 @@ System.register(['aurelia-dependency-injection'], function (_export) {
         var opts = {};
 
         Object.keys(obj).map(function (key) {
-          if (typeof obj[key] === 'object') {
+          if (_typeof(obj[key]) === 'object') {
             extend(opts, assignObjectToKeys(key, obj[key]));
           } else {
             opts[root !== '' ? root + '.' + key : key] = obj[key];
@@ -36,13 +46,13 @@ System.register(['aurelia-dependency-injection'], function (_export) {
         });
 
         return opts;
-      };
+      });
 
       _export('assignObjectToKeys', assignObjectToKeys);
 
-      LazyOptional = (function () {
+      _export('LazyOptional', LazyOptional = (_dec = resolver(), _dec(_class = function () {
         function LazyOptional(key) {
-          _classCallCheck(this, _LazyOptional);
+          _classCallCheck(this, LazyOptional);
 
           this.key = key;
         }
@@ -62,10 +72,8 @@ System.register(['aurelia-dependency-injection'], function (_export) {
           return new LazyOptional(key);
         };
 
-        var _LazyOptional = LazyOptional;
-        LazyOptional = resolver()(LazyOptional) || LazyOptional;
         return LazyOptional;
-      })();
+      }()) || _class));
 
       _export('LazyOptional', LazyOptional);
     }

@@ -1,16 +1,20 @@
-System.register(['i18next'], function (_export) {
-  'use strict';
+'use strict';
 
+System.register(['i18next'], function (_export, _context) {
   var i18next, I18N;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_i18next) {
-      i18next = _i18next['default'];
+      i18next = _i18next.default;
     }],
     execute: function () {
-      I18N = (function () {
+      _export('I18N', I18N = function () {
         function I18N(ea, signaler) {
           _classCallCheck(this, I18N);
 
@@ -101,17 +105,18 @@ System.register(['i18next'], function (_export) {
         };
 
         I18N.prototype.updateTranslations = function updateTranslations(el) {
-          var i = undefined;
-          var l = undefined;
+          var i = void 0;
+          var l = void 0;
 
           var selector = [].concat(this.i18next.options.attributes);
-          for (i = 0, l = selector.length; i < l; i++) selector[i] = '[' + selector[i] + ']';
-          selector = selector.join(',');
+          for (i = 0, l = selector.length; i < l; i++) {
+            selector[i] = '[' + selector[i] + ']';
+          }selector = selector.join(',');
 
           var nodes = el.querySelectorAll(selector);
           for (i = 0, l = nodes.length; i < l; i++) {
             var node = nodes[i];
-            var keys = undefined;
+            var keys = void 0;
 
             for (var i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
               keys = node.getAttribute(this.i18next.options.attributes[i2]);
@@ -137,7 +142,7 @@ System.register(['i18next'], function (_export) {
 
             var re = /\[([a-z\-]*)\]/g;
 
-            var m = undefined;
+            var m = void 0;
             var attr = 'text';
 
             if (node.nodeName === 'IMG') attr = 'src';
@@ -176,7 +181,7 @@ System.register(['i18next'], function (_export) {
         };
 
         return I18N;
-      })();
+      }());
 
       _export('I18N', I18N);
     }

@@ -1,22 +1,25 @@
 'use strict';
 
-exports.__esModule = true;
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.I18N = undefined;
 
 var _i18next = require('i18next');
 
 var _i18next2 = _interopRequireDefault(_i18next);
 
-var I18N = (function () {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var I18N = exports.I18N = function () {
   function I18N(ea, signaler) {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
 
-    this.i18next = _i18next2['default'];
+    this.i18next = _i18next2.default;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -35,9 +38,9 @@ var I18N = (function () {
     };
 
     return new Promise(function (resolve) {
-      _i18next2['default'].init(options || defaultOptions, function (err, t) {
-        if (_i18next2['default'].options.attributes instanceof String) {
-          _i18next2['default'].options.attributes = [_i18next2['default'].options.attributes];
+      _i18next2.default.init(options || defaultOptions, function (err, t) {
+        if (_i18next2.default.options.attributes instanceof String) {
+          _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
         }
 
         resolve(_this.i18next);
@@ -101,17 +104,18 @@ var I18N = (function () {
   };
 
   I18N.prototype.updateTranslations = function updateTranslations(el) {
-    var i = undefined;
-    var l = undefined;
+    var i = void 0;
+    var l = void 0;
 
     var selector = [].concat(this.i18next.options.attributes);
-    for (i = 0, l = selector.length; i < l; i++) selector[i] = '[' + selector[i] + ']';
-    selector = selector.join(',');
+    for (i = 0, l = selector.length; i < l; i++) {
+      selector[i] = '[' + selector[i] + ']';
+    }selector = selector.join(',');
 
     var nodes = el.querySelectorAll(selector);
     for (i = 0, l = nodes.length; i < l; i++) {
       var node = nodes[i];
-      var keys = undefined;
+      var keys = void 0;
 
       for (var i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(this.i18next.options.attributes[i2]);
@@ -137,7 +141,7 @@ var I18N = (function () {
 
       var re = /\[([a-z\-]*)\]/g;
 
-      var m = undefined;
+      var m = void 0;
       var attr = 'text';
 
       if (node.nodeName === 'IMG') attr = 'src';
@@ -176,6 +180,4 @@ var I18N = (function () {
   };
 
   return I18N;
-})();
-
-exports.I18N = I18N;
+}();

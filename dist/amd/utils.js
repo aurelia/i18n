@@ -1,11 +1,26 @@
 define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaDependencyInjection) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.LazyOptional = exports.assignObjectToKeys = exports.extend = undefined;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-  var extend = function extend(destination, source) {
+  var _dec, _class;
+
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
+  var extend = exports.extend = function extend(destination, source) {
     for (var property in source) {
       destination[property] = source[property];
     }
@@ -13,8 +28,7 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
     return destination;
   };
 
-  exports.extend = extend;
-  var assignObjectToKeys = function assignObjectToKeys(root, obj) {
+  var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKeys(root, obj) {
     if (obj === undefined || obj === null) {
       return obj;
     }
@@ -22,7 +36,7 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
     var opts = {};
 
     Object.keys(obj).map(function (key) {
-      if (typeof obj[key] === 'object') {
+      if (_typeof(obj[key]) === 'object') {
         extend(opts, assignObjectToKeys(key, obj[key]));
       } else {
         opts[root !== '' ? root + '.' + key : key] = obj[key];
@@ -32,11 +46,9 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
     return opts;
   };
 
-  exports.assignObjectToKeys = assignObjectToKeys;
-
-  var LazyOptional = (function () {
+  var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjection.resolver)(), _dec(_class = function () {
     function LazyOptional(key) {
-      _classCallCheck(this, _LazyOptional);
+      _classCallCheck(this, LazyOptional);
 
       this.key = key;
     }
@@ -56,10 +68,6 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
       return new LazyOptional(key);
     };
 
-    var _LazyOptional = LazyOptional;
-    LazyOptional = _aureliaDependencyInjection.resolver()(LazyOptional) || LazyOptional;
     return LazyOptional;
-  })();
-
-  exports.LazyOptional = LazyOptional;
+  }()) || _class);
 });

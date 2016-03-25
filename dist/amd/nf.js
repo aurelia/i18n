@@ -1,11 +1,18 @@
 define(['exports', './i18n'], function (exports, _i18n) {
   'use strict';
 
-  exports.__esModule = true;
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.NfValueConverter = undefined;
 
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
-  var NfValueConverter = (function () {
+  var NfValueConverter = exports.NfValueConverter = function () {
     NfValueConverter.inject = function inject() {
       return [_i18n.I18N];
     };
@@ -23,7 +30,5 @@ define(['exports', './i18n'], function (exports, _i18n) {
     };
 
     return NfValueConverter;
-  })();
-
-  exports.NfValueConverter = NfValueConverter;
+  }();
 });

@@ -1,13 +1,16 @@
-import {I18N} from './i18n';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {customAttribute} from 'aurelia-templating';
-import {SignalBindingBehavior} from 'aurelia-templating-resources';
-import {ValueConverter} from 'aurelia-binding';
-import {LazyOptional} from './utils';
+var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3;
 
+import { I18N } from './i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { customAttribute } from 'aurelia-templating';
+import { SignalBindingBehavior } from 'aurelia-templating-resources';
+import { ValueConverter } from 'aurelia-binding';
+import { LazyOptional } from './utils';
 
-export class TValueConverter {
-  static inject() { return [I18N]; }
+export let TValueConverter = class TValueConverter {
+  static inject() {
+    return [I18N];
+  }
   constructor(i18n) {
     this.service = i18n;
   }
@@ -15,26 +18,18 @@ export class TValueConverter {
   toView(value, options) {
     return this.service.tr(value, options);
   }
-}
+};
 
-@customAttribute('t-params')
-export class TParamsCustomAttribute {
-  static inject = [Element];
-  service;
+export let TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = class TParamsCustomAttribute {
 
   constructor(element) {
     this.element = element;
   }
 
-  valueChanged() {
+  valueChanged() {}
+}, _class2.inject = [Element], _temp)) || _class);
 
-  }
-}
-
-@customAttribute('t')
-export class TCustomAttribute {
-
-  static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = class TCustomAttribute {
 
   constructor(element, i18n, ea, tparams) {
     this.element = element;
@@ -70,40 +65,29 @@ export class TCustomAttribute {
   }
 
   unbind() {
-    // If unbind is called before timeout for subscription is triggered, subscription will be undefined
     if (this.subscription) {
       this.subscription.dispose();
     }
   }
-}
+}, _class4.inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
 
-export class TBindingBehavior {
-  static inject = [SignalBindingBehavior];
+export let TBindingBehavior = (_temp3 = _class5 = class TBindingBehavior {
 
   constructor(signalBindingBehavior) {
     this.signalBindingBehavior = signalBindingBehavior;
   }
 
   bind(binding, source) {
-    // bind the signal behavior
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
-    // rewrite the expression to use the TValueConverter.
-    // pass through any args to the binding behavior to the TValueConverter
     let sourceExpression = binding.sourceExpression;
     let expression = sourceExpression.expression;
-    sourceExpression.expression = new ValueConverter(
-      expression,
-      't',
-      sourceExpression.args,
-      [expression, ...sourceExpression.args]);
+    sourceExpression.expression = new ValueConverter(expression, 't', sourceExpression.args, [expression, ...sourceExpression.args]);
   }
 
   unbind(binding, source) {
-    // undo the expression rewrite
     binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
 
-    // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }
-}
+}, _class5.inject = [SignalBindingBehavior], _temp3);

@@ -1,11 +1,13 @@
-System.register(['./i18n', 'aurelia-event-aggregator'], function (_export) {
-  'use strict';
+'use strict';
 
-  var I18N, EventAggregator, BaseI18N;
+System.register(['./i18n', 'aurelia-event-aggregator'], function (_export, _context) {
+  var I18N, EventAggregator, _class, _temp, BaseI18N;
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_i18n) {
@@ -14,13 +16,7 @@ System.register(['./i18n', 'aurelia-event-aggregator'], function (_export) {
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }],
     execute: function () {
-      BaseI18N = (function () {
-        _createClass(BaseI18N, null, [{
-          key: 'inject',
-          value: [I18N, Element, EventAggregator],
-          enumerable: true
-        }]);
-
+      _export('BaseI18N', BaseI18N = (_temp = _class = function () {
         function BaseI18N(i18n, element, ea) {
           var _this = this;
 
@@ -43,7 +39,7 @@ System.register(['./i18n', 'aurelia-event-aggregator'], function (_export) {
         };
 
         return BaseI18N;
-      })();
+      }(), _class.inject = [I18N, Element, EventAggregator], _temp));
 
       _export('BaseI18N', BaseI18N);
     }

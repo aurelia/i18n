@@ -1,11 +1,13 @@
-System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export) {
-  'use strict';
+'use strict';
 
-  var I18N, EventAggregator, customAttribute, SignalBindingBehavior, ValueConverter, LazyOptional, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export, _context) {
+  var I18N, EventAggregator, customAttribute, SignalBindingBehavior, ValueConverter, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
 
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
 
   return {
     setters: [function (_i18n) {
@@ -22,7 +24,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       LazyOptional = _utils.LazyOptional;
     }],
     execute: function () {
-      TValueConverter = (function () {
+      _export('TValueConverter', TValueConverter = function () {
         TValueConverter.inject = function inject() {
           return [I18N];
         };
@@ -38,41 +40,27 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
         };
 
         return TValueConverter;
-      })();
+      }());
 
       _export('TValueConverter', TValueConverter);
 
-      TParamsCustomAttribute = (function () {
-        _createClass(TParamsCustomAttribute, null, [{
-          key: 'inject',
-          value: [Element],
-          enumerable: true
-        }]);
-
+      _export('TParamsCustomAttribute', TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
         function TParamsCustomAttribute(element) {
-          _classCallCheck(this, _TParamsCustomAttribute);
+          _classCallCheck(this, TParamsCustomAttribute);
 
           this.element = element;
         }
 
         TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
-        var _TParamsCustomAttribute = TParamsCustomAttribute;
-        TParamsCustomAttribute = customAttribute('t-params')(TParamsCustomAttribute) || TParamsCustomAttribute;
         return TParamsCustomAttribute;
-      })();
+      }(), _class2.inject = [Element], _temp)) || _class));
 
       _export('TParamsCustomAttribute', TParamsCustomAttribute);
 
-      TCustomAttribute = (function () {
-        _createClass(TCustomAttribute, null, [{
-          key: 'inject',
-          value: [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)],
-          enumerable: true
-        }]);
-
+      _export('TCustomAttribute', TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
         function TCustomAttribute(element, i18n, ea, tparams) {
-          _classCallCheck(this, _TCustomAttribute);
+          _classCallCheck(this, TCustomAttribute);
 
           this.element = element;
           this.service = i18n;
@@ -114,20 +102,12 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
           }
         };
 
-        var _TCustomAttribute = TCustomAttribute;
-        TCustomAttribute = customAttribute('t')(TCustomAttribute) || TCustomAttribute;
         return TCustomAttribute;
-      })();
+      }(), _class4.inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3));
 
       _export('TCustomAttribute', TCustomAttribute);
 
-      TBindingBehavior = (function () {
-        _createClass(TBindingBehavior, null, [{
-          key: 'inject',
-          value: [SignalBindingBehavior],
-          enumerable: true
-        }]);
-
+      _export('TBindingBehavior', TBindingBehavior = (_temp3 = _class5 = function () {
         function TBindingBehavior(signalBindingBehavior) {
           _classCallCheck(this, TBindingBehavior);
 
@@ -149,7 +129,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
         };
 
         return TBindingBehavior;
-      })();
+      }(), _class5.inject = [SignalBindingBehavior], _temp3));
 
       _export('TBindingBehavior', TBindingBehavior);
     }
