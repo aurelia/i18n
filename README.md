@@ -50,18 +50,18 @@ jspm install aurelia-i18n
 4. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
 5. In those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
-```javascript
-{
-  "score": "Score: {{score}}",
-  "lives": "{{count}} life remaining",
-  "lives_plural": "{{count}} lives remaining",
-  "lives_indefinite": "a life remaining",
-  "lives_plural_indefinite": "some lives remaining",
-  "friend": "A friend",
-  "friend_male": "A boyfriend",
-  "friend_female": "A girlfriend"
-}
-```
+  ```javascript
+  {
+    "score": "Score: {{score}}",
+    "lives": "{{count}} life remaining",
+    "lives_plural": "{{count}} lives remaining",
+    "lives_indefinite": "a life remaining",
+    "lives_plural_indefinite": "some lives remaining",
+    "friend": "A friend",
+    "friend_male": "A boyfriend",
+    "friend_female": "A girlfriend"
+  }
+  ```
 6. NEW!: Install a backend plugin
 From v.2 you have to pick your own backend service. For this guide we're going to leverage the [XHR Plugin](https://github.com/i18next/i18next-xhr-backend)
 Install it in the root of your project via `jspm install npm:i18next-xhr-backend`.
