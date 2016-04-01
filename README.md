@@ -150,7 +150,7 @@ export class MyDemoVM {
 ```
 
 ### Translating via code
-Translating stuff via code works by using the method `tr`. You pass in the `key` as first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/pages/doc_features.html) for a detailed list of those:
+Translating stuff via code works by using the method `tr`. You pass in the `key` as first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions) for a detailed list of those:
 
 ```javascript
 import {I18N} from 'aurelia-i18n';
