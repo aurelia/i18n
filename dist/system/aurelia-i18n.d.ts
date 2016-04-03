@@ -29,6 +29,7 @@ declare module 'aurelia-i18n' {
   /*eslint no-cond-assign: 0*/
   export class I18N {
     globalVars: any;
+    i18nextDefered: any;
     constructor(ea: any, signaler: any);
     setup(options?: any): any;
     setLocale(locale: any): any;

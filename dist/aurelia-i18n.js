@@ -293,12 +293,17 @@ export class LazyOptional {
 export class I18N {
 
   globalVars = {};
+  i18nextDefered = {
+    resolve: null,
+    promise: null
+  };
 
   constructor(ea, signaler) {
     this.i18next = i18next;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
+    this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }
 
   setup(options?) {
@@ -311,16 +316,16 @@ export class I18N {
       debug: false
     };
 
-    return new Promise((resolve) => {
-      i18next.init(options || defaultOptions, (err, t) => {
-        //make sure attributes is an array in case a string was provided
-        if (i18next.options.attributes instanceof String) {
-          i18next.options.attributes = [i18next.options.attributes];
-        }
+    i18next.init(options || defaultOptions, (err, t) => {
+      //make sure attributes is an array in case a string was provided
+      if (i18next.options.attributes instanceof String) {
+        i18next.options.attributes = [i18next.options.attributes];
+      }
 
-        resolve(this.i18next);
-      });
+      this.i18nextDefered.resolve(this.i18next);
     });
+
+    return this.i18nextDefered.promise;
   }
 
   setLocale(locale) {
@@ -419,6 +424,10 @@ export class I18N {
   }
 
   updateValue(node, value, params) {
+    this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
+  }
+
+  _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }

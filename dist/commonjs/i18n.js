@@ -15,18 +15,27 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var I18N = exports.I18N = function () {
   function I18N(ea, signaler) {
+    var _this = this;
+
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
+    this.i18nextDefered = {
+      resolve: null,
+      promise: null
+    };
 
     this.i18next = _i18next2.default;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
+    this.i18nextDefered.promise = new Promise(function (resolve) {
+      return _this.i18nextDefered.resolve = resolve;
+    });
   }
 
   I18N.prototype.setup = function setup(options) {
-    var _this = this;
+    var _this2 = this;
 
     var defaultOptions = {
       compatibilityAPI: 'v1',
@@ -37,25 +46,25 @@ var I18N = exports.I18N = function () {
       debug: false
     };
 
-    return new Promise(function (resolve) {
-      _i18next2.default.init(options || defaultOptions, function (err, t) {
-        if (_i18next2.default.options.attributes instanceof String) {
-          _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
-        }
+    _i18next2.default.init(options || defaultOptions, function (err, t) {
+      if (_i18next2.default.options.attributes instanceof String) {
+        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+      }
 
-        resolve(_this.i18next);
-      });
+      _this2.i18nextDefered.resolve(_this2.i18next);
     });
+
+    return this.i18nextDefered.promise;
   };
 
   I18N.prototype.setLocale = function setLocale(locale) {
-    var _this2 = this;
+    var _this3 = this;
 
     return new Promise(function (resolve) {
-      var oldLocale = _this2.getLocale();
-      _this2.i18next.changeLanguage(locale, function (err, tr) {
-        _this2.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
-        _this2.signaler.signal('aurelia-translation-signal');
+      var oldLocale = _this3.getLocale();
+      _this3.i18next.changeLanguage(locale, function (err, tr) {
+        _this3.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        _this3.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
@@ -129,6 +138,14 @@ var I18N = exports.I18N = function () {
   };
 
   I18N.prototype.updateValue = function updateValue(node, value, params) {
+    var _this4 = this;
+
+    this.i18nextDefered.promise.then(function () {
+      return _this4._updateValue(node, value, params);
+    });
+  };
+
+  I18N.prototype._updateValue = function _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }
