@@ -57,6 +57,10 @@ var I18N = exports.I18N = function () {
     return this.i18nextDefered.promise;
   };
 
+  I18N.prototype.i18nextReady = function i18nextReady() {
+    return this.i18nextDefered.promise;
+  };
+
   I18N.prototype.setLocale = function setLocale(locale) {
     var _this3 = this;
 

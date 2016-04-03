@@ -58,6 +58,10 @@ System.register(['i18next'], function (_export, _context) {
           return this.i18nextDefered.promise;
         };
 
+        I18N.prototype.i18nextReady = function i18nextReady() {
+          return this.i18nextDefered.promise;
+        };
+
         I18N.prototype.setLocale = function setLocale(locale) {
           var _this3 = this;
 

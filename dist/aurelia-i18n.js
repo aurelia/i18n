@@ -328,6 +328,10 @@ export class I18N {
     return this.i18nextDefered.promise;
   }
 
+  i18nextReady() {
+    return this.i18nextDefered.promise;
+  }
+
   setLocale(locale) {
     return new Promise( resolve => {
       let oldLocale = this.getLocale();
@@ -531,24 +535,32 @@ export class NfValueConverter {
 }
 
 export class RelativeTime {
-  static inject() { return [I18N]; }
-  constructor(i18n) {
+  static inject() { return [I18N, EventAggregator]; }
+  constructor(i18n, ea) {
     this.service = i18n;
+    this.ea = ea;
 
-    let trans = translations.default || translations;
-
-    Object.keys(trans).map( (key) => {
-      let translation = trans[key].translation;
-      let options = i18n.i18next.options;
-
-      if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
-        for (let subkey in translation) {
-          translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
-        }
-      }
-
-      this.service.i18next.addResources(key, 'translation', translation);
+    this.service.i18nextReady().then(() => {
+       this.setup();
     });
+    this.ea.subscribe('i18n:locale:changed', locales => {
+      this.setup(locales);
+    });
+  }
+
+  setup(locales) {
+    let trans = translations.default || translations;
+    let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
+    let translation = trans[key].translation;
+    let options = this.service.i18next.options;
+
+    if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
+      for (let subkey in translation) {
+        translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
+      }
+    }
+
+    this.service.i18next.addResources(key, 'translation', translation);
   }
 
   getRelativeTime(time) {

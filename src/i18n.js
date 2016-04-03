@@ -39,6 +39,10 @@ export class I18N {
     return this.i18nextDefered.promise;
   }
 
+  i18nextReady() {
+    return this.i18nextDefered.promise;
+  }
+
   setLocale(locale) {
     return new Promise( resolve => {
       let oldLocale = this.getLocale();

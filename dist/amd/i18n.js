@@ -64,6 +64,10 @@ define(['exports', 'i18next'], function (exports, _i18next) {
       return this.i18nextDefered.promise;
     };
 
+    I18N.prototype.i18nextReady = function i18nextReady() {
+      return this.i18nextDefered.promise;
+    };
+
     I18N.prototype.setLocale = function setLocale(locale) {
       var _this3 = this;
 

@@ -32,6 +32,7 @@ declare module 'aurelia-i18n' {
     i18nextDefered: any;
     constructor(ea: any, signaler: any);
     setup(options?: any): any;
+    i18nextReady(): any;
     setLocale(locale: any): any;
     getLocale(): any;
     nf(options?: any, locales?: any): any;
@@ -70,7 +71,8 @@ declare module 'aurelia-i18n' {
   }
   export class RelativeTime {
     static inject(): any;
-    constructor(i18n: any);
+    constructor(i18n: any, ea: any);
+    setup(locales: any): any;
     getRelativeTime(time: any): any;
     getTimeDiffDescription(diff: any, unit: any, timeDivisor: any): any;
   }
