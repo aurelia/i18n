@@ -11,25 +11,40 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [How to install this plugin?](#how-to-install-this-plugin)
 - [How to use this plugin](#how-to-use-this-plugin)
   - [Setting the active locale](#setting-the-active-locale)
   - [Getting the active locale](#getting-the-active-locale)
   - [Translating via code](#translating-via-code)
   - [Translating via html attributes](#translating-via-html-attributes)
+    - [Specifying attributes](#specifying-attributes)
+    - [Specifying multiple attributes](#specifying-multiple-attributes)
+    - [Using nested and combined translations](#using-nested-and-combined-translations)
+    - [Translating images](#translating-images)
+    - [Passing parameters to the attribute](#passing-parameters-to-the-attribute)
   - [Translating with the TValueConverter](#translating-with-the-tvalueconverter)
-  - [Translating with the TBindingBehavior](#translating-with-the-tbindingbehavior)  
+  - [ValueConverter Examples](#valueconverter-examples)
+  - [Translating with the TBindingBehavior](#translating-with-the-tbindingbehavior)
   - [Complex objects for variables](#complex-objects-for-variables)
   - [Formatting numbers via code](#formatting-numbers-via-code)
-  - [Formatting numbers with NfValueConverter](#formatting-numbers-with-nfvalueconverter)  
+  - [Formatting numbers with NfValueConverter](#formatting-numbers-with-nfvalueconverter)
+  - [ValueConverter Number Examples](#valueconverter-number-examples)
   - [Formatting dates via code](#formatting-dates-via-code)
   - [Formatting dates with DfValueConverter](#formatting-dates-with-dfvalueconverter)
+  - [ValueConverter Date Examples](#valueconverter-date-examples)
   - [Rendering relative time](#rendering-relative-time)
+  - [ValueConverter Relative Time Examples](#valueconverter-relative-time-examples)
 - [Internationalization API Polyfill](#internationalization-api-polyfill)
+- [Usage with webpack](#usage-with-webpack)
 - [CLI Integration](#cli-integration)
 - [Migration to new i18next version](#migration-to-new-i18next-version)
-- [Running the unit tests](#running-the-unit-tests)
-
+- [Polyfills](#polyfills)
+- [Dependencies](#dependencies)
+- [Used By](#used-by)
+- [Platform Support](#platform-support)
+- [Building The Code](#building-the-code)
+- [Running The Tests](#running-the-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -634,6 +649,27 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
 The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
 
 In case of bundling your app you should thus keep in mind that it will not be automatically included into the bundle. That means you have to manually adjust the bundle config to include the polyfill as well, if you intend to have your application run on browsers without full support. [related GitHub issue](https://github.com/aurelia/i18n/issues/61#issuecomment-178801842)
+
+## Usage with webpack
+
+This library has more than 1 file that need to be resolved. But by default, only the main file is loaded. Which means that you will get a error like:
+
+```
+.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/t'.
+.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/nf'.
+.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/df'.
+Uncaught (in promise) Error: Cannot find module './aurelia-i18n/rt'.
+```
+
+To correct this, you must, as described in the [aurelia-webpack-plugin documentation](https://github.com/aurelia/webpack-plugin/#configuration-options), use the `includeSubModules` option in the configuration of the `AureliaWebpackPlugin`:
+
+```javascript
+new AureliaWebpackPlugin({
+  includeSubModules: [
+    { moduleId: "aurelia-i18n" }
+  ]
+})
+```
 
 ## CLI Integration
 
