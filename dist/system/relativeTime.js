@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['./i18n', './defaultTranslations/relative.time'], function (_export, _context) {
-  var I18N, translations, RelativeTime;
+System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event-aggregator'], function (_export, _context) {
+  var I18N, translations, EventAggregator, RelativeTime;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -14,35 +14,45 @@ System.register(['./i18n', './defaultTranslations/relative.time'], function (_ex
       I18N = _i18n.I18N;
     }, function (_defaultTranslationsRelativeTime) {
       translations = _defaultTranslationsRelativeTime.translations;
+    }, function (_aureliaEventAggregator) {
+      EventAggregator = _aureliaEventAggregator.EventAggregator;
     }],
     execute: function () {
       _export('RelativeTime', RelativeTime = function () {
         RelativeTime.inject = function inject() {
-          return [I18N];
+          return [I18N, EventAggregator];
         };
 
-        function RelativeTime(i18n) {
+        function RelativeTime(i18n, ea) {
           var _this = this;
 
           _classCallCheck(this, RelativeTime);
 
           this.service = i18n;
+          this.ea = ea;
 
-          var trans = translations.default || translations;
-
-          Object.keys(trans).map(function (key) {
-            var translation = trans[key].translation;
-            var options = i18n.i18next.options;
-
-            if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
-              for (var subkey in translation) {
-                translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
-              }
-            }
-
-            _this.service.i18next.addResources(key, 'translation', translation);
+          this.service.i18nextReady().then(function () {
+            _this.setup();
+          });
+          this.ea.subscribe('i18n:locale:changed', function (locales) {
+            _this.setup(locales);
           });
         }
+
+        RelativeTime.prototype.setup = function setup(locales) {
+          var trans = translations.default || translations;
+          var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
+          var translation = trans[key].translation;
+          var options = this.service.i18next.options;
+
+          if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
+            for (var subkey in translation) {
+              translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
+            }
+          }
+
+          this.service.i18next.addResources(key, 'translation', translation);
+        };
 
         RelativeTime.prototype.getRelativeTime = function getRelativeTime(time) {
           var now = new Date();

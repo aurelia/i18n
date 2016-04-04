@@ -6,16 +6,17 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 describe('testing relative time support', () => {
   let sut;
   let i18n;
+  let ea;
 
-  beforeEach( () => {
-    i18n = new I18N(new EventAggregator(), new BindingSignaler());
+  beforeEach( done => {
+    ea = new EventAggregator();
+    i18n = new I18N(ea, new BindingSignaler());
+    sut = new RelativeTime(i18n, ea);
     i18n.setup({
       lng: 'en',
       fallbackLng: 'en',
       debug: false
-    });
-
-    sut = new RelativeTime(i18n);
+    }).then(() => done());
   });
 
   it('should provide now unit', () => {
@@ -96,8 +97,10 @@ describe('testing relative time support', () => {
     });
   });
 
-  it('should respect interpolation settings', () => {
-    let customInterpolationSettings = new I18N(new EventAggregator(), new BindingSignaler());
+  it('should respect interpolation settings', done => {
+    let ea = new EventAggregator();
+    let customInterpolationSettings = new I18N(ea, new BindingSignaler());
+    let customSut = new RelativeTime(customInterpolationSettings, ea);
     customInterpolationSettings.setup({
       lng: 'en',
       getAsync: false,
@@ -106,13 +109,13 @@ describe('testing relative time support', () => {
       debug: false,
       interpolationPrefix: '${',
       interpolationSuffix: '}'
+    }).then(() => {
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() - 1);
+
+      expect(customSut.getRelativeTime(expectedDate)).toBe('1 hour ago');
+
+      done();
     });
-
-    let customSut = new RelativeTime(customInterpolationSettings);
-
-    let expectedDate = new Date();
-    expectedDate.setHours(new Date().getHours() - 1);
-
-    expect(customSut.getRelativeTime(expectedDate)).toBe('1 hour ago');
   });
 });

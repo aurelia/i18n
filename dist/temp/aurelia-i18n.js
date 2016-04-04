@@ -317,18 +317,27 @@ var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjectio
 
 var I18N = exports.I18N = function () {
   function I18N(ea, signaler) {
+    var _this2 = this;
+
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
+    this.i18nextDefered = {
+      resolve: null,
+      promise: null
+    };
 
     this.i18next = _i18next2.default;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
+    this.i18nextDefered.promise = new Promise(function (resolve) {
+      return _this2.i18nextDefered.resolve = resolve;
+    });
   }
 
   I18N.prototype.setup = function setup(options) {
-    var _this2 = this;
+    var _this3 = this;
 
     var defaultOptions = {
       compatibilityAPI: 'v1',
@@ -339,25 +348,29 @@ var I18N = exports.I18N = function () {
       debug: false
     };
 
-    return new Promise(function (resolve) {
-      _i18next2.default.init(options || defaultOptions, function (err, t) {
-        if (_i18next2.default.options.attributes instanceof String) {
-          _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
-        }
+    _i18next2.default.init(options || defaultOptions, function (err, t) {
+      if (_i18next2.default.options.attributes instanceof String) {
+        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+      }
 
-        resolve(_this2.i18next);
-      });
+      _this3.i18nextDefered.resolve(_this3.i18next);
     });
+
+    return this.i18nextDefered.promise;
+  };
+
+  I18N.prototype.i18nextReady = function i18nextReady() {
+    return this.i18nextDefered.promise;
   };
 
   I18N.prototype.setLocale = function setLocale(locale) {
-    var _this3 = this;
+    var _this4 = this;
 
     return new Promise(function (resolve) {
-      var oldLocale = _this3.getLocale();
-      _this3.i18next.changeLanguage(locale, function (err, tr) {
-        _this3.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
-        _this3.signaler.signal('aurelia-translation-signal');
+      var oldLocale = _this4.getLocale();
+      _this4.i18next.changeLanguage(locale, function (err, tr) {
+        _this4.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
+        _this4.signaler.signal('aurelia-translation-signal');
         resolve(tr);
       });
     });
@@ -431,6 +444,14 @@ var I18N = exports.I18N = function () {
   };
 
   I18N.prototype.updateValue = function updateValue(node, value, params) {
+    var _this5 = this;
+
+    this.i18nextDefered.promise.then(function () {
+      return _this5._updateValue(node, value, params);
+    });
+  };
+
+  I18N.prototype._updateValue = function _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }
@@ -486,7 +507,7 @@ var I18N = exports.I18N = function () {
 
 var BaseI18N = exports.BaseI18N = (_temp = _class3 = function () {
   function BaseI18N(i18n, element, ea) {
-    var _this4 = this;
+    var _this6 = this;
 
     _classCallCheck(this, BaseI18N);
 
@@ -494,7 +515,7 @@ var BaseI18N = exports.BaseI18N = (_temp = _class3 = function () {
     this.element = element;
 
     this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function () {
-      _this4.i18n.updateTranslations(_this4.element);
+      _this6.i18n.updateTranslations(_this6.element);
     });
   }
 
@@ -551,31 +572,39 @@ var NfValueConverter = exports.NfValueConverter = function () {
 
 var RelativeTime = exports.RelativeTime = function () {
   RelativeTime.inject = function inject() {
-    return [I18N];
+    return [I18N, _aureliaEventAggregator.EventAggregator];
   };
 
-  function RelativeTime(i18n) {
-    var _this5 = this;
+  function RelativeTime(i18n, ea) {
+    var _this7 = this;
 
     _classCallCheck(this, RelativeTime);
 
     this.service = i18n;
+    this.ea = ea;
 
-    var trans = translations.default || translations;
-
-    Object.keys(trans).map(function (key) {
-      var translation = trans[key].translation;
-      var options = i18n.i18next.options;
-
-      if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
-        for (var subkey in translation) {
-          translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
-        }
-      }
-
-      _this5.service.i18next.addResources(key, 'translation', translation);
+    this.service.i18nextReady().then(function () {
+      _this7.setup();
+    });
+    this.ea.subscribe('i18n:locale:changed', function (locales) {
+      _this7.setup(locales);
     });
   }
+
+  RelativeTime.prototype.setup = function setup(locales) {
+    var trans = translations.default || translations;
+    var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
+    var translation = trans[key].translation;
+    var options = this.service.i18next.options;
+
+    if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
+      for (var subkey in translation) {
+        translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
+      }
+    }
+
+    this.service.i18next.addResources(key, 'translation', translation);
+  };
 
   RelativeTime.prototype.getRelativeTime = function getRelativeTime(time) {
     var now = new Date();
@@ -659,19 +688,19 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   }
 
   TCustomAttribute.prototype.bind = function bind() {
-    var _this6 = this;
+    var _this8 = this;
 
     this.params = this.lazyParams();
 
     if (this.params) {
       this.params.valueChanged = function (newParams, oldParams) {
-        _this6.paramsChanged(_this6.value, newParams, oldParams);
+        _this8.paramsChanged(_this8.value, newParams, oldParams);
       };
     }
 
     var p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-      _this6.service.updateValue(_this6.element, _this6.value, p);
+      _this8.service.updateValue(_this8.element, _this8.value, p);
     });
 
     this.service.updateValue(this.element, this.value, p);
