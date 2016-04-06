@@ -541,7 +541,7 @@ export class RelativeTime {
     this.ea = ea;
 
     this.service.i18nextReady().then(() => {
-       this.setup();
+      this.setup();
     });
     this.ea.subscribe('i18n:locale:changed', locales => {
       this.setup(locales);

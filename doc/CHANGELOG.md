@@ -1,3 +1,12 @@
+### 0.5.1 (2016-04-06)
+
+
+#### Bug Fixes
+
+* **i18n:** use a promise to wait for i18next to be ready before updating value ([2b69cfeb](http://github.com/aurelia/i18n/commit/2b69cfeb09e017209b3510daccd68c7e91dcb7f5))
+* **relativeTime:** prevent relativeTime to add resources to soon ([21a37e62](http://github.com/aurelia/i18n/commit/21a37e62814280601a5fc6e0a23ae3764a126cf6))
+
+
 ### 0.5.0 (2016-03-25)
 
 
