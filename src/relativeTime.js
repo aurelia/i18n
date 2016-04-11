@@ -19,7 +19,8 @@ export class RelativeTime {
   setup(locales) {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    let translation = trans[key].translation;
+    let fallbackLng = this.service.fallbackLng;
+    let translation = (trans[key] || trans[fallbackLng] || {}).translation;
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
