@@ -16,16 +16,30 @@ export class RelativeTime {
     });
   }
 
-  setup(locales) {
+  setup(locales) {      
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.fallbackLng;    
     let index = 0;
-    let originalKey = key;
     
-    if (!trans[key] && (index = key.indexOf("-")) >= 0) key = key.substring(0, index);
     let translation = (trans[key] || trans[fallbackLng] || {}).translation;
+    let useFallback = true;
     
+    if ((index = key.indexOf("-")) >= 0) {
+        let baseLocale = key.substring(0, index);
+        
+        if (trans[baseLocale]) { 
+            useFallback = false; //There is a base locale, do not use fallback for main locale if it doesn't exist
+            this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+        }
+    }
+    
+    if (useFallback || trans[key]) {
+        this.addTranslationResource(key, translation);
+    }
+  }
+  
+  addTranslationResource(key, translation) {    
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
@@ -34,7 +48,7 @@ export class RelativeTime {
       }
     }
     
-    this.service.i18next.addResources(originalKey, 'translation', translation);
+    this.service.i18next.addResources(key, 'translation', translation);
   }
 
   getRelativeTime(time) {

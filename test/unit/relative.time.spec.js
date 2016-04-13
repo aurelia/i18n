@@ -109,7 +109,7 @@ describe('testing relative time support', () => {
   });
 
   it('should try to find the language of the locale when the full locale is not found', (done) => {
-      expect(translations['nl-BE']).toBe(undefined);
+      expect(translations['nl-BE']).toBe(undefined); //If this fails, someone added translations for nl-BE  
       i18n.setLocale('nl-BE').then( () => {
         let expectedDate = new Date();
         expectedDate.setHours(new Date().getHours() + 2);
@@ -119,14 +119,24 @@ describe('testing relative time support', () => {
       });
   });
   
-  it('should provide the translation for the full locale when available', (done) => {
-      expect(translations['nl-XX']).toBe(undefined);
+  it('should provide the translation for the full locale when available', (done) => {      
       translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
       i18n.setLocale('nl-XX').then( () => {
         let expectedDate = new Date();
         expectedDate.setHours(new Date().getHours() + 2);
 
         expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
+        done();
+      });
+  });
+  
+  it('should provide the translation for the base locale when a key is not found in the full locale', (done) => {      
+      translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
+      i18n.setLocale('nl-XX').then( () => {
+        let expectedDate = new Date();
+        expectedDate.setMinutes(new Date().getMinutes() + 2);
+
+        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 minuten');
         done();
       });
   });
