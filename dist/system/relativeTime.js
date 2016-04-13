@@ -42,7 +42,8 @@ System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event
         RelativeTime.prototype.setup = function setup(locales) {
           var trans = translations.default || translations;
           var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-          var translation = trans[key].translation;
+          var fallbackLng = this.service.fallbackLng;
+          var translation = (trans[key] || trans[fallbackLng] || {}).translation;
           var options = this.service.i18next.options;
 
           if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {

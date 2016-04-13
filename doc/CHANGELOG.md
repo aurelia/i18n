@@ -1,3 +1,14 @@
+### 0.5.2 (2016-04-13)
+
+
+#### Features
+
+* **relative time:** Use the fallback language if needed ([10ef19c0](http://github.com/aurelia/i18n/commit/10ef19c082bd2c4311e254e67d7a3422dee0efb2))
+* **translation:**
+  * Add italian translation ([d610aeb9](http://github.com/aurelia/i18n/commit/d610aeb9da8b12cc82a53108a736697cf4d50760))
+  * Add italian translation ([0d8e65b1](http://github.com/aurelia/i18n/commit/0d8e65b108bce4d75c3cbc0ecdafedf8b39cbab6))
+
+
 ### 0.5.1 (2016-04-06)
 
 

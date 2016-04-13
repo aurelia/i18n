@@ -78,6 +78,35 @@ var translations = exports.translations = {
       'year_in_plural': 'in __count__ years'
     }
   },
+  it: {
+    translation: {
+      'now': 'adesso',
+      'second_ago': '__count__ secondo fa',
+      'second_ago_plural': '__count__ secondi fa',
+      'second_in': 'in __count__ secondo',
+      'second_in_plural': 'in __count__ secondi',
+      'minute_ago': '__count__ minuto fa',
+      'minute_ago_plural': '__count__ minuti fa',
+      'minute_in': 'in __count__ minuto',
+      'minute_in_plural': 'in __count__ minuti',
+      'hour_ago': '__count__ ora fa',
+      'hour_ago_plural': '__count__ ore fa',
+      'hour_in': 'in __count__ ora',
+      'hour_in_plural': 'in __count__ ore',
+      'day_ago': '__count__ giorno fa',
+      'day_ago_plural': '__count__ giorni fa',
+      'day_in': 'in __count__ giorno',
+      'day_in_plural': 'in __count__ giorni',
+      'month_ago': '__count__ mese fa',
+      'month_ago_plural': '__count__ mesi fa',
+      'month_in': 'in __count__ mese',
+      'month_in_plural': 'in __count__ mesi',
+      'year_ago': '__count__ anno fa',
+      'year_ago_plural': '__count__ anni fa',
+      'year_in': 'in __count__ anno',
+      'year_in_plural': 'in __count__ anni'
+    }
+  },
   de: {
     translation: {
       'now': 'jetzt gerade',
@@ -594,7 +623,8 @@ var RelativeTime = exports.RelativeTime = function () {
   RelativeTime.prototype.setup = function setup(locales) {
     var trans = translations.default || translations;
     var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    var translation = trans[key].translation;
+    var fallbackLng = this.service.fallbackLng;
+    var translation = (trans[key] || trans[fallbackLng] || {}).translation;
     var options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
