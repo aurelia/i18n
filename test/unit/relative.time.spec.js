@@ -95,6 +95,16 @@ describe('testing relative time support', () => {
         done();
       });
     });
+
+    it('should provide the translation in English when the locale is not present', (done) => {
+      i18n.setLocale('notPresent').then( () => {
+        let expectedDate = new Date();
+        expectedDate.setHours(new Date().getHours() + 2);
+
+        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 hours');
+        done();
+      });
+    });
   });
 
   it('should respect interpolation settings', done => {
