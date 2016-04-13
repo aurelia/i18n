@@ -2,6 +2,7 @@ import {I18N} from '../../src/i18n';
 import {RelativeTime} from '../../src/relativeTime';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {translations} from  '../../src/defaultTranslations/relative.time';
 
 describe('testing relative time support', () => {
   let sut;
@@ -107,6 +108,29 @@ describe('testing relative time support', () => {
     });
   });
 
+  it('should try to find the language of the locale when the full locale is not found', (done) => {
+      expect(translations['nl-BE']).toBe(undefined);
+      i18n.setLocale('nl-BE').then( () => {
+        let expectedDate = new Date();
+        expectedDate.setHours(new Date().getHours() + 2);
+
+        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 uren');
+        done();
+      });
+  });
+  
+  it('should provide the translation for the full locale when available', (done) => {
+      expect(translations['nl-XX']).toBe(undefined);
+      translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
+      i18n.setLocale('nl-XX').then( () => {
+        let expectedDate = new Date();
+        expectedDate.setHours(new Date().getHours() + 2);
+
+        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
+        done();
+      });
+  });
+  
   it('should respect interpolation settings', done => {
     let ea = new EventAggregator();
     let customInterpolationSettings = new I18N(ea, new BindingSignaler());

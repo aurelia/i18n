@@ -20,9 +20,12 @@ export class RelativeTime {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.fallbackLng;    
-    let index = key.indexOf("-");
-    if (index >= 0 && !trans[key]) key = key.substring(0, index);
+    let index = 0;
+    let originalKey = key;
+    
+    if (!trans[key] && (index = key.indexOf("-")) >= 0) key = key.substring(0, index);
     let translation = (trans[key] || trans[fallbackLng] || {}).translation;
+    
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
@@ -30,8 +33,8 @@ export class RelativeTime {
         translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
       }
     }
-
-    this.service.i18next.addResources(key, 'translation', translation);
+    
+    this.service.i18next.addResources(originalKey, 'translation', translation);
   }
 
   getRelativeTime(time) {
