@@ -22,20 +22,19 @@ export class RelativeTime {
     let fallbackLng = this.service.fallbackLng;    
     let index = 0;
     
-    let translation = (trans[key] || trans[fallbackLng] || {}).translation;
-    let useFallback = true;
-    
     if ((index = key.indexOf("-")) >= 0) {
         let baseLocale = key.substring(0, index);
         
-        if (trans[baseLocale]) { 
-            useFallback = false; //There is a base locale, do not use fallback for main locale if it doesn't exist
+        if (trans[baseLocale]) {             
             this.addTranslationResource(baseLocale, trans[baseLocale].translation);
         }
     }
     
-    if (useFallback || trans[key]) {
-        this.addTranslationResource(key, translation);
+    if (trans[key]) {
+        this.addTranslationResource(key, trans[key].translation);
+    }
+    if (trans[fallbackLng]) {
+        this.addTranslationResource(key, trans[fallbackLng].translation);
     }
   }
   
