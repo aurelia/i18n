@@ -7,6 +7,10 @@ export class DfValueConverter {
   }
   
   toView(value, dfOrOptions, locale, df) {
+    if (!value) {
+      return value;
+    }
+    
     if (dfOrOptions && (typeof dfOrOptions.format === 'function')) {
       return dfOrOptions.format(value);
     } else if(df) {

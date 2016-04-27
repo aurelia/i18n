@@ -35,5 +35,19 @@ describe('dfvalueconverter tests', () => {
     let testDate = new Date(2000, 0, 1, 0, 0, 1);
     expect(dfvc.toView(testDate, options, 'de')).toEqual('01.01.2000, 00:00:01');
   });
+  
+  it('should return undefined if undefined value given', () => {
+    let val = undefined;
+    expect(dfvc.toView(val)).toBe(undefined);
+  });
+  
+  it('should return null if null value given', () => {
+    let val = null;
+    expect(dfvc.toView(val)).toBe(null);
+  });
 
+  it('should return empty string if empty string value given', () => {
+    let val = "";
+    expect(dfvc.toView(val)).toBe("");
+  });
 });
