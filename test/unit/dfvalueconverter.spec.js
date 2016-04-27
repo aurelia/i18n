@@ -50,4 +50,20 @@ describe('dfvalueconverter tests', () => {
     let val = "";
     expect(dfvc.toView(val)).toBe("");
   });
+  
+  it('should return 0 as begin of unix timestamp', (done) => {
+    let val = 0;
+    sut.setLocale('de').then( () => {
+      expect(dfvc.toView(val)).toBe("1.1.1970");
+      done();
+    });
+  });
+  
+  it('should return "0" as begin of unix timestamp', (done) => {
+    let val = "0";
+    sut.setLocale('de').then( () => {
+      expect(dfvc.toView(val)).toBe("1.1.1970");
+      done();
+    });
+  });
 });

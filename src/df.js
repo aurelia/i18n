@@ -7,7 +7,10 @@ export class DfValueConverter {
   }
   
   toView(value, dfOrOptions, locale, df) {
-    if (!value) {
+    if (value === null
+      || typeof value === 'undefined'
+      || (typeof value === "string" && value.trim() === "")
+      ) {
       return value;
     }
     
