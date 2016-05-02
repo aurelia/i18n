@@ -127,13 +127,13 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
 8. If You use typescript
 
-    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not provided typings for these libraries for now. So, during typescript compilation process You will see next error messages:
+    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries for now. So, during the typescript compilation process you will see the following error messages:
     ``` javascript
     "/yourHost/pathToApp/pathToFile/filename.ts(3,26): Cannot find module 'i18next-xhr-backend'."
     "/yourHost/pathToApp/jspm_packages/npm/aurelia-i18n@0.5.2/aurelia-i18n.d.ts(2,23): Cannot find module 'i18next'."
     ```
 
-    First of all You need to get `*.d.ts` files:
+    In order to fix that you first need to get the `*.d.ts` files:
     
     1. **i18next**
     
@@ -141,20 +141,20 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
             ``` javascript
             typings install i18next --ambient
             ```
-        - on other hand You can use similar file from this repository (`doc/i18next.d.ts`)
+        - alternatively you can use a similar file from this repositories doc folder (`doc/i18next.d.ts`)
         
     2. **i18next-xhr-backend**
-        - use typings file from this repository `doc/i18next-xhr-backend.d.ts`
-    > in order to comply with some neat project structure You would copy `*.d.ts` files from `doc/*.d.ts` to some other folder, e.g. `/customTypings`
+        - use the typings file from this repositories doc folder `doc/i18next-xhr-backend.d.ts`
+    > in order to comply with some neat project structure you should copy `*.d.ts` files from `doc/*.d.ts` to another folder, e.g. `/customTypings`
     
-    The next step - to give the compiler know about your  `*.d.ts` files. Add the following section to your `tsconfig.json` file.
+    The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
     ```javascript
-    //...some configuration code
+    // ... existing configuration code
     "filesGlob": [
-        "./typings/browser.d.ts", //this must be specified in case if You use typings(https://github.com/typings/typings)
-        "./your_custom_typings_folder_path/**/*.d.ts", //if You use two typings file from this repositorie (`doc/*.d.ts`)
+        "./typings/browser.d.ts", // this must be specified in case you use typings(https://github.com/typings/typings)
+        "./your_custom_typings_folder_path/**/*.d.ts", // if you use both typings files from this repository (`doc/*.d.ts`)
       ],
-    //...some configuration code
+    // ... other existing configuration code
     ```
 
 ## How to use this plugin
