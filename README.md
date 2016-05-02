@@ -52,79 +52,110 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
 
 1. In your project install the plugin via `jspm` with following command
 
-  ```shell
-jspm install aurelia-i18n
-  ```
+    ```shell
+    jspm install aurelia-i18n
+    ```
 2. Make sure you use [manual bootstrapping](http://aurelia.io/docs#startup-and-configuration). In order to do so open your `index.html` and locate the element with the attribute aurelia-app. Change it to look like this:
 
-  ```html
-  <body aurelia-app="main">
-  ...
-  ```
+    ```html
+    <body aurelia-app="main">
+    ...
+    ```
 3. Create folder `locale` in your projects root
 4. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
 5. In those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
-  ```javascript
-  {
-    "score": "Score: {{score}}",
-    "lives": "{{count}} life remaining",
-    "lives_plural": "{{count}} lives remaining",
-    "lives_indefinite": "a life remaining",
-    "lives_plural_indefinite": "some lives remaining",
-    "friend": "A friend",
-    "friend_male": "A boyfriend",
-    "friend_female": "A girlfriend"
-  }
-  ```
+    ```javascript
+    {
+        "score": "Score: {{score}}",
+        "lives": "{{count}} life remaining",
+        "lives_plural": "{{count}} lives remaining",
+        "lives_indefinite": "a life remaining",
+        "lives_plural_indefinite": "some lives remaining",
+        "friend": "A friend",
+        "friend_male": "A boyfriend",
+        "friend_female": "A girlfriend"
+    }
+    ```
 6. NEW!: Install a backend plugin
 From v.2 you have to pick your own backend service. For this guide we're going to leverage the [XHR Plugin](https://github.com/i18next/i18next-xhr-backend)
 Install it in the root of your project via `jspm install npm:i18next-xhr-backend`.
-
-
 7. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
 
-```javascript
-  import {I18N} from 'aurelia-i18n';
-  import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin 
-
-  export function configure(aurelia) {
-    aurelia.use
-      .standardConfiguration()
-      .developmentLogging()
-      .plugin('aurelia-i18n', (instance) => {
-        // register backend plugin
-        instance.i18next.use(Backend);
+    ```javascript
+    import {I18N} from 'aurelia-i18n';
+    import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin 
+    
+    export function configure(aurelia) {
+        aurelia.use
+          .standardConfiguration()
+          .developmentLogging()
+          .plugin('aurelia-i18n', (instance) => {
+            // register backend plugin
+            instance.i18next.use(Backend);
+            
+            // adapt options to your needs (see http://i18next.com/docs/options/)
+            // make sure to return the promise of the setup method, in order to guarantee proper loading
+            return instance.setup({
+              backend: {                                  // <-- configure backend settings
+                loadPath: '/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+              },
+              lng : 'de',
+              attributes : ['t','i18n'],
+              fallbackLng : 'en',
+              debug : false
+            });
+          });
         
-        // adapt options to your needs (see http://i18next.com/docs/options/)
-        // make sure to return the promise of the setup method, in order to guarantee proper loading
-        return instance.setup({
-          backend: {                                  // <-- configure backend settings
-            loadPath: '/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
-          },
-          lng : 'de',
-          attributes : ['t','i18n'],
-          fallbackLng : 'en',
-          debug : false
-        });
-      });
+        aurelia.start().then(a => a.setRoot());
+    }
+    ```
 
-    aurelia.start().then(a => a.setRoot());
-  }
-```
+    > You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
+    and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
+    containing the different namespaces as well as the default namespace.
 
-> You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
-and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
-containing the different namespaces as well as the default namespace.
-```
-instance.setup({
-  ...
-  ns: { 
-    namespaces: ['translation','nav'],
-    defaultNs: 'translation'
-  }
-});
-```
+    ```javascript
+    instance.setup({
+      ...
+      ns: { 
+        namespaces: ['translation','nav'],
+        defaultNs: 'translation'
+      }
+    });
+    ```
+
+8. If You use typescript
+
+    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries for now. So, during the typescript compilation process you will see the following error messages:
+    ``` javascript
+    "/yourHost/pathToApp/pathToFile/filename.ts(3,26): Cannot find module 'i18next-xhr-backend'."
+    "/yourHost/pathToApp/jspm_packages/npm/aurelia-i18n@0.5.2/aurelia-i18n.d.ts(2,23): Cannot find module 'i18next'."
+    ```
+
+    In order to fix that you first need to get the `*.d.ts` files:
+    
+    1. **i18next**
+    
+        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can istall typings for [i18next](http://i18next.com/) with next command in console: 
+            ``` javascript
+            typings install i18next --ambient
+            ```
+        - alternatively you can use a similar file from this repositories doc folder (`doc/i18next.d.ts`)
+        
+    2. **i18next-xhr-backend**
+        - use the typings file from this repositories doc folder `doc/i18next-xhr-backend.d.ts`
+    > in order to comply with some neat project structure you should copy `*.d.ts` files from `doc/*.d.ts` to another folder, e.g. `/customTypings`
+    
+    The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
+    ```javascript
+    // ... existing configuration code
+    "filesGlob": [
+        "./typings/browser.d.ts", // this must be specified in case you use typings(https://github.com/typings/typings)
+        "./your_custom_typings_folder_path/**/*.d.ts", // if you use both typings files from this repository (`doc/*.d.ts`)
+      ],
+    // ... other existing configuration code
+    ```
 
 ## How to use this plugin
 i18next translations work by setting up an active locale, which you've setup above in the init phase with the property `lng`.
