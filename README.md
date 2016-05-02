@@ -653,7 +653,7 @@ In case of bundling your app you should thus keep in mind that it will not be au
 
 ## Usage with webpack
 
-This library has more than 1 file that need to be resolved. But by default, only the main file is loaded. Which means that you will get a error like:
+This library has more than one file that needs to be resolved. But by default, only the main file is loaded. Which means that you will get a error like:
 
 ```
 .*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/t'.
@@ -671,6 +671,15 @@ new AureliaWebpackPlugin({
   ]
 })
 ```
+
+On top of that if you need the Intl polyfill included you have to manualy require and bundle it. To do so add the following import statement at the begin of your `main.js/ts` file:
+
+```javascript
+//main.js
+import 'intl';
+```
+
+For additional information about Intl.js and Webpack please take a look at this [official repos information](https://github.com/andyearnshaw/Intl.js#intljs-and-browserifywebpack)
 
 ## CLI Integration
 
