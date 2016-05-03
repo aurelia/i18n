@@ -1,12 +1,13 @@
 # aurelia-i18n
 
+[![npm Version](https://img.shields.io/npm/v/aurelia-i18n.svg)](https://www.npmjs.com/package/aurelia-i18n)
 [![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
 [![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a plugin that provides i18n support.
 Under the hood it uses the [i18next](http://i18next.com/) library.
 
-> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/). If you have questions, we invite you to [join us on Gitter](https://gitter.im/aurelia/discuss). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome Extension and visit any of our repository's boards. You can get an overview of all Aurelia work by visiting [the framework board](https://github.com/aurelia/framework#boards).
+> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/) and [our email list](http://durandal.us10.list-manage1.com/subscribe?u=dae7661a3872ee02b519f6f29&id=3de6801ccc). We also invite you to [follow us on twitter](https://twitter.com/aureliaeffect). If you have questions, please [join our community on Gitter](https://gitter.im/aurelia/discuss). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome or Firefox Extension and visit any of our repository's boards. You can get an overview of all Aurelia work by visiting [the framework board](https://github.com/aurelia/framework#boards).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -84,8 +85,8 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
     ```javascript
     import {I18N} from 'aurelia-i18n';
-    import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin 
-    
+    import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
+
     export function configure(aurelia) {
         aurelia.use
           .standardConfiguration()
@@ -93,7 +94,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
           .plugin('aurelia-i18n', (instance) => {
             // register backend plugin
             instance.i18next.use(Backend);
-            
+
             // adapt options to your needs (see http://i18next.com/docs/options/)
             // make sure to return the promise of the setup method, in order to guarantee proper loading
             return instance.setup({
@@ -106,7 +107,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
               debug : false
             });
           });
-        
+
         aurelia.start().then(a => a.setRoot());
     }
     ```
@@ -118,7 +119,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     ```javascript
     instance.setup({
       ...
-      ns: { 
+      ns: {
         namespaces: ['translation','nav'],
         defaultNs: 'translation'
       }
@@ -134,19 +135,19 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     ```
 
     In order to fix that you first need to get the `*.d.ts` files:
-    
+
     1. **i18next**
-    
-        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can istall typings for [i18next](http://i18next.com/) with next command in console: 
+
+        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can istall typings for [i18next](http://i18next.com/) with next command in console:
             ``` javascript
             typings install i18next --ambient
             ```
         - alternatively you can use a similar file from this repositories doc folder (`doc/i18next.d.ts`)
-        
+
     2. **i18next-xhr-backend**
         - use the typings file from this repositories doc folder `doc/i18next-xhr-backend.d.ts`
     > in order to comply with some neat project structure you should copy `*.d.ts` files from `doc/*.d.ts` to another folder, e.g. `/customTypings`
-    
+
     The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
     ```javascript
     // ... existing configuration code
@@ -459,7 +460,7 @@ The TValueConverter is pretty useful if you prefer a declarative way to enhance 
 </li>
 ```
 
-Now aurelia-i18n will automatically emit signals when internal changes happen and you can do so as well by emiting a `aurelia-translation-signal`. The following example depicts how this is done internally when the current locale changes. First you need to get hold of the `BindingSignaler` exported by the `aurelia-templating-resources` module and inject it either in your constructor or via the static `$inject` property. Next when you want to trigger the signal just use the signalers `signal` method and pass it the predefined string. 
+Now aurelia-i18n will automatically emit signals when internal changes happen and you can do so as well by emiting a `aurelia-translation-signal`. The following example depicts how this is done internally when the current locale changes. First you need to get hold of the `BindingSignaler` exported by the `aurelia-templating-resources` module and inject it either in your constructor or via the static `$inject` property. Next when you want to trigger the signal just use the signalers `signal` method and pass it the predefined string.
 
 ```javascript
 import {BindingSignaler} from 'aurelia-templating-resources';
@@ -733,20 +734,6 @@ Take a look at the updated [How to install this plugin?](#how-to-install-this-pl
 ## Polyfills
 
 * andyearnshaw/Intl.js
-
-## Dependencies
-
-* [i18next](https://github.com/i18next/i18next)
-* aurelia-binding
-* aurelia-dependency-injection
-* aurelia-event-aggregator
-* aurelia-loader
-* aurelia-templating
-* aurelia-templating-resources
-
-## Used By
-
-This library is used directly by applications only.
 
 ## Platform Support
 
