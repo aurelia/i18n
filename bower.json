@@ -8,6 +8,8 @@
     "plugin"
   ],
   "homepage": "http://aurelia.io",
+  "main": "dist/commonjs/aurelia-i18n.js",
+  "moduleType": "node",
   "license": "MIT",
   "authors": [
     "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
