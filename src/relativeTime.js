@@ -16,29 +16,29 @@ export class RelativeTime {
     });
   }
 
-  setup(locales) {      
+  setup(locales) {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    let fallbackLng = this.service.fallbackLng;    
+    let fallbackLng = this.service.fallbackLng;
     let index = 0;
-    
-    if ((index = key.indexOf("-")) >= 0) {
-        let baseLocale = key.substring(0, index);
-        
-        if (trans[baseLocale]) {             
-            this.addTranslationResource(baseLocale, trans[baseLocale].translation);
-        }
+
+    if ((index = key.indexOf('-')) >= 0) { // eslint-disable-line no-cond-assign
+      let baseLocale = key.substring(0, index);
+
+      if (trans[baseLocale]) {
+        this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+      }
     }
-    
+
     if (trans[key]) {
-        this.addTranslationResource(key, trans[key].translation);
+      this.addTranslationResource(key, trans[key].translation);
     }
     if (trans[fallbackLng]) {
-        this.addTranslationResource(key, trans[fallbackLng].translation);
+      this.addTranslationResource(key, trans[fallbackLng].translation);
     }
   }
-  
-  addTranslationResource(key, translation) {    
+
+  addTranslationResource(key, translation) {
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
@@ -46,7 +46,7 @@ export class RelativeTime {
         translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
       }
     }
-    
+
     this.service.i18next.addResources(key, 'translation', translation);
   }
 
@@ -83,7 +83,7 @@ export class RelativeTime {
       return this.service.tr(unit, { count: parseInt(unitAmount, 10), context: 'ago' });
     } else if (unitAmount < 0) {
       let abs = Math.abs(unitAmount);
-      return this.service.tr(unit, { count: abs, context: 'in'});
+      return this.service.tr(unit, { count: abs, context: 'in' });
     }
 
     return null;
