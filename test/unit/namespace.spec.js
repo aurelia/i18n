@@ -44,7 +44,7 @@ describe('testing i18n namespaces', () => {
     
   });
   
-  fit('should have translation as defaultNS', () => {
+  it('should have translation as defaultNS', () => {
     sut.setup({
       resources: resources,
       lng: 'en',
@@ -55,7 +55,7 @@ describe('testing i18n namespaces', () => {
     expect(sut.i18next.options.defaultNS).toEqual(["translation"]);
   });
   
-  fit('should have customns as defaultNS', () => {
+  it('should have customns as defaultNS', () => {
     sut.setup({
       resources: resources,
       lng: 'en',
