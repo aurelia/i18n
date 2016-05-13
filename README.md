@@ -85,7 +85,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
     ```javascript
     import {I18N} from 'aurelia-i18n';
-    import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
+    import * as Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
     export function configure(aurelia) {
         aurelia.use
