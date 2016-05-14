@@ -111,6 +111,10 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
         aurelia.start().then(a => a.setRoot());
     }
     ```
+    If You use typescript use:
+    ```import * as Backend from 'i18next-xhr-backend';```
+    instead of
+    ```import Backend from 'i18next-xhr-backend';```
 
     > You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
     and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
