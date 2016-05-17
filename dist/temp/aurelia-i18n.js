@@ -290,6 +290,35 @@ var translations = exports.translations = {
       'day_in': 'あと __count__ 日間',
       'day_in_plural': 'あと __count__ 日間'
     }
+  },
+  pt: {
+    translation: {
+      'now': 'neste exato momento',
+      'second_ago': '__count__ segundo atrás',
+      'second_ago_plural': '__count__ segundos atrás',
+      'second_in': 'em __count__ segundo',
+      'second_in_plural': 'em __count__ segundos',
+      'minute_ago': '__count__ minuto atrás',
+      'minute_ago_plural': '__count__ minutos atrás',
+      'minute_in': 'em __count__ minuto',
+      'minute_in_plural': 'em __count__ minutos',
+      'hour_ago': '__count__ hora atrás',
+      'hour_ago_plural': '__count__ horas atrás',
+      'hour_in': 'em __count__ hora',
+      'hour_in_plural': 'em __count__ horas',
+      'day_ago': '__count__ dia atrás',
+      'day_ago_plural': '__count__ dias atrás',
+      'day_in': 'em __count__ dia',
+      'day_in_plural': 'em __count__ dias',
+      'month_ago': '__count__ mês atrás',
+      'month_ago_plural': '__count__ meses atrás',
+      'month_in': 'em __count__ mês',
+      'month_in_plural': 'em __count__ meses',
+      'year_ago': '__count__ ano atrás',
+      'year_ago_plural': '__count__ anos atrás',
+      'year_in': 'em __count__ ano',
+      'year_in_plural': 'em __count__ anos'
+    }
   }
 };
 
@@ -570,8 +599,18 @@ var DfValueConverter = exports.DfValueConverter = function () {
     this.service = i18n;
   }
 
-  DfValueConverter.prototype.toView = function toView(value, formatOptions, locale, dateFormat) {
-    var df = dateFormat || this.service.df(formatOptions, locale || this.service.getLocale());
+  DfValueConverter.prototype.toView = function toView(value, dfOrOptions, locale, df) {
+    if (value === null || typeof value === 'undefined' || typeof value === 'string' && value.trim() === '') {
+      return value;
+    }
+
+    if (dfOrOptions && typeof dfOrOptions.format === 'function') {
+      return dfOrOptions.format(value);
+    } else if (df) {
+      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
+    } else {
+        df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+      }
 
     return df.format(value);
   };
@@ -624,7 +663,25 @@ var RelativeTime = exports.RelativeTime = function () {
     var trans = translations.default || translations;
     var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     var fallbackLng = this.service.fallbackLng;
-    var translation = (trans[key] || trans[fallbackLng] || {}).translation;
+    var index = 0;
+
+    if ((index = key.indexOf('-')) >= 0) {
+      var baseLocale = key.substring(0, index);
+
+      if (trans[baseLocale]) {
+        this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+      }
+    }
+
+    if (trans[key]) {
+      this.addTranslationResource(key, trans[key].translation);
+    }
+    if (trans[fallbackLng]) {
+      this.addTranslationResource(key, trans[fallbackLng].translation);
+    }
+  };
+
+  RelativeTime.prototype.addTranslationResource = function addTranslationResource(key, translation) {
     var options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {

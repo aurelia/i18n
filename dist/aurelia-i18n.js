@@ -269,6 +269,35 @@ export const translations = {
       'day_in': 'あと __count__ 日間',
       'day_in_plural': 'あと __count__ 日間'
     }
+  },
+  pt: {
+    translation: {
+      'now': 'neste exato momento',
+      'second_ago': '__count__ segundo atrás',
+      'second_ago_plural': '__count__ segundos atrás',
+      'second_in': 'em __count__ segundo',
+      'second_in_plural': 'em __count__ segundos',
+      'minute_ago': '__count__ minuto atrás',
+      'minute_ago_plural': '__count__ minutos atrás',
+      'minute_in': 'em __count__ minuto',
+      'minute_in_plural': 'em __count__ minutos',
+      'hour_ago': '__count__ hora atrás',
+      'hour_ago_plural': '__count__ horas atrás',
+      'hour_in': 'em __count__ hora',
+      'hour_in_plural': 'em __count__ horas',
+      'day_ago': '__count__ dia atrás',
+      'day_ago_plural': '__count__ dias atrás',
+      'day_in': 'em __count__ dia',
+      'day_in_plural': 'em __count__ dias',
+      'month_ago': '__count__ mês atrás',
+      'month_ago_plural': '__count__ meses atrás',
+      'month_in': 'em __count__ mês',
+      'month_in_plural': 'em __count__ meses',
+      'year_ago': '__count__ ano atrás',
+      'year_ago_plural': '__count__ anos atrás',
+      'year_in': 'em __count__ ano',
+      'year_in_plural': 'em __count__ anos'
+    }
   }
 };
 
@@ -543,8 +572,21 @@ export class DfValueConverter {
     this.service = i18n;
   }
 
-  toView(value, formatOptions, locale, dateFormat) {
-    let df = dateFormat || this.service.df(formatOptions, locale || this.service.getLocale());
+  toView(value, dfOrOptions, locale, df) {
+    if (value === null
+      || typeof value === 'undefined'
+      || (typeof value === 'string' && value.trim() === '')
+      ) {
+      return value;
+    }
+
+    if (dfOrOptions && (typeof dfOrOptions.format === 'function')) {
+      return dfOrOptions.format(value);
+    } else if (df) {
+      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]'); // eslint-disable-line no-console
+    } else {
+      df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+    }
 
     return df.format(value);
   }
@@ -581,7 +623,25 @@ export class RelativeTime {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.fallbackLng;
-    let translation = (trans[key] || trans[fallbackLng] || {}).translation;
+    let index = 0;
+
+    if ((index = key.indexOf('-')) >= 0) { // eslint-disable-line no-cond-assign
+      let baseLocale = key.substring(0, index);
+
+      if (trans[baseLocale]) {
+        this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+      }
+    }
+
+    if (trans[key]) {
+      this.addTranslationResource(key, trans[key].translation);
+    }
+    if (trans[fallbackLng]) {
+      this.addTranslationResource(key, trans[fallbackLng].translation);
+    }
+  }
+
+  addTranslationResource(key, translation) {
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
@@ -626,7 +686,7 @@ export class RelativeTime {
       return this.service.tr(unit, { count: parseInt(unitAmount, 10), context: 'ago' });
     } else if (unitAmount < 0) {
       let abs = Math.abs(unitAmount);
-      return this.service.tr(unit, { count: abs, context: 'in'});
+      return this.service.tr(unit, { count: abs, context: 'in' });
     }
 
     return null;

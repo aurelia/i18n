@@ -62,7 +62,7 @@ declare module 'aurelia-i18n' {
   export class DfValueConverter {
     static inject(): any;
     constructor(i18n: any);
-    toView(value: any, formatOptions: any, locale: any, dateFormat: any): any;
+    toView(value: any, dfOrOptions: any, locale: any, df: any): any;
   }
   export class NfValueConverter {
     static inject(): any;
@@ -73,6 +73,7 @@ declare module 'aurelia-i18n' {
     static inject(): any;
     constructor(i18n: any, ea: any);
     setup(locales: any): any;
+    addTranslationResource(key: any, translation: any): any;
     getRelativeTime(time: any): any;
     getTimeDiffDescription(diff: any, unit: any, timeDivisor: any): any;
   }

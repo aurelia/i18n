@@ -22,7 +22,25 @@ export let RelativeTime = class RelativeTime {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.fallbackLng;
-    let translation = (trans[key] || trans[fallbackLng] || {}).translation;
+    let index = 0;
+
+    if ((index = key.indexOf('-')) >= 0) {
+      let baseLocale = key.substring(0, index);
+
+      if (trans[baseLocale]) {
+        this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+      }
+    }
+
+    if (trans[key]) {
+      this.addTranslationResource(key, trans[key].translation);
+    }
+    if (trans[fallbackLng]) {
+      this.addTranslationResource(key, trans[fallbackLng].translation);
+    }
+  }
+
+  addTranslationResource(key, translation) {
     let options = this.service.i18next.options;
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {

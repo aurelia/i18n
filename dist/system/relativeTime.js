@@ -43,7 +43,25 @@ System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event
           var trans = translations.default || translations;
           var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
           var fallbackLng = this.service.fallbackLng;
-          var translation = (trans[key] || trans[fallbackLng] || {}).translation;
+          var index = 0;
+
+          if ((index = key.indexOf('-')) >= 0) {
+            var baseLocale = key.substring(0, index);
+
+            if (trans[baseLocale]) {
+              this.addTranslationResource(baseLocale, trans[baseLocale].translation);
+            }
+          }
+
+          if (trans[key]) {
+            this.addTranslationResource(key, trans[key].translation);
+          }
+          if (trans[fallbackLng]) {
+            this.addTranslationResource(key, trans[fallbackLng].translation);
+          }
+        };
+
+        RelativeTime.prototype.addTranslationResource = function addTranslationResource(key, translation) {
           var options = this.service.i18next.options;
 
           if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
