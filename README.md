@@ -86,6 +86,9 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     ```javascript
     import {I18N} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
+    
+    // if you use TypeScript
+    // import * as Backend from 'i18next-xhr-backend';
 
     export function configure(aurelia) {
         aurelia.use
@@ -126,9 +129,9 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     });
     ```
 
-8. If You use typescript
+8. If you use TypeScript
 
-    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries for now. So, during the typescript compilation process you will see the following error messages:
+    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries for now. So, during the TypeScript compilation process you will see the following error messages:
     ``` javascript
     "/yourHost/pathToApp/pathToFile/filename.ts(3,26): Cannot find module 'i18next-xhr-backend'."
     "/yourHost/pathToApp/jspm_packages/npm/aurelia-i18n@0.5.2/aurelia-i18n.d.ts(2,23): Cannot find module 'i18next'."
