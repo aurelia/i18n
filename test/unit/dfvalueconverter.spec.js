@@ -59,7 +59,7 @@ describe('dfvalueconverter tests', () => {
     });
   });
 
-  fit('should return "0" as begin of unix timestamp', (done) => {
+  it('should return "0" as begin of unix timestamp', (done) => {
     let val = '0';
     sut.setLocale('de').then( () => {
       expect(dfvc.toView(val, { timeZone: 'UTC'})).toBe('1.1.1970');
