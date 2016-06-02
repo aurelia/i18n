@@ -62,7 +62,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
     <body aurelia-app="main">
     ...
     ```
-3. Create folder `locale` in your projects root
+3. Create folder `locales` in your projects root
 4. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
 5. In those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
