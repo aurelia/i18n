@@ -1,5 +1,6 @@
 /*eslint no-cond-assign: 0*/
 import i18next from 'i18next';
+import {DOM} from 'aurelia-pal';
 
 export class I18N {
 
@@ -178,13 +179,48 @@ export class I18N {
       //anything other than text,prepend,append or html will be added as an attribute on the element.
       switch (attr) {
       case 'text':
-        node.textContent = this.tr(key, params);
+        let newChild = DOM.createTextNode(this.tr(key, params));
+        if (node._newChild) {
+          node.removeChild(node._newChild);
+        }
+
+        node._newChild = newChild;
+        while (node.firstChild) {
+          node.removeChild(node.firstChild);
+        }
+        node.appendChild(node._newChild);
         break;
       case 'prepend':
-        node.innerHTML = this.tr(key, params) + node._innerHTML.trim();
+        let prependParser = DOM.createElement('div');
+        prependParser.innerHTML = this.tr(key, params);
+        for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
+          if (node.childNodes[ni]._prepended) {
+            node.removeChild(node.childNodes[ni]);
+          }
+        }
+
+        for (let pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+          prependParser.childNodes[pi]._prepended = true;
+          if (node.firstChild) {
+            node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+          } else {
+            node.appendChild(prependParser.childNodes[pi]);
+          }
+        }
         break;
       case 'append':
-        node.innerHTML = node._innerHTML.trim() + this.tr(key, params);
+        let appendParser = DOM.createElement('div');
+        appendParser.innerHTML = this.tr(key, params);
+        for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
+          if (node.childNodes[ni]._appended) {
+            node.removeChild(node.childNodes[ni]);
+          }
+        }
+
+        while (appendParser.firstChild) {
+          appendParser.firstChild._appended = true;
+          node.appendChild(appendParser.firstChild);
+        }
         break;
       case 'html':
         node.innerHTML = this.tr(key, params);
