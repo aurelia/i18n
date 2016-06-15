@@ -32,7 +32,7 @@ describe('testing i18n attributes', () => {
   });
 
 
-  it('should raise value change on i18n custom attribute', done => {
+  xit('should raise value change on i18n custom attribute', done => {
     let i18nAttribute = templatingEngine.createViewModelForUnitTest(TCustomAttribute);
     spyOn(i18nAttribute, 'valueChanged');
 
@@ -47,7 +47,7 @@ describe('testing i18n attributes', () => {
     });
   });
 
-  it('should listen to params changes', done => {
+  xit('should listen to params changes', done => {
     let paramsAttribute = templatingEngine.createViewModelForUnitTest(TParamsCustomAttribute);
     container.registerInstance(TParamsCustomAttribute, paramsAttribute);
 
@@ -64,7 +64,7 @@ describe('testing i18n attributes', () => {
     });
   });
 
-  it('should raise value change on i18n custom attribute with dash in name', done => {
+  xit('should raise value change on i18n custom attribute with dash in name', done => {
     let i18nAttribute = templatingEngine.createViewModelForUnitTest(TCustomAttribute);
     spyOn(i18nAttribute, 'valueChanged');
 

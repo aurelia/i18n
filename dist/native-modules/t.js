@@ -1,29 +1,17 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = undefined;
-
 var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3;
 
-var _i18n = require('./i18n');
-
-var _aureliaEventAggregator = require('aurelia-event-aggregator');
-
-var _aureliaTemplating = require('aurelia-templating');
-
-var _aureliaTemplatingResources = require('aurelia-templating-resources');
-
-var _aureliaBinding = require('aurelia-binding');
-
-var _utils = require('./utils');
 
 
+import { I18N } from './i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { customAttribute } from 'aurelia-templating';
+import { SignalBindingBehavior } from 'aurelia-templating-resources';
+import { ValueConverter } from 'aurelia-binding';
+import { LazyOptional } from './utils';
 
-var TValueConverter = exports.TValueConverter = function () {
+export var TValueConverter = function () {
   TValueConverter.inject = function inject() {
-    return [_i18n.I18N];
+    return [I18N];
   };
 
   function TValueConverter(i18n) {
@@ -39,7 +27,7 @@ var TValueConverter = exports.TValueConverter = function () {
   return TValueConverter;
 }();
 
-var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aureliaTemplating.customAttribute)('t-params'), _dec(_class = (_temp = _class2 = function () {
+export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
   function TParamsCustomAttribute(element) {
     
 
@@ -50,7 +38,8 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aurel
 
   return TParamsCustomAttribute;
 }(), _class2.inject = [Element], _temp)) || _class);
-var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+
+export var TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
   function TCustomAttribute(element, i18n, ea, tparams) {
     
 
@@ -95,8 +84,9 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class4.inject = [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
-var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function () {
+}(), _class4.inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+
+export var TBindingBehavior = (_temp3 = _class5 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     
 
@@ -108,7 +98,7 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function (
 
     var sourceExpression = binding.sourceExpression;
     var expression = sourceExpression.expression;
-    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
+    sourceExpression.expression = new ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
   };
 
   TBindingBehavior.prototype.unbind = function unbind(binding, source) {
@@ -118,4 +108,4 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function (
   };
 
   return TBindingBehavior;
-}(), _class5.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp3);
+}(), _class5.inject = [SignalBindingBehavior], _temp3);

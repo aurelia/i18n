@@ -1,10 +1,29 @@
-define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
+define(['exports', 'aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (exports, _aureliaLogging, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtValueConverter = exports.NfValueConverter = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
+
+  var LogManager = _interopRequireWildcard(_aureliaLogging);
+
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    } else {
+      var newObj = {};
+
+      if (obj != null) {
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        }
+      }
+
+      newObj.default = obj;
+      return newObj;
+    }
+  }
 
   var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
     return typeof obj;
@@ -52,7 +71,10 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
 
     if (window.Intl === undefined) {
       var _ret = function () {
+        var i18nLogger = LogManager.getLogger('i18n');
+        i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
         var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
+        var normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
 
         return {
           v: loader.normalize('aurelia-i18n').then(function (i18nName) {
@@ -60,8 +82,14 @@ define(['exports', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-lo
               return loader.loadModule(intlName).then(function (poly) {
                 window.Intl = poly;
                 return registerI18N(frameworkConfig, cb);
+              }, function () {
+                return i18nLogger.warn('Failed to load the Intl polyfill.');
               });
+            }, function () {
+              return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl'));
             });
+          }, function () {
+            return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'aurelia-i18n'));
           })
         };
       }();

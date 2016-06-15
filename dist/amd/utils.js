@@ -6,11 +6,7 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
   });
   exports.LazyOptional = exports.assignObjectToKeys = exports.extend = undefined;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var _dec, _class;
 
@@ -48,7 +44,7 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
 
   var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjection.resolver)(), _dec(_class = function () {
     function LazyOptional(key) {
-      _classCallCheck(this, LazyOptional);
+      
 
       this.key = key;
     }

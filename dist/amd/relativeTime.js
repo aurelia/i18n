@@ -6,11 +6,7 @@ define(['exports', './i18n', './defaultTranslations/relative.time', 'aurelia-eve
   });
   exports.RelativeTime = undefined;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var RelativeTime = exports.RelativeTime = function () {
     RelativeTime.inject = function inject() {
@@ -20,7 +16,7 @@ define(['exports', './i18n', './defaultTranslations/relative.time', 'aurelia-eve
     function RelativeTime(i18n, ea) {
       var _this = this;
 
-      _classCallCheck(this, RelativeTime);
+      
 
       this.service = i18n;
       this.ea = ea;

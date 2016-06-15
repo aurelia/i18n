@@ -1,13 +1,11 @@
 'use strict';
 
 System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event-aggregator'], function (_export, _context) {
+  "use strict";
+
   var I18N, translations, EventAggregator, RelativeTime;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   return {
     setters: [function (_i18n) {
@@ -26,7 +24,7 @@ System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event
         function RelativeTime(i18n, ea) {
           var _this = this;
 
-          _classCallCheck(this, RelativeTime);
+          
 
           this.service = i18n;
           this.ea = ea;

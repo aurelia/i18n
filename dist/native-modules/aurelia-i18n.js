@@ -1,48 +1,30 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtValueConverter = exports.NfValueConverter = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
-
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _aureliaLogging = require('aurelia-logging');
+import * as LogManager from 'aurelia-logging';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { ViewResources } from 'aurelia-templating';
+import { Loader } from 'aurelia-loader';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
-var LogManager = _interopRequireWildcard(_aureliaLogging);
-
-var _aureliaEventAggregator = require('aurelia-event-aggregator');
-
-var _aureliaTemplating = require('aurelia-templating');
-
-var _aureliaLoader = require('aurelia-loader');
-
-var _aureliaTemplatingResources = require('aurelia-templating-resources');
-
-var _i18n = require('./i18n');
-
-var _relativeTime = require('./relativeTime');
-
-var _df = require('./df');
-
-var _nf = require('./nf');
-
-var _rt = require('./rt');
-
-var _t = require('./t');
-
-var _baseI18n = require('./base-i18n');
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+import { I18N } from './i18n';
+import { RelativeTime } from './relativeTime';
+import { DfValueConverter } from './df';
+import { NfValueConverter } from './nf';
+import { RtValueConverter } from './rt';
+import { TValueConverter } from './t';
+import { TBindingBehavior } from './t';
+import { TCustomAttribute } from './t';
+import { TParamsCustomAttribute } from './t';
+import { BaseI18N } from './base-i18n';
 
 function registerI18N(frameworkConfig, cb) {
-  var instance = new _i18n.I18N(frameworkConfig.container.get(_aureliaEventAggregator.EventAggregator), frameworkConfig.container.get(_aureliaTemplatingResources.BindingSignaler));
-  frameworkConfig.container.registerInstance(_i18n.I18N, instance);
+  var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
+  frameworkConfig.container.registerInstance(I18N, instance);
 
   var ret = cb(instance);
 
   frameworkConfig.postTask(function () {
-    var resources = frameworkConfig.container.get(_aureliaTemplating.ViewResources);
+    var resources = frameworkConfig.container.get(ViewResources);
     var htmlBehaviorResource = resources.getAttribute('t');
     var htmlParamsResource = resources.getAttribute('t-params');
     var attributes = instance.i18next.options.attributes;
@@ -77,7 +59,7 @@ function configure(frameworkConfig, cb) {
     var _ret = function () {
       var i18nLogger = LogManager.getLogger('i18n');
       i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
-      var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
+      var loader = frameworkConfig.container.get(Loader);
       var normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
 
       return {
@@ -104,15 +86,4 @@ function configure(frameworkConfig, cb) {
   return Promise.resolve(registerI18N(frameworkConfig, cb));
 }
 
-exports.configure = configure;
-exports.I18N = _i18n.I18N;
-exports.RelativeTime = _relativeTime.RelativeTime;
-exports.DfValueConverter = _df.DfValueConverter;
-exports.NfValueConverter = _nf.NfValueConverter;
-exports.RtValueConverter = _rt.RtValueConverter;
-exports.TValueConverter = _t.TValueConverter;
-exports.TBindingBehavior = _t.TBindingBehavior;
-exports.TCustomAttribute = _t.TCustomAttribute;
-exports.TParamsCustomAttribute = _t.TParamsCustomAttribute;
-exports.BaseI18N = _baseI18n.BaseI18N;
-exports.EventAggregator = _aureliaEventAggregator.EventAggregator;
+export { configure, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, EventAggregator };

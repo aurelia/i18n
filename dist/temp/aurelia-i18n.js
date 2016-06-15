@@ -15,6 +15,8 @@ var _i18next2 = _interopRequireDefault(_i18next);
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
+var _aureliaPal = require('aurelia-pal');
+
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplating = require('aurelia-templating');
@@ -542,13 +544,48 @@ var I18N = exports.I18N = function () {
 
       switch (attr) {
         case 'text':
-          node.textContent = this.tr(key, params);
+          var newChild = _aureliaPal.DOM.createTextNode(this.tr(key, params));
+          if (node._newChild) {
+            node.removeChild(node._newChild);
+          }
+
+          node._newChild = newChild;
+          while (node.firstChild) {
+            node.removeChild(node.firstChild);
+          }
+          node.appendChild(node._newChild);
           break;
         case 'prepend':
-          node.innerHTML = this.tr(key, params) + node._innerHTML.trim();
+          var prependParser = _aureliaPal.DOM.createElement('div');
+          prependParser.innerHTML = this.tr(key, params);
+          for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
+            if (node.childNodes[ni]._prepended) {
+              node.removeChild(node.childNodes[ni]);
+            }
+          }
+
+          for (var pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+            prependParser.childNodes[pi]._prepended = true;
+            if (node.firstChild) {
+              node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+            } else {
+              node.appendChild(prependParser.childNodes[pi]);
+            }
+          }
           break;
         case 'append':
-          node.innerHTML = node._innerHTML.trim() + this.tr(key, params);
+          var appendParser = _aureliaPal.DOM.createElement('div');
+          appendParser.innerHTML = this.tr(key, params);
+          for (var _ni = node.childNodes.length - 1; _ni >= 0; _ni--) {
+            if (node.childNodes[_ni]._appended) {
+              node.removeChild(node.childNodes[_ni]);
+            }
+          }
+
+          while (appendParser.firstChild) {
+            appendParser.firstChild._appended = true;
+            node.appendChild(appendParser.firstChild);
+          }
           break;
         case 'html':
           node.innerHTML = this.tr(key, params);

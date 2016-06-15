@@ -1,17 +1,10 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.DfValueConverter = undefined;
-
-var _i18n = require('./i18n');
 
 
+import { I18N } from './i18n';
 
-var DfValueConverter = exports.DfValueConverter = function () {
+export var DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
-    return [_i18n.I18N];
+    return [I18N];
   };
 
   function DfValueConverter(i18n) {

@@ -1,21 +1,9 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.I18N = undefined;
-
-var _i18next = require('i18next');
-
-var _i18next2 = _interopRequireDefault(_i18next);
-
-var _aureliaPal = require('aurelia-pal');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
+import i18next from 'i18next';
+import { DOM } from 'aurelia-pal';
 
-var I18N = exports.I18N = function () {
+export var I18N = function () {
   function I18N(ea, signaler) {
     var _this = this;
 
@@ -27,7 +15,7 @@ var I18N = exports.I18N = function () {
       promise: null
     };
 
-    this.i18next = _i18next2.default;
+    this.i18next = i18next;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -48,9 +36,9 @@ var I18N = exports.I18N = function () {
       debug: false
     };
 
-    _i18next2.default.init(options || defaultOptions, function (err, t) {
-      if (_i18next2.default.options.attributes instanceof String) {
-        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+    i18next.init(options || defaultOptions, function (err, t) {
+      if (i18next.options.attributes instanceof String) {
+        i18next.options.attributes = [i18next.options.attributes];
       }
 
       _this2.i18nextDefered.resolve(_this2.i18next);
@@ -184,7 +172,7 @@ var I18N = exports.I18N = function () {
 
       switch (attr) {
         case 'text':
-          var newChild = _aureliaPal.DOM.createTextNode(this.tr(key, params));
+          var newChild = DOM.createTextNode(this.tr(key, params));
           if (node._newChild) {
             node.removeChild(node._newChild);
           }
@@ -196,7 +184,7 @@ var I18N = exports.I18N = function () {
           node.appendChild(node._newChild);
           break;
         case 'prepend':
-          var prependParser = _aureliaPal.DOM.createElement('div');
+          var prependParser = DOM.createElement('div');
           prependParser.innerHTML = this.tr(key, params);
           for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
             if (node.childNodes[ni]._prepended) {
@@ -214,7 +202,7 @@ var I18N = exports.I18N = function () {
           }
           break;
         case 'append':
-          var appendParser = _aureliaPal.DOM.createElement('div');
+          var appendParser = DOM.createElement('div');
           appendParser.innerHTML = this.tr(key, params);
           for (var _ni = node.childNodes.length - 1; _ni >= 0; _ni--) {
             if (node.childNodes[_ni]._appended) {

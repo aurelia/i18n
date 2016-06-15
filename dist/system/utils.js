@@ -1,13 +1,11 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection'], function (_export, _context) {
+  "use strict";
+
   var resolver, _dec, _class, _typeof, extend, assignObjectToKeys, LazyOptional;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   return {
     setters: [function (_aureliaDependencyInjection) {
@@ -52,7 +50,7 @@ System.register(['aurelia-dependency-injection'], function (_export, _context) {
 
       _export('LazyOptional', LazyOptional = (_dec = resolver(), _dec(_class = function () {
         function LazyOptional(key) {
-          _classCallCheck(this, LazyOptional);
+          
 
           this.key = key;
         }

@@ -6,11 +6,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator'], function (exports, _i1
   });
   exports.BaseI18N = undefined;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var _class, _temp;
 

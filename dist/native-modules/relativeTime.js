@@ -1,21 +1,12 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RelativeTime = undefined;
-
-var _i18n = require('./i18n');
-
-var _relative = require('./defaultTranslations/relative.time');
-
-var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 
+import { I18N } from './i18n';
+import { translations } from './defaultTranslations/relative.time';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-var RelativeTime = exports.RelativeTime = function () {
+export var RelativeTime = function () {
   RelativeTime.inject = function inject() {
-    return [_i18n.I18N, _aureliaEventAggregator.EventAggregator];
+    return [I18N, EventAggregator];
   };
 
   function RelativeTime(i18n, ea) {
@@ -35,7 +26,7 @@ var RelativeTime = exports.RelativeTime = function () {
   }
 
   RelativeTime.prototype.setup = function setup(locales) {
-    var trans = _relative.translations.default || _relative.translations;
+    var trans = translations.default || translations;
     var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     var fallbackLng = this.service.fallbackLng;
     var index = 0;

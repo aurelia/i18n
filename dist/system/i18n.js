@@ -1,17 +1,17 @@
 'use strict';
 
-System.register(['i18next'], function (_export, _context) {
-  var i18next, I18N;
+System.register(['i18next', 'aurelia-pal'], function (_export, _context) {
+  "use strict";
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  var i18next, DOM, I18N;
+
+  
 
   return {
     setters: [function (_i18next) {
       i18next = _i18next.default;
+    }, function (_aureliaPal) {
+      DOM = _aureliaPal.DOM;
     }],
     execute: function () {
       _export('I18N', I18N = function () {
@@ -183,13 +183,48 @@ System.register(['i18next'], function (_export, _context) {
 
             switch (attr) {
               case 'text':
-                node.textContent = this.tr(key, params);
+                var newChild = DOM.createTextNode(this.tr(key, params));
+                if (node._newChild) {
+                  node.removeChild(node._newChild);
+                }
+
+                node._newChild = newChild;
+                while (node.firstChild) {
+                  node.removeChild(node.firstChild);
+                }
+                node.appendChild(node._newChild);
                 break;
               case 'prepend':
-                node.innerHTML = this.tr(key, params) + node._innerHTML.trim();
+                var prependParser = DOM.createElement('div');
+                prependParser.innerHTML = this.tr(key, params);
+                for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
+                  if (node.childNodes[ni]._prepended) {
+                    node.removeChild(node.childNodes[ni]);
+                  }
+                }
+
+                for (var pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+                  prependParser.childNodes[pi]._prepended = true;
+                  if (node.firstChild) {
+                    node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+                  } else {
+                    node.appendChild(prependParser.childNodes[pi]);
+                  }
+                }
                 break;
               case 'append':
-                node.innerHTML = node._innerHTML.trim() + this.tr(key, params);
+                var appendParser = DOM.createElement('div');
+                appendParser.innerHTML = this.tr(key, params);
+                for (var _ni = node.childNodes.length - 1; _ni >= 0; _ni--) {
+                  if (node.childNodes[_ni]._appended) {
+                    node.removeChild(node.childNodes[_ni]);
+                  }
+                }
+
+                while (appendParser.firstChild) {
+                  appendParser.firstChild._appended = true;
+                  node.appendChild(appendParser.firstChild);
+                }
                 break;
               case 'html':
                 node.innerHTML = this.tr(key, params);

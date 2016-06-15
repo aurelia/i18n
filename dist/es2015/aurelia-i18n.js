@@ -1,3 +1,4 @@
+import * as LogManager from 'aurelia-logging';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { ViewResources } from 'aurelia-templating';
 import { Loader } from 'aurelia-loader';
@@ -49,16 +50,19 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources('./rt');
 
   if (window.Intl === undefined) {
+    let i18nLogger = LogManager.getLogger('i18n');
+    i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
     let loader = frameworkConfig.container.get(Loader);
+    const normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
 
     return loader.normalize('aurelia-i18n').then(i18nName => {
       return loader.normalize('intl', i18nName).then(intlName => {
         return loader.loadModule(intlName).then(poly => {
           window.Intl = poly;
           return registerI18N(frameworkConfig, cb);
-        });
-      });
-    });
+        }, () => i18nLogger.warn('Failed to load the Intl polyfill.'));
+      }, () => i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl')));
+    }, () => i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'aurelia-i18n')));
   }
 
   return Promise.resolve(registerI18N(frameworkConfig, cb));

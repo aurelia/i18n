@@ -1,13 +1,11 @@
 'use strict';
 
 System.register(['./i18n'], function (_export, _context) {
+  "use strict";
+
   var I18N, NfValueConverter;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   return {
     setters: [function (_i18n) {
@@ -20,7 +18,7 @@ System.register(['./i18n'], function (_export, _context) {
         };
 
         function NfValueConverter(i18n) {
-          _classCallCheck(this, NfValueConverter);
+          
 
           this.service = i18n;
         }

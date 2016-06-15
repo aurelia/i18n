@@ -5,7 +5,7 @@ var runSequence = require('run-sequence');
 var through2 = require('through2');
 
 gulp.task('doc-generate', function(){
-  return gulp.src([paths.output + paths.packageName + '.d.ts'])
+  return gulp.src([paths.output + paths.packageName + '.d.ts', paths.doc + '/i18next.d.ts'])
     .pipe(typedoc({
       target: 'es6',
       includeDeclarations: true,

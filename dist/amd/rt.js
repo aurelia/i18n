@@ -6,11 +6,7 @@ define(['exports', './relativeTime'], function (exports, _relativeTime) {
   });
   exports.RtValueConverter = undefined;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var RtValueConverter = exports.RtValueConverter = function () {
     RtValueConverter.inject = function inject() {
@@ -18,7 +14,7 @@ define(['exports', './relativeTime'], function (exports, _relativeTime) {
     };
 
     function RtValueConverter(relativeTime) {
-      _classCallCheck(this, RtValueConverter);
+      
 
       this.service = relativeTime;
     }

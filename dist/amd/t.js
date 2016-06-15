@@ -8,11 +8,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
 
   var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var TValueConverter = exports.TValueConverter = function () {
     TValueConverter.inject = function inject() {
@@ -20,7 +16,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
     };
 
     function TValueConverter(i18n) {
-      _classCallCheck(this, TValueConverter);
+      
 
       this.service = i18n;
     }
@@ -34,7 +30,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
 
   var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aureliaTemplating.customAttribute)('t-params'), _dec(_class = (_temp = _class2 = function () {
     function TParamsCustomAttribute(element) {
-      _classCallCheck(this, TParamsCustomAttribute);
+      
 
       this.element = element;
     }
@@ -45,7 +41,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
   }(), _class2.inject = [Element], _temp)) || _class);
   var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
     function TCustomAttribute(element, i18n, ea, tparams) {
-      _classCallCheck(this, TCustomAttribute);
+      
 
       this.element = element;
       this.service = i18n;
@@ -91,7 +87,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
   }(), _class4.inject = [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
   var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function () {
     function TBindingBehavior(signalBindingBehavior) {
-      _classCallCheck(this, TBindingBehavior);
+      
 
       this.signalBindingBehavior = signalBindingBehavior;
     }

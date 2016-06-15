@@ -1,19 +1,11 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BaseI18N = undefined;
-
 var _class, _temp;
 
-var _i18n = require('./i18n');
-
-var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 
+import { I18N } from './i18n';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
+export var BaseI18N = (_temp = _class = function () {
   function BaseI18N(i18n, element, ea) {
     var _this = this;
 
@@ -36,4 +28,4 @@ var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
   };
 
   return BaseI18N;
-}(), _class.inject = [_i18n.I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);
+}(), _class.inject = [I18N, Element, EventAggregator], _temp);

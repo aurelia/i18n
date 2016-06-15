@@ -1,19 +1,12 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.LazyOptional = exports.assignObjectToKeys = exports.extend = undefined;
-
 var _dec, _class;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 
+import { resolver } from 'aurelia-dependency-injection';
 
-var extend = exports.extend = function extend(destination, source) {
+export var extend = function extend(destination, source) {
   for (var property in source) {
     destination[property] = source[property];
   }
@@ -21,7 +14,7 @@ var extend = exports.extend = function extend(destination, source) {
   return destination;
 };
 
-var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKeys(root, obj) {
+export var assignObjectToKeys = function assignObjectToKeys(root, obj) {
   if (obj === undefined || obj === null) {
     return obj;
   }
@@ -39,7 +32,7 @@ var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKey
   return opts;
 };
 
-var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjection.resolver)(), _dec(_class = function () {
+export var LazyOptional = (_dec = resolver(), _dec(_class = function () {
   function LazyOptional(key) {
     
 

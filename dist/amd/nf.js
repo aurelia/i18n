@@ -6,11 +6,7 @@ define(['exports', './i18n'], function (exports, _i18n) {
   });
   exports.NfValueConverter = undefined;
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+  
 
   var NfValueConverter = exports.NfValueConverter = function () {
     NfValueConverter.inject = function inject() {
@@ -18,7 +14,7 @@ define(['exports', './i18n'], function (exports, _i18n) {
     };
 
     function NfValueConverter(i18n) {
-      _classCallCheck(this, NfValueConverter);
+      
 
       this.service = i18n;
     }

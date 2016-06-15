@@ -1,0 +1,1 @@
+export * from './aurelia-i18n';

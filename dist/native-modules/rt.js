@@ -1,17 +1,10 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RtValueConverter = undefined;
-
-var _relativeTime = require('./relativeTime');
 
 
+import { RelativeTime } from './relativeTime';
 
-var RtValueConverter = exports.RtValueConverter = function () {
+export var RtValueConverter = function () {
   RtValueConverter.inject = function inject() {
-    return [_relativeTime.RelativeTime];
+    return [RelativeTime];
   };
 
   function RtValueConverter(relativeTime) {
