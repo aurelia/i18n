@@ -157,7 +157,7 @@ describe('testing i18n translation update', () => {
       expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>content');
       done();
     });
-    });
+  });
 
   it('should append the translation when using the [append] attribute, and it allows html', done => {
     let el = template.querySelector('#test-append');

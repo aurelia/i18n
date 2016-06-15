@@ -63,7 +63,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
     <body aurelia-app="main">
     ...
     ```
-3. Create folder `locale` in your projects root
+3. Create folder `locales` in your projects root
 4. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
 5. In those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
@@ -686,6 +686,42 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
 The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
 
 In case of bundling your app you should thus keep in mind that it will not be automatically included into the bundle. That means you have to manually adjust the bundle config to include the polyfill as well, if you intend to have your application run on browsers without full support. [related GitHub issue](https://github.com/aurelia/i18n/issues/61#issuecomment-178801842)
+
+### Use Internationalization API Polyfill with webpack
+
+In order to use the Polyfill with webpack, you will have to adapt your `bootstrap` function.
+
+```javascript
+bootstrap(aurelia => {
+    if (!global.Intl) {
+        console.log('Intl not present')
+        require.ensure([
+            'intl',
+            'intl/locale-data/jsonp/en.js'
+        ], function (require) {
+            require('intl');
+            require('intl/locale-data/jsonp/en.js');
+            boot(aurelia);
+        });
+    } else {
+        boot(aurelia);
+    }
+});
+
+
+function boot(aurelia) {
+    aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin('aurelia-i18n', (instance) => {
+            // code to setup aurelia-i18n
+        });
+
+    aurelia.start().then(() => aurelia.setRoot('app', document.body));
+}
+```
+
+More information [in the README of the Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-and-browserifywebpack).
 
 ## Usage with webpack
 
