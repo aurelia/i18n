@@ -17,7 +17,7 @@ var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
   function BaseI18N(i18n, element, ea) {
     var _this = this;
 
-    _classCallCheck(this, BaseI18N);
+    
 
     this.i18n = i18n;
     this.element = element;

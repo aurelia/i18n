@@ -18,7 +18,7 @@ System.register(['i18next', 'aurelia-pal'], function (_export, _context) {
         function I18N(ea, signaler) {
           var _this = this;
 
-          _classCallCheck(this, I18N);
+          
 
           this.globalVars = {};
           this.i18nextDefered = {

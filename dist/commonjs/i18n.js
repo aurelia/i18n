@@ -19,7 +19,7 @@ var I18N = exports.I18N = function () {
   function I18N(ea, signaler) {
     var _this = this;
 
-    _classCallCheck(this, I18N);
+    
 
     this.globalVars = {};
     this.i18nextDefered = {

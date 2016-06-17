@@ -20,7 +20,7 @@ define(['exports', 'i18next', 'aurelia-pal'], function (exports, _i18next, _aure
     function I18N(ea, signaler) {
       var _this = this;
 
-      _classCallCheck(this, I18N);
+      
 
       this.globalVars = {};
       this.i18nextDefered = {

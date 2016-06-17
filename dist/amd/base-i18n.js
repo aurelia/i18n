@@ -14,7 +14,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator'], function (exports, _i1
     function BaseI18N(i18n, element, ea) {
       var _this = this;
 
-      _classCallCheck(this, BaseI18N);
+      
 
       this.i18n = i18n;
       this.element = element;
