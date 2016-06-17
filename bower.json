@@ -22,6 +22,7 @@
     "aurelia-binding": "^1.0.0-beta.1.1.1",
     "aurelia-event-aggregator": "^1.0.0-beta.1.1.0",
     "aurelia-loader": "^1.0.0-beta.1.1.0",
+    "aurelia-logging": "^1.0.0-beta.2.0.1",
     "aurelia-templating": "^1.0.0-beta.1.1.0",
     "aurelia-templating-resources": "^1.0.0-beta.1.1.0",
     "aurelia-dependency-injection": "^1.0.0-beta.1.1.4",
