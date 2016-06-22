@@ -54,7 +54,6 @@ export declare class I18N {
      */
   updateTranslations(el?: any): any;
   updateValue(node?: any, value?: any, params?: any): any;
-  _updateValue(node?: any, value?: any, params?: any): any;
 }
 export declare class BaseI18N {
   static inject: any;
