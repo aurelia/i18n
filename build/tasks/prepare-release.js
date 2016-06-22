@@ -15,16 +15,10 @@ gulp.task('changelog', function () {
   .pipe(gulp.dest(paths.doc));
 });
 
-gulp.task('changelog', function(callback) {
-  var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
-
-  return changelog({
-    repository: pkg.repository.url,
-    version: pkg.version,
-    file: paths.doc + '/CHANGELOG.md'
-  }, function(err, log) {
-    fs.writeFileSync(paths.doc + '/CHANGELOG.md', log);
-  });
+gulp.task('bump-version', function(){
+  return gulp.src(['./package.json', './bower.json'])
+    .pipe(bump({type:args.bump })) //major|minor|patch|prerelease
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('prepare-release', function(callback){
