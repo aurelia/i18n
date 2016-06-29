@@ -123,6 +123,14 @@
     "yargs": "^4.7.1"
   },
   "aurelia": {
+    "build": {
+      "resources": [
+        "aurelia-i18n/t",
+        "aurelia-i18n/nf",
+        "aurelia-i18n/df",
+        "aurelia-i18n/rt"
+      ]
+    },
     "documentation": {
       "articles": []
     }
