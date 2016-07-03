@@ -103,7 +103,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
             // make sure to return the promise of the setup method, in order to guarantee proper loading
             return instance.setup({
               backend: {                                  // <-- configure backend settings
-                loadPath: '/locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+                loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
               },
               lng : 'de',
               attributes : ['t','i18n'],
