@@ -5,6 +5,7 @@ import {DOM} from 'aurelia-pal';
 export class I18N {
 
   globalVars = {};
+  params = {};
   i18nextDefered = {
     resolve: null,
     promise: null
@@ -140,7 +141,13 @@ export class I18N {
   }
 
   updateValue(node, value, params) {
-    this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
   }
 
   _updateValue(node, value, params) {

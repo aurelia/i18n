@@ -23,6 +23,7 @@ describe('testing i18n translation update', () => {
           'description2': 'Description <b>with some bold</b>',
           'nested_referencing': 'The $t(title) is the header',
           'description-class': 'red',
+          'params': 'My name is {{name}}',
           'testimage': 'testimage-english.jpg'
         }
       },
@@ -33,6 +34,7 @@ describe('testing i18n translation update', () => {
           'description2': 'Beschreibung <b>mit Fettdruck</b>',
           'nested_referencing': 'Der $t(title) ist der Kopf',
           'description-class': 'blue',
+          'params': 'Meine Name ist {{name}}',
           'testimage': 'testimage-german.jpg'
         }
       }
@@ -114,6 +116,16 @@ describe('testing i18n translation update', () => {
       expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('The Title is the header');
       sut.setLocale('de').then(() => {
         expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('Der Titel ist der Kopf');
+        done();
+      });
+    });
+
+    it('should translate paramaters', done => {
+      sut.updateValue(template.querySelector('#test-params'), 'params', {name: 'Aurelia'}).then(() => {
+        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('My name is Aurelia');
+        return sut.setLocale('de');
+      }).then(() => {
+        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('Meine Name ist Aurelia');
         done();
       });
     });
