@@ -1,9 +1,9 @@
 <template>
   
-    <h1 t="title" id="test1">Title</h1>
+    <h1 t="title" id="test1">WrongTitle</h1>
             
     <p t="description" id="test2">
-      Description
+      Wrong Description
     </p>
 
     <p t="nested_referencing" id="test-nested">
@@ -11,19 +11,19 @@
     </p>-
         
     <p data-i18n="description" id="test-other-attr">
-      Description
+      Wrong Description
     </p>
   
     <p t="[text]description" id="test-text">
-      Description
+      Wrong Description
     </p>
   
     <p t="description2" id="test-text-with-tags">
-      Description <b>with some bold</b>
+      Wrong Description <b>with some bold</b>
     </p>
   
     <p t="[html]description2" id="test-html">
-      Description <b>with some bold</b>
+      Wrong Description <b>with some bold</b>
     </p>
   
     <p t="[prepend]description2" id="test-prepend">content</p>
@@ -31,9 +31,9 @@
     <p t="[append]description2" id="test-append">content</p>
   
     <p t="[html]description2;[class]description-class" id="test-multiple">
-      Description <b>with some bold</b>
+      Wrong Description <b>with some bold</b>
     </p>
     
-    <img data-src="testimage-english.jpg" t="testimage" id="test-img"/>
+    <img data-src="wrong-testimage-english.jpg" t="testimage" id="test-img"/>
   
 </template>
