@@ -723,27 +723,6 @@ function boot(aurelia) {
 
 More information [in the README of the Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-and-browserifywebpack).
 
-## Usage with webpack
-
-This library has more than one file that needs to be resolved. But by default, only the main file is loaded. Which means that you will get a error like:
-
-```
-.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/t'.
-.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/nf'.
-.*$:106 Uncaught (in promise) Error: Cannot find module './aurelia-i18n/df'.
-Uncaught (in promise) Error: Cannot find module './aurelia-i18n/rt'.
-```
-
-To correct this, you must, as described in the [aurelia-webpack-plugin documentation](https://github.com/aurelia/webpack-plugin/#configuration-options), use the `includeSubModules` option in the configuration of the `AureliaWebpackPlugin`:
-
-```javascript
-new AureliaWebpackPlugin({
-  includeSubModules: [
-    { moduleId: "aurelia-i18n" }
-  ]
-})
-```
-
 On top of that if you need the Intl polyfill included you have to manualy require and bundle it. To do so add the following import statement at the begin of your `main.js/ts` file:
 
 ```javascript
