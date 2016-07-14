@@ -19,21 +19,8 @@ Choose one of the two headings, delete the other.
 **I'm submitting a bug report**
 **I'm submitting a feature request**
 
-* **Aurelia Skeleton Version**
-skeleton-esnext
-skeleton-esnext-aspnetcore
-skeleton-esnext-webpack
-skeleton-typescript
-skeleton-typescript-aspnetcore
-skeleton-typescript-webpack
-<!-- Delete any skeleton versions this DOES NOT apply to -->
-
-* **aurelia-i18n version:**
-1.0.0-rc.1.0.0
-
-* **aurelia-framework version:**
-1.0.0-rc.1.0.2
-
+* **Library Version:**
+major.minor.patch-pre
 
 **Please tell us about your environment:**
 * **Operating System:**
