@@ -143,8 +143,8 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     1. **i18next**
 
         - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can istall typings for [i18next](http://i18next.com/) with next command in console:
-            ``` javascript
-            typings install i18next --ambient
+            ```
+            typings install dt~i18next --global
             ```
         - alternatively you can use a similar file from this repositories doc folder (`doc/i18next.d.ts`)
 
