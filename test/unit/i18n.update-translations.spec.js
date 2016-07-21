@@ -8,7 +8,7 @@ describe('testing i18n translation update', () => {
   let template;
   let ea;
 
-  beforeEach((done) => {
+  beforeEach(done => {
     System.config({
       'paths': {
         'fixture:*': 'test/unit/fixtures/*.js'
@@ -23,6 +23,7 @@ describe('testing i18n translation update', () => {
           'description2': 'Description <b>with some bold</b>',
           'nested_referencing': 'The $t(title) is the header',
           'description-class': 'red',
+          'params': 'My name is {{name}}',
           'testimage': 'testimage-english.jpg'
         }
       },
@@ -33,6 +34,7 @@ describe('testing i18n translation update', () => {
           'description2': 'Beschreibung <b>mit Fettdruck</b>',
           'nested_referencing': 'Der $t(title) ist der Kopf',
           'description-class': 'blue',
+          'params': 'Meine Name ist {{name}}',
           'testimage': 'testimage-german.jpg'
         }
       }
@@ -65,98 +67,116 @@ describe('testing i18n translation update', () => {
   });
 
 
-  it('should not update translations if no attributes defined in options', (done) => {
-    ea  = new EventAggregator();
-    sut = new I18N(ea, new BindingSignaler());
-    sut.setup({
-      resStore: resources,
-      lng: 'en',
-      getAsync: false,
-      sendMissing: false,
-      fallbackLng: 'en',
-      debug: false
+  describe('init locale', () => {
+    beforeEach(done => {
+      sut.setLocale('en').then(() => done());
     });
 
-    //load the the html fixture
-    System.import('fixture:template.html!text').then((result) => {
-      template           = document.createElement('div');
-      template.innerHTML = result;
-      if (template.firstChild instanceof HTMLTemplateElement) template.innerHTML = template.firstChild.innerHTML;
-      document.body.appendChild(template);
-      done();
+
+    it('should not update translations if no attributes defined in options', (done) => {
+      ea = new EventAggregator();
+      sut = new I18N(ea, new BindingSignaler());
+      sut.setup({
+        resStore: resources,
+        lng: 'en',
+        getAsync: false,
+        sendMissing: false,
+        fallbackLng: 'en',
+        debug: false
+      });
+
+      //load the the html fixture
+      System.import('fixture:template.html!text').then((result) => {
+        template = document.createElement('div');
+        template.innerHTML = result;
+        if (template.firstChild instanceof HTMLTemplateElement)
+          template.innerHTML = template.firstChild.innerHTML;
+        document.body.appendChild(template);
+        done();
+      });
+
+      expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
+      expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
+      sut.setLocale('de');
+      expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
+      expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
     });
 
-    expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
-    expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
-    sut.setLocale('de');
-    expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
-    expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
-  });
-
-  it('should translate contents of elements with a translation attribute', done => {
-    expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
-    expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
-    sut.setLocale('de').then(() => {
-      expect(template.querySelector('#test1').innerHTML.trim()).toBe('Titel');
-      expect(template.querySelector('#test2').innerHTML.trim()).toBe('Beschreibung');
-      done();
+    it('should translate contents of elements with a translation attribute', done => {
+      expect(template.querySelector('#test1').innerHTML.trim()).toBe('Title');
+      expect(template.querySelector('#test2').innerHTML.trim()).toBe('Description');
+      sut.setLocale('de').then(() => {
+        expect(template.querySelector('#test1').innerHTML.trim()).toBe('Titel');
+        expect(template.querySelector('#test2').innerHTML.trim()).toBe('Beschreibung');
+        done();
+      });
     });
-  });
 
-  it('should translate nested keys', done => {
-    expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('Description Title');
-    sut.setLocale('de').then(() => {
-      expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('Der Titel ist der Kopf');
-      done();
+    it('should translate nested keys', done => {
+      expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('The Title is the header');
+      sut.setLocale('de').then(() => {
+        expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('Der Titel ist der Kopf');
+        done();
+      });
     });
-  });
 
-  it('should work with all attributes specified in the options', done => {
-    let el = template.querySelector('#test-other-attr');
-    expect(el.innerHTML.trim()).toBe('Description');
-    sut.setLocale('de').then(() => {
-      expect(el.innerHTML.trim()).toBe('Beschreibung');
-      done();
+    it('should translate paramaters', done => {
+      sut.updateValue(template.querySelector('#test-params'), 'params', {name: 'Aurelia'}).then(() => {
+        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('My name is Aurelia');
+        return sut.setLocale('de');
+      }).then(() => {
+        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('Meine Name ist Aurelia');
+        done();
+      });
     });
-  });
 
-  it('should set the textContent when using the [text] attribute', done => {
-    let el = template.querySelector('#test-text');
-    expect(el.innerHTML.trim()).toBe('Description');
-    sut.setLocale('de').then(() => {
-      expect(el.innerHTML.trim()).toBe('Beschreibung');
-      done();
+    it('should work with all attributes specified in the options', done => {
+      let el = template.querySelector('#test-other-attr');
+      expect(el.innerHTML.trim()).toBe('Description');
+      sut.setLocale('de').then(() => {
+        expect(el.innerHTML.trim()).toBe('Beschreibung');
+        done();
+      });
     });
-  });
 
-  it('should escape html tags by default or when using [text]', done => {
-    let el = template.querySelector('#test-text-with-tags');
-    expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>');
-    sut.setLocale('de').then(() => {
-      expect(el.innerHTML.trim()).toBe('Beschreibung &lt;b&gt;mit Fettdruck&lt;/b&gt;');
-      done();
+    it('should set the textContent when using the [text] attribute', done => {
+      let el = template.querySelector('#test-text');
+      expect(el.innerHTML.trim()).toBe('Description');
+      sut.setLocale('de').then(() => {
+        expect(el.innerHTML.trim()).toBe('Beschreibung');
+        done();
+      });
     });
-  });
 
-  it('should allow tags when using the [html] attribute', done => {
-    let el = template.querySelector('#test-html');
-    expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>');
-    sut.setLocale('de').then(() => {
-      expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>');
-      done();
+    it('should escape html tags by default or when using [text]', done => {
+      let el = template.querySelector('#test-text-with-tags');
+      expect(el.innerHTML.trim()).toBe('Description &lt;b&gt;with some bold&lt;/b&gt;');
+      sut.setLocale('de').then(() => {
+        expect(el.innerHTML.trim()).toBe('Beschreibung &lt;b&gt;mit Fettdruck&lt;/b&gt;');
+        done();
+      });
+    });
+
+    it('should allow tags when using the [html] attribute', done => {
+      let el = template.querySelector('#test-html');
+      expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>');
+      sut.setLocale('de').then(() => {
+        expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>');
+        done();
+      });
     });
   });
 
   it('should prepend the translation when using the [prepend] attribute, and it allows html', done => {
-    let el = template.querySelector('#test-prepend');
-    expect(el.innerHTML.trim()).toBe('content');
-    sut.setLocale('de').then(() => {
-      expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>content');
-      return sut.setLocale('en');
-    }).then(() => {
-      expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>content');
-      done();
-    });
+      let el = template.querySelector('#test-prepend');
+      expect(el.innerHTML.trim()).toBe('content');
+      sut.setLocale('de').then(() => {
+        expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>content');
+        return sut.setLocale('en');
+      }).then(() => {
+        expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>content');
+        done();
+      });
   });
 
   it('should append the translation when using the [append] attribute, and it allows html', done => {
@@ -173,7 +193,7 @@ describe('testing i18n translation update', () => {
 
   it('should set multiple keys when separated with a semicolon', done => {
     let el = template.querySelector('#test-multiple');
-    expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>');
+    expect(el.innerHTML.trim()).toBe('Wrong Description <b>with some bold</b>');
     expect(el.className).toBe('');
     sut.setLocale('de').then(() => {
       expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>');
