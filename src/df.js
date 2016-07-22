@@ -1,3 +1,4 @@
+import * as LogManager from 'aurelia-logging';
 import {I18N} from './i18n';
 
 export class DfValueConverter {
@@ -17,7 +18,8 @@ export class DfValueConverter {
     if (dfOrOptions && (typeof dfOrOptions.format === 'function')) {
       return dfOrOptions.format(value);
     } else if (df) {
-      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]'); // eslint-disable-line no-console
+      let i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
