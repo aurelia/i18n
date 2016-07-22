@@ -91,6 +91,13 @@ export class TBindingBehavior {
     // rewrite the expression to use the TValueConverter.
     // pass through any args to the binding behavior to the TValueConverter
     let sourceExpression = binding.sourceExpression;
+
+    // do create the sourceExpression only once
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
@@ -100,9 +107,6 @@ export class TBindingBehavior {
   }
 
   unbind(binding, source) {
-    // undo the expression rewrite
-    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
-
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }
