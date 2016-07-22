@@ -33,6 +33,21 @@ describe('nfvalueconverter tests', () => {
     });
   });
 
+  it('should return undefined if undefined value given', () => {
+    let val = undefined;
+    expect(nfvc.toView(val)).toBe(undefined);
+  });
+  
+  it('should return null if null value given', () => {
+    let val = null;
+    expect(nfvc.toView(val)).toBe(null);
+  });
+
+  it('should return empty string if empty string value given', () => {
+    let val = "";
+    expect(nfvc.toView(val)).toBe("");
+  });
+
   it('should display number as currency', () => {
     let testNumber = 123456.789;
     expect(nfvc.toView(testNumber, { style: 'currency', currency: 'JPY' }, 'de')).toBe('123.457 ¥');
