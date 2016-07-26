@@ -122,4 +122,13 @@ describe('testing i18n translations', () => {
 
     sut.setLocale('de');
   });
+
+  it('should handle undefined elements during translation updates', () => {
+    expect(() => { sut.updateTranslations(); }).not.toThrow();
+  });
+
+  it('should not process comment nodes during translation updates', () => {
+    let comment = document.createComment('A DEMO COMMENT');
+    expect(() => { sut.updateTranslations(comment); }).not.toThrow();
+  });
 });

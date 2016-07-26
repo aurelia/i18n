@@ -113,6 +113,10 @@ export class I18N {
    * @param el    HTMLElement to search within
    */
   updateTranslations(el) {
+    if (!el || !el.querySelectorAll) {
+      return;
+    }
+
     let i;
     let l;
 
