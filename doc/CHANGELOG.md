@@ -1,3 +1,20 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/aurelia/i18n/compare/1.0.0-rc.1.0.0...v1.0.0) (2016-07-27)
+
+
+### Bug Fixes
+
+* **binding:** sourceExpression only once ([5963396](https://github.com/aurelia/i18n/commit/5963396))
+* **i18n:** make sure translations parameters are always applied ([3060e7a](https://github.com/aurelia/i18n/commit/3060e7a)), closes [#116](https://github.com/aurelia/i18n/issues/116)
+* **i18n.update-translations.spec.js:** set locale before testing to be sure 1st translation is applied ([0496b41](https://github.com/aurelia/i18n/commit/0496b41))
+* **logger:** use LogManager instead console ([b6ffedb](https://github.com/aurelia/i18n/commit/b6ffedb))
+* **logging:** use aurelia-logging ([d2552e7](https://github.com/aurelia/i18n/commit/d2552e7))
+* **nf-vc:** changed signature of NfValueConverter ([168f556](https://github.com/aurelia/i18n/commit/168f556))
+* **relativeTime:** fix fallbackLng reading ([ffb0dcb](https://github.com/aurelia/i18n/commit/ffb0dcb))
+* **updateTranslation:** check elem param ([e8373a8](https://github.com/aurelia/i18n/commit/e8373a8))
+
+
+
 <a name="1.0.0-rc.1.0.0"></a>
 # [1.0.0-rc.1.0.0](https://github.com/aurelia/i18n/compare/1.0.0-beta.1.0.4...v1.0.0-rc.1.0.0) (2016-06-22)
 
