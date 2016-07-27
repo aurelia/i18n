@@ -19,15 +19,15 @@
     "url": "http://github.com/aurelia/i18n"
   },
   "dependencies": {
-    "aurelia-binding": "^1.0.0-rc.1.0.0",
-    "aurelia-dependency-injection": "^1.0.0-rc.1.0.0",
-    "aurelia-event-aggregator": "^1.0.0-rc.1.0.0",
-    "aurelia-loader": "^1.0.0-rc.1.0.0",
-    "aurelia-logging": "^1.0.0-rc.1.0.0",
-    "aurelia-pal": "^1.0.0-rc.1.0.0",
-    "aurelia-templating": "^1.0.0-rc.1.0.0",
-    "aurelia-templating-resources": "^1.0.0-rc.1.0.0",
-    "i18next": "^3.3.0",
+    "aurelia-binding": "^1.0.0",
+    "aurelia-dependency-injection": "^1.0.0",
+    "aurelia-event-aggregator": "^1.0.0",
+    "aurelia-loader": "^1.0.0",
+    "aurelia-logging": "^1.0.0",
+    "aurelia-pal": "^1.0.0",
+    "aurelia-templating": "^1.0.0",
+    "aurelia-templating-resources": "^1.0.0",
+    "i18next": "^3.4.1",
     "intl": "^1.2.4"
   }
 }
