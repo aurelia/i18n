@@ -1,14 +1,16 @@
 'use strict';
 
-System.register(['./i18n'], function (_export, _context) {
+System.register(['aurelia-logging', './i18n'], function (_export, _context) {
   "use strict";
 
-  var I18N, DfValueConverter;
+  var LogManager, I18N, DfValueConverter;
 
   
 
   return {
-    setters: [function (_i18n) {
+    setters: [function (_aureliaLogging) {
+      LogManager = _aureliaLogging;
+    }, function (_i18n) {
       I18N = _i18n.I18N;
     }],
     execute: function () {
@@ -31,10 +33,11 @@ System.register(['./i18n'], function (_export, _context) {
           if (dfOrOptions && typeof dfOrOptions.format === 'function') {
             return dfOrOptions.format(value);
           } else if (df) {
-            console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
+            var i18nLogger = LogManager.getLogger('i18n');
+            i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
           } else {
-              df = this.service.df(dfOrOptions, locale || this.service.getLocale());
-            }
+            df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+          }
 
           return df.format(value);
         };

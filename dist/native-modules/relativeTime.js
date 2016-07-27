@@ -28,7 +28,7 @@ export var RelativeTime = function () {
   RelativeTime.prototype.setup = function setup(locales) {
     var trans = translations.default || translations;
     var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    var fallbackLng = this.service.fallbackLng;
+    var fallbackLng = this.service.i18next.fallbackLng;
     var index = 0;
 
     if ((index = key.indexOf('-')) >= 0) {

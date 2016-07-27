@@ -6,6 +6,7 @@ export let I18N = class I18N {
 
   constructor(ea, signaler) {
     this.globalVars = {};
+    this.params = {};
     this.i18nextDefered = {
       resolve: null,
       promise: null
@@ -97,6 +98,10 @@ export let I18N = class I18N {
   }
 
   updateTranslations(el) {
+    if (!el || !el.querySelectorAll) {
+      return;
+    }
+
     let i;
     let l;
 
@@ -121,7 +126,13 @@ export let I18N = class I18N {
   }
 
   updateValue(node, value, params) {
-    this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
   }
 
   _updateValue(node, value, params) {

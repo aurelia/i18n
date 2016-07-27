@@ -5,7 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DfValueConverter = undefined;
 
+var _aureliaLogging = require('aurelia-logging');
+
+var LogManager = _interopRequireWildcard(_aureliaLogging);
+
 var _i18n = require('./i18n');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 
 
@@ -28,10 +34,11 @@ var DfValueConverter = exports.DfValueConverter = function () {
     if (dfOrOptions && typeof dfOrOptions.format === 'function') {
       return dfOrOptions.format(value);
     } else if (df) {
-      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
+      var i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
-        df = this.service.df(dfOrOptions, locale || this.service.getLocale());
-      }
+      df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+    }
 
     return df.format(value);
   };

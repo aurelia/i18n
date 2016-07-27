@@ -21,7 +21,7 @@ export let RelativeTime = class RelativeTime {
   setup(locales) {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    let fallbackLng = this.service.fallbackLng;
+    let fallbackLng = this.service.i18next.fallbackLng;
     let index = 0;
 
     if ((index = key.indexOf('-')) >= 0) {

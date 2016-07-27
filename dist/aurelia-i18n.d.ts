@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import * as LogManager from 'aurelia-logging';
 import {
   resolver
 } from 'aurelia-dependency-injection';
@@ -31,6 +32,7 @@ export declare class LazyOptional {
 /*eslint no-cond-assign: 0*/
 export declare class I18N {
   globalVars: any;
+  params: any;
   i18nextDefered: any;
   constructor(ea?: any, signaler?: any);
   setup(options?: any): any;
@@ -69,7 +71,7 @@ export declare class DfValueConverter {
 export declare class NfValueConverter {
   static inject(): any;
   constructor(i18n?: any);
-  toView(value?: any, formatOptions?: any, locale?: any, numberFormat?: any): any;
+  toView(value?: any, nfOrOptions?: any, locale?: any, nf?: any): any;
 }
 export declare class RelativeTime {
   static inject(): any;

@@ -81,13 +81,17 @@ export let TBindingBehavior = (_temp3 = _class5 = class TBindingBehavior {
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
     let sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(expression, 't', sourceExpression.args, [expression, ...sourceExpression.args]);
   }
 
   unbind(binding, source) {
-    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
-
     this.signalBindingBehavior.unbind(binding, source);
   }
 }, _class5.inject = [SignalBindingBehavior], _temp3);

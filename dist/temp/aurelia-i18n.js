@@ -13,6 +13,10 @@ var _i18next = require('i18next');
 
 var _i18next2 = _interopRequireDefault(_i18next);
 
+var _aureliaLogging = require('aurelia-logging');
+
+var LogManager = _interopRequireWildcard(_aureliaLogging);
+
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaPal = require('aurelia-pal');
@@ -24,6 +28,8 @@ var _aureliaTemplating = require('aurelia-templating');
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -382,6 +388,7 @@ var I18N = exports.I18N = function () {
     _classCallCheck(this, I18N);
 
     this.globalVars = {};
+    this.params = {};
     this.i18nextDefered = {
       resolve: null,
       promise: null
@@ -479,6 +486,10 @@ var I18N = exports.I18N = function () {
   };
 
   I18N.prototype.updateTranslations = function updateTranslations(el) {
+    if (!el || !el.querySelectorAll) {
+      return;
+    }
+
     var i = void 0;
     var l = void 0;
 
@@ -506,7 +517,13 @@ var I18N = exports.I18N = function () {
   I18N.prototype.updateValue = function updateValue(node, value, params) {
     var _this5 = this;
 
-    this.i18nextDefered.promise.then(function () {
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(function () {
       return _this5._updateValue(node, value, params);
     });
   };
@@ -644,10 +661,11 @@ var DfValueConverter = exports.DfValueConverter = function () {
     if (dfOrOptions && typeof dfOrOptions.format === 'function') {
       return dfOrOptions.format(value);
     } else if (df) {
-      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
+      var i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
-        df = this.service.df(dfOrOptions, locale || this.service.getLocale());
-      }
+      df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+    }
 
     return df.format(value);
   };
@@ -666,8 +684,19 @@ var NfValueConverter = exports.NfValueConverter = function () {
     this.service = i18n;
   }
 
-  NfValueConverter.prototype.toView = function toView(value, formatOptions, locale, numberFormat) {
-    var nf = numberFormat || this.service.nf(formatOptions, locale || this.service.getLocale());
+  NfValueConverter.prototype.toView = function toView(value, nfOrOptions, locale, nf) {
+    if (value === null || typeof value === 'undefined' || typeof value === 'string' && value.trim() === '') {
+      return value;
+    }
+
+    if (nfOrOptions && typeof nfOrOptions.format === 'function') {
+      return nfOrOptions.format(value);
+    } else if (nf) {
+      var i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [nfOrOptions, locale]');
+    } else {
+      nf = this.service.nf(nfOrOptions, locale || this.service.getLocale());
+    }
 
     return nf.format(value);
   };
@@ -699,7 +728,7 @@ var RelativeTime = exports.RelativeTime = function () {
   RelativeTime.prototype.setup = function setup(locales) {
     var trans = translations.default || translations;
     var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    var fallbackLng = this.service.fallbackLng;
+    var fallbackLng = this.service.i18next.fallbackLng;
     var index = 0;
 
     if ((index = key.indexOf('-')) >= 0) {
@@ -858,13 +887,17 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp4 = _class8 = function (
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
     var sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
     var expression = sourceExpression.expression;
     sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 't', sourceExpression.args, [expression].concat(sourceExpression.args));
   };
 
   TBindingBehavior.prototype.unbind = function unbind(binding, source) {
-    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
-
     this.signalBindingBehavior.unbind(binding, source);
   };
 

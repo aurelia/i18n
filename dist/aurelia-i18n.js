@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import * as LogManager from 'aurelia-logging';
 import {resolver} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -352,6 +353,7 @@ export class LazyOptional {
 export class I18N {
 
   globalVars = {};
+  params = {};
   i18nextDefered = {
     resolve: null,
     promise: null
@@ -459,6 +461,10 @@ export class I18N {
    * @param el    HTMLElement to search within
    */
   updateTranslations(el) {
+    if (!el || !el.querySelectorAll) {
+      return;
+    }
+
     let i;
     let l;
 
@@ -487,7 +493,13 @@ export class I18N {
   }
 
   updateValue(node, value, params) {
-    this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
+    if (params) {
+      this.params[value] = params;
+    } else if (this.params[value]) {
+      params = this.params[value];
+    }
+
+    return this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
   }
 
   _updateValue(node, value, params) {
@@ -619,7 +631,8 @@ export class DfValueConverter {
     if (dfOrOptions && (typeof dfOrOptions.format === 'function')) {
       return dfOrOptions.format(value);
     } else if (df) {
-      console.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]'); // eslint-disable-line no-console
+      let i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
@@ -634,8 +647,22 @@ export class NfValueConverter {
     this.service = i18n;
   }
 
-  toView(value, formatOptions, locale, numberFormat) {
-    let nf = numberFormat || this.service.nf(formatOptions, locale || this.service.getLocale());
+  toView(value, nfOrOptions, locale, nf) {
+    if (value === null
+      || typeof value === 'undefined'
+      || (typeof value === 'string' && value.trim() === '')
+      ) {
+      return value;
+    }
+
+    if (nfOrOptions && (typeof nfOrOptions.format === 'function')) {
+      return nfOrOptions.format(value);
+    } else if (nf) {
+      let i18nLogger = LogManager.getLogger('i18n');
+      i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [nfOrOptions, locale]');
+    } else {
+      nf = this.service.nf(nfOrOptions, locale || this.service.getLocale());
+    }
 
     return nf.format(value);
   }
@@ -658,7 +685,7 @@ export class RelativeTime {
   setup(locales) {
     let trans = translations.default || translations;
     let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
-    let fallbackLng = this.service.fallbackLng;
+    let fallbackLng = this.service.i18next.fallbackLng;
     let index = 0;
 
     if ((index = key.indexOf('-')) >= 0) { // eslint-disable-line no-cond-assign
@@ -814,6 +841,13 @@ export class TBindingBehavior {
     // rewrite the expression to use the TValueConverter.
     // pass through any args to the binding behavior to the TValueConverter
     let sourceExpression = binding.sourceExpression;
+
+    // do create the sourceExpression only once
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
@@ -823,9 +857,6 @@ export class TBindingBehavior {
   }
 
   unbind(binding, source) {
-    // undo the expression rewrite
-    binding.sourceExpression.expression = binding.sourceExpression.expression.expression;
-
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }
