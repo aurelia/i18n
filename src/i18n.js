@@ -242,7 +242,7 @@ export class I18N {
         } else {
           node.setAttribute(attr, this.tr(key, params));
         }
-        
+
         break;
       }
     }
