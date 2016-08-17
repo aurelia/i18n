@@ -237,7 +237,12 @@ export class I18N {
         node.innerHTML = this.tr(key, params);
         break;
       default: //normal html attribute
-        node.setAttribute(attr, this.tr(key, params));
+        if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+          node.au.controller.viewModel[attr] = this.tr(key, params);
+        } else {
+          node.setAttribute(attr, this.tr(key, params));
+        }
+        
         break;
       }
     }
