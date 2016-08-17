@@ -319,7 +319,30 @@ There are 4 special attributes including the shown `[html]`:
 * `[append]`:  appends the translation to the current content already present in the element (allows html).
 * `[prepend]`: prepends the translation to the current content already present in the element (allows html).
 
-Any other values will be used as actual attributes on the element.
+If the element is a custom element and the value relates to a bindable property of that, then the properties value itself will
+be updated.
+
+```markup
+// Custom Element ViewModel
+export class Foo {
+  @bindable() mybindable = "abc";
+}
+
+// Custom Element View
+<template>
+  <span>${'mybindable'}</span>
+</template>
+
+// Rendering the Custom Element and passing validations to custom bindable properties
+<foo t="[mybindable]bar"></foo>
+
+// Result
+<foo>
+  <span>[TRANSLATED VALUE OF BAR KEY]</span>
+</foo>
+```  
+
+Any other values will be used as actual attributes on the element itself.
 The following example will not change the content of the element, but will set its `alt` attribute to the translated value of `title` when the locale changes.
 
 ```markup
