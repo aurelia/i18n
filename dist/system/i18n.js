@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['i18next', 'aurelia-pal'], function (_export, _context) {
+System.register(['i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-templating-resources'], function (_export, _context) {
   "use strict";
 
-  var i18next, DOM, I18N;
+  var i18next, DOM, EventAggregator, BindingSignaler, _class, _temp, I18N;
 
   
 
@@ -12,9 +12,13 @@ System.register(['i18next', 'aurelia-pal'], function (_export, _context) {
       i18next = _i18next.default;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
+    }, function (_aureliaEventAggregator) {
+      EventAggregator = _aureliaEventAggregator.EventAggregator;
+    }, function (_aureliaTemplatingResources) {
+      BindingSignaler = _aureliaTemplatingResources.BindingSignaler;
     }],
     execute: function () {
-      _export('I18N', I18N = function () {
+      _export('I18N', I18N = (_temp = _class = function () {
         function I18N(ea, signaler) {
           var _this = this;
 
@@ -241,14 +245,19 @@ System.register(['i18next', 'aurelia-pal'], function (_export, _context) {
                 node.innerHTML = this.tr(key, params);
                 break;
               default:
-                node.setAttribute(attr, this.tr(key, params));
+                if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+                  node.au.controller.viewModel[attr] = this.tr(key, params);
+                } else {
+                  node.setAttribute(attr, this.tr(key, params));
+                }
+
                 break;
             }
           }
         };
 
         return I18N;
-      }());
+      }(), _class.inject = [EventAggregator, BindingSignaler], _temp));
 
       _export('I18N', I18N);
     }

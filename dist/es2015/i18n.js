@@ -1,8 +1,11 @@
+var _class, _temp;
 
 import i18next from 'i18next';
 import { DOM } from 'aurelia-pal';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
-export let I18N = class I18N {
+export let I18N = (_temp = _class = class I18N {
 
   constructor(ea, signaler) {
     this.globalVars = {};
@@ -215,9 +218,14 @@ export let I18N = class I18N {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          node.setAttribute(attr, this.tr(key, params));
+          if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+            node.au.controller.viewModel[attr] = this.tr(key, params);
+          } else {
+            node.setAttribute(attr, this.tr(key, params));
+          }
+
           break;
       }
     }
   }
-};
+}, _class.inject = [EventAggregator, BindingSignaler], _temp);

@@ -5,17 +5,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.I18N = undefined;
 
+var _class, _temp;
+
 var _i18next = require('i18next');
 
 var _i18next2 = _interopRequireDefault(_i18next);
 
 var _aureliaPal = require('aurelia-pal');
 
+var _aureliaEventAggregator = require('aurelia-event-aggregator');
+
+var _aureliaTemplatingResources = require('aurelia-templating-resources');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 
 
-var I18N = exports.I18N = function () {
+var I18N = exports.I18N = (_temp = _class = function () {
   function I18N(ea, signaler) {
     var _this = this;
 
@@ -242,11 +248,16 @@ var I18N = exports.I18N = function () {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          node.setAttribute(attr, this.tr(key, params));
+          if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+            node.au.controller.viewModel[attr] = this.tr(key, params);
+          } else {
+            node.setAttribute(attr, this.tr(key, params));
+          }
+
           break;
       }
     }
   };
 
   return I18N;
-}();
+}(), _class.inject = [_aureliaEventAggregator.EventAggregator, _aureliaTemplatingResources.BindingSignaler], _temp);

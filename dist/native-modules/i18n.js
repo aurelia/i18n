@@ -1,9 +1,13 @@
+var _class, _temp;
+
 
 
 import i18next from 'i18next';
 import { DOM } from 'aurelia-pal';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
-export var I18N = function () {
+export var I18N = (_temp = _class = function () {
   function I18N(ea, signaler) {
     var _this = this;
 
@@ -230,11 +234,16 @@ export var I18N = function () {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          node.setAttribute(attr, this.tr(key, params));
+          if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+            node.au.controller.viewModel[attr] = this.tr(key, params);
+          } else {
+            node.setAttribute(attr, this.tr(key, params));
+          }
+
           break;
       }
     }
   };
 
   return I18N;
-}();
+}(), _class.inject = [EventAggregator, BindingSignaler], _temp);

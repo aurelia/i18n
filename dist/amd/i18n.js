@@ -1,4 +1,4 @@
-define(['exports', 'i18next', 'aurelia-pal'], function (exports, _i18next, _aureliaPal) {
+define(['exports', 'i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-templating-resources'], function (exports, _i18next, _aureliaPal, _aureliaEventAggregator, _aureliaTemplatingResources) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -16,7 +16,9 @@ define(['exports', 'i18next', 'aurelia-pal'], function (exports, _i18next, _aure
 
   
 
-  var I18N = exports.I18N = function () {
+  var _class, _temp;
+
+  var I18N = exports.I18N = (_temp = _class = function () {
     function I18N(ea, signaler) {
       var _this = this;
 
@@ -243,12 +245,17 @@ define(['exports', 'i18next', 'aurelia-pal'], function (exports, _i18next, _aure
             node.innerHTML = this.tr(key, params);
             break;
           default:
-            node.setAttribute(attr, this.tr(key, params));
+            if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+              node.au.controller.viewModel[attr] = this.tr(key, params);
+            } else {
+              node.setAttribute(attr, this.tr(key, params));
+            }
+
             break;
         }
       }
     };
 
     return I18N;
-  }();
+  }(), _class.inject = [_aureliaEventAggregator.EventAggregator, _aureliaTemplatingResources.BindingSignaler], _temp);
 });

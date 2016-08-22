@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfValueConverter = exports.DfValueConverter = exports.BaseI18N = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
+exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
 
-var _dec, _class, _class3, _temp, _dec2, _class4, _class5, _temp2, _dec3, _class6, _class7, _temp3, _class8, _temp4;
+var _dec, _class, _class2, _temp, _class3, _temp2, _dec2, _class4, _class5, _temp3, _dec3, _class6, _class7, _temp4, _class8, _temp5;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
@@ -23,11 +23,11 @@ var _aureliaPal = require('aurelia-pal');
 
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
-var _aureliaTemplating = require('aurelia-templating');
-
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
+
+var _aureliaTemplating = require('aurelia-templating');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -380,8 +380,7 @@ var LazyOptional = exports.LazyOptional = (_dec = (0, _aureliaDependencyInjectio
 
   return LazyOptional;
 }()) || _class);
-
-var I18N = exports.I18N = function () {
+var I18N = exports.I18N = (_temp = _class2 = function () {
   function I18N(ea, signaler) {
     var _this2 = this;
 
@@ -608,16 +607,20 @@ var I18N = exports.I18N = function () {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          node.setAttribute(attr, this.tr(key, params));
+          if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+            node.au.controller.viewModel[attr] = this.tr(key, params);
+          } else {
+            node.setAttribute(attr, this.tr(key, params));
+          }
+
           break;
       }
     }
   };
 
   return I18N;
-}();
-
-var BaseI18N = exports.BaseI18N = (_temp = _class3 = function () {
+}(), _class2.inject = [_aureliaEventAggregator.EventAggregator, _aureliaTemplatingResources.BindingSignaler], _temp);
+var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
   function BaseI18N(i18n, element, ea) {
     var _this6 = this;
 
@@ -640,7 +643,7 @@ var BaseI18N = exports.BaseI18N = (_temp = _class3 = function () {
   };
 
   return BaseI18N;
-}(), _class3.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);
+}(), _class3.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp2);
 
 var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
@@ -673,6 +676,38 @@ var DfValueConverter = exports.DfValueConverter = function () {
   return DfValueConverter;
 }();
 
+var DfBindingBehavior = exports.DfBindingBehavior = function () {
+  DfBindingBehavior.inject = function inject() {
+    return [_aureliaTemplatingResources.SignalBindingBehavior];
+  };
+
+  function DfBindingBehavior(signalBindingBehavior) {
+    _classCallCheck(this, DfBindingBehavior);
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  DfBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 'df', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  DfBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return DfBindingBehavior;
+}();
+
 var NfValueConverter = exports.NfValueConverter = function () {
   NfValueConverter.inject = function inject() {
     return [I18N];
@@ -702,6 +737,38 @@ var NfValueConverter = exports.NfValueConverter = function () {
   };
 
   return NfValueConverter;
+}();
+
+var NfBindingBehavior = exports.NfBindingBehavior = function () {
+  NfBindingBehavior.inject = function inject() {
+    return [_aureliaTemplatingResources.SignalBindingBehavior];
+  };
+
+  function NfBindingBehavior(signalBindingBehavior) {
+    _classCallCheck(this, NfBindingBehavior);
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  NfBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 'nf', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  NfBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return NfBindingBehavior;
 }();
 
 var RelativeTime = exports.RelativeTime = function () {
@@ -819,7 +886,7 @@ var TValueConverter = exports.TValueConverter = function () {
   return TValueConverter;
 }();
 
-var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class4 = (_temp2 = _class5 = function () {
+var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class4 = (_temp3 = _class5 = function () {
   function TParamsCustomAttribute(element) {
     _classCallCheck(this, TParamsCustomAttribute);
 
@@ -829,8 +896,8 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aure
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class5.inject = [Element], _temp2)) || _class4);
-var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class6 = (_temp3 = _class7 = function () {
+}(), _class5.inject = [Element], _temp3)) || _class4);
+var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class6 = (_temp4 = _class7 = function () {
   function TCustomAttribute(element, i18n, ea, tparams) {
     _classCallCheck(this, TCustomAttribute);
 
@@ -875,8 +942,8 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class7.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp3)) || _class6);
-var TBindingBehavior = exports.TBindingBehavior = (_temp4 = _class8 = function () {
+}(), _class7.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp4)) || _class6);
+var TBindingBehavior = exports.TBindingBehavior = (_temp5 = _class8 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     _classCallCheck(this, TBindingBehavior);
 
@@ -902,7 +969,7 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp4 = _class8 = function (
   };
 
   return TBindingBehavior;
-}(), _class8.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp4);
+}(), _class8.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp5);
 
 var RtValueConverter = exports.RtValueConverter = function () {
   RtValueConverter.inject = function inject() {

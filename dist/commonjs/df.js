@@ -3,13 +3,17 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.DfValueConverter = undefined;
+exports.DfBindingBehavior = exports.DfValueConverter = undefined;
 
 var _aureliaLogging = require('aurelia-logging');
 
 var LogManager = _interopRequireWildcard(_aureliaLogging);
 
 var _i18n = require('./i18n');
+
+var _aureliaTemplatingResources = require('aurelia-templating-resources');
+
+var _aureliaBinding = require('aurelia-binding');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -44,4 +48,36 @@ var DfValueConverter = exports.DfValueConverter = function () {
   };
 
   return DfValueConverter;
+}();
+
+var DfBindingBehavior = exports.DfBindingBehavior = function () {
+  DfBindingBehavior.inject = function inject() {
+    return [_aureliaTemplatingResources.SignalBindingBehavior];
+  };
+
+  function DfBindingBehavior(signalBindingBehavior) {
+    
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  DfBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 'df', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  DfBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return DfBindingBehavior;
 }();

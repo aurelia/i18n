@@ -3,9 +3,9 @@ import * as LogManager from 'aurelia-logging';
 import {resolver} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {customAttribute} from 'aurelia-templating';
-import {SignalBindingBehavior} from 'aurelia-templating-resources';
+import {BindingSignaler,SignalBindingBehavior} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
+import {customAttribute} from 'aurelia-templating';
 
 /*eslint no-irregular-whitespace: 0*/
 export const translations = {
@@ -351,6 +351,7 @@ export class LazyOptional {
 
 /*eslint no-cond-assign: 0*/
 export class I18N {
+  static inject = [EventAggregator, BindingSignaler];
 
   globalVars = {};
   params = {};
@@ -358,6 +359,8 @@ export class I18N {
     resolve: null,
     promise: null
   };
+  i18next;
+  ea: EventAggregator;
 
   constructor(ea, signaler) {
     this.i18next = i18next;
@@ -367,7 +370,7 @@ export class I18N {
     this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }
 
-  setup(options?) {
+  setup(options?): Promise<i18next.I18n> {
     const defaultOptions = {
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
@@ -389,11 +392,11 @@ export class I18N {
     return this.i18nextDefered.promise;
   }
 
-  i18nextReady() {
+  i18nextReady(): Promise<i18next.I18n> {
     return this.i18nextDefered.promise;
   }
 
-  setLocale(locale) {
+  setLocale(locale): Promise<any> {
     return new Promise( resolve => {
       let oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
@@ -404,15 +407,15 @@ export class I18N {
     });
   }
 
-  getLocale() {
+  getLocale(): string {
     return this.i18next.language;
   }
 
-  nf(options?, locales?) {
+  nf(options?, locales?): string {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  uf(number, locale?) {
+  uf(number, locale?): number {
     let nf = this.nf({}, locale || this.getLocale());
     let comparer = nf.format(10000 / 3);
 
@@ -430,11 +433,11 @@ export class I18N {
     return Number(result);
   }
 
-  df(options?, locales?) {
+  df(options?, locales?): string {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  tr(key, options?) {
+  tr(key, options?): string {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
@@ -444,11 +447,11 @@ export class I18N {
     return this.i18next.t(key, fullOptions);
   }
 
-  registerGlobalVariable(key, value) {
+  registerGlobalVariable(key, value): void {
     this.globalVars[key] = value;
   }
 
-  unregisterGlobalVariable(key) {
+  unregisterGlobalVariable(key): void {
     delete this.globalVars[key];
   }
 
@@ -460,7 +463,7 @@ export class I18N {
    *
    * @param el    HTMLElement to search within
    */
-  updateTranslations(el) {
+  updateTranslations(el): void {
     if (!el || !el.querySelectorAll) {
       return;
     }
@@ -585,7 +588,12 @@ export class I18N {
         node.innerHTML = this.tr(key, params);
         break;
       default: //normal html attribute
-        node.setAttribute(attr, this.tr(key, params));
+        if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+          node.au.controller.viewModel[attr] = this.tr(key, params);
+        } else {
+          node.setAttribute(attr, this.tr(key, params));
+        }
+
         break;
       }
     }
@@ -641,6 +649,41 @@ export class DfValueConverter {
   }
 }
 
+export class DfBindingBehavior {
+  static inject() {return [SignalBindingBehavior];}
+
+  constructor(signalBindingBehavior) {
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  bind(binding, source) {
+    // bind the signal behavior
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    // rewrite the expression to use the TValueConverter.
+    // pass through any args to the binding behavior to the TValueConverter
+    let sourceExpression = binding.sourceExpression;
+
+    // do create the sourceExpression only once
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    let expression = sourceExpression.expression;
+    sourceExpression.expression = new ValueConverter(
+      expression,
+      'df',
+      sourceExpression.args,
+      [expression, ...sourceExpression.args]);
+  }
+
+  unbind(binding, source) {
+    // unbind the signal behavior
+    this.signalBindingBehavior.unbind(binding, source);
+  }
+}
+
 export class NfValueConverter {
   static inject() { return [I18N]; }
   constructor(i18n) {
@@ -665,6 +708,41 @@ export class NfValueConverter {
     }
 
     return nf.format(value);
+  }
+}
+
+export class NfBindingBehavior {
+  static inject() {return [SignalBindingBehavior];}
+
+  constructor(signalBindingBehavior) {
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  bind(binding, source) {
+    // bind the signal behavior
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    // rewrite the expression to use the TValueConverter.
+    // pass through any args to the binding behavior to the TValueConverter
+    let sourceExpression = binding.sourceExpression;
+
+    // do create the sourceExpression only once
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    let expression = sourceExpression.expression;
+    sourceExpression.expression = new ValueConverter(
+      expression,
+      'nf',
+      sourceExpression.args,
+      [expression, ...sourceExpression.args]);
+  }
+
+  unbind(binding, source) {
+    // unbind the signal behavior
+    this.signalBindingBehavior.unbind(binding, source);
   }
 }
 

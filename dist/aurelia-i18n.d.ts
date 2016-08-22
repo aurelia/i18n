@@ -10,14 +10,15 @@ import {
   EventAggregator
 } from 'aurelia-event-aggregator';
 import {
-  customAttribute
-} from 'aurelia-templating';
-import {
+  BindingSignaler,
   SignalBindingBehavior
 } from 'aurelia-templating-resources';
 import {
   ValueConverter
 } from 'aurelia-binding';
+import {
+  customAttribute
+} from 'aurelia-templating';
 
 /*eslint no-irregular-whitespace: 0*/
 export declare const translations: any;
@@ -31,20 +32,23 @@ export declare class LazyOptional {
 
 /*eslint no-cond-assign: 0*/
 export declare class I18N {
+  static inject: any;
   globalVars: any;
   params: any;
   i18nextDefered: any;
+  i18next: any;
+  ea: EventAggregator;
   constructor(ea?: any, signaler?: any);
-  setup(options?: any): any;
-  i18nextReady(): any;
-  setLocale(locale?: any): any;
-  getLocale(): any;
-  nf(options?: any, locales?: any): any;
-  uf(number?: any, locale?: any): any;
-  df(options?: any, locales?: any): any;
-  tr(key?: any, options?: any): any;
-  registerGlobalVariable(key?: any, value?: any): any;
-  unregisterGlobalVariable(key?: any): any;
+  setup(options?: any): Promise<i18next.I18n>;
+  i18nextReady(): Promise<i18next.I18n>;
+  setLocale(locale?: any): Promise<any>;
+  getLocale(): string;
+  nf(options?: any, locales?: any): string;
+  uf(number?: any, locale?: any): number;
+  df(options?: any, locales?: any): string;
+  tr(key?: any, options?: any): string;
+  registerGlobalVariable(key?: any, value?: any): void;
+  unregisterGlobalVariable(key?: any): void;
   
   /**
      * Scans an element for children that have a translation attribute and
@@ -54,7 +58,7 @@ export declare class I18N {
      *
      * @param el    HTMLElement to search within
      */
-  updateTranslations(el?: any): any;
+  updateTranslations(el?: any): void;
   updateValue(node?: any, value?: any, params?: any): any;
 }
 export declare class BaseI18N {
@@ -68,10 +72,22 @@ export declare class DfValueConverter {
   constructor(i18n?: any);
   toView(value?: any, dfOrOptions?: any, locale?: any, df?: any): any;
 }
+export declare class DfBindingBehavior {
+  static inject(): any;
+  constructor(signalBindingBehavior?: any);
+  bind(binding?: any, source?: any): any;
+  unbind(binding?: any, source?: any): any;
+}
 export declare class NfValueConverter {
   static inject(): any;
   constructor(i18n?: any);
   toView(value?: any, nfOrOptions?: any, locale?: any, nf?: any): any;
+}
+export declare class NfBindingBehavior {
+  static inject(): any;
+  constructor(signalBindingBehavior?: any);
+  bind(binding?: any, source?: any): any;
+  unbind(binding?: any, source?: any): any;
 }
 export declare class RelativeTime {
   static inject(): any;

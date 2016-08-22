@@ -1,3 +1,20 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/aurelia/i18n/compare/1.0.0...v1.1.0) (2016-08-22)
+
+
+### Bug Fixes
+
+* **eslint:** fix linting issues ([0ddf93d](https://github.com/aurelia/i18n/commit/0ddf93d))
+* **ts:** declare missing props ([c8102c8](https://github.com/aurelia/i18n/commit/c8102c8))
+
+
+### Features
+
+* **i18n:** add dependency injection ([0545999](https://github.com/aurelia/i18n/commit/0545999))
+* **TCustomAttribute:** support custom-elements ([06373f0](https://github.com/aurelia/i18n/commit/06373f0))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/aurelia/i18n/compare/1.0.0-rc.1.0.0...v1.0.0) (2016-07-27)
 

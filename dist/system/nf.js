@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-logging', './i18n'], function (_export, _context) {
+System.register(['aurelia-logging', './i18n', 'aurelia-templating-resources', 'aurelia-binding'], function (_export, _context) {
   "use strict";
 
-  var LogManager, I18N, NfValueConverter;
+  var LogManager, I18N, SignalBindingBehavior, ValueConverter, NfValueConverter, NfBindingBehavior;
 
   
 
@@ -12,6 +12,10 @@ System.register(['aurelia-logging', './i18n'], function (_export, _context) {
       LogManager = _aureliaLogging;
     }, function (_i18n) {
       I18N = _i18n.I18N;
+    }, function (_aureliaTemplatingResources) {
+      SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
+    }, function (_aureliaBinding) {
+      ValueConverter = _aureliaBinding.ValueConverter;
     }],
     execute: function () {
       _export('NfValueConverter', NfValueConverter = function () {
@@ -46,6 +50,40 @@ System.register(['aurelia-logging', './i18n'], function (_export, _context) {
       }());
 
       _export('NfValueConverter', NfValueConverter);
+
+      _export('NfBindingBehavior', NfBindingBehavior = function () {
+        NfBindingBehavior.inject = function inject() {
+          return [SignalBindingBehavior];
+        };
+
+        function NfBindingBehavior(signalBindingBehavior) {
+          
+
+          this.signalBindingBehavior = signalBindingBehavior;
+        }
+
+        NfBindingBehavior.prototype.bind = function bind(binding, source) {
+          this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+          var sourceExpression = binding.sourceExpression;
+
+          if (sourceExpression.rewritten) {
+            return;
+          }
+          sourceExpression.rewritten = true;
+
+          var expression = sourceExpression.expression;
+          sourceExpression.expression = new ValueConverter(expression, 'nf', sourceExpression.args, [expression].concat(sourceExpression.args));
+        };
+
+        NfBindingBehavior.prototype.unbind = function unbind(binding, source) {
+          this.signalBindingBehavior.unbind(binding, source);
+        };
+
+        return NfBindingBehavior;
+      }());
+
+      _export('NfBindingBehavior', NfBindingBehavior);
     }
   };
 });
