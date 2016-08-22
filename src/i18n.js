@@ -13,6 +13,8 @@ export class I18N {
     resolve: null,
     promise: null
   };
+  i18next;
+  ea: EventAggregator;
 
   constructor(ea, signaler) {
     this.i18next = i18next;
@@ -22,7 +24,7 @@ export class I18N {
     this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }
 
-  setup(options?) {
+  setup(options?): Promise<i18next.I18n> {
     const defaultOptions = {
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
@@ -44,11 +46,11 @@ export class I18N {
     return this.i18nextDefered.promise;
   }
 
-  i18nextReady() {
+  i18nextReady(): Promise<i18next.I18n> {
     return this.i18nextDefered.promise;
   }
 
-  setLocale(locale) {
+  setLocale(locale): Promise<any> {
     return new Promise( resolve => {
       let oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
@@ -59,15 +61,15 @@ export class I18N {
     });
   }
 
-  getLocale() {
+  getLocale(): string {
     return this.i18next.language;
   }
 
-  nf(options?, locales?) {
+  nf(options?, locales?): string {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  uf(number, locale?) {
+  uf(number, locale?): number {
     let nf = this.nf({}, locale || this.getLocale());
     let comparer = nf.format(10000 / 3);
 
@@ -85,11 +87,11 @@ export class I18N {
     return Number(result);
   }
 
-  df(options?, locales?) {
+  df(options?, locales?): string {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  tr(key, options?) {
+  tr(key, options?): string {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
@@ -99,11 +101,11 @@ export class I18N {
     return this.i18next.t(key, fullOptions);
   }
 
-  registerGlobalVariable(key, value) {
+  registerGlobalVariable(key, value): void {
     this.globalVars[key] = value;
   }
 
-  unregisterGlobalVariable(key) {
+  unregisterGlobalVariable(key): void {
     delete this.globalVars[key];
   }
 
@@ -115,7 +117,7 @@ export class I18N {
    *
    * @param el    HTMLElement to search within
    */
-  updateTranslations(el) {
+  updateTranslations(el): void {
     if (!el || !el.querySelectorAll) {
       return;
     }
