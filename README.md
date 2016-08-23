@@ -123,10 +123,8 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
     ```javascript
     instance.setup({
       ...
-      ns: {
-        namespaces: ['translation','nav'],
-        defaultNs: 'translation'
-      }
+      ns: ['translation','nav'],
+      defaultNS: 'translation'
     });
     ```
 
