@@ -218,7 +218,7 @@ export let I18N = (_temp = _class = class I18N {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          if (node.au && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
+          if (node.au && node.au.controller && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
             node.au.controller.viewModel[attr] = this.tr(key, params);
           } else {
             node.setAttribute(attr, this.tr(key, params));

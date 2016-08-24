@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/aurelia/i18n/compare/1.1.0...v1.1.1) (2016-08-24)
+
+
+### Bug Fixes
+
+* **attribute:** check for undefined controller ([8c6e6bc](https://github.com/aurelia/i18n/commit/8c6e6bc))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/aurelia/i18n/compare/1.0.0...v1.1.0) (2016-08-22)
 
