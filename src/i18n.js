@@ -24,7 +24,7 @@ export class I18N {
     this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }
 
-  setup(options?): Promise<i18next.I18n> {
+  setup(options?): Promise<any> {
     const defaultOptions = {
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
@@ -46,7 +46,7 @@ export class I18N {
     return this.i18nextDefered.promise;
   }
 
-  i18nextReady(): Promise<i18next.I18n> {
+  i18nextReady(): Promise<any> {
     return this.i18nextDefered.promise;
   }
 
