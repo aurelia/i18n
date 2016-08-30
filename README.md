@@ -40,6 +40,8 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
 - [Internationalization API Polyfill](#internationalization-api-polyfill)
 - [Usage with webpack](#usage-with-webpack)
 - [CLI Integration](#cli-integration)
+    - [Bundling the Intl Polyfill](#bundling-the-intl-polyfill)
+	- [I18N and TypeScript](#i18n-and-typescript)
 - [Migration to new i18next version](#migration-to-new-i18next-version)
 - [Polyfills](#polyfills)
 - [Dependencies](#dependencies)
@@ -755,8 +757,83 @@ For additional information about Intl.js and Webpack please take a look at this 
 
 ## CLI Integration
 
-There will be a command line tool that can create `translation.json` files for you by extracting the values from the html and javascript files.
-(coming soon)
+In order to install the Plugin with a CLI Project, first you want to install the plugin via npm, from within the root folder of your project:
+
+`npm install aurelia-i18n`
+
+Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. As an example we're going to leverage the i18next-xhr-backend:
+
+`npm install i18next i18next-xhr-backend`
+
+After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to section named *dependencies*. In there add the following three entries:
+
+```
+{
+  "name": "i18next",
+  "path": "../node_modules/i18next/dist/umd",
+  "main": "i18next"
+},
+{
+  "name": "aurelia-i18n",
+  "path": "../node_modules/aurelia-i18n/dist/amd",
+  "main": "aurelia-i18n"
+},
+{
+  "name": "i18next-xhr-backend",
+  "path": "../node_modules/i18next-xhr-backend/dist/umd",
+  "main": "i18nextXHRBackend"
+}
+```
+
+Now follow the description on how to setup your project according to the [section above](#how-to-install-this-plugin) continuing from Step 3.
+
+### Bundling the Intl Polyfill
+
+Aurelia-I18N uses a polyfill to provide Intl.API support for browsers currently not implementing the feature.
+Amongst those are Safari for Mac and iOS. The Polyfill will be lazy loaded in dev mode as needed but won't be included
+automatically as part of the bundle. The reason is the decent file size of ~50k in minified mode, as such you as the developer
+have to opt-in and bundle the Polyfill manually.
+
+To do so first install the Polyfill as part of your project using npm:
+
+`npm install intl`
+
+After that open up the *aurelia_project/aurelia.json* file and add the following dependency:
+```json
+{
+  "name": "intl",
+  "path": "../node_modules/intl/dist",
+  "main": "Intl.min"  <--- or Intl.complete
+},
+````
+
+> Instead of referencing the min file you could also reference `Intl.complete` to include the Unicode CLDR locale data. For
+more info about that consult the [official Polyfill docs](https://github.com/andyearnshaw/Intl.js/#locale-data)
+
+### I18N and TypeScript
+
+Add the i18next.d.ts by calling:
+
+`typings install dt~i18next --save --global`
+
+> I18Next is hosted on DefinitlyTyped, as such you need to use the --global modifier to target typings to said source. This modfier used to be named --ambient.
+
+Next thing missing is the i18next-xhr-backend.d.ts file. Since this file is neither available from the typings registry nor DefinitlyTyped, you should install it using a local link.
+
+`typings install --save --global file:./node_modules/i18next-xhr-backend/typings/i18next-xhr-backend.d.ts`
+
+Now the last thing left is that there is an issue with the way TS resolves the default exported class. As such 
+you need to change the import statement of the Backend in your `main.ts` file to:
+
+```
+/**********************************************/
+/          add the necessary imports           /
+/**********************************************/
+import environment from './environment';
+import * as Backend from 'i18next-xhr-backend';  <--- see this changed line in order to make TS compiler shut up
+``` 
+
+After that you should be ready to use Aurelia-I18N with your TypeScript based CLI-App.  
 
 ## Migration to new i18next version
 * Default interpolation is `{{` and `}}` instead of `__`
