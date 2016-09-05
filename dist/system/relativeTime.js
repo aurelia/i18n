@@ -68,7 +68,7 @@ System.register(['./i18n', './defaultTranslations/relative.time', 'aurelia-event
             }
           }
 
-          this.service.i18next.addResources(key, 'translation', translation);
+          this.service.i18next.addResources(key, options.defaultNS, translation);
         };
 
         RelativeTime.prototype.getRelativeTime = function getRelativeTime(time) {

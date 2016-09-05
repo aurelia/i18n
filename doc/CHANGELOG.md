@@ -1,3 +1,13 @@
+<a name="1.1.2"></a>
+## [1.1.2](https://github.com/aurelia/i18n/compare/1.1.1...v1.1.2) (2016-09-05)
+
+
+### Bug Fixes
+
+* **ts:** fix wrong type information ([c86cd3f](https://github.com/aurelia/i18n/commit/c86cd3f)), closes [/github.com/aurelia/i18n/issues/136#issuecomment-243419568](https://github.com//github.com/aurelia/i18n/issues/136/issues/issuecomment-243419568)
+
+
+
 <a name="1.1.1"></a>
 ## [1.1.1](https://github.com/aurelia/i18n/compare/1.1.0...v1.1.1) (2016-08-24)
 

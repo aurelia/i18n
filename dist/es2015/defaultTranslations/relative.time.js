@@ -291,5 +291,34 @@ export const translations = {
       'year_in': 'em __count__ ano',
       'year_in_plural': 'em __count__ anos'
     }
+  },
+  zh: {
+    translation: {
+      'now': '刚才',
+      'second_ago': '__count__ 秒钟前',
+      'second_ago_plural': '__count__ 秒钟前',
+      'second_in': '__count__ 秒内',
+      'second_in_plural': '__count__ 秒内',
+      'minute_ago': '__count__ 分钟前',
+      'minute_ago_plural': '__count__ 分钟前',
+      'minute_in': '__count__ 分钟内',
+      'minute_in_plural': '__count__ 分钟内',
+      'hour_ago': '__count__ 小时前',
+      'hour_ago_plural': '__count__ 小时前',
+      'hour_in': '__count__ 小时内',
+      'hour_in_plural': '__count__ 小时内',
+      'day_ago': '__count__ 天前',
+      'day_ago_plural': '__count__ 天前',
+      'day_in': '__count__ 天内',
+      'day_in_plural': '__count__ 天内',
+      'month_ago': '__count__ 月前',
+      'month_ago_plural': '__count__ 月前',
+      'month_in': '__count__ 月内',
+      'month_in_plural': '__count__ 月内',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': '__count__ 年内',
+      'year_in_plural': '__count__ 年内'
+    }
   }
 };

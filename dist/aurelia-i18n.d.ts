@@ -39,8 +39,8 @@ export declare class I18N {
   i18next: any;
   ea: EventAggregator;
   constructor(ea?: any, signaler?: any);
-  setup(options?: any): Promise<i18next.I18n>;
-  i18nextReady(): Promise<i18next.I18n>;
+  setup(options?: any): Promise<any>;
+  i18nextReady(): Promise<any>;
   setLocale(locale?: any): Promise<any>;
   getLocale(): string;
   nf(options?: any, locales?: any): string;
