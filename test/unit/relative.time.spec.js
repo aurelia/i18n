@@ -16,7 +16,7 @@ describe('testing relative time support', () => {
     i18n.setup({
       lng: 'en',
       fallbackLng: 'en',
-      defaultNS: 'translation',
+      defaultNS: 'custom_default',
       debug: false
     }).then(() => done());
   });

@@ -47,7 +47,7 @@ export class RelativeTime {
       }
     }
 
-    this.service.i18next.addResources(key, 'translation', translation);
+    this.service.i18next.addResources(key, options.defaultNS, translation);
   }
 
   getRelativeTime(time) {
