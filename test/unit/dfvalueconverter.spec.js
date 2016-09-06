@@ -51,14 +51,6 @@ describe('dfvalueconverter tests', () => {
     expect(dfvc.toView(val)).toBe('');
   });
 
-  it('should return formated string if ISO8601 string value given', (done) => {
-    let val = '2016-09-05';
-    sut.setLocale('en-AU').then(() => {
-      expect(dfvc.toView(val)).toBe('05/09/2016');
-      done();
-    });
-  });
-
   it('should return 0 as begin of unix timestamp', (done) => {
     let val = 0;
     sut.setLocale('de').then(() => {
@@ -71,6 +63,38 @@ describe('dfvalueconverter tests', () => {
     let val = '0';
     sut.setLocale('de').then(() => {
       expect(dfvc.toView(val, { timeZone: 'UTC' })).toBe('1.1.1970');
+      done();
+    });
+  });
+
+  it('should return formated string if ISO8601 date string value given LOCAL time AU', (done) => {
+    let val = '2016-09-05';
+    sut.setLocale('en-AU').then(() => {
+      expect(dfvc.toView(val)).toBe('05/09/2016');
+      done();
+    });
+  });
+
+  it('should return formated string if ISO8601 date string value given LOCAL time DE', (done) => {
+    let val = '2016-09-05';
+    sut.setLocale('de').then(() => {
+      expect(dfvc.toView(val)).toBe('5.9.2016');
+      done();
+    });
+  });
+
+  it('should return formated string if ISO8601 datetime string value given UTC+Offset time AU', (done) => {
+    let val = '2016-09-05T23:36:00+12:00';
+    sut.setLocale('en-AU').then(() => {
+      expect(dfvc.toView(val)).toBe('05/09/2016');
+      done();
+    });
+  });
+
+  it('should return formated string if ISO8601 datetime string value given UTC time AU', (done) => {
+    let val = '2016-09-05T23:36:00Z';
+    sut.setLocale('en-AU').then(() => {
+      expect(dfvc.toView(val)).toBe('05/09/2016');
       done();
     });
   });
