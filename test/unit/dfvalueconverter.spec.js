@@ -82,20 +82,4 @@ describe('dfvalueconverter tests', () => {
       done();
     });
   });
-
-  it('should return formated string if ISO8601 datetime string value given UTC+Offset time AU', (done) => {
-    let val = '2016-09-05T23:36:00+12:00';
-    sut.setLocale('en-AU').then(() => {
-      expect(dfvc.toView(val)).toBe('05/09/2016');
-      done();
-    });
-  });
-
-  it('should return formated string if ISO8601 datetime string value given UTC time AU', (done) => {
-    let val = '2016-09-05T23:36:00Z';
-    sut.setLocale('en-AU').then(() => {
-      expect(dfvc.toView(val)).toBe('05/09/2016');
-      done();
-    });
-  });
 });
