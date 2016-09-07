@@ -8,7 +8,7 @@
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a plugin that provides i18n support.
 Under the hood it uses the [i18next](http://i18next.com/) library.
 
-> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.durandal.io/) and [our email list](http://durandal.us10.list-manage1.com/subscribe?u=dae7661a3872ee02b519f6f29&id=3de6801ccc). We also invite you to [follow us on twitter](https://twitter.com/aureliaeffect). If you have questions, please [join our community on Gitter](https://gitter.im/aurelia/discuss). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome or Firefox Extension and visit any of our repository's boards. You can get an overview of all Aurelia work by visiting [the framework board](https://github.com/aurelia/framework#boards).
+> To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.aurelia.io/) and [our email list](http://durandal.us10.list-manage1.com/subscribe?u=dae7661a3872ee02b519f6f29&id=3de6801ccc). We also invite you to [follow us on twitter](https://twitter.com/aureliaeffect). If you have questions, please [join our community on Gitter](https://gitter.im/aurelia/discuss). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome or Firefox Extension and visit any of our repository's boards. You can get an overview of all Aurelia work by visiting [the framework board](https://github.com/aurelia/framework#boards).
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -822,7 +822,7 @@ Next thing missing is the i18next-xhr-backend.d.ts file. Since this file is neit
 
 `typings install --save --global file:./node_modules/i18next-xhr-backend/typings/i18next-xhr-backend.d.ts`
 
-Now the last thing left is that there is an issue with the way TS resolves the default exported class. As such 
+Now the last thing left is that there is an issue with the way TS resolves the default exported class. As such
 you need to change the import statement of the Backend in your `main.ts` file to:
 
 ```
@@ -831,7 +831,7 @@ you need to change the import statement of the Backend in your `main.ts` file to
 /**********************************************/
 import environment from './environment';
 import * as Backend from 'i18next-xhr-backend';  <--- see this changed line in order to make TS compiler shut up
-``` 
+```
 
 After that you should be ready to use Aurelia-I18N with your TypeScript based CLI-App.  
 
