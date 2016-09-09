@@ -27,9 +27,7 @@ export class DfValueConverter {
     }
 
     if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
-      //Take the first 3 values assuming date is in ISO format, ie 2016-09-08
-      let s = value.split(/\D/);
-      value = new Date(s[0], --s[1], s[2], 0, 0, 0, 0);
+      value = new Date(value);
     }
 
     return df.format(value);
