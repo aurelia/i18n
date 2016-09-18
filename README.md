@@ -673,7 +673,7 @@ To use it via code get hold of the service via injection and call the method as 
 import {RelativeTime} from 'aurelia-i18n';
 
 export class MyDemoVM {
-  static inject = [I18N];
+  static inject = [RelativeTime];
 	constructor(relativeTime) {
 	  this.rt = relativeTime;
 
