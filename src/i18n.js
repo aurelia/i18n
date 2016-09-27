@@ -77,7 +77,7 @@ export class I18N {
     let decimalSeparator  = comparer[5];
 
     // remove thousand seperator
-    let result = number.replace(thousandSeparator, '')
+    let result = number.toString().replace(thousandSeparator, '')
       // remove non-numeric signs except -> , .
       .replace(/[^\d.,-]/g, '')
       // replace original decimalSeparator with english one
