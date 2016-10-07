@@ -51,7 +51,7 @@ describe('testing i18n translations', () => {
   it('should translate a simple key without options', () => {
     expect(sut.tr('friend', { count: 0 })).toEqual('A friend');
   });
-  
+
   it('should replace a not provided variable with an empty string', () => {
     expect(sut.tr('novar')).toEqual(' should be replaced with an empty string');
   });

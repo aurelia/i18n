@@ -89,8 +89,11 @@ describe('testing i18n translation update', () => {
       System.import('fixture:template.html!text').then((result) => {
         template = document.createElement('div');
         template.innerHTML = result;
-        if (template.firstChild instanceof HTMLTemplateElement)
+
+        if (template.firstChild instanceof HTMLTemplateElement) {
           template.innerHTML = template.firstChild.innerHTML;
+        }
+
         document.body.appendChild(template);
         done();
       });
@@ -116,16 +119,6 @@ describe('testing i18n translation update', () => {
       expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('The Title is the header');
       sut.setLocale('de').then(() => {
         expect(template.querySelector('#test-nested').innerHTML.trim()).toBe('Der Titel ist der Kopf');
-        done();
-      });
-    });
-
-    it('should translate paramaters', done => {
-      sut.updateValue(template.querySelector('#test-params'), 'params', {name: 'Aurelia'}).then(() => {
-        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('My name is Aurelia');
-        return sut.setLocale('de');
-      }).then(() => {
-        expect(template.querySelector('#test-params').innerHTML.trim()).toBe('Meine Name ist Aurelia');
         done();
       });
     });
