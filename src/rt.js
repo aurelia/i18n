@@ -13,11 +13,11 @@ export class RtValueConverter {
       ) {
       return value;
     }
-    
+
     if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
       value = new Date(value);
     }
-    
+
     return this.service.getRelativeTime(value);
   }
 }
