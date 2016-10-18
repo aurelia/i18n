@@ -86,7 +86,7 @@ describe('dfvalueconverter tests', () => {
   it('should return formated string if ISO8601 date string value given LOCAL time AU', (done) => {
     let val = '2016-09-05';
     let options = {
-      year: 'numeric', month: '2-digit', day: '2-digit'
+      year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'UTC'
     };
     sut.setLocale('en-AU').then(() => {
       expect(dfvc.toView(val, options)).toBe('05/09/2016');
@@ -97,7 +97,7 @@ describe('dfvalueconverter tests', () => {
   it('should return formated string if ISO8601 date string value given LOCAL time DE', (done) => {
     let val = '2016-09-05';
     sut.setLocale('de').then(() => {
-      expect(dfvc.toView(val)).toBe('5.9.2016');
+      expect(dfvc.toView(val, { timeZone: 'UTC'})).toBe('5.9.2016');
       done();
     });
   });
