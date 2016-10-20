@@ -19,7 +19,7 @@ declare module 'i18next-xhr-backend' {
         };
         constructor(services: Services, options?: {});
         init(services: Services, options?: {}): void;
-        readMulti(languages: Array, namespaces: Array, callback: () => void): void;
+        readMulti(languages: Array<any>, namespaces: Array<any>, callback: () => void): void;
         read(language: {}, namespace: {}, callback: () => void): void;
         loadUrl(url: string, callback: () => void): void;
         create(languages: any[], namespace: string, key: string, fallbackValue: string): void;
