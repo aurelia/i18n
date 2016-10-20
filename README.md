@@ -65,7 +65,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
     <body aurelia-app="main">
     ...
     ```
-3. Create folder `locales` in your projects root
+3. Create a folder `locales` in your project's root
 4. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
 5. In those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
@@ -82,7 +82,7 @@ Under the hood it uses the [i18next](http://i18next.com/) library.
     }
     ```
 6. NEW!: Install a backend plugin
-From v.2 you have to pick your own backend service. For this guide we're going to leverage the [XHR Plugin](https://github.com/i18next/i18next-xhr-backend)
+From v.2 you have to pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend)
 Install it in the root of your project via `jspm install npm:i18next-xhr-backend`.
 7. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
 
@@ -132,7 +132,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
 8. If you use TypeScript
 
-    Unfortunately creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries for now. So, during the TypeScript compilation process you will see the following error messages:
+    Unfortunately, the creators of [i18next](http://i18next.com/) and [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) have not yet provided typings for these libraries/ So, during the TypeScript compilation process you will see the following error messages:
     ``` javascript
     "/yourHost/pathToApp/pathToFile/filename.ts(3,26): Cannot find module 'i18next-xhr-backend'."
     "/yourHost/pathToApp/jspm_packages/npm/aurelia-i18n@0.5.2/aurelia-i18n.d.ts(2,23): Cannot find module 'i18next'."
@@ -142,7 +142,7 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
     1. **i18next**
 
-        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can istall typings for [i18next](http://i18next.com/) with next command in console:
+        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can install typings for [i18next](http://i18next.com/) with next command in console:
             ```
             typings install dt~i18next --global
             ```
@@ -202,7 +202,7 @@ export class MyDemoVM {
 ```
 
 ### Translating via code
-Translating stuff via code works by using the method `tr`. You pass in the `key` as first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions) for a detailed list of those:
+Translating stuff via code works by using the method `tr`. You pass in the `key` as its first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions) for a detailed list of those:
 
 ```javascript
 import {I18N} from 'aurelia-i18n';
