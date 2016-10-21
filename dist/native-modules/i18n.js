@@ -141,20 +141,6 @@ export var I18N = (_temp = _class = function () {
   };
 
   I18N.prototype.updateValue = function updateValue(node, value, params) {
-    var _this4 = this;
-
-    if (params) {
-      this.params[value] = params;
-    } else if (this.params[value]) {
-      params = this.params[value];
-    }
-
-    return this.i18nextDefered.promise.then(function () {
-      return _this4._updateValue(node, value, params);
-    });
-  };
-
-  I18N.prototype._updateValue = function _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }

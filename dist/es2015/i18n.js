@@ -129,16 +129,6 @@ export let I18N = (_temp = _class = class I18N {
   }
 
   updateValue(node, value, params) {
-    if (params) {
-      this.params[value] = params;
-    } else if (this.params[value]) {
-      params = this.params[value];
-    }
-
-    return this.i18nextDefered.promise.then(() => this._updateValue(node, value, params));
-  }
-
-  _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }

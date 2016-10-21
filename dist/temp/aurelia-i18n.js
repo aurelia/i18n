@@ -175,21 +175,21 @@ var translations = exports.translations = {
   },
   fr: {
     translation: {
-      'now': 'juste',
-      'second_ago': '__count__ seconde passé',
-      'second_ago_plural': '__count__ secondes passé',
+      'now': 'maintenant',
+      'second_ago': '__count__ seconde plus tôt',
+      'second_ago_plural': '__count__ secondes plus tôt',
       'second_in': 'en __count__ seconde',
       'second_in_plural': 'en __count__ secondes',
-      'minute_ago': '__count__ minute passé',
-      'minute_ago_plural': '__count__ minutes passé',
+      'minute_ago': '__count__ minute plus tôt',
+      'minute_ago_plural': '__count__ minutes plus tôt',
       'minute_in': 'en __count__ minute',
       'minute_in_plural': 'en __count__ minutes',
-      'hour_ago': '__count__ heure passé',
-      'hour_ago_plural': '__count__ heures passé',
+      'hour_ago': '__count__ heure plus tôt',
+      'hour_ago_plural': '__count__ heures plus tôt',
       'hour_in': 'en __count__ heure',
       'hour_in_plural': 'en __count__ heures',
-      'day_ago': '__count__ jour passé',
-      'day_ago_plural': '__count__ jours passé',
+      'day_ago': '__count__ jour plus tôt',
+      'day_ago_plural': '__count__ jours plus tôt',
       'day_in': 'en __count__ jour',
       'day_in_plural': 'en __count__ jours'
     }
@@ -355,6 +355,93 @@ var translations = exports.translations = {
       'year_ago_plural': '__count__ 年前',
       'year_in': '__count__ 年内',
       'year_in_plural': '__count__ 年内'
+    }
+  },
+  'zh-CN': {
+    translation: {
+      'now': '刚才',
+      'second_ago': '__count__ 秒钟前',
+      'second_ago_plural': '__count__ 秒钟前',
+      'second_in': '__count__ 秒内',
+      'second_in_plural': '__count__ 秒内',
+      'minute_ago': '__count__ 分钟前',
+      'minute_ago_plural': '__count__ 分钟前',
+      'minute_in': '__count__ 分钟内',
+      'minute_in_plural': '__count__ 分钟内',
+      'hour_ago': '__count__ 小时前',
+      'hour_ago_plural': '__count__ 小时前',
+      'hour_in': '__count__ 小时内',
+      'hour_in_plural': '__count__ 小时内',
+      'day_ago': '__count__ 天前',
+      'day_ago_plural': '__count__ 天前',
+      'day_in': '__count__ 天内',
+      'day_in_plural': '__count__ 天内',
+      'month_ago': '__count__ 月前',
+      'month_ago_plural': '__count__ 月前',
+      'month_in': '__count__ 月内',
+      'month_in_plural': '__count__ 月内',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': '__count__ 年内',
+      'year_in_plural': '__count__ 年内'
+    }
+  },
+  'zh-HK': {
+    translation: {
+      'now': '剛才',
+      'second_ago': '__count__ 秒鐘前',
+      'second_ago_plural': '__count__ 秒鐘前',
+      'second_in': '__count__ 秒內',
+      'second_in_plural': '__count__ 秒內',
+      'minute_ago': '__count__ 分鐘前',
+      'minute_ago_plural': '__count__ 分鐘前',
+      'minute_in': '__count__ 分鐘內',
+      'minute_in_plural': '__count__ 分鐘內',
+      'hour_ago': '__count__ 小時前',
+      'hour_ago_plural': '__count__ 小時前',
+      'hour_in': '__count__ 小時內',
+      'hour_in_plural': '__count__ 小時內',
+      'day_ago': '__count__ 天前',
+      'day_ago_plural': '__count__ 天前',
+      'day_in': '__count__ 天內',
+      'day_in_plural': '__count__ 天內',
+      'month_ago': '__count__ 月前',
+      'month_ago_plural': '__count__ 月前',
+      'month_in': '__count__ 月內',
+      'month_in_plural': '__count__ 月內',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': '__count__ 年內',
+      'year_in_plural': '__count__ 年內'
+    }
+  },
+  'zh-TW': {
+    translation: {
+      'now': '剛才',
+      'second_ago': '__count__ 秒鐘前',
+      'second_ago_plural': '__count__ 秒鐘前',
+      'second_in': '__count__ 秒內',
+      'second_in_plural': '__count__ 秒內',
+      'minute_ago': '__count__ 分鐘前',
+      'minute_ago_plural': '__count__ 分鐘前',
+      'minute_in': '__count__ 分鐘內',
+      'minute_in_plural': '__count__ 分鐘內',
+      'hour_ago': '__count__ 小時前',
+      'hour_ago_plural': '__count__ 小時前',
+      'hour_in': '__count__ 小時內',
+      'hour_in_plural': '__count__ 小時內',
+      'day_ago': '__count__ 天前',
+      'day_ago_plural': '__count__ 天前',
+      'day_in': '__count__ 天內',
+      'day_in_plural': '__count__ 天內',
+      'month_ago': '__count__ 月前',
+      'month_ago_plural': '__count__ 月前',
+      'month_in': '__count__ 月內',
+      'month_in_plural': '__count__ 月內',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': '__count__ 年內',
+      'year_in_plural': '__count__ 年內'
     }
   }
 };
@@ -543,20 +630,6 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
   };
 
   I18N.prototype.updateValue = function updateValue(node, value, params) {
-    var _this5 = this;
-
-    if (params) {
-      this.params[value] = params;
-    } else if (this.params[value]) {
-      params = this.params[value];
-    }
-
-    return this.i18nextDefered.promise.then(function () {
-      return _this5._updateValue(node, value, params);
-    });
-  };
-
-  I18N.prototype._updateValue = function _updateValue(node, value, params) {
     if (value === null || value === undefined) {
       return;
     }
@@ -651,7 +724,7 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
 }(), _class2.inject = [_aureliaEventAggregator.EventAggregator, _aureliaTemplatingResources.BindingSignaler], _temp);
 var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
   function BaseI18N(i18n, element, ea) {
-    var _this6 = this;
+    var _this5 = this;
 
     _classCallCheck(this, BaseI18N);
 
@@ -659,7 +732,7 @@ var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
     this.element = element;
 
     this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function () {
-      _this6.i18n.updateTranslations(_this6.element);
+      _this5.i18n.updateTranslations(_this5.element);
     });
   }
 
@@ -697,6 +770,10 @@ var DfValueConverter = exports.DfValueConverter = function () {
       i18nLogger.warn('This ValueConverter signature is depcrecated and will be removed in future releases. Please use the signature [dfOrOptions, locale]');
     } else {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+    }
+
+    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+      value = new Date(value);
     }
 
     return df.format(value);
@@ -806,7 +883,7 @@ var RelativeTime = exports.RelativeTime = function () {
   };
 
   function RelativeTime(i18n, ea) {
-    var _this7 = this;
+    var _this6 = this;
 
     _classCallCheck(this, RelativeTime);
 
@@ -814,10 +891,10 @@ var RelativeTime = exports.RelativeTime = function () {
     this.ea = ea;
 
     this.service.i18nextReady().then(function () {
-      _this7.setup();
+      _this6.setup();
     });
     this.ea.subscribe('i18n:locale:changed', function (locales) {
-      _this7.setup(locales);
+      _this6.setup(locales);
     });
   }
 
@@ -937,19 +1014,19 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   }
 
   TCustomAttribute.prototype.bind = function bind() {
-    var _this8 = this;
+    var _this7 = this;
 
     this.params = this.lazyParams();
 
     if (this.params) {
       this.params.valueChanged = function (newParams, oldParams) {
-        _this8.paramsChanged(_this8.value, newParams, oldParams);
+        _this7.paramsChanged(_this7.value, newParams, oldParams);
       };
     }
 
     var p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-      _this8.service.updateValue(_this8.element, _this8.value, p);
+      _this7.service.updateValue(_this7.element, _this7.value, _this7.params !== null ? _this7.params.value : undefined);
     });
 
     this.service.updateValue(this.element, this.value, p);
@@ -1012,6 +1089,14 @@ var RtValueConverter = exports.RtValueConverter = function () {
   }
 
   RtValueConverter.prototype.toView = function toView(value) {
+    if (value === null || typeof value === 'undefined' || typeof value === 'string' && value.trim() === '') {
+      return value;
+    }
+
+    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+      value = new Date(value);
+    }
+
     return this.service.getRelativeTime(value);
   };
 

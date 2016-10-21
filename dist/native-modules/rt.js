@@ -14,6 +14,14 @@ export var RtValueConverter = function () {
   }
 
   RtValueConverter.prototype.toView = function toView(value) {
+    if (value === null || typeof value === 'undefined' || typeof value === 'string' && value.trim() === '') {
+      return value;
+    }
+
+    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+      value = new Date(value);
+    }
+
     return this.service.getRelativeTime(value);
   };
 

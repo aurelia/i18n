@@ -49,7 +49,7 @@ export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_t
 
     let p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
-      this.service.updateValue(this.element, this.value, p);
+      this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
     });
 
     this.service.updateValue(this.element, this.value, p);

@@ -44,6 +44,10 @@ var DfValueConverter = exports.DfValueConverter = function () {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
 
+    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+      value = new Date(value);
+    }
+
     return df.format(value);
   };
 

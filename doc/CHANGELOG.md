@@ -1,3 +1,21 @@
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/aurelia/i18n/compare/1.1.2...v1.2.0) (2016-10-21)
+
+
+### Bug Fixes
+
+* **attribute:** TAttribute related fixes ([d2f8d72](https://github.com/aurelia/i18n/commit/d2f8d72))
+* **doc:** inject `RelativeTime` ([8cb0bff](https://github.com/aurelia/i18n/commit/8cb0bff))
+* **rt:** corrected French translations for relative time ([b3142dc](https://github.com/aurelia/i18n/commit/b3142dc))
+
+
+### Features
+
+* **df:** add support for ISO8601 strings ([e4771df](https://github.com/aurelia/i18n/commit/e4771df))
+* **rt:** add support for rt value converter to accept ISO8601 strings and empty values ([58e0b30](https://github.com/aurelia/i18n/commit/58e0b30))
+
+
+
 <a name="1.1.2"></a>
 ## [1.1.2](https://github.com/aurelia/i18n/compare/1.1.1...v1.1.2) (2016-09-05)
 

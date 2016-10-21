@@ -62,7 +62,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
 
       var p = this.params !== null ? this.params.value : undefined;
       this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-        _this.service.updateValue(_this.element, _this.value, p);
+        _this.service.updateValue(_this.element, _this.value, _this.params !== null ? _this.params.value : undefined);
       });
 
       this.service.updateValue(this.element, this.value, p);
