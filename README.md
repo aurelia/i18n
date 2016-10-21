@@ -142,15 +142,24 @@ Install it in the root of your project via `jspm install npm:i18next-xhr-backend
 
     1. **i18next**
 
-        - If You use [typings](https://github.com/typings/typings) (it is most likely true) you can install typings for [i18next](http://i18next.com/) with next command in console:
+        - If You use [typings](https://github.com/typings/typings) (it is most likely true), you can install the typings for [i18next](http://i18next.com/) using this command:
+
             ```
             typings install dt~i18next --global
             ```
-        - alternatively you can use a similar file from this repositories doc folder (`doc/i18next.d.ts`)
+            
+        - Alternatively, you can find this file in this repository's doc folder: `doc/i18next.d.ts`
 
     2. **i18next-xhr-backend**
-        - use the typings file from this repositories doc folder `doc/i18next-xhr-backend.d.ts`
-    > in order to comply with some neat project structure you should copy `*.d.ts` files from `doc/*.d.ts` to another folder, e.g. `/customTypings`
+        - If You use [typings](https://github.com/typings/typings) (it is most likely true), you can install the typings for [i18next-xhr-backend](https://github.com/i18next/i18next-xhr-backend) using this command:
+
+            ```
+            typings install dt~i18next-xhr-backend --global
+            ``` 
+            
+        - Alternative, you can find this file in this repository's doc folder: `doc/i18next-xhr-backend.d.ts`
+        
+    Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
     The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
     ```javascript
@@ -816,11 +825,11 @@ Add the i18next.d.ts by calling:
 
 `typings install dt~i18next --save --global`
 
-> I18Next is hosted on DefinitlyTyped, as such you need to use the --global modifier to target typings to said source. This modfier used to be named --ambient.
+> I18Next is hosted on DefinitelyTyped, as such you need to use the --global modifier to target typings to said source. This modfier used to be named --ambient.
 
-Next thing missing is the i18next-xhr-backend.d.ts file. Since this file is neither available from the typings registry nor DefinitlyTyped, you should install it using a local link.
+Next thing is adding the i18next-xhr-backend.d.ts file. Since this file is also hosted on DefinitelyTyped, we can install it the same way we installed the `i18next` typings:
 
-`typings install --save --global file:./node_modules/i18next-xhr-backend/typings/i18next-xhr-backend.d.ts`
+`typings install dt~i18next-xhr-backend --save --global`
 
 Now the last thing left is that there is an issue with the way TS resolves the default exported class. As such
 you need to change the import statement of the Backend in your `main.ts` file to:
