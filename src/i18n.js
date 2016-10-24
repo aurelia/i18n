@@ -235,7 +235,6 @@ export class I18N {
         node.innerHTML = this.tr(key, params);
         break;
       default: //normal html attribute
-        debugger;
         if (node.au &&
             node.au.controller &&
             node.au.controller.viewModel &&
