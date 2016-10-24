@@ -160,7 +160,7 @@ export class I18N {
     while (i--) {
       let key = keys[i];
       // remove the optional attribute
-      let re = /\[([a-z\-]*)\]/g;
+      let re = /\[([a-z\-]*)\]/ig;
 
       let m;
       let attr = 'text';
@@ -180,6 +180,9 @@ export class I18N {
 
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+      // convert to camelCase
+      attr = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
 
       //handle various attributes
       //anything other than text,prepend,append or html will be added as an attribute on the element.
@@ -232,6 +235,7 @@ export class I18N {
         node.innerHTML = this.tr(key, params);
         break;
       default: //normal html attribute
+        debugger;
         if (node.au &&
             node.au.controller &&
             node.au.controller.viewModel &&
