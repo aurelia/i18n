@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import i18next = require('i18next');
 import * as LogManager from 'aurelia-logging';
 import {
   resolver
