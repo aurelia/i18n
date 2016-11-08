@@ -162,7 +162,7 @@ define(['exports', 'i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aureli
       while (i--) {
         var key = keys[i];
 
-        var re = /\[([a-z\-]*)\]/g;
+        var re = /\[([a-z\-]*)\]/ig;
 
         var m = void 0;
         var attr = 'text';
@@ -181,6 +181,10 @@ define(['exports', 'i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aureli
 
         if (!node._textContent) node._textContent = node.textContent;
         if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+        attr = attr.replace(/-([a-z])/g, function (g) {
+          return g[1].toUpperCase();
+        });
 
         switch (attr) {
           case 'text':

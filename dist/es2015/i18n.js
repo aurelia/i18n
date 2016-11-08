@@ -139,7 +139,7 @@ export let I18N = (_temp = _class = class I18N {
     while (i--) {
       let key = keys[i];
 
-      let re = /\[([a-z\-]*)\]/g;
+      let re = /\[([a-z\-]*)\]/ig;
 
       let m;
       let attr = 'text';
@@ -158,6 +158,10 @@ export let I18N = (_temp = _class = class I18N {
 
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+      attr = attr.replace(/-([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+      });
 
       switch (attr) {
         case 'text':

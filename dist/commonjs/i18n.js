@@ -165,7 +165,7 @@ var I18N = exports.I18N = (_temp = _class = function () {
     while (i--) {
       var key = keys[i];
 
-      var re = /\[([a-z\-]*)\]/g;
+      var re = /\[([a-z\-]*)\]/ig;
 
       var m = void 0;
       var attr = 'text';
@@ -184,6 +184,10 @@ var I18N = exports.I18N = (_temp = _class = function () {
 
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+      attr = attr.replace(/-([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+      });
 
       switch (attr) {
         case 'text':
