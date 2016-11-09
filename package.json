@@ -49,7 +49,7 @@
       "aurelia-pal": "^1.0.0",
       "aurelia-templating": "^1.0.0",
       "aurelia-templating-resources": "^1.0.0",
-      "i18next": "^3.4.1",
+      "i18next": "^3.5.2",
       "intl": "^1.2.4"
     },
     "devDependencies": {
