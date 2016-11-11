@@ -97,7 +97,18 @@ Also install the `i18next-xhr-backend` plugin:
 npm install i18next-xhr-backend
 ```
 
-Optionally, but recommendedly, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
+Optionally, but recommendedly, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.babel.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
+
+An example based directly on `skeleton-navigation`:
+```shell
+const coreBundles = {
+  bootstrap: [/* snip (to keep example short) */],
+  aurelia: [
+    /* snip (to keep example short) */
+    'aurelia-i18n' // add aurelia-i18n to the array
+  ]
+}
+```
 
 
 
