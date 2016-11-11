@@ -110,8 +110,6 @@ const coreBundles = {
 }
 ```
 
-
-
 ## [Setting up the Plugin](aurelia-doc://section/3/version/1.0.0)
 Now that you have installed and configured your loader these are the steps to get started
 with the plugin.
