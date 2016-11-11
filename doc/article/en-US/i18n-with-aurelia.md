@@ -85,7 +85,21 @@ jspm install npm:i18next-xhr-backend
 
 ### Webpack
 
-** TODO **
+Install the `aurelia-i18n` plugin in your project using `npm` and the following command:
+
+```shell
+npm install aurelia-i18n
+```
+
+Also install the `i18next-xhr-backend` plugin:
+
+```shell
+npm install i18next-xhr-backend
+```
+
+Optionally, but recommendedly, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
+
+
 
 ## [Setting up the Plugin](aurelia-doc://section/3/version/1.0.0)
 Now that you have installed and configured your loader these are the steps to get started
