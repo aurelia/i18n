@@ -2,7 +2,7 @@ var _class, _temp;
 
 
 
-import i18next from 'i18next';
+import * as i18next from 'i18next';
 import { DOM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { BindingSignaler } from 'aurelia-templating-resources';
@@ -151,7 +151,7 @@ export var I18N = (_temp = _class = function () {
     while (i--) {
       var key = keys[i];
 
-      var re = /\[([a-z\-]*)\]/g;
+      var re = /\[([a-z\-]*)\]/ig;
 
       var m = void 0;
       var attr = 'text';
@@ -170,6 +170,10 @@ export var I18N = (_temp = _class = function () {
 
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
+
+      attr = attr.replace(/-([a-z])/g, function (g) {
+        return g[1].toUpperCase();
+      });
 
       switch (attr) {
         case 'text':
