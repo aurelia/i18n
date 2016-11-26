@@ -148,6 +148,7 @@ with the plugin.
 
 <code-listing heading="Registering the Plugin">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
@@ -240,6 +241,7 @@ In order to change the active language you'd have to call the function `setLocal
 
 <code-listing heading="Setting the active locale with setLocale">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -262,6 +264,7 @@ To get the active locale you'd go with `getLocale()`:
 
 <code-listing heading="Getting the active locale using getLocale">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -280,6 +283,7 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 
 <code-listing heading="Translating using the i18n.tr function">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -339,6 +343,7 @@ The following example shows how a view model can be configured to update it's co
 
 <code-listing heading="Updating translations manually">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
     import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -364,6 +369,7 @@ Alternatively you may extend your VM with the provided Base-I18N-VM, which will 
 
 <code-listing heading="Automatic locale changed subscription using the Base-I18N-VM">
   <source-code lang="ES 2015">
+  
     import {BaseI18N} from 'aurelia-i18n';
 
     export class MyDemoVM extends BaseI18N {
@@ -577,6 +583,7 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
 
 <code-listing heading="Signaling a change to the TBindingBehavior">
   <source-code lang="ES 2015">
+  
     import {BindingSignaler} from 'aurelia-templating-resources';
     // inject signaler to constructor ...
     ...
@@ -637,6 +644,7 @@ Below is an example how to access the NumberFormat via code:
 
 <code-listing heading="Number formatting via Code">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -699,6 +707,7 @@ Below you'll find an example how to use those via code:
 
 <code-listing heading="Formatting Dates via Code">
   <source-code lang="ES 2015">
+  
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -764,6 +773,7 @@ To use it via code get hold of the service via injection and call the method as 
 
 <code-listing heading="Rendering relative time via Code">
   <source-code lang="ES 2015">
+  
     import {RelativeTime} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -871,6 +881,7 @@ On top of that if you need the Intl polyfill included you have to manualy requir
 
 <code-listing heading="Manually requiering the Intl Polyfill">
   <source-code lang="ES 2015">
+  
     //main.js
     import 'intl';
   </source-code>
