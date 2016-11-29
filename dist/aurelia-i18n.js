@@ -527,7 +527,7 @@ export class I18N {
     return this.i18next.language;
   }
 
-  nf(options?, locales?): string {
+  nf(options?, locales?): any {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
@@ -549,7 +549,7 @@ export class I18N {
     return Number(result);
   }
 
-  df(options?, locales?): string {
+  df(options?, locales?): any {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 

@@ -43,9 +43,9 @@ export declare class I18N {
   i18nextReady(): Promise<any>;
   setLocale(locale?: any): Promise<any>;
   getLocale(): string;
-  nf(options?: any, locales?: any): string;
+  nf(options?: any, locales?: any): any;
   uf(number?: any, locale?: any): number;
-  df(options?: any, locales?: any): string;
+  df(options?: any, locales?: any): any;
   tr(key?: any, options?: any): string;
   registerGlobalVariable(key?: any, value?: any): void;
   unregisterGlobalVariable(key?: any): void;
