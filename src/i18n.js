@@ -65,7 +65,7 @@ export class I18N {
     return this.i18next.language;
   }
 
-  nf(options?, locales?): any {
+  nf(options?, locales?): string {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
@@ -87,7 +87,7 @@ export class I18N {
     return Number(result);
   }
 
-  df(options?, locales?): any {
+  df(options?, locales?): string {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
