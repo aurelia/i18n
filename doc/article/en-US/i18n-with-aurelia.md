@@ -154,6 +154,8 @@ with the plugin.
 
     // if you use TypeScript and target ES5 you might need to import it like this instead
     // import * as Backend from 'i18next-xhr-backend';
+    // otherwise add "allowSyntheticDefaultImports": true, to your tsconfig
+
 
     export function configure(aurelia) {
         aurelia.use
@@ -220,6 +222,12 @@ typings install dt~i18next-xhr-backend --save --global
     
 Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
+If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via typings as well.
+
+```
+typings install github:aurelia/i18n
+```
+
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
 <code-listing heading="Configuring custom typings in tsconfig.json">
   <source-code lang="ES 2015">
@@ -232,6 +240,14 @@ The next step is to let the compiler know about your `*.d.ts` files. Add the fol
   </source-code>
 </code-listing>
 
+> Note that TypeScript will throw errors like `Module xxx not found` either for aurelia-i18n or one of the backends. This is due to the fact
+that TypeScript does not see proper ES6 exported defaults. So you can now either switch to alias imports:
+
+```
+import * as Backend from 'i18next-xhr-backend'
+``` 
+
+or update your tsconfig with `"allowSyntheticDefaultImports": true` to maintain the same import style.
 
 ## [Using the Plugin](aurelia-doc://section/5/version/1.0.0)
 i18next translations work by setting up an active locale, which you've setup above in the init phase with the property `lng`.
