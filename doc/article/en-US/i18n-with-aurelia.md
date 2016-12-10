@@ -114,51 +114,46 @@ const coreBundles = {
 
 ## [Setting up the Plugin](aurelia-doc://section/3/version/1.0.0)
 
-Now that you have installed and configured your loader these are the steps to get started
-with the plugin.
+Now that you have installed and configured your loader, these are the steps to get started with the plugin.
 
-1. Make sure you use [manual bootstrapping](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/cheat-sheet/1).
-   In order to do so open your `index.html` and locate the element with the attribute aurelia-app.
-   Change it to look like this:
+First, use Manual Boostrapping. Open your `index.html` and locate the element with the attribute aurelia-app. Change it to look like this:
 
-    ```html
-    <body aurelia-app="main">
-    ...
-    ```
+```html
+<body aurelia-app="main">
+```
 
-    > If you're using one of the [Aurelia Skeletons](https://github.com/aurelia/skeleton-navigation) as your base
-    this is already done and you can safely skip this step.      
-2. Create a folder `locales` in your project's root
-3. For each locale create a new folder with it's name (e.g. `en`, `de`, ...)
-4. In those subfolders create a file named `translation.json` which contains
-   your language specific translations. Below you can find a sample `en-EN` translation file.
-   The full potential of i18next is achieved through a specific translation-file schema.
-   Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
+> Info
+> If you're using one of the [Aurelia Skeletons](https://github.com/aurelia/skeleton-navigation) as your base this is already done and you can safely skip this step. [See here to learn more about manual bootstrapping.](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/cheat-sheet/1).
 
-    ```javascript
-    {
-        "score": "Score: {{score}}",
-        "lives": "{{count}} life remaining",
-        "lives_plural": "{{count}} lives remaining",
-        "lives_indefinite": "a life remaining",
-        "lives_plural_indefinite": "some lives remaining",
-        "friend": "A friend",
-        "friend_male": "A boyfriend",
-        "friend_female": "A girlfriend"
-    }
-    ```
-5. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
+Second, create a folder named `locales` in your project's root.
+
+Third, for each locale, create a new folder with it's name (e.g. `en`, `de`, ...).
+
+Fourth, in those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
+
+```javascript
+{
+    "score": "Score: {{score}}",
+    "lives": "{{count}} life remaining",
+    "lives_plural": "{{count}} lives remaining",
+    "lives_indefinite": "a life remaining",
+    "lives_plural_indefinite": "some lives remaining",
+    "friend": "A friend",
+    "friend_male": "A boyfriend",
+    "friend_female": "A girlfriend"
+}
+```
+
+Fifth, create (if you haven't already) a file `main.js` in your `src` folder with following content:
 
 <code-listing heading="Registering the Plugin">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
     // if you use TypeScript and target ES5 you might need to import it like this instead
     // import * as Backend from 'i18next-xhr-backend';
     // otherwise add "allowSyntheticDefaultImports": true, to your tsconfig
-
 
     export function configure(aurelia) {
         aurelia.use
@@ -186,11 +181,9 @@ with the plugin.
   </source-code>
 </code-listing>
 
-    > You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
-    and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
-    containing the different namespaces as well as the default namespace.
+You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object containing the different namespaces as well as the default namespace.
 
-<code-listing heading="Setting up multiple namespaces">
+<code-listing heading="Setting up Multiple Namespaces">
   <source-code lang="ES 2015">
     instance.setup({
       ...
@@ -200,7 +193,8 @@ with the plugin.
   </source-code>
 </code-listing>
 
-## [TypeScript support](aurelia-doc://section/4/version/1.0.0)
+## [TypeScript Support](aurelia-doc://section/4/version/1.0.0)
+
 In order to get proper support for autocompletion and typesafety you should install
 the necessary type definitions (d.ts) for the plugins dependencies.
 Here we show how you can do that for i18next and the i18next-xhr-backend, but this
