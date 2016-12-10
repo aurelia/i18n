@@ -83,5 +83,6 @@ export {
   TCustomAttribute,
   TParamsCustomAttribute,
   BaseI18N,
-  EventAggregator
+  EventAggregator,
+  Backend
 };

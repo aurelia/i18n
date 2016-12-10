@@ -17,14 +17,14 @@
 //       debug : false
 //     });
 //  });
-
 export class Backend {
-    // static loader to support passing the aurelia-loader
-    static loader = null;
-    static with(loader) {
-        this.loader = loader;
-        return this;
-    }
+
+  static loader = null; // static loader to support passing the aurelia-loader
+
+  static with(loader) {
+    this.loader = loader;
+    return this;
+  }
 
   constructor(services, options = {}) {
     this.init(services, options);
@@ -37,7 +37,7 @@ export class Backend {
   }
 
   readMulti(languages, namespaces, callback) {
-    var loadPath = this.options.loadPath;
+    let loadPath = this.options.loadPath;
     if (typeof this.options.loadPath === 'function') {
 	    loadPath = this.options.loadPath(languages, namespaces);
     }
@@ -48,7 +48,7 @@ export class Backend {
   }
 
   read(language, namespace, callback) {
-    var loadPath = this.options.loadPath;
+    let loadPath = this.options.loadPath;
     if (typeof this.options.loadPath === 'function') {
 	    loadPath = this.options.loadPath([language], [namespace]);
     }
@@ -59,20 +59,21 @@ export class Backend {
   }
 
   loadUrl(url, callback) {
-      this.constructor.loader.loadText(url)
-      .then(response=>{
-          let ret, err;
-          try {
-            ret = this.options.parse(response, url);
-          } catch (e) {
-            err = 'failed parsing ' + url + ' to json';
-          }
-          if (err) return callback(err, false);
-          callback(null, ret);
-      },
-      response=>{
-          return callback('failed loading ' + url, false /* no retry */);
-      });
+    this.constructor.loader.loadText(url)
+    .then(response=>{
+      let ret;
+      let err;
+      try {
+        ret = this.options.parse(response, url);
+      } catch (e) {
+        err = 'failed parsing ' + url + ' to json';
+      }
+      if (err) return callback(err, false);
+      callback(null, ret);
+    },
+    response=>{
+      return callback('failed loading ' + url, false /* no retry */);
+    });
   }
 
   create(languages, namespace, key, fallbackValue) {
@@ -93,14 +94,14 @@ function getDefaults() {
     loadPath: '/locales/{{lng}}/{{ns}}.json',
     addPath: 'locales/add/{{lng}}/{{ns}}',
     allowMultiLoading: false,
-    parse: JSON.parse,
+    parse: JSON.parse
   };
 }
 
- function defaults(obj) {
+function defaults(obj) {
   each.call(slice.call(arguments, 1), function(source) {
     if (source) {
-      for (var prop in source) {
+      for (let prop in source) {
         if (obj[prop] === undefined) obj[prop] = source[prop];
       }
     }
