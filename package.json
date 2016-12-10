@@ -132,7 +132,12 @@
       ]
     },
     "documentation": {
-      "articles": []
+      "articles": [
+        {
+          "title": "I18N with Aurelia",
+          "href": "doc/article/en-US/i18n-with-aurelia.md"
+        }
+      ]
     }
   }
 }
