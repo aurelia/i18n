@@ -1,3 +1,14 @@
+<a name="1.2.1"></a>
+## [1.2.1](https://github.com/aurelia/i18n/compare/1.2.0...v1.2.1) (2016-11-08)
+
+
+### Bug Fixes
+
+* **attribute:** fix support for dashed bindables ([e70372c](https://github.com/aurelia/i18n/commit/e70372c))
+* **debug:** remove debugger statement ([1d5f312](https://github.com/aurelia/i18n/commit/1d5f312))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/aurelia/i18n/compare/1.1.2...v1.2.0) (2016-10-21)
 
