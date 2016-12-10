@@ -120,6 +120,8 @@ First, use Manual Boostrapping. Open your `index.html` and locate the element wi
 
 ```html
 <body aurelia-app="main">
+  ...
+</body>
 ```
 
 > Info
@@ -844,7 +846,7 @@ After that open up the *aurelia_project/aurelia.json* file and add the following
 {
   "name": "intl",
   "path": "../node_modules/intl/dist",
-  "main": "Intl.min"  <--- or Intl.complete
+  "main": "Intl.min"  // or Intl.complete
 },
 ````
 
