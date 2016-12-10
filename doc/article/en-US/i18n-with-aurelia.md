@@ -15,33 +15,34 @@
 ---
 
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
+
 This documentation explains how to get up and running with Aurelia-I18N
 in order to provide localization and internationalization features with your app.
 
 Under the hood it uses [i18next](http://i18next.com/), which is a generalized
-open source library with an extense set of features. By building on top of it
-not only you can reuse your work across various other platforms and frameworks
-but are able to use an extensive eco-system full of various packackes.
+open source library with an extensive set of features. By building on top of it
+not only can you reuse your work across various other platforms and frameworks
+but you are able to use an extensive eco-system full of various packages.
 
 ## [Installing the Plugin](aurelia-doc://section/2/version/1.0.0)
+
 There are various ways to setup your Aurelia app. It not only boils down
 to the question whether you use JavaScript or TypeScript but also which module loader
 and bundler is in use.
 
-Aurelia-I18N is tested and optimized to support both JS and TS, as well as the following
-loader/bundler scenarios:
+Aurelia-I18N is tested and optimized to support both JS and TS, as well as the following loader/bundler scenarios:
 
 * Aurelia CLI
 * JSPM
 * Webpack
 
-So continue with the section which suites your setup. Besides that you have to
+Please continue with the section which suites your setup. In addition to this, you must
 pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend).
-We'll get to TypeScript specifics in a later section.
+We'll discuss TypeScript specifics in a later section.
 
 ### Aurelia CLI
 
-In order to install the Plugin with a CLI Project, first you want to install the plugin via npm, from within the root folder of your project:
+In order to install the Plugin with a CLI Project, first install the plugin via npm, from within the root folder of your project:
 
 `npm install aurelia-i18n`
 
@@ -49,7 +50,7 @@ Since Aurelia-I18N is backed by i18next, you should install it and a backend plu
 
 `npm install i18next i18next-xhr-backend`
 
-After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to section named *dependencies*. In there add the following three entries:
+After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to the section named *dependencies*. In there add the following three entries:
 
 ```
 {
@@ -97,9 +98,10 @@ Also install the `i18next-xhr-backend` plugin:
 npm install i18next-xhr-backend
 ```
 
-Optionally, but recommendedly, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.babel.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
+Optionally, but recommended, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.babel.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
 
 An example based directly on `skeleton-navigation`:
+
 ```shell
 const coreBundles = {
   bootstrap: [/* snip (to keep example short) */],
@@ -111,6 +113,7 @@ const coreBundles = {
 ```
 
 ## [Setting up the Plugin](aurelia-doc://section/3/version/1.0.0)
+
 Now that you have installed and configured your loader these are the steps to get started
 with the plugin.
 
@@ -143,12 +146,12 @@ with the plugin.
         "friend_male": "A boyfriend",
         "friend_female": "A girlfriend"
     }
-    ``` 
+    ```
 5. Create (if you haven't already) a file `main.js` in your `src` folder with following content:
 
 <code-listing heading="Registering the Plugin">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
@@ -182,7 +185,7 @@ with the plugin.
     }
   </source-code>
 </code-listing>
-    
+
     > You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json
     and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object
     containing the different namespaces as well as the default namespace.
@@ -201,10 +204,10 @@ with the plugin.
 In order to get proper support for autocompletion and typesafety you should install
 the necessary type definitions (d.ts) for the plugins dependencies.
 Here we show how you can do that for i18next and the i18next-xhr-backend, but this
-should be applicable to every other backend choice. 
+should be applicable to every other backend choice.
 
 The way to get hold of those is using [typings](https://github.com/typings/typings).
-You can install the typings for [i18next](http://i18next.com/) using this command: 
+You can install the typings for [i18next](http://i18next.com/) using this command:
 
 ```
 typings install dt~i18next --save --global
@@ -216,10 +219,10 @@ As for the XHR-Backend you'll be using:
 
 ```
 typings install dt~i18next-xhr-backend --save --global
-``` 
-        
+```
+
 > Alternative, you can find this file in the plugins repository doc folder: `doc/i18next-xhr-backend.d.ts`
-    
+
 Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
 If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via typings as well.
@@ -245,7 +248,7 @@ that TypeScript does not see proper ES6 exported defaults. So you can now either
 
 ```
 import * as Backend from 'i18next-xhr-backend'
-``` 
+```
 
 or update your tsconfig with `"allowSyntheticDefaultImports": true` to maintain the same import style.
 
@@ -257,7 +260,7 @@ In order to change the active language you'd have to call the function `setLocal
 
 <code-listing heading="Setting the active locale with setLocale">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -280,7 +283,7 @@ To get the active locale you'd go with `getLocale()`:
 
 <code-listing heading="Getting the active locale using getLocale">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -299,7 +302,7 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 
 <code-listing heading="Translating using the i18n.tr function">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -359,7 +362,7 @@ The following example shows how a view model can be configured to update it's co
 
 <code-listing heading="Updating translations manually">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
     import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -385,7 +388,7 @@ Alternatively you may extend your VM with the provided Base-I18N-VM, which will 
 
 <code-listing heading="Automatic locale changed subscription using the Base-I18N-VM">
   <source-code lang="ES 2015">
-  
+
     import {BaseI18N} from 'aurelia-i18n';
 
     export class MyDemoVM extends BaseI18N {
@@ -599,7 +602,7 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
 
 <code-listing heading="Signaling a change to the TBindingBehavior">
   <source-code lang="ES 2015">
-  
+
     import {BindingSignaler} from 'aurelia-templating-resources';
     // inject signaler to constructor ...
     ...
@@ -660,7 +663,7 @@ Below is an example how to access the NumberFormat via code:
 
 <code-listing heading="Number formatting via Code">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -723,7 +726,7 @@ Below you'll find an example how to use those via code:
 
 <code-listing heading="Formatting Dates via Code">
   <source-code lang="ES 2015">
-  
+
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -789,7 +792,7 @@ To use it via code get hold of the service via injection and call the method as 
 
 <code-listing heading="Rendering relative time via Code">
   <source-code lang="ES 2015">
-  
+
     import {RelativeTime} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -897,7 +900,7 @@ On top of that if you need the Intl polyfill included you have to manualy requir
 
 <code-listing heading="Manually requiering the Intl Polyfill">
   <source-code lang="ES 2015">
-  
+
     //main.js
     import 'intl';
   </source-code>
