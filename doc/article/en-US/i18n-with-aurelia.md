@@ -118,11 +118,14 @@ Now that you have installed and configured your loader, these are the steps to g
 
 First, use Manual Boostrapping. Open your `index.html` and locate the element with the attribute aurelia-app. Change it to look like this:
 
-```html
-<body aurelia-app="main">
-  ...
-</body>
-```
+<code-listing heading="Setting up Aurelia Bootstrapping">
+  <source-code lang="HTML">
+
+    <body aurelia-app="main">
+      ...
+    </body>
+  </source-code>
+</code-listing>
 
 > Info
 > If you're using one of the [Aurelia Skeletons](https://github.com/aurelia/skeleton-navigation) as your base this is already done and you can safely skip this step. [See here to learn more about manual bootstrapping.](http://aurelia.io/hub.html#/doc/article/aurelia/framework/latest/cheat-sheet/1).
@@ -133,7 +136,7 @@ Third, for each locale, create a new folder with it's name (e.g. `en`, `de`, ...
 
 Fourth, in those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
-```javascript
+```json
 {
     "score": "Score: {{score}}",
     "lives": "{{count}} life remaining",
@@ -150,6 +153,7 @@ Fifth, create (if you haven't already) a file `main.js` in your `src` folder wit
 
 <code-listing heading="Registering the Plugin">
   <source-code lang="ES 2015">
+
     import {I18N} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
@@ -187,6 +191,7 @@ You may also group your translations by namespaces, spread across multiple files
 
 <code-listing heading="Setting up Multiple Namespaces">
   <source-code lang="ES 2015">
+
     instance.setup({
       ...
       ns: ['translation','nav'],
@@ -230,6 +235,7 @@ typings install github:aurelia/i18n
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
 <code-listing heading="Configuring custom typings in tsconfig.json">
   <source-code lang="ES 2015">
+
     // ... existing configuration code
     "filesGlob": [
         "./typings/browser.d.ts", // this must be specified in case you use typings(https://github.com/typings/typings)
@@ -318,6 +324,7 @@ This can be configured during the plugin registration using the `attributes` pro
 
 <code-listing heading="Configuring translation attributes">
   <source-code lang="ES 2015">
+
     ...
     instance.setup({
       ...
@@ -330,21 +337,28 @@ This can be configured during the plugin registration using the `attributes` pro
 
 Any element in your views that has one of those attributes, will be translated when the locale is changed.
 
-```markup
-<span t="title">Title</span>
-```
+<code-listing heading="Attribute based translation with the TCustomAttribute">
+  <source-code lang="HTML">
+    
+    <span t="title">Title</span>
+  </source-code>
+</code-listing>
 
 The plugin will use the `title` as the key when translating that element.
 Other attributes, specified in the `attributes` option, may be used as well.
 
-```markup
-<span i18n="home.title">Title</span>
-```
+<code-listing heading="Attribute based translation with optionally registered I18NCustomAttribute">
+  <source-code lang="HTML">
+    
+    <span i18n="home.title">Title</span>
+  </source-code>
+</code-listing>
 
 Notice in the above example that the key was set to `home.title`. This will make the plugin look for a translation with nested objects in your translation json, ie:
 
 <code-listing heading="Nested object translation">
   <source-code lang="ES 2015">
+  
     {
       "home": {
         "title": "Title",
@@ -476,6 +490,7 @@ Nested keys may also be referenced and will be properly translated:
 
 <code-listing heading="Nested combined translations">
   <source-code lang="ES 2015">
+
     {
       "translation": {
         "title": "Title",
@@ -518,10 +533,13 @@ Also note that for whatever attribute you registered, the corresponding \*-param
 }
 ```
 
-```markup
-<!-- View -->
-<span t="[html]paramstest" t-params.bind="params"></span>
-```
+<code-listing heading="View for parameter passing to attributes">
+  <source-code lang="HTML">
+  
+    <!-- View -->
+    <span t="[html]paramstest" t-params.bind="params"></span>
+  </source-code>
+</code-listing>
 
 ```javascript
 // ViewModel
@@ -539,50 +557,53 @@ In order to do translations in a more declarative way from within your HTML mark
 
 You will find below a few examples of the available [i18next features](http://i18next.com/translate/)
 
-```html
-<template>
-  <section>
-    <div class="row">
-      <div class="col-md-3">
-        <h3>ValueConverter Examples</h3>
-        <ul class="list-group">
-          <li class="list-group-item">
-            Translation with Variables: <br />
-            ${ 'score' | t: {'score': userScore}}
-          </li>
+<code-listing heading="Declarative translation using the TValueConverter">
+  <source-code lang="HTML">
 
-          <li class="list-group-item">
-            Translation singular: <br />
-            ${ 'lives' | t: { 'count': 1 } }
-          </li>
+    <template>
+      <section>
+        <div class="row">
+          <div class="col-md-3">
+            <h3>ValueConverter Examples</h3>
+            <ul class="list-group">
+              <li class="list-group-item">
+                Translation with Variables: <br />
+                ${ 'score' | t: {'score': userScore}}
+              </li>
 
-          <li class="list-group-item">
-            Translation plural: <br />
-            ${ 'lives' | t: { 'count': 2 } }
-          </li>
+              <li class="list-group-item">
+                Translation singular: <br />
+                ${ 'lives' | t: { 'count': 1 } }
+              </li>
 
-          <li class="list-group-item">
-            Translation singular indefinite: <br />
-            ${ 'lives' | t: { 'count': 1, indefinite_article: true  } }
-          </li>
+              <li class="list-group-item">
+                Translation plural: <br />
+                ${ 'lives' | t: { 'count': 2 } }
+              </li>
 
-          <li class="list-group-item">
-            Translation plural indefinite: <br />
-            ${ 'lives' | t: { 'count': 2, indefinite_article: true } }
-          </li>
+              <li class="list-group-item">
+                Translation singular indefinite: <br />
+                ${ 'lives' | t: { 'count': 1, indefinite_article: true  } }
+              </li>
 
-          <li class="list-group-item">
-            Translation without/with context: <br />
-            ${ 'friend' | t } <br />
-            ${ 'friend' | t: { context: 'male' } } <br />
-            ${ 'friend' | t: { context: 'female' } }
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
-</template>
-```
+              <li class="list-group-item">
+                Translation plural indefinite: <br />
+                ${ 'lives' | t: { 'count': 2, indefinite_article: true } }
+              </li>
+
+              <li class="list-group-item">
+                Translation without/with context: <br />
+                ${ 'friend' | t } <br />
+                ${ 'friend' | t: { context: 'male' } } <br />
+                ${ 'friend' | t: { context: 'female' } }
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </template>
+  </source-code>
+</code-listing>
 
 ### Translating with the TBindingBehavior
 The TValueConverter is pretty useful if you prefer a declarative way to enhance DOM elements with i18n support. But it has a lack when it comes to automatically updating itself when changes happen outside, like locale switches. This is what the TBindingBehavior can do. Essentially you do the same thing like with the TValueConverter but use the `&` sign instead of `|` to indicate usage of the binding behavior.
@@ -622,6 +643,7 @@ Now we could easily pass min and max as separate variables but on the other hand
 
 <code-listing heading="Complex objects for variables">
   <source-code lang="ES 2015">
+
     var resources = {
       en: {
         translation: {
@@ -637,6 +659,7 @@ You can also mix and match it with simple variables.
 
 <code-listing heading="Mixing complex and simple variables">
   <source-code lang="ES 2015">
+
     var options = {
       'threshold': {
         'min': 1,
@@ -681,7 +704,7 @@ Below is an example how to access the NumberFormat via code:
         var result = nf.format(123456.123);
 
         console.log(result);
-        // output => 123.456,123 �  	  
+        // output => 123.456,123 €  	  
       }
       ...
     }
@@ -692,25 +715,28 @@ Below is an example how to access the NumberFormat via code:
 ### Formatting numbers with NfValueConverter
 A more declarative way is to use the `nf` ValueConverter from within your HTML markup. It essentially works the same way as the code version. Take a look at the following example:
 
-```html
-<div class="col-md-3">
-  <h3>ValueConverter Number Examples</h3>
-  <ul class="list-group">
-    <li class="list-group-item">
-      Numberformat with default locale/format:
-      ${ 1234567.890 | nf : undefined : selectedLocale}
-    </li>
-    <li class="list-group-item">
-      Numberformat with different locale default format:
-      ${ 1234567.890 | nf : undefined : 'de'}
-    </li>
-    <li class="list-group-item">
-      Numberformat with different locale/format:
-      ${ 1234567.890 | nf : { style: 'currency', currency: 'EUR' } : 'de'}
-    </li>
-  </ul>
-</div>
-```
+<code-listing heading="Declarative formatting of numbers with the NfValueConverter">
+  <source-code lang="HTML">
+
+    <div class="col-md-3">
+      <h3>ValueConverter Number Examples</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          Numberformat with default locale/format:
+          ${ 1234567.890 | nf : undefined : selectedLocale}
+        </li>
+        <li class="list-group-item">
+          Numberformat with different locale default format:
+          ${ 1234567.890 | nf : undefined : 'de'}
+        </li>
+        <li class="list-group-item">
+          Numberformat with different locale/format:
+          ${ 1234567.890 | nf : { style: 'currency', currency: 'EUR' } : 'de'}
+        </li>
+      </ul>
+    </div>
+  </source-code>
+</code-listing>
 
 > Note that if you provide the active locale as a bound VM property, the ValueConverter will be re-evaluated as soon as the property value changes, resulting in automatic re-formatting of your number.
 
@@ -762,25 +788,28 @@ Below you'll find an example how to use those via code:
 A more declarative way is to use the `df` ValueConverter from within your HTML markup. It essentially works the same way as the code version. Take a look at the following example, which defines a VM property myDate:
 
 
-```html
-<div class="col-md-3">
-  <h3>ValueConverter Date Examples</h3>
-  <ul class="list-group">
-    <li class="list-group-item">
-      DateFormat with default locale/format:
-      ${ myDate | df : undefined : selectedLocale}
-    </li>
-    <li class="list-group-item">
-      DateFormat with different locale default format:
-      ${ myDate | df : undefined : 'de'}
-    </li>
-    <li class="list-group-item">
-      DateFormat with different locale/format:
-      ${ myDate | df : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } : 'de'}
-    </li>
-  </ul>
-</div>
-```
+<code-listing heading="Declarative formatting of dates with the DfValueConverter">
+  <source-code lang="HTML">
+
+    <div class="col-md-3">
+      <h3>ValueConverter Date Examples</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          DateFormat with default locale/format:
+          ${ myDate | df : undefined : selectedLocale}
+        </li>
+        <li class="list-group-item">
+          DateFormat with different locale default format:
+          ${ myDate | df : undefined : 'de'}
+        </li>
+        <li class="list-group-item">
+          DateFormat with different locale/format:
+          ${ myDate | df : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' } : 'de'}
+        </li>
+      </ul>
+    </div>
+  </source-code>
+</code-listing>
 
 ### Rendering relative time
 In order to create a representation of relative time like `x days ago` or `in x days` you can leverage the Service relativeTime. This exposes a method `getRelativeTime` which accepts a valid JS date.
@@ -812,17 +841,20 @@ translations. If you're missing yours I welcome you to provide a PR so everybody
 
 A more declarative approach is to use the RtValueConverter directly in your HTML markup. It's not taking any additional parameters so just drop it in and you're good to go:
 
-```html
-<div class="col-md-3">
-  <h3>ValueConverter Relative Time Examples</h3>
-  <ul class="list-group">
-    <li class="list-group-item">
-      2 hours ago:
-      ${ myDate | rt }
-    </li>
-  </ul>
-</div>
-```
+<code-listing heading="Declarative relative time using the RtValueConverter">
+  <source-code lang="HTML">
+
+    <div class="col-md-3">
+      <h3>ValueConverter Relative Time Examples</h3>
+      <ul class="list-group">
+        <li class="list-group-item">
+          2 hours ago:
+          ${ myDate | rt }
+        </li>
+      </ul>
+    </div>
+  </source-code>
+</code-listing>
 
 ## [Internationalization API Polyfill](aurelia-doc://section/6/version/1.0.0)
 
@@ -860,6 +892,7 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
 
 <code-listing heading="Using the polyfill with Webpack">
   <source-code lang="ES 2015">
+  
     bootstrap(aurelia => {
         if (!global.Intl) {
             console.log('Intl not present')
