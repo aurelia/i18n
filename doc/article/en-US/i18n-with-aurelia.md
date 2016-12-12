@@ -339,7 +339,7 @@ Any element in your views that has one of those attributes, will be translated w
 
 <code-listing heading="Attribute based translation with the TCustomAttribute">
   <source-code lang="HTML">
-    
+
     <span t="title">Title</span>
   </source-code>
 </code-listing>
@@ -349,7 +349,7 @@ Other attributes, specified in the `attributes` option, may be used as well.
 
 <code-listing heading="Attribute based translation with optionally registered I18NCustomAttribute">
   <source-code lang="HTML">
-    
+
     <span i18n="home.title">Title</span>
   </source-code>
 </code-listing>
@@ -358,7 +358,7 @@ Notice in the above example that the key was set to `home.title`. This will make
 
 <code-listing heading="Nested object translation">
   <source-code lang="ES 2015">
-  
+
     {
       "home": {
         "title": "Title",
@@ -535,7 +535,7 @@ Also note that for whatever attribute you registered, the corresponding \*-param
 
 <code-listing heading="View for parameter passing to attributes">
   <source-code lang="HTML">
-  
+
     <!-- View -->
     <span t="[html]paramstest" t-params.bind="params"></span>
   </source-code>
@@ -608,12 +608,14 @@ You will find below a few examples of the available [i18next features](http://i1
 ### Translating with the TBindingBehavior
 The TValueConverter is pretty useful if you prefer a declarative way to enhance DOM elements with i18n support. But it has a lack when it comes to automatically updating itself when changes happen outside, like locale switches. This is what the TBindingBehavior can do. Essentially you do the same thing like with the TValueConverter but use the `&` sign instead of `|` to indicate usage of the binding behavior.
 
-```markup
-<li class="list-group-item">
-  Translation with Variables: <br />
-  ${ 'score' & t: {'score': userScore}}
-</li>
-```
+<code-listing heading="TBindingBehavior Example">
+  <source-code lang="HTML">
+  <li class="list-group-item">
+    Translation with Variables: <br />
+    ${ 'score' & t: {'score': userScore}}
+  </li>
+  </source-code>
+</code-listing>
 
 Now aurelia-i18n will automatically emit signals when internal changes happen and you can do so as well by emiting a `aurelia-translation-signal`. The following example depicts how this is done internally when the current locale changes. First you need to get hold of the `BindingSignaler` exported by the `aurelia-templating-resources` module and inject it either in your constructor or via the static `$inject` property. Next when you want to trigger the signal just use the signalers `signal` method and pass it the predefined string.
 
@@ -892,7 +894,7 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
 
 <code-listing heading="Using the polyfill with Webpack">
   <source-code lang="ES 2015">
-  
+
     bootstrap(aurelia => {
         if (!global.Intl) {
             console.log('Intl not present')
