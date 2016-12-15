@@ -238,7 +238,7 @@ export class I18N {
         if (node.au &&
             node.au.controller &&
             node.au.controller.viewModel &&
-            node.au.controller.viewModel[attr]) {
+            attr in node.au.controller.viewModel) {
           node.au.controller.viewModel[attr] = this.tr(key, params);
         } else {
           node.setAttribute(attr, this.tr(key, params));
