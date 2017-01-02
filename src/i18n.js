@@ -182,7 +182,7 @@ export class I18N {
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
 
       // convert to camelCase
-      attr = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
+      const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
 
       //handle various attributes
       //anything other than text,prepend,append or html will be added as an attribute on the element.
@@ -238,8 +238,8 @@ export class I18N {
         if (node.au &&
             node.au.controller &&
             node.au.controller.viewModel &&
-            attr in node.au.controller.viewModel) {
-          node.au.controller.viewModel[attr] = this.tr(key, params);
+            attrCC in node.au.controller.viewModel) {
+          node.au.controller.viewModel[attrCC] = this.tr(key, params);
         } else {
           node.setAttribute(attr, this.tr(key, params));
         }
