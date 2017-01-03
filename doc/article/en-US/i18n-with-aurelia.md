@@ -37,7 +37,7 @@ Aurelia-I18N is tested and optimized to support both JS and TS, as well as the f
 * Webpack
 
 Please continue with the section which suites your setup. In addition to this, you must
-pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend).
+pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend) or a variation of this plugin that uses the aurelia loader which is bundled with the aurelia-i18n plugin.
 We'll discuss TypeScript specifics in a later section.
 
 ### Aurelia CLI
@@ -46,7 +46,7 @@ In order to install the Plugin with a CLI Project, first install the plugin via 
 
 `npm install aurelia-i18n`
 
-Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. As an example we're going to leverage the i18next-xhr-backend:
+Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. You can use the build-in backend that uses aurelia's loader or any of your choice. As an example we're going to leverage the i18next-xhr-backend:
 
 `npm install i18next i18next-xhr-backend`
 
@@ -78,7 +78,7 @@ In your project install the plugin via `jspm` using the following command:
 jspm install aurelia-i18n
 ```
 
-And install the backend service using:
+And optionally install the backend service using:
 
 ```shell
 jspm install npm:i18next-xhr-backend
@@ -92,7 +92,7 @@ Install the `aurelia-i18n` plugin in your project using `npm` and the following 
 npm install aurelia-i18n
 ```
 
-Also install the `i18next-xhr-backend` plugin:
+Also optionally install the `i18next-xhr-backend` plugin:
 
 ```shell
 npm install i18next-xhr-backend
@@ -150,6 +150,42 @@ Fourth, in those subfolders create a file named `translation.json` which contain
 ```
 
 Fifth, create (if you haven't already) a file `main.js` in your `src` folder with following content:
+
+example use of build-in backed that uses the aurelia loader:
+
+<code-listing heading="Registering the Plugin">
+    <source-code lang="ES 2015">
+
+      import {I18N, Backend} from 'aurelia-i18n';
+
+      export function configure(aurelia) {
+
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin('aurelia-i18n', (instance) => {
+          // register backend plugin
+         instance.i18next.use(Backend.with(aurelia.loader));
+
+          // adapt options to your needs (see http://i18next.com/docs/options/)
+          // make sure to return the promise of the setup method, in order to guarantee proper loading
+          return instance.setup({
+            backend: {                                  // <-- configure backend settings
+              loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+            },
+            lng : 'de',
+            attributes : ['t','i18n'],
+            fallbackLng : 'en',
+            debug : false
+          });
+        });
+
+      aurelia.start().then(a => a.setRoot());
+  }
+</source-code>
+</code-listing>
+
+example using 'i18next-xhr-backend':
 
 <code-listing heading="Registering the Plugin">
   <source-code lang="ES 2015">
@@ -857,6 +893,21 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
     </div>
   </source-code>
 </code-listing>
+
+## Bundle translation files
+When bundling is used the build-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module.
+example of bundle: (jspm flavour)
+```json
+
+    "bundles": {
+       "dist/app-build": {
+         "includes": [
+           "[*.js]",
+           "*.html!text",
+           "*.css!text",  
+           "*.json!text"      
+         ],
+```
 
 ## [Internationalization API Polyfill](aurelia-doc://section/6/version/1.0.0)
 
