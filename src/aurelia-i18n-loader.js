@@ -6,19 +6,8 @@
 // aurelia.use.plugin('aurelia-i18n', (instance) => {
 //    // register backend plugin
 //    instance.i18next.use(Backend.with(aurelia.loader));
-//
-//    return instance.setup({
-//       backend: {                                  // <-- configure backend settings
-//         loadPath: './dist/locales/{{lng}}-{{ns}}.json', // <-- XHR settings for where to get the files from
-//       },
-//       lng : 'nl',
-//       attributes : ['t','i18n'],
-//       fallbackLng : 'en',
-//       debug : false
-//     });
-//  });
-export class Backend {
 
+export class Backend {
   static loader = null; // static loader to support passing the aurelia-loader
 
   static with(loader) {

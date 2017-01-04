@@ -37,7 +37,8 @@ Aurelia-I18N is tested and optimized to support both JS and TS, as well as the f
 * Webpack
 
 Please continue with the section which suites your setup. In addition to this, you must
-pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend).
+pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend),
+or a variation of this plugin — `aurelia-18n-loader` — that uses the aurelia loader, which is bundled with the aurelia-i18n plugin.
 We'll discuss TypeScript specifics in a later section.
 
 ### Aurelia CLI
@@ -46,7 +47,8 @@ In order to install the Plugin with a CLI Project, first install the plugin via 
 
 `npm install aurelia-i18n`
 
-Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. As an example we're going to leverage the i18next-xhr-backend:
+Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. You can use the built-in backend that uses aurelia's loader or any of your choice.
+As an example we're going to leverage the i18next-xhr-backend:
 
 `npm install i18next i18next-xhr-backend`
 
@@ -70,6 +72,8 @@ After that we need to tell our CLI App about the new dependencies. To do so we'r
 }
 ```
 
+> If you're planning to use the built-in aurelia-i18n-loader there is no need for an additional configuration and you're fine with the first two entries.
+
 ### JSPM
 
 In your project install the plugin via `jspm` using the following command:
@@ -78,11 +82,13 @@ In your project install the plugin via `jspm` using the following command:
 jspm install aurelia-i18n
 ```
 
-And install the backend service using:
+And optionally install the backend service using:
 
 ```shell
 jspm install npm:i18next-xhr-backend
 ```
+
+> You can skip this part if you're planning to use the built-in aurelia-i18n-loader
 
 ### Webpack
 
@@ -92,11 +98,13 @@ Install the `aurelia-i18n` plugin in your project using `npm` and the following 
 npm install aurelia-i18n
 ```
 
-Also install the `i18next-xhr-backend` plugin:
+Also optionally install the `i18next-xhr-backend` plugin:
 
 ```shell
 npm install i18next-xhr-backend
 ```
+
+> You can skip this part if you're planning to use the built-in aurelia-i18n-loader
 
 Optionally, but recommended, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.babel.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
 
@@ -149,9 +157,42 @@ Fourth, in those subfolders create a file named `translation.json` which contain
 }
 ```
 
-Fifth, create (if you haven't already) a file `main.js` in your `src` folder with following content:
+Fifth, create (if you haven't already) a file `main.js` in your `src` folder to configure the plugin. Depending on which backend you've chosen there might
+be slight differences. The following listings show the configuration for first the built-in aurelia loader, the second using i18next-xhr-backend.
 
-<code-listing heading="Registering the Plugin">
+<code-listing heading="Registering the Plugin - using the built-in aurelia loader backed:">
+    <source-code lang="ES 2015">
+
+      import {I18N, Backend} from 'aurelia-i18n';
+
+      export function configure(aurelia) {
+
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin('aurelia-i18n', (instance) => {
+          // register backend plugin
+         instance.i18next.use(Backend.with(aurelia.loader));
+
+          // adapt options to your needs (see http://i18next.com/docs/options/)
+          // make sure to return the promise of the setup method, in order to guarantee proper loading
+          return instance.setup({
+            backend: {                                  // <-- configure backend settings
+              loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+            },
+            lng : 'de',
+            attributes : ['t','i18n'],
+            fallbackLng : 'en',
+            debug : false
+          });
+        });
+
+      aurelia.start().then(a => a.setRoot());
+  }
+</source-code>
+</code-listing>
+
+<code-listing heading="Registering the Plugin - using the i18next-xhr-backend">
   <source-code lang="ES 2015">
 
     import {I18N} from 'aurelia-i18n';
@@ -857,6 +898,74 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
     </div>
   </source-code>
 </code-listing>
+
+## Bundle translation files
+When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module.
+
+### Using JSPM
+If you're using JSPM as your module loader, the bundle configuration might look like.
+
+```json
+
+    "bundles": {
+       "dist/app-build": {
+         "includes": [
+           "[*.js]",
+           "*.html!text",
+           "*.css!text",  
+           "*.json!text"      
+         ],
+```
+
+### Using Aurelia CLI
+Same would apply to the Aurelia CLI. In order to tell it to process the locales you can create a new task `process-locales.js`, located in the `aurelia_project/tasks` folder with the contents:
+
+<code-listing heading="Processing locales with a custom task">
+  <source-code lang="ES 2015">
+
+    import gulp from 'gulp';
+    import changedInPlace from 'gulp-changed-in-place';
+    import project from '../aurelia.json';
+    import {build} from 'aurelia-cli';
+
+    export default function processLocales() {
+      return gulp.src(project.localesProcessor.source)
+        .pipe(changedInPlace({firstPass: true}))
+        .pipe(build.bundle());
+    }
+  </source-code>
+</code-listing>
+
+With that in place, edit your `aurelia_project/aurelia.json` file and add the task right after the `markupProcessor` configuration, where the source property should reflect your previously setup locales folder:
+
+```json
+
+    ...
+    "localesProcessor": {
+      "id": "none",
+      "displayName": "None",
+      "fileExtension": ".json",
+      "source": "locales\\**\\*.json"
+    },
+    ...
+```
+
+Last but not least search for the build/bundles/source section for the app-bundle and update the configuration to include json files.
+
+```json
+
+    ...
+    "bundles": [
+      {
+        "name": "app-bundle.js",
+        "source": [
+          "[**/*.js]",
+          "**/*.{css,html,json}"
+        ]
+      }
+      ...
+```
+
 
 ## [Internationalization API Polyfill](aurelia-doc://section/6/version/1.0.0)
 
