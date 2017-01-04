@@ -8,7 +8,6 @@
 //    instance.i18next.use(Backend.with(aurelia.loader));
 
 export class Backend {
-
   static loader = null; // static loader to support passing the aurelia-loader
 
   static with(loader) {
