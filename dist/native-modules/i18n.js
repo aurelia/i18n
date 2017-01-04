@@ -2,7 +2,7 @@ var _class, _temp;
 
 
 
-import i18next from 'i18next';
+import * as i18next from 'i18next';
 import { DOM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { BindingSignaler } from 'aurelia-templating-resources';

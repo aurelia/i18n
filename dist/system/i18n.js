@@ -9,7 +9,7 @@ System.register(['i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-
 
   return {
     setters: [function (_i18next) {
-      i18next = _i18next.default;
+      i18next = _i18next;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
     }, function (_aureliaEventAggregator) {

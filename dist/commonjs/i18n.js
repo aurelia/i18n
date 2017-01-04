@@ -9,7 +9,7 @@ var _class, _temp;
 
 var _i18next = require('i18next');
 
-var _i18next2 = _interopRequireDefault(_i18next);
+var i18next = _interopRequireWildcard(_i18next);
 
 var _aureliaPal = require('aurelia-pal');
 
@@ -17,7 +17,7 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 
 
@@ -34,7 +34,7 @@ var I18N = exports.I18N = (_temp = _class = function () {
       promise: null
     };
 
-    this.i18next = _i18next2.default;
+    this.i18next = i18next;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -55,9 +55,9 @@ var I18N = exports.I18N = (_temp = _class = function () {
       debug: false
     };
 
-    _i18next2.default.init(options || defaultOptions, function (err, t) {
-      if (_i18next2.default.options.attributes instanceof String) {
-        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+    i18next.init(options || defaultOptions, function (err, t) {
+      if (i18next.options.attributes instanceof String) {
+        i18next.options.attributes = [i18next.options.attributes];
       }
 
       _this2.i18nextDefered.resolve(_this2.i18next);

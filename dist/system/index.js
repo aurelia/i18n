@@ -8,7 +8,7 @@ System.register(['./aurelia-i18n'], function (_export, _context) {
       var _exportObj = {};
 
       for (var _key in _aureliaI18n) {
-        if (_key !== "default" && key !== "__esModule") _exportObj[_key] = _aureliaI18n[_key];
+        if (_key !== "default" && _key !== "__esModule") _exportObj[_key] = _aureliaI18n[_key];
       }
 
       _export(_exportObj);

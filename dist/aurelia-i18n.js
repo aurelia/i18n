@@ -1,4 +1,4 @@
-import i18next from 'i18next';
+import * as i18next from 'i18next';
 import * as LogManager from 'aurelia-logging';
 import {resolver} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';

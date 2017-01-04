@@ -7,11 +7,11 @@ exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute =
 
 var _dec, _class, _class2, _temp, _class3, _temp2, _dec2, _class4, _class5, _temp3, _dec3, _class6, _class7, _temp4, _class8, _temp5;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _i18next = require('i18next');
 
-var _i18next2 = _interopRequireDefault(_i18next);
+var i18next = _interopRequireWildcard(_i18next);
 
 var _aureliaLogging = require('aurelia-logging');
 
@@ -30,8 +30,6 @@ var _aureliaBinding = require('aurelia-binding');
 var _aureliaTemplating = require('aurelia-templating');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -509,7 +507,7 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       promise: null
     };
 
-    this.i18next = _i18next2.default;
+    this.i18next = i18next;
     this.ea = ea;
     this.Intl = window.Intl;
     this.signaler = signaler;
@@ -530,9 +528,9 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       debug: false
     };
 
-    _i18next2.default.init(options || defaultOptions, function (err, t) {
-      if (_i18next2.default.options.attributes instanceof String) {
-        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+    i18next.init(options || defaultOptions, function (err, t) {
+      if (i18next.options.attributes instanceof String) {
+        i18next.options.attributes = [i18next.options.attributes];
       }
 
       _this3.i18nextDefered.resolve(_this3.i18next);
