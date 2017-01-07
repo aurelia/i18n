@@ -3,9 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
+exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
 
-var _dec, _class, _class2, _temp, _class3, _temp2, _dec2, _class4, _class5, _temp3, _dec3, _class6, _class7, _temp4, _class8, _temp5;
+var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _class5, _class6, _temp4, _dec3, _class7, _class8, _temp5, _class9, _temp6;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
@@ -660,7 +660,7 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
 
-      attr = attr.replace(/-([a-z])/g, function (g) {
+      var attrCC = attr.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
       });
 
@@ -713,8 +713,8 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          if (node.au && node.au.controller && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
-            node.au.controller.viewModel[attr] = this.tr(key, params);
+          if (node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+            node.au.controller.viewModel[attrCC] = this.tr(key, params);
           } else {
             node.setAttribute(attr, this.tr(key, params));
           }
@@ -726,9 +726,106 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
 
   return I18N;
 }(), _class2.inject = [_aureliaEventAggregator.EventAggregator, _aureliaTemplatingResources.BindingSignaler], _temp);
-var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
-  function BaseI18N(i18n, element, ea) {
+var Backend = exports.Backend = (_temp2 = _class3 = function () {
+  Backend.with = function _with(loader) {
+    this.loader = loader;
+    return this;
+  };
+
+  function Backend(services) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+    _classCallCheck(this, Backend);
+
+    this.init(services, options);
+    this.type = 'backend';
+  }
+
+  Backend.prototype.init = function init(services) {
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+    this.services = services;
+    this.options = defaults(options, this.options || {}, getDefaults());
+  };
+
+  Backend.prototype.readMulti = function readMulti(languages, namespaces, callback) {
+    var loadPath = this.options.loadPath;
+
+    if (typeof this.options.loadPath === 'function') {
+      loadPath = this.options.loadPath(languages, namespaces);
+    }
+
+    var url = this.services.interpolator.interpolate(loadPath, { lng: languages.join('+'), ns: namespaces.join('+') });
+
+    this.loadUrl(url, callback);
+  };
+
+  Backend.prototype.read = function read(language, namespace, callback) {
+    var loadPath = this.options.loadPath;
+
+    if (typeof this.options.loadPath === 'function') {
+      loadPath = this.options.loadPath([language], [namespace]);
+    }
+
+    var url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
+
+    this.loadUrl(url, callback);
+  };
+
+  Backend.prototype.loadUrl = function loadUrl(url, callback) {
     var _this5 = this;
+
+    this.constructor.loader.loadText(url).then(function (response) {
+      var ret = void 0;
+      var err = void 0;
+      try {
+        ret = _this5.options.parse(response, url);
+      } catch (e) {
+        err = 'failed parsing ' + url + ' to json';
+      }
+      if (err) return callback(err, false);
+      callback(null, ret);
+    }, function (response) {
+      return callback('failed loading ' + url, false);
+    });
+  };
+
+  Backend.prototype.create = function create(languages, namespace, key, fallbackValue) {};
+
+  return Backend;
+}(), _class3.loader = null, _temp2);
+
+
+Backend.type = 'backend';
+exports.default = Backend;
+
+var arr = [];
+var each = arr.forEach;
+var slice = arr.slice;
+
+function getDefaults() {
+  return {
+    loadPath: '/locales/{{lng}}/{{ns}}.json',
+    addPath: 'locales/add/{{lng}}/{{ns}}',
+    allowMultiLoading: false,
+    parse: JSON.parse
+  };
+}
+
+function defaults(obj) {
+  each.call(slice.call(arguments, 1), function (source) {
+    if (source) {
+      for (var prop in source) {
+        if (obj[prop] === undefined) obj[prop] = source[prop];
+      }
+    }
+  });
+  return obj;
+}
+
+var BaseI18N = exports.BaseI18N = (_temp3 = _class4 = function () {
+  function BaseI18N(i18n, element, ea) {
+    var _this6 = this;
 
     _classCallCheck(this, BaseI18N);
 
@@ -736,7 +833,7 @@ var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
     this.element = element;
 
     this.__i18nDisposer = ea.subscribe('i18n:locale:changed', function () {
-      _this5.i18n.updateTranslations(_this5.element);
+      _this6.i18n.updateTranslations(_this6.element);
     });
   }
 
@@ -749,7 +846,7 @@ var BaseI18N = exports.BaseI18N = (_temp2 = _class3 = function () {
   };
 
   return BaseI18N;
-}(), _class3.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp2);
+}(), _class4.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp3);
 
 var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
@@ -887,7 +984,7 @@ var RelativeTime = exports.RelativeTime = function () {
   };
 
   function RelativeTime(i18n, ea) {
-    var _this6 = this;
+    var _this7 = this;
 
     _classCallCheck(this, RelativeTime);
 
@@ -895,10 +992,10 @@ var RelativeTime = exports.RelativeTime = function () {
     this.ea = ea;
 
     this.service.i18nextReady().then(function () {
-      _this6.setup();
+      _this7.setup();
     });
     this.ea.subscribe('i18n:locale:changed', function (locales) {
-      _this6.setup(locales);
+      _this7.setup(locales);
     });
   }
 
@@ -996,7 +1093,7 @@ var TValueConverter = exports.TValueConverter = function () {
   return TValueConverter;
 }();
 
-var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class4 = (_temp3 = _class5 = function () {
+var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class5 = (_temp4 = _class6 = function () {
   function TParamsCustomAttribute(element) {
     _classCallCheck(this, TParamsCustomAttribute);
 
@@ -1006,8 +1103,8 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aure
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class5.inject = [Element], _temp3)) || _class4);
-var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class6 = (_temp4 = _class7 = function () {
+}(), _class6.inject = [Element], _temp4)) || _class5);
+var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class7 = (_temp5 = _class8 = function () {
   function TCustomAttribute(element, i18n, ea, tparams) {
     _classCallCheck(this, TCustomAttribute);
 
@@ -1018,19 +1115,19 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   }
 
   TCustomAttribute.prototype.bind = function bind() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.params = this.lazyParams();
 
     if (this.params) {
       this.params.valueChanged = function (newParams, oldParams) {
-        _this7.paramsChanged(_this7.value, newParams, oldParams);
+        _this8.paramsChanged(_this8.value, newParams, oldParams);
       };
     }
 
     var p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe('i18n:locale:changed', function () {
-      _this7.service.updateValue(_this7.element, _this7.value, _this7.params !== null ? _this7.params.value : undefined);
+      _this8.service.updateValue(_this8.element, _this8.value, _this8.params !== null ? _this8.params.value : undefined);
     });
 
     this.service.updateValue(this.element, this.value, p);
@@ -1052,8 +1149,8 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class7.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp4)) || _class6);
-var TBindingBehavior = exports.TBindingBehavior = (_temp5 = _class8 = function () {
+}(), _class8.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp5)) || _class7);
+var TBindingBehavior = exports.TBindingBehavior = (_temp6 = _class9 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     _classCallCheck(this, TBindingBehavior);
 
@@ -1079,7 +1176,7 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp5 = _class8 = function (
   };
 
   return TBindingBehavior;
-}(), _class8.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp5);
+}(), _class9.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp6);
 
 var RtValueConverter = exports.RtValueConverter = function () {
   RtValueConverter.inject = function inject() {

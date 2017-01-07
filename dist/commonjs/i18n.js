@@ -185,7 +185,7 @@ var I18N = exports.I18N = (_temp = _class = function () {
       if (!node._textContent) node._textContent = node.textContent;
       if (!node._innerHTML) node._innerHTML = node.innerHTML;
 
-      attr = attr.replace(/-([a-z])/g, function (g) {
+      var attrCC = attr.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
       });
 
@@ -238,8 +238,8 @@ var I18N = exports.I18N = (_temp = _class = function () {
           node.innerHTML = this.tr(key, params);
           break;
         default:
-          if (node.au && node.au.controller && node.au.controller.viewModel && node.au.controller.viewModel[attr]) {
-            node.au.controller.viewModel[attr] = this.tr(key, params);
+          if (node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+            node.au.controller.viewModel[attrCC] = this.tr(key, params);
           } else {
             node.setAttribute(attr, this.tr(key, params));
           }

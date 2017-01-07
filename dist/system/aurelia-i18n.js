@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n'], function (_export, _context) {
+System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (_export, _context) {
   "use strict";
 
-  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, _typeof;
+  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend, _typeof;
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -102,6 +102,8 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
       TParamsCustomAttribute = _t.TParamsCustomAttribute;
     }, function (_baseI18n) {
       BaseI18N = _baseI18n.BaseI18N;
+    }, function (_aureliaI18nLoader) {
+      Backend = _aureliaI18nLoader.Backend;
     }],
     execute: function () {
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
@@ -133,6 +135,8 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
       _export('BaseI18N', BaseI18N);
 
       _export('EventAggregator', EventAggregator);
+
+      _export('Backend', Backend);
     }
   };
 });

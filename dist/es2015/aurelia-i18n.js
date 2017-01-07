@@ -14,6 +14,7 @@ import { TBindingBehavior } from './t';
 import { TCustomAttribute } from './t';
 import { TParamsCustomAttribute } from './t';
 import { BaseI18N } from './base-i18n';
+import { Backend } from './aurelia-i18n-loader';
 
 function registerI18N(frameworkConfig, cb) {
   let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -68,4 +69,4 @@ function configure(frameworkConfig, cb) {
   return Promise.resolve(registerI18N(frameworkConfig, cb));
 }
 
-export { configure, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, EventAggregator };
+export { configure, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, EventAggregator, Backend };

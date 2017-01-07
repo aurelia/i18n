@@ -43,9 +43,9 @@ export declare class I18N {
   i18nextReady(): Promise<any>;
   setLocale(locale?: any): Promise<any>;
   getLocale(): string;
-  nf(options?: any, locales?: any): string;
+  nf(options?: any, locales?: any): any;
   uf(number?: any, locale?: any): number;
-  df(options?: any, locales?: any): string;
+  df(options?: any, locales?: any): any;
   tr(key?: any, options?: any): string;
   registerGlobalVariable(key?: any, value?: any): void;
   unregisterGlobalVariable(key?: any): void;
@@ -60,6 +60,29 @@ export declare class I18N {
      */
   updateTranslations(el?: any): void;
   updateValue(node?: any, value?: any, params?: any): any;
+}
+
+// aurelia-i18n-loader
+// an implementation of an i18next Backend that uses the aurelia loader to load the json translation files
+// based on i18next-xhr-backend
+//
+// usage:
+// aurelia.use.plugin('aurelia-i18n', (instance) => {
+//    // register backend plugin
+//    instance.i18next.use(Backend.with(aurelia.loader));
+export declare class Backend {
+  static loader: any;
+  
+  // static loader to support passing the aurelia-loader
+  static with(loader?: any): any;
+  constructor(services?: any, options?: any);
+  init(services?: any, options?: any): any;
+  readMulti(languages?: any, namespaces?: any, callback?: any): any;
+  read(language?: any, namespace?: any, callback?: any): any;
+  loadUrl(url?: any, callback?: any): any;
+  
+  /* no retry */
+  create(languages?: any, namespace?: any, key?: any, fallbackValue?: any): any;
 }
 export declare class BaseI18N {
   static inject: any;

@@ -1,3 +1,20 @@
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/aurelia/i18n/compare/1.2.3...v1.3.0) (2017-01-07)
+
+
+### Bug Fixes
+
+* **attr:** fix camel-casing attributes ([8a458a8](https://github.com/aurelia/i18n/commit/8a458a8))
+* **attribute:** bindable attribute check ([2c45b08](https://github.com/aurelia/i18n/commit/2c45b08))
+
+
+### Features
+
+* **aurelia-i18n-loader:** Added backend for i18next to use aurelia's loader ([eb5909a](https://github.com/aurelia/i18n/commit/eb5909a))
+* **aurelia-i18n-loader:** Added backend for i18next to use aurelia's loader ([f4d3166](https://github.com/aurelia/i18n/commit/f4d3166))
+
+
+
 <a name="1.2.1"></a>
 ## [1.2.1](https://github.com/aurelia/i18n/compare/1.2.0...v1.2.1) (2016-11-08)
 
