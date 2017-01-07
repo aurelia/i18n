@@ -27,8 +27,9 @@ export class Backend {
 
   readMulti(languages, namespaces, callback) {
     let loadPath = this.options.loadPath;
+
     if (typeof this.options.loadPath === 'function') {
-	    loadPath = this.options.loadPath(languages, namespaces);
+      loadPath = this.options.loadPath(languages, namespaces);
     }
 
     let url = this.services.interpolator.interpolate(loadPath, { lng: languages.join('+'), ns: namespaces.join('+') });
@@ -38,8 +39,9 @@ export class Backend {
 
   read(language, namespace, callback) {
     let loadPath = this.options.loadPath;
+
     if (typeof this.options.loadPath === 'function') {
-	    loadPath = this.options.loadPath([language], [namespace]);
+      loadPath = this.options.loadPath([language], [namespace]);
     }
 
     let url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
