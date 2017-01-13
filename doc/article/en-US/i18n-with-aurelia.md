@@ -591,7 +591,7 @@ class MyVM {
 }
 ```
 
-> The object passed to `t-params` is a complex object explained [in the next section](#complex-objects-for-variables)
+> The object passed to `t-params` is a complex object explained [in the next section](/doc/article/aurelia/i18n/latest/i18n-with-aurelia/5)
 
 ### Translating with the TValueConverter
 In order to do translations in a more declarative way from within your HTML markup you can use a custom ValueConverter named `t`. It takes exactly the same `options` as the code translation method `tr` but of course provides the key automatically.
