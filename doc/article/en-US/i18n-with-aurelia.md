@@ -945,10 +945,26 @@ With that in place, edit your `aurelia_project/aurelia.json` file and add the ta
       "id": "none",
       "displayName": "None",
       "fileExtension": ".json",
-      "source": "locales\\**\\*.json"
+      "source": "src/locales/**/*.json"
     },
     ...
 ```
+
+Also, edit your `aurelia_project/tasks/run.js` (or .ts if you're using Typescript) file and add a new gulp.watch task to the `watch` function:
+
+<code-listing heading="Add a locales watch task the watch function">
+  <source-code lang="ES 2015">
+  
+    let watch = function() {
+      gulp.watch(project.transpiler.source, refresh).on('change', onChange);
+      gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
+      gulp.watch(project.cssProcessor.source, refresh).on('change', onChange);
+      gulp.watch(project.localesProcessor.source, refresh).on('change', onChange); //<-- add this line
+    };
+  </source-code>
+</code-listing>
+
+By doing this, if you're running your project with the --watch flag, your bundles will be rebuilt whenever your change something in your translation files. In the same way that happens with your .html, .js and .css files.
 
 Last but not least search for the build/bundles/source section for the app-bundle and update the configuration to include json files.
 
