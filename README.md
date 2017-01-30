@@ -8,7 +8,7 @@
 This library is part of the [Aurelia](http://www.aurelia.io/) platform and contains a plugin that provides i18n support.
 Under the hood it uses the [i18next](http://i18next.com/) library.
 
-You can find complete documentation on setup and usage in the official [Aurelia Developer Hub](https://github.com/aurelia/i18n/blob/master/doc/article/en-US/i18n-with-aurelia.md)
+You can find complete documentation on setup and usage in the official [Aurelia Developer Hub](http://aurelia.io/hub.html#/doc/article/aurelia/i18n/latest/i18n-with-aurelia)
 
 > To keep up to date on [Aurelia](http://www.aurelia.io/), please visit and subscribe to [the official blog](http://blog.aurelia.io/) and [our email list](http://eepurl.com/ces50j). We also invite you to [follow us on twitter](https://twitter.com/aureliaeffect). If you have questions, please [join our community on Gitter](https://gitter.im/aurelia/discuss) or use [stack overflow](http://stackoverflow.com/search?q=aurelia). Documentation can be found [in our developer hub](http://aurelia.io/hub.html). If you would like to have deeper insight into our development process, please install the [ZenHub](https://zenhub.io) Chrome or Firefox Extension and visit any of our repository's boards.
 
