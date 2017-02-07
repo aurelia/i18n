@@ -870,6 +870,8 @@ To use it via code get hold of the service via injection and call the method as 
 
         var myDate = new Date();
         myDate.setHours(myDate.getHours() - 2);
+        
+        var result = relativeTime.getRelativeTime(myDate);
 
         console.log(result);
         // output => 2 hours ago  	  
@@ -880,9 +882,9 @@ To use it via code get hold of the service via injection and call the method as 
 </code-listing>
 
 This is also tied in to the currentLocale of the library so changing that one will also translate relative time messages. Take a look at the file `src/defaultTranslations/relative.time.js` for available
-translations. If you're missing yours I welcome you to provide a PR so everybody can benefit from it.
+translations. If you're missing yours, I welcome you to provide a PR so everybody can benefit from it.
 
-A more declarative approach is to use the RtValueConverter directly in your HTML markup. It's not taking any additional parameters so just drop it in and you're good to go:
+A more declarative approach is to use the RtValueConverter directly in your HTML markup. It doesn't take any additional parameters, so just drop it in and you're good to go:
 
 <code-listing heading="Declarative relative time using the RtValueConverter">
   <source-code lang="HTML">
