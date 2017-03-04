@@ -870,7 +870,7 @@ To use it via code get hold of the service via injection and call the method as 
 
         var myDate = new Date();
         myDate.setHours(myDate.getHours() - 2);
-        
+
         var result = relativeTime.getRelativeTime(myDate);
 
         console.log(result);
@@ -901,7 +901,8 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
   </source-code>
 </code-listing>
 
-## Bundle translation files
+## [Bundle Translation Files](aurelia-doc://section/6/version/1.0.0)
+
 When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module.
 
 ### Using JSPM
@@ -920,6 +921,7 @@ If you're using JSPM as your module loader, the bundle configuration might look 
 ```
 
 ### Using Aurelia CLI
+
 Same would apply to the Aurelia CLI. In order to tell it to process the locales you can create a new task `process-locales.js`, located in the `aurelia_project/tasks` folder with the contents:
 
 <code-listing heading="Processing locales with a custom task">
@@ -956,7 +958,7 @@ Also, edit your `aurelia_project/tasks/run.js` (or .ts if you're using Typescrip
 
 <code-listing heading="Add a locales watch task the watch function">
   <source-code lang="ES 2015">
-  
+
     let watch = function() {
       gulp.watch(project.transpiler.source, refresh).on('change', onChange);
       gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
@@ -984,8 +986,7 @@ Last but not least search for the build/bundles/source section for the app-bundl
       ...
 ```
 
-
-## [Internationalization API Polyfill](aurelia-doc://section/6/version/1.0.0)
+## [Internationalization API Polyfill](aurelia-doc://section/7/version/1.0.0)
 
 The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
 
