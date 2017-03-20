@@ -1,6 +1,7 @@
 import {I18N} from './i18n';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {customAttribute} from 'aurelia-templating';
+import {metadata} from 'aurelia-metadata';
+import {customAttribute, HtmlBehaviorResource} from 'aurelia-templating';
 import {SignalBindingBehavior} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
 import {LazyOptional} from './utils';
@@ -20,6 +21,10 @@ export class TValueConverter {
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
   static inject = [Element];
+  static configureAliases(aliases) {
+    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
+    r.aliases = aliases;
+  }
   service;
 
   constructor(element) {
@@ -35,6 +40,10 @@ export class TParamsCustomAttribute {
 export class TCustomAttribute {
 
   static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static configureAliases(aliases) {
+    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
+    r.aliases = aliases;
+  }
 
   constructor(element, i18n, ea, tparams) {
     this.element = element;
