@@ -25,7 +25,7 @@
     "aurelia-loader": "^1.0.0",
     "aurelia-logging": "^1.0.0",
     "aurelia-pal": "^1.0.0",
-    "aurelia-templating": "^1.0.0",
+    "aurelia-templating": "^1.4.0",
     "aurelia-templating-resources": "^1.0.0",
     "i18next": "^3.4.1",
     "intl": "^1.2.4"
