@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (_export, _context) {
+System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', 'aurelia-pal', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (_export, _context) {
   "use strict";
 
-  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend, _typeof;
+  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, PLATFORM, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend, _typeof;
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -38,10 +38,10 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
       throw errorMsg;
     }
 
-    frameworkConfig.globalResources('./t');
-    frameworkConfig.globalResources('./nf');
-    frameworkConfig.globalResources('./df');
-    frameworkConfig.globalResources('./rt');
+    frameworkConfig.globalResources(PLATFORM.moduleName('./t'));
+    frameworkConfig.globalResources(PLATFORM.moduleName('./nf'));
+    frameworkConfig.globalResources(PLATFORM.moduleName('./df'));
+    frameworkConfig.globalResources(PLATFORM.moduleName('./rt'));
 
     if (window.Intl === undefined) {
       var _ret = function () {
@@ -85,6 +85,8 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
       Loader = _aureliaLoader.Loader;
     }, function (_aureliaTemplatingResources) {
       BindingSignaler = _aureliaTemplatingResources.BindingSignaler;
+    }, function (_aureliaPal) {
+      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_i18n) {
       I18N = _i18n.I18N;
     }, function (_relativeTime) {

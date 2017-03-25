@@ -3,6 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { ViewResources } from 'aurelia-templating';
 import { Loader } from 'aurelia-loader';
 import { BindingSignaler } from 'aurelia-templating-resources';
+import { PLATFORM } from 'aurelia-pal';
 
 import { I18N } from './i18n';
 import { RelativeTime } from './relativeTime';
@@ -45,10 +46,10 @@ function configure(frameworkConfig, cb) {
     throw errorMsg;
   }
 
-  frameworkConfig.globalResources('./t');
-  frameworkConfig.globalResources('./nf');
-  frameworkConfig.globalResources('./df');
-  frameworkConfig.globalResources('./rt');
+  frameworkConfig.globalResources(PLATFORM.moduleName('./t'));
+  frameworkConfig.globalResources(PLATFORM.moduleName('./nf'));
+  frameworkConfig.globalResources(PLATFORM.moduleName('./df'));
+  frameworkConfig.globalResources(PLATFORM.moduleName('./rt'));
 
   if (window.Intl === undefined) {
     let i18nLogger = LogManager.getLogger('i18n');

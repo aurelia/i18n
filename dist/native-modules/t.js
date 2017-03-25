@@ -4,7 +4,8 @@ var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _tem
 
 import { I18N } from './i18n';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import { customAttribute } from 'aurelia-templating';
+import { metadata } from 'aurelia-metadata';
+import { customAttribute, HtmlBehaviorResource } from 'aurelia-templating';
 import { SignalBindingBehavior } from 'aurelia-templating-resources';
 import { ValueConverter } from 'aurelia-binding';
 import { LazyOptional } from './utils';
@@ -28,6 +29,11 @@ export var TValueConverter = function () {
 }();
 
 export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
+  TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TParamsCustomAttribute(element) {
     
 
@@ -40,6 +46,11 @@ export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_c
 }(), _class2.inject = [Element], _temp)) || _class);
 
 export var TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+  TCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TCustomAttribute(element, i18n, ea, tparams) {
     
 

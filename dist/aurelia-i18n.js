@@ -5,7 +5,8 @@ import {DOM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingSignaler,SignalBindingBehavior} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
-import {customAttribute} from 'aurelia-templating';
+import {metadata} from 'aurelia-metadata';
+import {customAttribute,HtmlBehaviorResource} from 'aurelia-templating';
 
 /*eslint no-irregular-whitespace: 0*/
 export const translations = {
@@ -1066,6 +1067,10 @@ export class TValueConverter {
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
   static inject = [Element];
+  static configureAliases(aliases) {
+    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
+    r.aliases = aliases;
+  }
   service;
 
   constructor(element) {
@@ -1081,6 +1086,10 @@ export class TParamsCustomAttribute {
 export class TCustomAttribute {
 
   static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static configureAliases(aliases) {
+    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
+    r.aliases = aliases;
+  }
 
   constructor(element, i18n, ea, tparams) {
     this.element = element;

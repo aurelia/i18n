@@ -19,6 +19,8 @@ var _aureliaLoader = require('aurelia-loader');
 
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
+var _aureliaPal = require('aurelia-pal');
+
 var _i18n = require('./i18n');
 
 var _relativeTime = require('./relativeTime');
@@ -70,10 +72,10 @@ function configure(frameworkConfig, cb) {
     throw errorMsg;
   }
 
-  frameworkConfig.globalResources('./t');
-  frameworkConfig.globalResources('./nf');
-  frameworkConfig.globalResources('./df');
-  frameworkConfig.globalResources('./rt');
+  frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./t'));
+  frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./nf'));
+  frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./df'));
+  frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./rt'));
 
   if (window.Intl === undefined) {
     var _ret = function () {

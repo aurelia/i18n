@@ -1,4 +1,4 @@
-define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaTemplating, _aureliaTemplatingResources, _aureliaBinding, _utils) {
+define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaMetadata, _aureliaTemplating, _aureliaTemplatingResources, _aureliaBinding, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -29,6 +29,11 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
   }();
 
   var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aureliaTemplating.customAttribute)('t-params'), _dec(_class = (_temp = _class2 = function () {
+    TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
+      var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute);
+      r.aliases = aliases;
+    };
+
     function TParamsCustomAttribute(element) {
       
 
@@ -40,6 +45,11 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-templating', '
     return TParamsCustomAttribute;
   }(), _class2.inject = [Element], _temp)) || _class);
   var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+    TCustomAttribute.configureAliases = function configureAliases(aliases) {
+      var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
+      r.aliases = aliases;
+    };
+
     function TCustomAttribute(element, i18n, ea, tparams) {
       
 

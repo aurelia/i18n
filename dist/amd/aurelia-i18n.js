@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (exports, _aureliaLogging, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n, _aureliaI18nLoader) {
+define(['exports', 'aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', 'aurelia-pal', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (exports, _aureliaLogging, _aureliaEventAggregator, _aureliaTemplating, _aureliaLoader, _aureliaTemplatingResources, _aureliaPal, _i18n, _relativeTime, _df, _nf, _rt, _t, _baseI18n, _aureliaI18nLoader) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -64,10 +64,10 @@ define(['exports', 'aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templ
       throw errorMsg;
     }
 
-    frameworkConfig.globalResources('./t');
-    frameworkConfig.globalResources('./nf');
-    frameworkConfig.globalResources('./df');
-    frameworkConfig.globalResources('./rt');
+    frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./t'));
+    frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./nf'));
+    frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./df'));
+    frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./rt'));
 
     if (window.Intl === undefined) {
       var _ret = function () {

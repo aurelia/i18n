@@ -17,7 +17,11 @@ import {
   ValueConverter
 } from 'aurelia-binding';
 import {
-  customAttribute
+  metadata
+} from 'aurelia-metadata';
+import {
+  customAttribute,
+  HtmlBehaviorResource
 } from 'aurelia-templating';
 
 /*eslint no-irregular-whitespace: 0*/
@@ -127,12 +131,14 @@ export declare class TValueConverter {
 }
 export declare class TParamsCustomAttribute {
   static inject: any;
+  static configureAliases(aliases?: any): any;
   service: any;
   constructor(element?: any);
   valueChanged(): any;
 }
 export declare class TCustomAttribute {
   static inject: any;
+  static configureAliases(aliases?: any): any;
   constructor(element?: any, i18n?: any, ea?: any, tparams?: any);
   bind(): any;
   paramsChanged(newValue?: any, newParams?: any): any;

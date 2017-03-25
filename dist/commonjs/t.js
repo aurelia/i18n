@@ -11,6 +11,8 @@ var _i18n = require('./i18n');
 
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
+var _aureliaMetadata = require('aurelia-metadata');
+
 var _aureliaTemplating = require('aurelia-templating');
 
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
@@ -40,6 +42,11 @@ var TValueConverter = exports.TValueConverter = function () {
 }();
 
 var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aureliaTemplating.customAttribute)('t-params'), _dec(_class = (_temp = _class2 = function () {
+  TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TParamsCustomAttribute(element) {
     
 
@@ -51,6 +58,11 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aurel
   return TParamsCustomAttribute;
 }(), _class2.inject = [Element], _temp)) || _class);
 var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+  TCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TCustomAttribute(element, i18n, ea, tparams) {
     
 

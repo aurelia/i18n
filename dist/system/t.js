@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export, _context) {
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export, _context) {
   "use strict";
 
-  var I18N, EventAggregator, customAttribute, SignalBindingBehavior, ValueConverter, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
+  var I18N, EventAggregator, metadata, customAttribute, HtmlBehaviorResource, SignalBindingBehavior, ValueConverter, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
 
   
 
@@ -12,8 +12,11 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       I18N = _i18n.I18N;
     }, function (_aureliaEventAggregator) {
       EventAggregator = _aureliaEventAggregator.EventAggregator;
+    }, function (_aureliaMetadata) {
+      metadata = _aureliaMetadata.metadata;
     }, function (_aureliaTemplating) {
       customAttribute = _aureliaTemplating.customAttribute;
+      HtmlBehaviorResource = _aureliaTemplating.HtmlBehaviorResource;
     }, function (_aureliaTemplatingResources) {
       SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
     }, function (_aureliaBinding) {
@@ -43,6 +46,11 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       _export('TValueConverter', TValueConverter);
 
       _export('TParamsCustomAttribute', TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
+        TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
+          var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
+          r.aliases = aliases;
+        };
+
         function TParamsCustomAttribute(element) {
           
 
@@ -57,6 +65,11 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-templating', 'au
       _export('TParamsCustomAttribute', TParamsCustomAttribute);
 
       _export('TCustomAttribute', TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+        TCustomAttribute.configureAliases = function configureAliases(aliases) {
+          var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
+          r.aliases = aliases;
+        };
+
         function TCustomAttribute(element, i18n, ea, tparams) {
           
 

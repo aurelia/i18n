@@ -27,6 +27,8 @@ var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
 
+var _aureliaMetadata = require('aurelia-metadata');
+
 var _aureliaTemplating = require('aurelia-templating');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
@@ -1094,6 +1096,11 @@ var TValueConverter = exports.TValueConverter = function () {
 }();
 
 var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class5 = (_temp4 = _class6 = function () {
+  TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TParamsCustomAttribute(element) {
     _classCallCheck(this, TParamsCustomAttribute);
 
@@ -1105,6 +1112,11 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aure
   return TParamsCustomAttribute;
 }(), _class6.inject = [Element], _temp4)) || _class5);
 var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class7 = (_temp5 = _class8 = function () {
+  TCustomAttribute.configureAliases = function configureAliases(aliases) {
+    var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
+    r.aliases = aliases;
+  };
+
   function TCustomAttribute(element, i18n, ea, tparams) {
     _classCallCheck(this, TCustomAttribute);
 

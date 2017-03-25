@@ -1,3 +1,13 @@
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/aurelia/i18n/compare/1.3.2...v1.4.0) (2017-03-25)
+
+
+### Bug Fixes
+
+* **t:** expose configuration of aliases ([0e928ea](https://github.com/aurelia/i18n/commit/0e928ea))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/aurelia/i18n/compare/1.3.0...v1.3.1) (2017-02-27)
 
