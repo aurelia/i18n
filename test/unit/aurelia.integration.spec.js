@@ -1,8 +1,7 @@
 import {configure} from '../../src/aurelia-i18n';
 
 describe('testing aurelia configure routine', () => {
-
-  var frameworkConfig = {
+  let frameworkConfig = {
     globalResources: () => {
 
     },
@@ -10,7 +9,7 @@ describe('testing aurelia configure routine', () => {
       registerInstance: (type, instance) => {
 
       },
-      get: (type) => { return new type(); }
+      get: (Type) => { return new Type(); }
     }
   };
 
@@ -19,9 +18,7 @@ describe('testing aurelia configure routine', () => {
   });
 
   it('should accept a setup callback passing back the instance', (done) => {
-
-
-    var cb = (instance) => {
+    const cb = (instance) => {
       expect(typeof instance).toBe('object');
       done();
     };

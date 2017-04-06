@@ -161,15 +161,15 @@ describe('testing i18n translation update', () => {
   });
 
   it('should prepend the translation when using the [prepend] attribute, and it allows html', done => {
-      let el = template.querySelector('#test-prepend');
-      expect(el.innerHTML.trim()).toBe('content');
-      sut.setLocale('de').then(() => {
-        expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>content');
-        return sut.setLocale('en');
-      }).then(() => {
-        expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>content');
-        done();
-      });
+    let el = template.querySelector('#test-prepend');
+    expect(el.innerHTML.trim()).toBe('content');
+    sut.setLocale('de').then(() => {
+      expect(el.innerHTML.trim()).toBe('Beschreibung <b>mit Fettdruck</b>content');
+      return sut.setLocale('en');
+    }).then(() => {
+      expect(el.innerHTML.trim()).toBe('Description <b>with some bold</b>content');
+      done();
+    });
   });
 
   it('should append the translation when using the [append] attribute, and it allows html', done => {
@@ -210,5 +210,4 @@ describe('testing i18n translation update', () => {
       done();
     });
   });
-
 });

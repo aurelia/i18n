@@ -3,7 +3,6 @@ import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('feature verification placeholders', () => {
-
   let sut;
 
   beforeEach( () => {

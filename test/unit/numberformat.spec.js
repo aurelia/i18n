@@ -2,7 +2,7 @@ import {I18N} from '../../src/i18n';
 import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import Intl from 'intl';
-import * as allData from 'intl/locale-data/complete';
+import 'intl/locale-data/complete';
 
 describe('numberformat tests', () => {
   let sut;

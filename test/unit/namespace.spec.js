@@ -5,7 +5,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 describe('testing i18n namespaces', () => {
   let sut;
   let resources;
-  
+
   beforeEach( () => {
     resources = {
       en: {
@@ -41,9 +41,8 @@ describe('testing i18n namespaces', () => {
     };
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
-    
   });
-  
+
   it('should have translation as defaultNS', () => {
     sut.setup({
       resources: resources,
@@ -51,10 +50,10 @@ describe('testing i18n namespaces', () => {
       fallbackLng: 'en',
       debug: false
     });
-    
-    expect(sut.i18next.options.defaultNS).toEqual(["translation"]);
+
+    expect(sut.i18next.options.defaultNS).toEqual(['translation']);
   });
-  
+
   it('should have customns as defaultNS', () => {
     sut.setup({
       resources: resources,
@@ -63,7 +62,7 @@ describe('testing i18n namespaces', () => {
       defaultNS: 'customns',
       debug: false
     });
-    
-    expect(sut.i18next.options.defaultNS).toBe("customns");
+
+    expect(sut.i18next.options.defaultNS).toBe('customns');
   });
 });

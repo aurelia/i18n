@@ -3,7 +3,6 @@ import {BindingSignaler} from 'aurelia-templating-resources';
 import {EventAggregator} from 'aurelia-event-aggregator';
 
 describe('feature verification pluralization', () => {
-
   let sut;
 
   beforeEach( () => {
@@ -38,14 +37,4 @@ describe('feature verification pluralization', () => {
   it('should return same key if no plural is defined', () => {
     expect(sut.tr('wrongtest', { count: 2 })).toContain('wrongtest');
   });
-
-  // xit('should return singular indefinite translation', () => {
-    // Not supported by i18next v2
-    // expect(sut.tr('lives', { count: 1, indefinite_article: true })).toEqual('a life remaining');
-  // });
-
-  // xit('should return plural indefinite translation', () => {
-    // Not supported by i18next v2
-    // expect(sut.tr('lives', { count: 2, indefinite_article: true })).toEqual('some lives remaining');
-  // });
 });
