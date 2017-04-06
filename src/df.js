@@ -45,8 +45,8 @@ export class DfBindingBehavior {
     // bind the signal behavior
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
-    // rewrite the expression to use the TValueConverter.
-    // pass through any args to the binding behavior to the TValueConverter
+    // rewrite the expression to use the DfValueConverter.
+    // pass through any args to the binding behavior to the DfValueConverter
     let sourceExpression = binding.sourceExpression;
 
     // do create the sourceExpression only once
