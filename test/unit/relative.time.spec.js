@@ -110,51 +110,73 @@ describe('testing relative time support', () => {
   });
 
   it('should try to find the language of the locale when the full locale is not found', (done) => {
-      expect(translations['nl-BE']).toBe(undefined); //If this fails, someone added translations for nl-BE  
-      i18n.setLocale('nl-BE').then( () => {
-        let expectedDate = new Date();
-        expectedDate.setHours(new Date().getHours() + 2);
+    expect(translations['nl-BE']).toBe(undefined); //If this fails, someone added translations for nl-BE
+    i18n.setLocale('nl-BE').then( () => {
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() + 2);
 
-        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 uren');
-        done();
-      });
+      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 uren');
+      done();
+    });
   });
-  
-  it('should provide the translation for the full locale when available', (done) => {      
-      translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
-      i18n.setLocale('nl-XX').then( () => {
-        let expectedDate = new Date();
-        expectedDate.setHours(new Date().getHours() + 2);
 
-        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
-        done();
-      });
-  });
-  
-  it('should provide the translation for the base locale when a key is not found in the full locale', (done) => {      
-      translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
-      i18n.setLocale('nl-XX').then( () => {
-        let expectedDate = new Date();
-        expectedDate.setMinutes(new Date().getMinutes() + 2);
+  it('should provide the translation for the full locale when available', (done) => {
+    translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
+    i18n.setLocale('nl-XX').then( () => {
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() + 2);
 
-        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 minuten');
-        done();
-      });
+      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
+      done();
+    });
   });
-  
-  it('should respect interpolation settings', done => {
-    let ea = new EventAggregator();
+
+  it('should provide the translation for the base locale when a key is not found in the full locale', (done) => {
+    translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
+    i18n.setLocale('nl-XX').then( () => {
+      let expectedDate = new Date();
+      expectedDate.setMinutes(new Date().getMinutes() + 2);
+
+      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 minuten');
+      done();
+    });
+  });
+
+  it('should handle non-defined interpolation prefix and suffix', done => {
     let customInterpolationSettings = new I18N(ea, new BindingSignaler());
-    let customSut = new RelativeTime(customInterpolationSettings, ea);
+
     customInterpolationSettings.setup({
       lng: 'en',
       getAsync: false,
       sendMissing: false,
       fallbackLng: 'en',
-      debug: false,
-      interpolationPrefix: '${',
-      interpolationSuffix: '}'
-    }).then(() => {
+      debug: false
+    }).then((instance) => {
+      instance.options.interpolation.prefix = undefined;
+      instance.options.interpolation.suffix = undefined;
+      let customSut = new RelativeTime(customInterpolationSettings, ea);
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() - 3);
+
+      expect(customSut.getRelativeTime(expectedDate)).toBe('3 hours ago');
+
+      done();
+    });
+  });
+
+  it('should respect interpolation settings', done => {
+    let customInterpolationSettings = new I18N(ea, new BindingSignaler());
+
+    customInterpolationSettings.setup({
+      lng: 'en',
+      getAsync: false,
+      sendMissing: false,
+      fallbackLng: 'en',
+      debug: false
+    }).then((instance) => {
+      instance.options.interpolation.prefix = '${';
+      instance.options.interpolation.suffix = '}';
+      let customSut = new RelativeTime(customInterpolationSettings, ea);
       let expectedDate = new Date();
       expectedDate.setHours(new Date().getHours() - 1);
 
