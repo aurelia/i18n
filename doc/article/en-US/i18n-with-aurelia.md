@@ -171,8 +171,11 @@ be slight differences. The following listings show the configuration for first t
         .standardConfiguration()
         .developmentLogging()
         .plugin('aurelia-i18n', (instance) => {
+          // add aliases for "t" attribute
+          TCustomAttribute.configureAliases(["t", "i18n"]);
+          
           // register backend plugin
-         instance.i18next.use(Backend.with(aurelia.loader));
+          instance.i18next.use(Backend.with(aurelia.loader));
 
           // adapt options to your needs (see http://i18next.com/docs/options/)
           // make sure to return the promise of the setup method, in order to guarantee proper loading
@@ -181,7 +184,6 @@ be slight differences. The following listings show the configuration for first t
               loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
             },
             lng : 'de',
-            attributes : ['t','i18n'],
             fallbackLng : 'en',
             debug : false
           });
@@ -207,6 +209,9 @@ be slight differences. The following listings show the configuration for first t
           .standardConfiguration()
           .developmentLogging()
           .plugin('aurelia-i18n', (instance) => {
+            // add aliases for "t" attribute
+            TCustomAttribute.configureAliases(["t", "i18n"]);
+            
             // register backend plugin
             instance.i18next.use(Backend);
 
@@ -217,7 +222,6 @@ be slight differences. The following listings show the configuration for first t
                 loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
               },
               lng : 'de',
-              attributes : ['t','i18n'],
               fallbackLng : 'en',
               debug : false
             });
@@ -361,18 +365,19 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 
 ### Translating via html attributes
 Translation in html can be done alternatively using attributes. By default the plugin is configured to use the `t` and `i18n` attributes.
-This can be configured during the plugin registration using the `attributes` property.
+This can be configured during the plugin registration using the `TCustomAttribute.configureAliases` function.
 
 <code-listing heading="Configuring translation attributes">
   <source-code lang="ES 2015">
-
+  
     ...
-    instance.setup({
+    .plugin("aurelia-i18n", (instance) => {
       ...
-      attributes : ['t','i18n'],
+      TCustomAttribute.configureAliases(["t", "i18n"]);
       ...
     });
     ...
+    
   </source-code>
 </code-listing>
 
