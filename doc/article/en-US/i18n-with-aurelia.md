@@ -171,8 +171,9 @@ be slight differences. The following listings show the configuration for first t
         .standardConfiguration()
         .developmentLogging()
         .plugin('aurelia-i18n', (instance) => {
-          // add aliases for "t" attribute
-          TCustomAttribute.configureAliases(["t", "i18n"]);
+          let aliases = ['t', 'i18n'];
+          // add aliases for 't' attribute
+          TCustomAttribute.configureAliases(aliases);
           
           // register backend plugin
           instance.i18next.use(Backend.with(aurelia.loader));
@@ -183,6 +184,7 @@ be slight differences. The following listings show the configuration for first t
             backend: {                                  // <-- configure backend settings
               loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
             },
+            attributes: aliases,
             lng : 'de',
             fallbackLng : 'en',
             debug : false
@@ -209,8 +211,9 @@ be slight differences. The following listings show the configuration for first t
           .standardConfiguration()
           .developmentLogging()
           .plugin('aurelia-i18n', (instance) => {
-            // add aliases for "t" attribute
-            TCustomAttribute.configureAliases(["t", "i18n"]);
+            let aliases = ['t', 'i18n'];
+            // add aliases for 't' attribute
+            TCustomAttribute.configureAliases(aliases);
             
             // register backend plugin
             instance.i18next.use(Backend);
@@ -221,6 +224,7 @@ be slight differences. The following listings show the configuration for first t
               backend: {                                  // <-- configure backend settings
                 loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
               },
+              attributes: aliases,
               lng : 'de',
               fallbackLng : 'en',
               debug : false
@@ -365,7 +369,8 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 
 ### Translating via html attributes
 Translation in html can be done alternatively using attributes. By default the plugin is configured to use the `t` and `i18n` attributes.
-This can be configured during the plugin registration using the `TCustomAttribute.configureAliases` function.
+This can be configured during the plugin registration using the `TCustomAttribute.configureAliases` function and also the `attributes`
+property plugin `instance.setup` function parameter.
 
 <code-listing heading="Configuring translation attributes">
   <source-code lang="ES 2015">
@@ -373,7 +378,14 @@ This can be configured during the plugin registration using the `TCustomAttribut
     ...
     .plugin("aurelia-i18n", (instance) => {
       ...
-      TCustomAttribute.configureAliases(["t", "i18n"]);
+      let aliases = ['t','i18n'];
+      TCustomAttribute.configureAliases(aliases);
+      ...
+      instance.setup({
+      ...
+        attributes : aliases,
+      ...
+      });
       ...
     });
     ...
