@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Backend = exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtValueConverter = exports.NfValueConverter = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
+exports.Backend = exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtBindingBehavior = exports.RtValueConverter = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
@@ -112,8 +112,11 @@ exports.configure = configure;
 exports.I18N = _i18n.I18N;
 exports.RelativeTime = _relativeTime.RelativeTime;
 exports.DfValueConverter = _df.DfValueConverter;
+exports.DfBindingBehavior = _df.DfBindingBehavior;
 exports.NfValueConverter = _nf.NfValueConverter;
+exports.NfBindingBehavior = _nf.NfBindingBehavior;
 exports.RtValueConverter = _rt.RtValueConverter;
+exports.RtBindingBehavior = _rt.RtBindingBehavior;
 exports.TValueConverter = _t.TValueConverter;
 exports.TBindingBehavior = _t.TBindingBehavior;
 exports.TCustomAttribute = _t.TCustomAttribute;

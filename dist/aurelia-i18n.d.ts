@@ -156,3 +156,9 @@ export declare class RtValueConverter {
   constructor(relativeTime?: any);
   toView(value?: any): any;
 }
+export declare class RtBindingBehavior {
+  static inject(): any;
+  constructor(signalBindingBehavior?: any);
+  bind(binding?: any, source?: any): any;
+  unbind(binding?: any, source?: any): any;
+}

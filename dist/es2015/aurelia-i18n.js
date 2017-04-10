@@ -7,13 +7,10 @@ import { PLATFORM } from 'aurelia-pal';
 
 import { I18N } from './i18n';
 import { RelativeTime } from './relativeTime';
-import { DfValueConverter } from './df';
-import { NfValueConverter } from './nf';
-import { RtValueConverter } from './rt';
-import { TValueConverter } from './t';
-import { TBindingBehavior } from './t';
-import { TCustomAttribute } from './t';
-import { TParamsCustomAttribute } from './t';
+import { DfValueConverter, DfBindingBehavior } from './df';
+import { NfValueConverter, NfBindingBehavior } from './nf';
+import { RtValueConverter, RtBindingBehavior } from './rt';
+import { TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute } from './t';
 import { BaseI18N } from './base-i18n';
 import { Backend } from './aurelia-i18n-loader';
 
@@ -70,4 +67,4 @@ function configure(frameworkConfig, cb) {
   return Promise.resolve(registerI18N(frameworkConfig, cb));
 }
 
-export { configure, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, EventAggregator, Backend };
+export { configure, I18N, RelativeTime, DfValueConverter, DfBindingBehavior, NfValueConverter, NfBindingBehavior, RtValueConverter, RtBindingBehavior, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, EventAggregator, Backend };

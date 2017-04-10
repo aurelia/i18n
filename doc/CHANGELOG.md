@@ -1,3 +1,18 @@
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/aurelia/i18n/compare/1.4.0...v1.5.0) (2017-04-10)
+
+
+### Bug Fixes
+
+* **rt:** default interpolation as fallback ([9407c58](https://github.com/aurelia/i18n/commit/9407c58))
+
+
+### Features
+
+* **relative-time:** relative time bindingbehavior ([fdddded](https://github.com/aurelia/i18n/commit/fdddded))
+
+
+
 <a name="1.4.0"></a>
 # [1.4.0](https://github.com/aurelia/i18n/compare/1.3.2...v1.4.0) (2017-03-25)
 

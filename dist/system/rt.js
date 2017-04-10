@@ -1,15 +1,19 @@
 'use strict';
 
-System.register(['./relativeTime'], function (_export, _context) {
+System.register(['./relativeTime', 'aurelia-templating-resources', 'aurelia-binding'], function (_export, _context) {
   "use strict";
 
-  var RelativeTime, RtValueConverter;
+  var RelativeTime, SignalBindingBehavior, ValueConverter, RtValueConverter, RtBindingBehavior;
 
   
 
   return {
     setters: [function (_relativeTime) {
       RelativeTime = _relativeTime.RelativeTime;
+    }, function (_aureliaTemplatingResources) {
+      SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
+    }, function (_aureliaBinding) {
+      ValueConverter = _aureliaBinding.ValueConverter;
     }],
     execute: function () {
       _export('RtValueConverter', RtValueConverter = function () {
@@ -39,6 +43,40 @@ System.register(['./relativeTime'], function (_export, _context) {
       }());
 
       _export('RtValueConverter', RtValueConverter);
+
+      _export('RtBindingBehavior', RtBindingBehavior = function () {
+        RtBindingBehavior.inject = function inject() {
+          return [SignalBindingBehavior];
+        };
+
+        function RtBindingBehavior(signalBindingBehavior) {
+          
+
+          this.signalBindingBehavior = signalBindingBehavior;
+        }
+
+        RtBindingBehavior.prototype.bind = function bind(binding, source) {
+          this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+          var sourceExpression = binding.sourceExpression;
+
+          if (sourceExpression.rewritten) {
+            return;
+          }
+          sourceExpression.rewritten = true;
+
+          var expression = sourceExpression.expression;
+          sourceExpression.expression = new ValueConverter(expression, 'rt', sourceExpression.args, [expression].concat(sourceExpression.args));
+        };
+
+        RtBindingBehavior.prototype.unbind = function unbind(binding, source) {
+          this.signalBindingBehavior.unbind(binding, source);
+        };
+
+        return RtBindingBehavior;
+      }());
+
+      _export('RtBindingBehavior', RtBindingBehavior);
     }
   };
 });

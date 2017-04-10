@@ -1,10 +1,10 @@
-define(['exports', './relativeTime'], function (exports, _relativeTime) {
+define(['exports', './relativeTime', 'aurelia-templating-resources', 'aurelia-binding'], function (exports, _relativeTime, _aureliaTemplatingResources, _aureliaBinding) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.RtValueConverter = undefined;
+  exports.RtBindingBehavior = exports.RtValueConverter = undefined;
 
   
 
@@ -32,5 +32,37 @@ define(['exports', './relativeTime'], function (exports, _relativeTime) {
     };
 
     return RtValueConverter;
+  }();
+
+  var RtBindingBehavior = exports.RtBindingBehavior = function () {
+    RtBindingBehavior.inject = function inject() {
+      return [_aureliaTemplatingResources.SignalBindingBehavior];
+    };
+
+    function RtBindingBehavior(signalBindingBehavior) {
+      
+
+      this.signalBindingBehavior = signalBindingBehavior;
+    }
+
+    RtBindingBehavior.prototype.bind = function bind(binding, source) {
+      this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+      var sourceExpression = binding.sourceExpression;
+
+      if (sourceExpression.rewritten) {
+        return;
+      }
+      sourceExpression.rewritten = true;
+
+      var expression = sourceExpression.expression;
+      sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 'rt', sourceExpression.args, [expression].concat(sourceExpression.args));
+    };
+
+    RtBindingBehavior.prototype.unbind = function unbind(binding, source) {
+      this.signalBindingBehavior.unbind(binding, source);
+    };
+
+    return RtBindingBehavior;
   }();
 });

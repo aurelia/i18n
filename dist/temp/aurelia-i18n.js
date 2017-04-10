@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
+exports.RtBindingBehavior = exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
 
 var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _class5, _class6, _temp4, _dec3, _class7, _class8, _temp5, _class9, _temp6;
 
@@ -1028,7 +1028,7 @@ var RelativeTime = exports.RelativeTime = function () {
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
       for (var subkey in translation) {
-        translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
+        translation[subkey] = translation[subkey].replace('__count__', (options.interpolation.prefix || '{{') + 'count' + (options.interpolation.suffix || '}}'));
       }
     }
 
@@ -1214,4 +1214,36 @@ var RtValueConverter = exports.RtValueConverter = function () {
   };
 
   return RtValueConverter;
+}();
+
+var RtBindingBehavior = exports.RtBindingBehavior = function () {
+  RtBindingBehavior.inject = function inject() {
+    return [_aureliaTemplatingResources.SignalBindingBehavior];
+  };
+
+  function RtBindingBehavior(signalBindingBehavior) {
+    _classCallCheck(this, RtBindingBehavior);
+
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  RtBindingBehavior.prototype.bind = function bind(binding, source) {
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    var sourceExpression = binding.sourceExpression;
+
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    var expression = sourceExpression.expression;
+    sourceExpression.expression = new _aureliaBinding.ValueConverter(expression, 'rt', sourceExpression.args, [expression].concat(sourceExpression.args));
+  };
+
+  RtBindingBehavior.prototype.unbind = function unbind(binding, source) {
+    this.signalBindingBehavior.unbind(binding, source);
+  };
+
+  return RtBindingBehavior;
 }();

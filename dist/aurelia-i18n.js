@@ -879,8 +879,8 @@ export class DfBindingBehavior {
     // bind the signal behavior
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
-    // rewrite the expression to use the TValueConverter.
-    // pass through any args to the binding behavior to the TValueConverter
+    // rewrite the expression to use the DfValueConverter.
+    // pass through any args to the binding behavior to the DfValueConverter
     let sourceExpression = binding.sourceExpression;
 
     // do create the sourceExpression only once
@@ -941,8 +941,8 @@ export class NfBindingBehavior {
     // bind the signal behavior
     this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
 
-    // rewrite the expression to use the TValueConverter.
-    // pass through any args to the binding behavior to the TValueConverter
+    // rewrite the expression to use the NfValueConverter.
+    // pass through any args to the binding behavior to the NfValueConverter
     let sourceExpression = binding.sourceExpression;
 
     // do create the sourceExpression only once
@@ -1006,7 +1006,7 @@ export class RelativeTime {
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
       for (let subkey in translation) {
-        translation[subkey] = translation[subkey].replace('__count__', options.interpolation.prefix + 'count' + options.interpolation.suffix);
+        translation[subkey] = translation[subkey].replace('__count__', `${options.interpolation.prefix || '{{'}count${options.interpolation.suffix || '}}'}`);
       }
     }
 
@@ -1186,5 +1186,40 @@ export class RtValueConverter {
     }
 
     return this.service.getRelativeTime(value);
+  }
+}
+
+export class RtBindingBehavior {
+  static inject() {return [SignalBindingBehavior];}
+
+  constructor(signalBindingBehavior) {
+    this.signalBindingBehavior = signalBindingBehavior;
+  }
+
+  bind(binding, source) {
+    // bind the signal behavior
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+
+    // rewrite the expression to use the RtValueConverter.
+    // pass through any args to the binding behavior to the RtValueConverter
+    let sourceExpression = binding.sourceExpression;
+
+    // do create the sourceExpression only once
+    if (sourceExpression.rewritten) {
+      return;
+    }
+    sourceExpression.rewritten = true;
+
+    let expression = sourceExpression.expression;
+    sourceExpression.expression = new ValueConverter(
+      expression,
+      'rt',
+      sourceExpression.args,
+      [expression, ...sourceExpression.args]);
+  }
+
+  unbind(binding, source) {
+    // unbind the signal behavior
+    this.signalBindingBehavior.unbind(binding, source);
   }
 }

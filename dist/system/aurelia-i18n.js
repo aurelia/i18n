@@ -3,7 +3,7 @@
 System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', 'aurelia-pal', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (_export, _context) {
   "use strict";
 
-  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, PLATFORM, I18N, RelativeTime, DfValueConverter, NfValueConverter, RtValueConverter, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend, _typeof;
+  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, PLATFORM, I18N, RelativeTime, DfValueConverter, DfBindingBehavior, NfValueConverter, NfBindingBehavior, RtValueConverter, RtBindingBehavior, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend, _typeof;
 
   function registerI18N(frameworkConfig, cb) {
     var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
@@ -93,10 +93,13 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
       RelativeTime = _relativeTime.RelativeTime;
     }, function (_df) {
       DfValueConverter = _df.DfValueConverter;
+      DfBindingBehavior = _df.DfBindingBehavior;
     }, function (_nf) {
       NfValueConverter = _nf.NfValueConverter;
+      NfBindingBehavior = _nf.NfBindingBehavior;
     }, function (_rt) {
       RtValueConverter = _rt.RtValueConverter;
+      RtBindingBehavior = _rt.RtBindingBehavior;
     }, function (_t) {
       TValueConverter = _t.TValueConverter;
       TBindingBehavior = _t.TBindingBehavior;
@@ -122,9 +125,15 @@ System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templat
 
       _export('DfValueConverter', DfValueConverter);
 
+      _export('DfBindingBehavior', DfBindingBehavior);
+
       _export('NfValueConverter', NfValueConverter);
 
+      _export('NfBindingBehavior', NfBindingBehavior);
+
       _export('RtValueConverter', RtValueConverter);
+
+      _export('RtBindingBehavior', RtBindingBehavior);
 
       _export('TValueConverter', TValueConverter);
 
