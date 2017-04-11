@@ -920,7 +920,26 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
 
 ## [Bundle Translation Files](aurelia-doc://section/6/version/1.0.0)
 
-When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module.
+When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module, by changing the `aurelia.json` and adding `.json` as an extension for the text plugin:
+
+```json
+"loader": {
+			"type": "require",
+			"configTarget": "vendor-bundle.js",
+			"includeBundleMetadataInConfig": "auto",
+			"plugins": [
+				{
+					"name": "text",
+					"extensions": [
+						".html",
+						".css",
+						".json"
+					],
+					"stub": true
+				}
+			]
+		},
+```
 
 ### Using JSPM
 If you're using JSPM as your module loader, the bundle configuration might look like.
