@@ -251,6 +251,7 @@ You may also group your translations by namespaces, spread across multiple files
 
 ### Reflect-Metadata Compatability
 
+If you are using [`reflect-metadata`](https://www.npmjs.com/package/reflect-metadata), there is an outstanding [compatability issue](https://github.com/aurelia/i18n/issues/209) which is resolved by ensuring `reflect-metadata` is loaded before Aurelia is initialized. If you are using SystemJS, this can be achieved in your `index.html` as follows:
 
 <code-listing heading="Ensuring reflect-metadata is loaded first">
   <source-code lang="HTML">
