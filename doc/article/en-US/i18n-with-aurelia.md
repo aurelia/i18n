@@ -192,7 +192,7 @@ be slight differences. The following listings show the configuration for first t
         });
 
       aurelia.start().then(a => a.setRoot());
-  }
+    }
 </source-code>
 </code-listing>
 
@@ -246,6 +246,21 @@ You may also group your translations by namespaces, spread across multiple files
       ns: ['translation','nav'],
       defaultNS: 'translation'
     });
+  </source-code>
+</code-listing>
+
+### Reflect-Metadata Compatability
+
+
+<code-listing heading="Ensuring reflect-metadata is loaded first">
+  <source-code lang="HTML">
+
+    <script>
+      System.import('reflect-metadata').then( () => {
+        System.import('aurelia-bootstrapper');  
+      });
+    </script>
+
   </source-code>
 </code-listing>
 
