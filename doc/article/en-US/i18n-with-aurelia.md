@@ -192,7 +192,7 @@ be slight differences. The following listings show the configuration for first t
         });
 
       aurelia.start().then(a => a.setRoot());
-  }
+    }
 </source-code>
 </code-listing>
 
@@ -246,6 +246,22 @@ You may also group your translations by namespaces, spread across multiple files
       ns: ['translation','nav'],
       defaultNS: 'translation'
     });
+  </source-code>
+</code-listing>
+
+### Reflect-Metadata Compatibility
+
+If you are using [`reflect-metadata`](https://www.npmjs.com/package/reflect-metadata), there is an outstanding [compatibility issue](https://github.com/aurelia/i18n/issues/209) which is resolved by ensuring `reflect-metadata` is loaded before Aurelia is initialized. If you are using SystemJS, this can be achieved in your `index.html` as follows:
+
+<code-listing heading="Ensuring reflect-metadata is loaded first">
+  <source-code lang="HTML">
+
+    <script>
+      System.import('reflect-metadata').then( () => {
+        System.import('aurelia-bootstrapper');  
+      });
+    </script>
+
   </source-code>
 </code-listing>
 
