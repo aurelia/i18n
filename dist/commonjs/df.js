@@ -15,6 +15,8 @@ var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
 
+var _utils = require('./utils');
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 
@@ -44,7 +46,7 @@ var DfValueConverter = exports.DfValueConverter = function () {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
 
-    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+    if (typeof value === 'string' && isNaN(value) && !(0, _utils.isInteger)(value)) {
       value = new Date(value);
     }
 

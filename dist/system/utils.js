@@ -3,7 +3,7 @@
 System.register(['aurelia-dependency-injection'], function (_export, _context) {
   "use strict";
 
-  var resolver, _dec, _class, _typeof, extend, assignObjectToKeys, LazyOptional;
+  var resolver, _dec, _class, _typeof, extend, isInteger, assignObjectToKeys, LazyOptional;
 
   
 
@@ -27,6 +27,12 @@ System.register(['aurelia-dependency-injection'], function (_export, _context) {
       });
 
       _export('extend', extend);
+
+      _export('isInteger', isInteger = Number.isInteger || function (value) {
+        return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+      });
+
+      _export('isInteger', isInteger);
 
       _export('assignObjectToKeys', assignObjectToKeys = function assignObjectToKeys(root, obj) {
         if (obj === undefined || obj === null) {

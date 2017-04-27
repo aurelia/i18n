@@ -14,6 +14,10 @@ export var extend = function extend(destination, source) {
   return destination;
 };
 
+export var isInteger = Number.isInteger || function (value) {
+  return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+};
+
 export var assignObjectToKeys = function assignObjectToKeys(root, obj) {
   if (obj === undefined || obj === null) {
     return obj;

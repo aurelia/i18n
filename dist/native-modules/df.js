@@ -4,6 +4,7 @@ import * as LogManager from 'aurelia-logging';
 import { I18N } from './i18n';
 import { SignalBindingBehavior } from 'aurelia-templating-resources';
 import { ValueConverter } from 'aurelia-binding';
+import { isInteger } from './utils';
 
 export var DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
@@ -30,7 +31,7 @@ export var DfValueConverter = function () {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
 
-    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+    if (typeof value === 'string' && isNaN(value) && !isInteger(value)) {
       value = new Date(value);
     }
 

@@ -27,6 +27,7 @@ import {
 /*eslint no-irregular-whitespace: 0*/
 export declare const translations: any;
 export declare let extend: any;
+export declare const isInteger: any;
 export declare let assignObjectToKeys: any;
 export declare class LazyOptional {
   constructor(key?: any);

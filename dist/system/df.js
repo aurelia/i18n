@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['aurelia-logging', './i18n', 'aurelia-templating-resources', 'aurelia-binding'], function (_export, _context) {
+System.register(['aurelia-logging', './i18n', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export, _context) {
   "use strict";
 
-  var LogManager, I18N, SignalBindingBehavior, ValueConverter, DfValueConverter, DfBindingBehavior;
+  var LogManager, I18N, SignalBindingBehavior, ValueConverter, isInteger, DfValueConverter, DfBindingBehavior;
 
   
 
@@ -16,6 +16,8 @@ System.register(['aurelia-logging', './i18n', 'aurelia-templating-resources', 'a
       SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
     }, function (_aureliaBinding) {
       ValueConverter = _aureliaBinding.ValueConverter;
+    }, function (_utils) {
+      isInteger = _utils.isInteger;
     }],
     execute: function () {
       _export('DfValueConverter', DfValueConverter = function () {
@@ -43,7 +45,7 @@ System.register(['aurelia-logging', './i18n', 'aurelia-templating-resources', 'a
             df = this.service.df(dfOrOptions, locale || this.service.getLocale());
           }
 
-          if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+          if (typeof value === 'string' && isNaN(value) && !isInteger(value)) {
             value = new Date(value);
           }
 

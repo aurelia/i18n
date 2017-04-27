@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-logging', './i18n', 'aurelia-templating-resources', 'aurelia-binding'], function (exports, _aureliaLogging, _i18n, _aureliaTemplatingResources, _aureliaBinding) {
+define(['exports', 'aurelia-logging', './i18n', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (exports, _aureliaLogging, _i18n, _aureliaTemplatingResources, _aureliaBinding, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -52,7 +52,7 @@ define(['exports', 'aurelia-logging', './i18n', 'aurelia-templating-resources', 
         df = this.service.df(dfOrOptions, locale || this.service.getLocale());
       }
 
-      if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+      if (typeof value === 'string' && isNaN(value) && !(0, _utils.isInteger)(value)) {
         value = new Date(value);
       }
 

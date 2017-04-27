@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RtBindingBehavior = exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.extend = exports.translations = undefined;
+exports.RtBindingBehavior = exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.isInteger = exports.extend = exports.translations = undefined;
 
 var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _class5, _class6, _temp4, _dec3, _class7, _class8, _temp5, _class9, _temp6;
 
@@ -456,6 +456,10 @@ var extend = exports.extend = function extend(destination, source) {
   return destination;
 };
 
+var isInteger = exports.isInteger = Number.isInteger || function (value) {
+  return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
+};
+
 var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKeys(root, obj) {
   if (obj === undefined || obj === null) {
     return obj;
@@ -875,7 +879,7 @@ var DfValueConverter = exports.DfValueConverter = function () {
       df = this.service.df(dfOrOptions, locale || this.service.getLocale());
     }
 
-    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+    if (typeof value === 'string' && isNaN(value) && !isInteger(value)) {
       value = new Date(value);
     }
 

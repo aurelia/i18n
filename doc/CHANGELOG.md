@@ -1,3 +1,13 @@
+<a name="1.6.0"></a>
+# [1.6.0](https://github.com/aurelia/i18n/compare/1.5.1...v1.6.0) (2017-04-27)
+
+
+### Bug Fixes
+
+* **df:** Number.isInteger helper ([8bb1a87](https://github.com/aurelia/i18n/commit/8bb1a87))
+
+
+
 <a name="1.5.0"></a>
 # [1.5.0](https://github.com/aurelia/i18n/compare/1.4.0...v1.5.0) (2017-04-10)
 

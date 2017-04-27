@@ -4,7 +4,7 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.LazyOptional = exports.assignObjectToKeys = exports.extend = undefined;
+  exports.LazyOptional = exports.assignObjectToKeys = exports.isInteger = exports.extend = undefined;
 
   
 
@@ -22,6 +22,10 @@ define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaD
     }
 
     return destination;
+  };
+
+  var isInteger = exports.isInteger = Number.isInteger || function (value) {
+    return typeof value === 'number' && isFinite(value) && Math.floor(value) === value;
   };
 
   var assignObjectToKeys = exports.assignObjectToKeys = function assignObjectToKeys(root, obj) {
