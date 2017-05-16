@@ -73,17 +73,17 @@ describe('numberformat tests', () => {
     });
 
     it('should keep the decimal separator', () => {
-      let sample = '1,234.56';
+      let sample = '1,234,567.89';
       let result = sut.uf(sample);
 
-      expect(result).toBe(1234.56);
+      expect(result).toBe(1234567.89);
     });
 
     it('should respect provided locale', () => {
-      let sample = '1.234,56';
+      let sample = '1.234.567,89';
       let result = sut.uf(sample, 'de');
 
-      expect(result).toBe(1234.56);
+      expect(result).toBe(1234567.89);
     });
 
     it('should remove currency symbols', () => {
