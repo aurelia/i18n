@@ -163,7 +163,7 @@ be slight differences. The following listings show the configuration for first t
 <code-listing heading="Registering the Plugin - using the built-in aurelia loader backed:">
     <source-code lang="ES 2015">
 
-      import {I18N, Backend} from 'aurelia-i18n';
+      import {I18N, Backend, TCustomAttribute} from 'aurelia-i18n';
 
       export function configure(aurelia) {
 
@@ -199,7 +199,7 @@ be slight differences. The following listings show the configuration for first t
 <code-listing heading="Registering the Plugin - using the i18next-xhr-backend">
   <source-code lang="ES 2015">
 
-    import {I18N} from 'aurelia-i18n';
+    import {I18N, TCustomAttribute} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
     // if you use TypeScript and target ES5 you might need to import it like this instead
