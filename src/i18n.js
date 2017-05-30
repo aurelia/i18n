@@ -77,6 +77,10 @@ export class I18N {
     let thousandSeparator = comparer[1];
     let decimalSeparator  = comparer[5];
 
+    if (thousandSeparator === '.') {
+      thousandSeparator = '\\.';
+    }
+
     // remove all thousand seperators
     let result = number.replace(new RegExp(thousandSeparator, 'g'), '')
       // remove non-numeric signs except -> , .
