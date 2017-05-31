@@ -1,3 +1,16 @@
+<a name="1.6.1"></a>
+## [1.6.1](https://github.com/aurelia/i18n/compare/1.6.0...v1.6.1) (2017-05-31)
+
+
+### Bug Fixes
+
+* **t-attribute:** warning when using reserved word ([a5b833f](https://github.com/aurelia/i18n/commit/a5b833f)), closes [/github.com/aurelia/i18n/issues/218#issuecomment-304611266](https://github.com//github.com/aurelia/i18n/issues/218/issues/issuecomment-304611266)
+* **uf:** properly escape dot in RegExp ([0ee7dbb](https://github.com/aurelia/i18n/commit/0ee7dbb))
+* **uf():** remove all thousand separators ([5741270](https://github.com/aurelia/i18n/commit/5741270))
+* **uf():** remove all thousand seperators ([40f549d](https://github.com/aurelia/i18n/commit/40f549d))
+
+
+
 <a name="1.6.0"></a>
 # [1.6.0](https://github.com/aurelia/i18n/compare/1.5.1...v1.6.0) (2017-04-27)
 

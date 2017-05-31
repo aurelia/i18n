@@ -9,13 +9,13 @@ var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _clas
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
-var _i18next = require('i18next');
-
-var _i18next2 = _interopRequireDefault(_i18next);
-
 var _aureliaLogging = require('aurelia-logging');
 
 var LogManager = _interopRequireWildcard(_aureliaLogging);
+
+var _i18next = require('i18next');
+
+var _i18next2 = _interopRequireDefault(_i18next);
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
@@ -31,9 +31,9 @@ var _aureliaMetadata = require('aurelia-metadata');
 
 var _aureliaTemplating = require('aurelia-templating');
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -579,7 +579,11 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
     var thousandSeparator = comparer[1];
     var decimalSeparator = comparer[5];
 
-    var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+    if (thousandSeparator === '.') {
+      thousandSeparator = '\\.';
+    }
+
+    var result = number.replace(new RegExp(thousandSeparator, 'g'), '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
 
     return Number(result);
   };
@@ -669,6 +673,11 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       var attrCC = attr.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
       });
+      var reservedNames = ['prepend', 'append', 'text', 'html'];
+      if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+        var i18nLogger = LogManager.getLogger('i18n');
+        i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+      }
 
       switch (attr) {
         case 'text':

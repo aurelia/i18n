@@ -7,6 +7,10 @@ exports.I18N = undefined;
 
 var _class, _temp;
 
+var _aureliaLogging = require('aurelia-logging');
+
+var LogManager = _interopRequireWildcard(_aureliaLogging);
+
 var _i18next = require('i18next');
 
 var _i18next2 = _interopRequireDefault(_i18next);
@@ -18,6 +22,8 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 
 
@@ -98,7 +104,11 @@ var I18N = exports.I18N = (_temp = _class = function () {
     var thousandSeparator = comparer[1];
     var decimalSeparator = comparer[5];
 
-    var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+    if (thousandSeparator === '.') {
+      thousandSeparator = '\\.';
+    }
+
+    var result = number.replace(new RegExp(thousandSeparator, 'g'), '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
 
     return Number(result);
   };
@@ -188,6 +198,11 @@ var I18N = exports.I18N = (_temp = _class = function () {
       var attrCC = attr.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
       });
+      var reservedNames = ['prepend', 'append', 'text', 'html'];
+      if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+        var i18nLogger = LogManager.getLogger('i18n');
+        i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+      }
 
       switch (attr) {
         case 'text':

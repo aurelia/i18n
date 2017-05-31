@@ -1,14 +1,16 @@
 'use strict';
 
-System.register(['i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-templating-resources'], function (_export, _context) {
+System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-templating-resources'], function (_export, _context) {
   "use strict";
 
-  var i18next, DOM, EventAggregator, BindingSignaler, _class, _temp, I18N;
+  var LogManager, i18next, DOM, EventAggregator, BindingSignaler, _class, _temp, I18N;
 
   
 
   return {
-    setters: [function (_i18next) {
+    setters: [function (_aureliaLogging) {
+      LogManager = _aureliaLogging;
+    }, function (_i18next) {
       i18next = _i18next.default;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
@@ -95,7 +97,11 @@ System.register(['i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-
           var thousandSeparator = comparer[1];
           var decimalSeparator = comparer[5];
 
-          var result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+          if (thousandSeparator === '.') {
+            thousandSeparator = '\\.';
+          }
+
+          var result = number.replace(new RegExp(thousandSeparator, 'g'), '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
 
           return Number(result);
         };
@@ -185,6 +191,11 @@ System.register(['i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-
             var attrCC = attr.replace(/-([a-z])/g, function (g) {
               return g[1].toUpperCase();
             });
+            var reservedNames = ['prepend', 'append', 'text', 'html'];
+            if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+              var i18nLogger = LogManager.getLogger('i18n');
+              i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+            }
 
             switch (attr) {
               case 'text':

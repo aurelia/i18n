@@ -1,5 +1,5 @@
-import i18next from 'i18next';
 import * as LogManager from 'aurelia-logging';
+import i18next from 'i18next';
 import {
   resolver
 } from 'aurelia-dependency-injection';

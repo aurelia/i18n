@@ -1,5 +1,6 @@
 var _class, _temp;
 
+import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
 import { DOM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -73,7 +74,11 @@ export let I18N = (_temp = _class = class I18N {
     let thousandSeparator = comparer[1];
     let decimalSeparator = comparer[5];
 
-    let result = number.replace(thousandSeparator, '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
+    if (thousandSeparator === '.') {
+      thousandSeparator = '\\.';
+    }
+
+    let result = number.replace(new RegExp(thousandSeparator, 'g'), '').replace(/[^\d.,-]/g, '').replace(decimalSeparator, '.');
 
     return Number(result);
   }
@@ -162,6 +167,14 @@ export let I18N = (_temp = _class = class I18N {
       const attrCC = attr.replace(/-([a-z])/g, function (g) {
         return g[1].toUpperCase();
       });
+      const reservedNames = ['prepend', 'append', 'text', 'html'];
+      if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+        const i18nLogger = LogManager.getLogger('i18n');
+        i18nLogger.warn(`Aurelia I18N reserved attribute name\n
+[${ reservedNames.join(', ') }]\n
+Your custom element has a bindable named ${ attr } which is a reserved word.\n
+If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
+      }
 
       switch (attr) {
         case 'text':

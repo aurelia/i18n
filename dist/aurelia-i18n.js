@@ -1,5 +1,5 @@
-import i18next from 'i18next';
 import * as LogManager from 'aurelia-logging';
+import i18next from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
 import {DOM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -545,8 +545,12 @@ export class I18N {
     let thousandSeparator = comparer[1];
     let decimalSeparator  = comparer[5];
 
-    // remove thousand seperator
-    let result = number.replace(thousandSeparator, '')
+    if (thousandSeparator === '.') {
+      thousandSeparator = '\\.';
+    }
+
+    // remove all thousand seperators
+    let result = number.replace(new RegExp(thousandSeparator, 'g'), '')
       // remove non-numeric signs except -> , .
       .replace(/[^\d.,-]/g, '')
       // replace original decimalSeparator with english one
@@ -652,6 +656,18 @@ export class I18N {
 
       // convert to camelCase
       const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
+      const reservedNames = ['prepend', 'append', 'text', 'html'];
+      if (reservedNames.indexOf(attr) > -1 &&
+          node.au &&
+          node.au.controller &&
+          node.au.controller.viewModel &&
+          attrCC in node.au.controller.viewModel) {
+        const i18nLogger = LogManager.getLogger('i18n');
+        i18nLogger.warn(`Aurelia I18N reserved attribute name\n
+[${reservedNames.join(', ')}]\n
+Your custom element has a bindable named ${attr} which is a reserved word.\n
+If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
+      }
 
       //handle various attributes
       //anything other than text,prepend,append or html will be added as an attribute on the element.
