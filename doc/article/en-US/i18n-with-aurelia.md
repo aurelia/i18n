@@ -237,6 +237,8 @@ be slight differences. The following listings show the configuration for first t
 </code-listing>
 
 You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object containing the different namespaces as well as the default namespace.
+When using namespaces, you will need to prepend string references with `ns:` for those strings that are not in the
+defaultNS. For example `t='nav:profile'` would access the `profile` string in `nav.json`.
 
 <code-listing heading="Setting up Multiple Namespaces">
   <source-code lang="ES 2015">
