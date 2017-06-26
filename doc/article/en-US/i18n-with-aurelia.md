@@ -160,6 +160,8 @@ Fourth, in those subfolders create a file named `translation.json` which contain
 Fifth, create (if you haven't already) a file `main.js` in your `src` folder to configure the plugin. Depending on which backend you've chosen there might
 be slight differences. The following listings show the configuration for first the built-in aurelia loader, the second using i18next-xhr-backend.
 
+> Notice that Aurelia I18N makes use of a non-standard attributes option, which is used to define custom aliases besides the default ones, being `t` and `i18n`. Calling `TCustomAttribute.configureAliases` is currently necessary in order make sure that the aliases are defined before view templates are fully processed.
+
 <code-listing heading="Registering the Plugin - using the built-in aurelia loader backed:">
     <source-code lang="ES 2015">
 
