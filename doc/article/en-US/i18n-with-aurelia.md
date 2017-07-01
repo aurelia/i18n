@@ -45,12 +45,12 @@ We'll discuss TypeScript specifics in a later section.
 
 In order to install the Plugin with a CLI Project, first install the plugin via npm, from within the root folder of your project:
 
-`npm install aurelia-i18n`
+`npm install aurelia-i18n --save`
 
 Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. You can use the built-in backend that uses aurelia's loader or any of your choice.
 As an example we're going to leverage the i18next-xhr-backend:
 
-`npm install i18next i18next-xhr-backend`
+`npm install i18next i18next-xhr-backend --save`
 
 After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to the section named *dependencies*. In there add the following three entries:
 
@@ -95,13 +95,13 @@ jspm install npm:i18next-xhr-backend
 Install the `aurelia-i18n` plugin in your project using `npm` and the following command:
 
 ```shell
-npm install aurelia-i18n
+npm install aurelia-i18n --save
 ```
 
 Also optionally install the `i18next-xhr-backend` plugin:
 
 ```shell
-npm install i18next-xhr-backend
+npm install i18next-xhr-backend --save
 ```
 
 > You can skip this part if you're planning to use the built-in aurelia-i18n-loader
@@ -1057,7 +1057,7 @@ have to opt-in and bundle the Polyfill manually.
 
 To do so first install the Polyfill as part of your project using npm:
 
-`npm install intl`
+`npm install intl --save`
 
 After that open up the *aurelia_project/aurelia.json* file and add the following dependency:
 ```json
