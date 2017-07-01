@@ -369,7 +369,7 @@ To get the active locale you'd go with `getLocale()`:
 </code-listing>
 
 ### Translating via code
-Translating stuff via code works by using the method `tr`. You pass in the `key` as its first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions for a detailed list of those:
+Translating stuff via code works by using the method `tr`. You pass in the `key` as its first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions) for a detailed list of those:
 
 <code-listing heading="Translating using the i18n.tr function">
   <source-code lang="ES 2015">
