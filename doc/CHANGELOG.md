@@ -1,3 +1,10 @@
+<a name="1.6.2"></a>
+## [1.6.2](https://github.com/aurelia/i18n/compare/1.6.1...v1.6.2) (2017-07-10)
+
+### Bug Fixes
+
+* Don't try to parse translation json if already parsed.
+
 <a name="1.6.1"></a>
 ## [1.6.1](https://github.com/aurelia/i18n/compare/1.6.0...v1.6.1) (2017-05-31)
 

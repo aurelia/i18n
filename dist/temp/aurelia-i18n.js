@@ -794,7 +794,7 @@ var Backend = exports.Backend = (_temp2 = _class3 = function () {
       var ret = void 0;
       var err = void 0;
       try {
-        ret = _this5.options.parse(response, url);
+        ret = response instanceof Object ? response : _this5.options.parse(response, url);
       } catch (e) {
         err = 'failed parsing ' + url + ' to json';
       }

@@ -82,7 +82,7 @@ System.register([], function (_export, _context) {
             var ret = void 0;
             var err = void 0;
             try {
-              ret = _this.options.parse(response, url);
+              ret = response instanceof Object ? response : _this.options.parse(response, url);
             } catch (e) {
               err = 'failed parsing ' + url + ' to json';
             }

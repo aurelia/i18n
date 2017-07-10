@@ -792,7 +792,7 @@ export class Backend {
       let ret;
       let err;
       try {
-        ret = this.options.parse(response, url);
+        ret = (response instanceof Object) ? response : this.options.parse(response, url);
       } catch (e) {
         err = 'failed parsing ' + url + ' to json';
       }
