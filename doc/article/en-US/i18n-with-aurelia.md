@@ -1042,6 +1042,23 @@ Last but not least search for the build/bundles/source section for the app-bundl
       ...
 ```
 
+and inlcude the json extensino in the loader plugin part build/loader/plugins/extensions
+```json
+     ...
+     "plugins": [
+        {
+          "name": "text",
+          "extensions": [
+            ".html",
+            ".css",
+            ".json"
+          ],
+          "stub": true
+        }
+      ]
+      ...
+```
+
 ## [Internationalization API Polyfill](aurelia-doc://section/7/version/1.0.0)
 
 The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
