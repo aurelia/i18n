@@ -50,6 +50,35 @@ export const translations = {
       'year_in_plural': 'in __count__ years'
     }
   },
+  es: {
+    translation: {
+      'now': 'ahora mismo',
+      'second_ago': 'hace __count__ segundo',
+      'second_ago_plural': 'hace __count__ segundos',
+      'second_in': 'en __count__ segundo',
+      'second_in_plural': 'en __count__ segundos',
+      'minute_ago': 'hace __count__ minuto',
+      'minute_ago_plural': 'hace __count__ minutos',
+      'minute_in': 'en __count__ minuto',
+      'minute_in_plural': 'en __count__ minutos',
+      'hour_ago': 'hace __count__ hora',
+      'hour_ago_plural': 'hace __count__ horas',
+      'hour_in': 'en __count__ hora',
+      'hour_in_plural': 'en __count__ horas',
+      'day_ago': 'hace __count__ día',
+      'day_ago_plural': 'hace __count__ días',
+      'day_in': 'en __count__ día',
+      'day_in_plural': 'en __count__ días',
+      'month_ago': 'hace __count__ mes',
+      'month_ago_plural': 'hace __count__ meses',
+      'month_in': 'en __count__ mes',
+      'month_in_plural': 'en __count__ meses',
+      'year_ago': 'hace __count__ año',
+      'year_ago_plural': 'hace __count__ años',
+      'year_in': 'en __count__ año',
+      'year_in_plural': 'en __count__ años'
+    }
+  },
   it: {
     translation: {
       'now': 'adesso',
