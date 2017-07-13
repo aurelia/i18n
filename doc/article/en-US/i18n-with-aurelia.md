@@ -1042,7 +1042,7 @@ Last but not least search for the build/bundles/source section for the app-bundl
       ...
 ```
 
-and inlcude the json extensino in the loader plugin part build/loader/plugins/extensions
+and inlcude the json extension in the loader plugin part build/loader/plugins/extensions
 ```json
      ...
      "plugins": [
