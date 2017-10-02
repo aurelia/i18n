@@ -207,7 +207,7 @@ var I18N = exports.I18N = (_temp = _class = function () {
       switch (attr) {
         case 'text':
           var newChild = _aureliaPal.DOM.createTextNode(this.tr(key, params));
-          if (node._newChild) {
+          if (node._newChild && node._newChild.parentNode === node) {
             node.removeChild(node._newChild);
           }
 

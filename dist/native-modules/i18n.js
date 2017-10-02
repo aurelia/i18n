@@ -188,7 +188,7 @@ export var I18N = (_temp = _class = function () {
       switch (attr) {
         case 'text':
           var newChild = DOM.createTextNode(this.tr(key, params));
-          if (node._newChild) {
+          if (node._newChild && node._newChild.parentNode === node) {
             node.removeChild(node._newChild);
           }
 

@@ -179,7 +179,7 @@ If you'd like Aurelia I18N to translate your bindable instead, please consider g
       switch (attr) {
         case 'text':
           let newChild = DOM.createTextNode(this.tr(key, params));
-          if (node._newChild) {
+          if (node._newChild && node._newChild.parentNode === node) {
             node.removeChild(node._newChild);
           }
 

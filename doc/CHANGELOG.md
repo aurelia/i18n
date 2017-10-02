@@ -1,3 +1,26 @@
+<a name="2.0.0"></a>
+# [2.0.0](https://github.com/aurelia/i18n/compare/1.6.2...v2.0.0) (2017-10-02)
+
+
+### Bug Fixes
+
+* **attribute:** check parent node on remove ([375a745](https://github.com/aurelia/i18n/commit/375a745))
+* **relative-time:** updated translations for french locale ([fa922db](https://github.com/aurelia/i18n/commit/fa922db))
+
+
+### Features
+
+* **i18next:** update to v9.0.0 ([fa64f3e](https://github.com/aurelia/i18n/commit/fa64f3e))
+
+
+### BREAKING CHANGES
+
+* i18next: all tests passed, this might introduce some compatibility issues due to dropping support for i18next options of type v1. See details in i18next changelog
+
+fixes https://github.com/aurelia/i18n/issues/199
+
+
+
 <a name="1.6.2"></a>
 ## [1.6.2](https://github.com/aurelia/i18n/compare/1.6.1...v1.6.2) (2017-07-10)
 

@@ -60,6 +60,35 @@ export const translations = {
       'year_in_plural': 'in __count__ years'
     }
   },
+  es: {
+    translation: {
+      'now': 'ahora mismo',
+      'second_ago': 'hace __count__ segundo',
+      'second_ago_plural': 'hace __count__ segundos',
+      'second_in': 'en __count__ segundo',
+      'second_in_plural': 'en __count__ segundos',
+      'minute_ago': 'hace __count__ minuto',
+      'minute_ago_plural': 'hace __count__ minutos',
+      'minute_in': 'en __count__ minuto',
+      'minute_in_plural': 'en __count__ minutos',
+      'hour_ago': 'hace __count__ hora',
+      'hour_ago_plural': 'hace __count__ horas',
+      'hour_in': 'en __count__ hora',
+      'hour_in_plural': 'en __count__ horas',
+      'day_ago': 'hace __count__ día',
+      'day_ago_plural': 'hace __count__ días',
+      'day_in': 'en __count__ día',
+      'day_in_plural': 'en __count__ días',
+      'month_ago': 'hace __count__ mes',
+      'month_ago_plural': 'hace __count__ meses',
+      'month_in': 'en __count__ mes',
+      'month_in_plural': 'en __count__ meses',
+      'year_ago': 'hace __count__ año',
+      'year_ago_plural': 'hace __count__ años',
+      'year_in': 'en __count__ año',
+      'year_in_plural': 'en __count__ años'
+    }
+  },
   it: {
     translation: {
       'now': 'adesso',
@@ -150,22 +179,30 @@ export const translations = {
   fr: {
     translation: {
       'now': 'maintenant',
-      'second_ago': '__count__ seconde plus tôt',
-      'second_ago_plural': '__count__ secondes plus tôt',
-      'second_in': 'en __count__ seconde',
-      'second_in_plural': 'en __count__ secondes',
-      'minute_ago': '__count__ minute plus tôt',
-      'minute_ago_plural': '__count__ minutes plus tôt',
-      'minute_in': 'en __count__ minute',
-      'minute_in_plural': 'en __count__ minutes',
-      'hour_ago': '__count__ heure plus tôt',
-      'hour_ago_plural': '__count__ heures plus tôt',
-      'hour_in': 'en __count__ heure',
-      'hour_in_plural': 'en __count__ heures',
-      'day_ago': '__count__ jour plus tôt',
-      'day_ago_plural': '__count__ jours plus tôt',
-      'day_in': 'en __count__ jour',
-      'day_in_plural': 'en __count__ jours'
+      'second_ago': 'il y a __count__ seconde',
+      'second_ago_plural': 'il y a __count__ secondes',
+      'second_in': 'dans __count__ seconde',
+      'second_in_plural': 'dans __count__ secondes',
+      'minute_ago': 'il y a __count__ minute',
+      'minute_ago_plural': 'il y a __count__ minutes',
+      'minute_in': 'dans __count__ minute',
+      'minute_in_plural': 'dans __count__ minutes',
+      'hour_ago': 'il y a __count__ heure',
+      'hour_ago_plural': 'il y a __count__ heures',
+      'hour_in': 'dans __count__ heure',
+      'hour_in_plural': 'dans __count__ heures',
+      'day_ago': 'il y a __count__ jour',
+      'day_ago_plural': 'il y a __count__ jours',
+      'day_in': 'dans __count__ jour',
+      'day_in_plural': 'dans __count__ jours',
+      'month_ago': 'il y a __count__ mois',
+      'month_ago_plural': 'il y a __count__ mois',
+      'month_in': 'dans __count__ mois',
+      'month_in_plural': 'dans __count__ mois',
+      'year_ago': 'il y a __count__ an',
+      'year_ago_plural': 'il y a __count__ ans',
+      'year_in': 'dans __count__ an',
+      'year_in_plural': 'dans __count__ ans'
     }
   },
   th: {
@@ -674,7 +711,7 @@ If you'd like Aurelia I18N to translate your bindable instead, please consider g
       switch (attr) {
       case 'text':
         let newChild = DOM.createTextNode(this.tr(key, params));
-        if (node._newChild) {
+        if (node._newChild && node._newChild.parentNode === node) {
           node.removeChild(node._newChild);
         }
 
