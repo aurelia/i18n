@@ -121,5 +121,5 @@ declare namespace I18next {
 declare module 'i18next' {
     var i18next:I18next.I18n;
 
-    export default i18next;
+    export = i18next;
 }
