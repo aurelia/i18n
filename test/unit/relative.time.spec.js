@@ -21,6 +21,15 @@ describe('testing relative time support', () => {
     }).then(() => done());
   });
 
+  it('should provide a custom error message if lng option is not provided', () => {
+    expect(() => i18n.setup({
+      lng: undefined,
+      fallbackLng: 'en',
+      defaultNS: 'custom_default',
+      debug: false
+    })).toThrow();
+  });
+
   it('should provide now unit', () => {
     let expectedDate = new Date();
 
