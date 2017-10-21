@@ -1,5 +1,5 @@
 import * as LogManager from 'aurelia-logging';
-import i18next from 'i18next';
+import * as i18next from 'i18next';
 import {
   resolver
 } from 'aurelia-dependency-injection';
@@ -85,8 +85,6 @@ export declare class Backend {
   readMulti(languages?: any, namespaces?: any, callback?: any): any;
   read(language?: any, namespace?: any, callback?: any): any;
   loadUrl(url?: any, callback?: any): any;
-  
-  /* no retry */
   create(languages?: any, namespace?: any, key?: any, fallbackValue?: any): any;
 }
 export declare class BaseI18N {

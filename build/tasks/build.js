@@ -16,6 +16,7 @@ var gulpIgnore = require('gulp-ignore');
 var merge = require('merge2');
 var jsName = paths.packageName + '.js';
 var compileToModules = ['es2015', 'commonjs', 'amd', 'system', 'native-modules'];
+var replace = require("gulp-replace");
 
 function cleanGeneratedCode() {
   return through2.obj(function(file, enc, callback) {
@@ -64,6 +65,7 @@ gulp.task('build-index', function() {
 
 gulp.task('build-es2015-temp', function () {
     return gulp.src(paths.output + jsName)
+      .pipe(replace('import i18next from', 'import * as i18next from')) // Replace babel cjs import syntax with TS cjs import syntax
       .pipe(to5(assign({}, compilerOptions.commonjs())))
       .pipe(gulp.dest(paths.output + 'temp'));
 });
