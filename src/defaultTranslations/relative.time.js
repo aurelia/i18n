@@ -279,7 +279,7 @@ export const translations = {
       'day_in_plural': 'om __count__ dager'
     }
   },
-  jp: {
+  ja: {
     translation: {
       'now': 'たった今',
       'second_ago': '__count__ 秒前',
@@ -300,6 +300,27 @@ export const translations = {
       'day_in_plural': 'あと __count__ 日間'
     }
   },
+  jp: {
+    translation: {
+      'now': 'たった今',
+      'second_ago': '__count__ 秒前',
+      'second_ago_plural': '__count__ 秒前',
+      'second_in': 'あと __count__ 秒',
+      'second_in_plural': 'あと __count__ 秒',
+      'minute_ago': '__count__ 分前',
+      'minute_ago_plural': '__count__ 分前',
+      'minute_in': 'あと __count__ 分',
+      'minute_in_plural': 'あと __count__ 分',
+      'hour_ago': '__count__ 時間前',
+      'hour_ago_plural': '__count__ 時間前',
+      'hour_in': 'あと __count__ 時間',
+      'hour_in_plural': 'あと __count__ 時間',
+      'day_ago': '__count__ 日間前',
+      'day_ago_plural': '__count__ 日間前',
+      'day_in': 'あと __count__ 日間',
+      'day_in_plural': 'あと __count__ 日間'
+    }
+  }, 
   pt: {
     translation: {
       'now': 'neste exato momento',
