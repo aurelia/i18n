@@ -64,7 +64,7 @@ function configure(frameworkConfig, cb): Promise<void> {
   frameworkConfig.globalResources(PLATFORM.moduleName('./rt'));
 
   // check whether Intl is available, otherwise load the polyfill
-  if (window.Intl === undefined) {
+  if (PLATFORM.global.Intl === undefined) {
     let i18nLogger = LogManager.getLogger('i18n');
     i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
     let loader = frameworkConfig.container.get(Loader);
@@ -73,7 +73,7 @@ function configure(frameworkConfig, cb): Promise<void> {
     return loader.normalize('aurelia-i18n').then((i18nName) => {
       return loader.normalize('intl', i18nName).then((intlName) => {
         return loader.loadModule(intlName).then((poly) => {
-          window.Intl = poly;
+          PLATFORM.global.Intl = poly;
           return registerI18N(frameworkConfig, cb);
         }, () => i18nLogger.warn('Failed to load the Intl polyfill.'));
       }, () => i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl')));

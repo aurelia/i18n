@@ -1,7 +1,7 @@
 /*eslint no-cond-assign: 0*/
 import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
-import {DOM} from 'aurelia-pal';
+import {DOM, PLATFORM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingSignaler} from 'aurelia-templating-resources';
 
@@ -20,7 +20,7 @@ export class I18N {
   constructor(ea, signaler) {
     this.i18next = i18next;
     this.ea = ea;
-    this.Intl = window.Intl;
+    this.Intl = PLATFORM.global.Intl;
     this.signaler = signaler;
     this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }

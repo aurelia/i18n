@@ -4,6 +4,7 @@ import {metadata} from 'aurelia-metadata';
 import {customAttribute, HtmlBehaviorResource} from 'aurelia-templating';
 import {SignalBindingBehavior} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
+import {DOM} from 'aurelia-pal';
 import {LazyOptional} from './utils';
 
 
@@ -20,7 +21,7 @@ export class TValueConverter {
 
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
-  static inject = [Element];
+  static inject = [DOM.Element];
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -39,7 +40,7 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
