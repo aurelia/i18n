@@ -320,7 +320,7 @@ export const translations = {
       'day_in': 'あと __count__ 日間',
       'day_in_plural': 'あと __count__ 日間'
     }
-  }, 
+  },
   pt: {
     translation: {
       'now': 'neste exato momento',
