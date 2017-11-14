@@ -33,7 +33,7 @@ export class RtBindingBehavior {
 
   bind(binding, source) {
     // bind the signal behavior
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal', 'aurelia-relativetime-signal');
 
     // rewrite the expression to use the RtValueConverter.
     // pass through any args to the binding behavior to the RtValueConverter

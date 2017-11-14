@@ -717,6 +717,8 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
   </source-code>
 </code-listing>
 
+> If you want to only update your relative time binding behaviors, you may use the signal `aurelia-relativetime-signal` which will only trigger those and safe unnecessary update roundtrips
+
 ### Complex objects for variables
 In some cases it might be useful to define variables via complex objects. Let's take a look at below example. It shows a validation message to hint the user that a given field should be in range of min and max.
 Now we could easily pass min and max as separate variables but on the other hand that involves more work you'd have to do manually if the source is a object.
