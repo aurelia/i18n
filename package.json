@@ -12,6 +12,9 @@
   "bugs": {
     "url": "https://github.com/aurelia/i18n/issues"
   },
+  "scripts": {
+    "precommit": "gulp lint && karma start --single-run"
+  },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-i18n.js",
@@ -107,6 +110,7 @@
     "gulp-typedoc-extractor": "0.0.8",
     "gulp-typescript": "^2.13.6",
     "gulp-util": "^3.0.7",
+    "husky": "^0.14.3",
     "jasmine-core": "^2.4.1",
     "karma": "^1.1.2",
     "karma-babel-preprocessor": "^6.0.1",
