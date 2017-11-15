@@ -1,7 +1,7 @@
 import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
 import {resolver} from 'aurelia-dependency-injection';
-import {DOM} from 'aurelia-pal';
+import {DOM,PLATFORM} from 'aurelia-pal';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {BindingSignaler,SignalBindingBehavior} from 'aurelia-templating-resources';
 import {ValueConverter} from 'aurelia-binding';
@@ -289,6 +289,27 @@ export const translations = {
       'day_in_plural': 'om __count__ dager'
     }
   },
+  ja: {
+    translation: {
+      'now': 'たった今',
+      'second_ago': '__count__ 秒前',
+      'second_ago_plural': '__count__ 秒前',
+      'second_in': 'あと __count__ 秒',
+      'second_in_plural': 'あと __count__ 秒',
+      'minute_ago': '__count__ 分前',
+      'minute_ago_plural': '__count__ 分前',
+      'minute_in': 'あと __count__ 分',
+      'minute_in_plural': 'あと __count__ 分',
+      'hour_ago': '__count__ 時間前',
+      'hour_ago_plural': '__count__ 時間前',
+      'hour_in': 'あと __count__ 時間',
+      'hour_in_plural': 'あと __count__ 時間',
+      'day_ago': '__count__ 日間前',
+      'day_ago_plural': '__count__ 日間前',
+      'day_in': 'あと __count__ 日間',
+      'day_in_plural': 'あと __count__ 日間'
+    }
+  },
   jp: {
     translation: {
       'now': 'たった今',
@@ -525,7 +546,7 @@ export class I18N {
   constructor(ea, signaler) {
     this.i18next = i18next;
     this.ea = ea;
-    this.Intl = window.Intl;
+    this.Intl = PLATFORM.global.Intl;
     this.signaler = signaler;
     this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
   }
@@ -539,6 +560,10 @@ export class I18N {
       fallbackLng: 'en',
       debug: false
     };
+
+    if (options && !options.lng) {
+      throw new Error('You need to provide the lng option');
+    }
 
     i18next.init(options || defaultOptions, (err, t) => {
       //make sure attributes is an array in case a string was provided
@@ -876,7 +901,7 @@ function defaults(obj) {
 
 export class BaseI18N {
 
-  static inject = [I18N, Element, EventAggregator];
+  static inject = [I18N, DOM.Element, EventAggregator];
 
   constructor(i18n, element, ea) {
     this.i18n = i18n;
@@ -1125,7 +1150,7 @@ export class TValueConverter {
 
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
-  static inject = [Element];
+  static inject = [DOM.Element];
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -1144,7 +1169,7 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
@@ -1257,7 +1282,7 @@ export class RtBindingBehavior {
 
   bind(binding, source) {
     // bind the signal behavior
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal', 'aurelia-relativetime-signal');
 
     // rewrite the expression to use the RtValueConverter.
     // pass through any args to the binding behavior to the RtValueConverter

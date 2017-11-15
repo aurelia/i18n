@@ -6,6 +6,7 @@ import { metadata } from 'aurelia-metadata';
 import { customAttribute, HtmlBehaviorResource } from 'aurelia-templating';
 import { SignalBindingBehavior } from 'aurelia-templating-resources';
 import { ValueConverter } from 'aurelia-binding';
+import { DOM } from 'aurelia-pal';
 import { LazyOptional } from './utils';
 
 export let TValueConverter = class TValueConverter {
@@ -33,7 +34,7 @@ export let TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_c
   }
 
   valueChanged() {}
-}, _class2.inject = [Element], _temp)) || _class);
+}, _class2.inject = [DOM.Element], _temp)) || _class);
 
 export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = class TCustomAttribute {
   static configureAliases(aliases) {
@@ -79,7 +80,7 @@ export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_t
       this.subscription.dispose();
     }
   }
-}, _class4.inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+}, _class4.inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
 
 export let TBindingBehavior = (_temp3 = _class5 = class TBindingBehavior {
 

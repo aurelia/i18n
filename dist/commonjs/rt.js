@@ -51,7 +51,7 @@ var RtBindingBehavior = exports.RtBindingBehavior = function () {
   }
 
   RtBindingBehavior.prototype.bind = function bind(binding, source) {
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal', 'aurelia-relativetime-signal');
 
     var sourceExpression = binding.sourceExpression;
 

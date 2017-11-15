@@ -19,6 +19,8 @@ var _aureliaTemplatingResources = require('aurelia-templating-resources');
 
 var _aureliaBinding = require('aurelia-binding');
 
+var _aureliaPal = require('aurelia-pal');
+
 var _utils = require('./utils');
 
 
@@ -56,7 +58,7 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec = (0, _aurel
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class2.inject = [Element], _temp)) || _class);
+}(), _class2.inject = [_aureliaPal.DOM.Element], _temp)) || _class);
 var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
   TCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
@@ -107,7 +109,7 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class4.inject = [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+}(), _class4.inject = [_aureliaPal.DOM.Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
 var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     

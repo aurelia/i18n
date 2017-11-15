@@ -2,7 +2,7 @@ var _class, _temp;
 
 import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
-import { DOM } from 'aurelia-pal';
+import { DOM, PLATFORM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { BindingSignaler } from 'aurelia-templating-resources';
 
@@ -18,7 +18,7 @@ export let I18N = (_temp = _class = class I18N {
 
     this.i18next = i18next;
     this.ea = ea;
-    this.Intl = window.Intl;
+    this.Intl = PLATFORM.global.Intl;
     this.signaler = signaler;
     this.i18nextDefered.promise = new Promise(resolve => this.i18nextDefered.resolve = resolve);
   }
@@ -32,6 +32,10 @@ export let I18N = (_temp = _class = class I18N {
       fallbackLng: 'en',
       debug: false
     };
+
+    if (options && !options.lng) {
+      throw new Error('You need to provide the lng option');
+    }
 
     i18next.init(options || defaultOptions, (err, t) => {
       if (i18next.options.attributes instanceof String) {
@@ -171,8 +175,8 @@ export let I18N = (_temp = _class = class I18N {
       if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
         const i18nLogger = LogManager.getLogger('i18n');
         i18nLogger.warn(`Aurelia I18N reserved attribute name\n
-[${ reservedNames.join(', ') }]\n
-Your custom element has a bindable named ${ attr } which is a reserved word.\n
+[${reservedNames.join(', ')}]\n
+Your custom element has a bindable named ${attr} which is a reserved word.\n
 If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
       }
 

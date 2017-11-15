@@ -9,6 +9,8 @@ var _class, _temp;
 
 var _i18n = require('./i18n');
 
+var _aureliaPal = require('aurelia-pal');
+
 var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 
@@ -36,4 +38,4 @@ var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
   };
 
   return BaseI18N;
-}(), _class.inject = [_i18n.I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);
+}(), _class.inject = [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp);

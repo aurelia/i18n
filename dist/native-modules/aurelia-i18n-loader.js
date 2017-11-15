@@ -9,7 +9,7 @@ export var Backend = (_temp = _class = function () {
   };
 
   function Backend(services) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     
 
@@ -18,7 +18,7 @@ export var Backend = (_temp = _class = function () {
   }
 
   Backend.prototype.init = function init(services) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     this.services = services;
     this.options = defaults(options, this.options || {}, getDefaults());

@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Backend = exports.EventAggregator = exports.BaseI18N = exports.TParamsCustomAttribute = exports.TCustomAttribute = exports.TBindingBehavior = exports.TValueConverter = exports.RtBindingBehavior = exports.RtValueConverter = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.RelativeTime = exports.I18N = exports.configure = undefined;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 var _aureliaLogging = require('aurelia-logging');
 
 var LogManager = _interopRequireWildcard(_aureliaLogging);
@@ -77,32 +75,26 @@ function configure(frameworkConfig, cb) {
   frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./df'));
   frameworkConfig.globalResources(_aureliaPal.PLATFORM.moduleName('./rt'));
 
-  if (window.Intl === undefined) {
-    var _ret = function () {
-      var i18nLogger = LogManager.getLogger('i18n');
-      i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
-      var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
-      var normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
+  if (_aureliaPal.PLATFORM.global.Intl === undefined) {
+    var i18nLogger = LogManager.getLogger('i18n');
+    i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
+    var loader = frameworkConfig.container.get(_aureliaLoader.Loader);
+    var normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
 
-      return {
-        v: loader.normalize('aurelia-i18n').then(function (i18nName) {
-          return loader.normalize('intl', i18nName).then(function (intlName) {
-            return loader.loadModule(intlName).then(function (poly) {
-              window.Intl = poly;
-              return registerI18N(frameworkConfig, cb);
-            }, function () {
-              return i18nLogger.warn('Failed to load the Intl polyfill.');
-            });
-          }, function () {
-            return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl'));
-          });
+    return loader.normalize('aurelia-i18n').then(function (i18nName) {
+      return loader.normalize('intl', i18nName).then(function (intlName) {
+        return loader.loadModule(intlName).then(function (poly) {
+          _aureliaPal.PLATFORM.global.Intl = poly;
+          return registerI18N(frameworkConfig, cb);
         }, function () {
-          return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'aurelia-i18n'));
-        })
-      };
-    }();
-
-    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+          return i18nLogger.warn('Failed to load the Intl polyfill.');
+        });
+      }, function () {
+        return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl'));
+      });
+    }, function () {
+      return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'aurelia-i18n'));
+    });
   }
 
   return Promise.resolve(registerI18N(frameworkConfig, cb));

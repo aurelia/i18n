@@ -4,7 +4,7 @@ var _class, _temp;
 
 import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
-import { DOM } from 'aurelia-pal';
+import { DOM, PLATFORM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { BindingSignaler } from 'aurelia-templating-resources';
 
@@ -23,7 +23,7 @@ export var I18N = (_temp = _class = function () {
 
     this.i18next = i18next;
     this.ea = ea;
-    this.Intl = window.Intl;
+    this.Intl = PLATFORM.global.Intl;
     this.signaler = signaler;
     this.i18nextDefered.promise = new Promise(function (resolve) {
       return _this.i18nextDefered.resolve = resolve;
@@ -41,6 +41,10 @@ export var I18N = (_temp = _class = function () {
       fallbackLng: 'en',
       debug: false
     };
+
+    if (options && !options.lng) {
+      throw new Error('You need to provide the lng option');
+    }
 
     i18next.init(options || defaultOptions, function (err, t) {
       if (i18next.options.attributes instanceof String) {

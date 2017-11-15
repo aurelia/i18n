@@ -45,7 +45,7 @@ export let RelativeTime = class RelativeTime {
 
     if (options.interpolation && options.interpolation.prefix !== '__' || options.interpolation.suffix !== '__') {
       for (let subkey in translation) {
-        translation[subkey] = translation[subkey].replace('__count__', `${ options.interpolation.prefix || '{{' }count${ options.interpolation.suffix || '}}' }`);
+        translation[subkey] = translation[subkey].replace('__count__', `${options.interpolation.prefix || '{{'}count${options.interpolation.suffix || '}}'}`);
       }
     }
 

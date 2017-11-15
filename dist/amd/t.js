@@ -1,4 +1,4 @@
-define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaMetadata, _aureliaTemplating, _aureliaTemplatingResources, _aureliaBinding, _utils) {
+define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', 'aurelia-pal', './utils'], function (exports, _i18n, _aureliaEventAggregator, _aureliaMetadata, _aureliaTemplating, _aureliaTemplatingResources, _aureliaBinding, _aureliaPal, _utils) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -43,7 +43,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'au
     TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
     return TParamsCustomAttribute;
-  }(), _class2.inject = [Element], _temp)) || _class);
+  }(), _class2.inject = [_aureliaPal.DOM.Element], _temp)) || _class);
   var TCustomAttribute = exports.TCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
     TCustomAttribute.configureAliases = function configureAliases(aliases) {
       var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
@@ -94,7 +94,7 @@ define(['exports', './i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'au
     };
 
     return TCustomAttribute;
-  }(), _class4.inject = [Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+  }(), _class4.inject = [_aureliaPal.DOM.Element, _i18n.I18N, _aureliaEventAggregator.EventAggregator, _utils.LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
   var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class5 = function () {
     function TBindingBehavior(signalBindingBehavior) {
       

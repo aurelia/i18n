@@ -4,7 +4,8 @@ import {
   resolver
 } from 'aurelia-dependency-injection';
 import {
-  DOM
+  DOM,
+  PLATFORM
 } from 'aurelia-pal';
 import {
   EventAggregator

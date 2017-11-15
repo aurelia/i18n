@@ -1,3 +1,21 @@
+<a name="2.1.0"></a>
+# [2.1.0](https://github.com/aurelia/i18n/compare/2.0.0...2.1.0) (2017-11-15)
+
+
+### Bug Fixes
+
+* **PAL:** support for pal-nodejs ([66412a8](https://github.com/aurelia/i18n/commit/66412a8))
+* **relative-time:** error on missing lng ([5deb4d2](https://github.com/aurelia/i18n/commit/5deb4d2))
+* **relative-time:** fix japanese locale name ([42ec461](https://github.com/aurelia/i18n/commit/42ec461))
+* **ts:** workaround for allowSyntheticDefaultImports ([ec6dbbe](https://github.com/aurelia/i18n/commit/ec6dbbe))
+
+
+### Features
+
+* **relative-time:** aurelia-relativetime-signal ([cce3b09](https://github.com/aurelia/i18n/commit/cce3b09))
+
+
+
 <a name="2.0.0"></a>
 # [2.0.0](https://github.com/aurelia/i18n/compare/1.6.2...v2.0.0) (2017-10-02)
 

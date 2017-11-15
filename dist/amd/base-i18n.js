@@ -1,4 +1,4 @@
-define(['exports', './i18n', 'aurelia-event-aggregator'], function (exports, _i18n, _aureliaEventAggregator) {
+define(['exports', './i18n', 'aurelia-pal', 'aurelia-event-aggregator'], function (exports, _i18n, _aureliaPal, _aureliaEventAggregator) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -33,5 +33,5 @@ define(['exports', './i18n', 'aurelia-event-aggregator'], function (exports, _i1
     };
 
     return BaseI18N;
-  }(), _class.inject = [_i18n.I18N, Element, _aureliaEventAggregator.EventAggregator], _temp);
+  }(), _class.inject = [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp);
 });

@@ -1,6 +1,7 @@
 var _class, _temp;
 
 import { I18N } from './i18n';
+import { DOM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 export let BaseI18N = (_temp = _class = class BaseI18N {
@@ -21,4 +22,4 @@ export let BaseI18N = (_temp = _class = class BaseI18N {
   detached() {
     this.__i18nDisposer.dispose();
   }
-}, _class.inject = [I18N, Element, EventAggregator], _temp);
+}, _class.inject = [I18N, DOM.Element, EventAggregator], _temp);

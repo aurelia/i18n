@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', './utils'], function (_export, _context) {
+System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', 'aurelia-pal', './utils'], function (_export, _context) {
   "use strict";
 
-  var I18N, EventAggregator, metadata, customAttribute, HtmlBehaviorResource, SignalBindingBehavior, ValueConverter, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
+  var I18N, EventAggregator, metadata, customAttribute, HtmlBehaviorResource, SignalBindingBehavior, ValueConverter, DOM, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
 
   
 
@@ -21,6 +21,8 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
       SignalBindingBehavior = _aureliaTemplatingResources.SignalBindingBehavior;
     }, function (_aureliaBinding) {
       ValueConverter = _aureliaBinding.ValueConverter;
+    }, function (_aureliaPal) {
+      DOM = _aureliaPal.DOM;
     }, function (_utils) {
       LazyOptional = _utils.LazyOptional;
     }],
@@ -60,7 +62,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
         TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
         return TParamsCustomAttribute;
-      }(), _class2.inject = [Element], _temp)) || _class));
+      }(), _class2.inject = [DOM.Element], _temp)) || _class));
 
       _export('TParamsCustomAttribute', TParamsCustomAttribute);
 
@@ -114,7 +116,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
         };
 
         return TCustomAttribute;
-      }(), _class4.inject = [Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3));
+      }(), _class4.inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3));
 
       _export('TCustomAttribute', TCustomAttribute);
 

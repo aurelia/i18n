@@ -7,7 +7,7 @@ exports.RtBindingBehavior = exports.RtValueConverter = exports.TBindingBehavior 
 
 var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _class5, _class6, _temp4, _dec3, _class7, _class8, _temp5, _class9, _temp6;
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _aureliaLogging = require('aurelia-logging');
 
@@ -15,7 +15,7 @@ var LogManager = _interopRequireWildcard(_aureliaLogging);
 
 var _i18next = require('i18next');
 
-var _i18next2 = _interopRequireDefault(_i18next);
+var i18next = _interopRequireWildcard(_i18next);
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
@@ -30,8 +30,6 @@ var _aureliaBinding = require('aurelia-binding');
 var _aureliaMetadata = require('aurelia-metadata');
 
 var _aureliaTemplating = require('aurelia-templating');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -317,6 +315,27 @@ var translations = exports.translations = {
       'day_in_plural': 'om __count__ dager'
     }
   },
+  ja: {
+    translation: {
+      'now': 'たった今',
+      'second_ago': '__count__ 秒前',
+      'second_ago_plural': '__count__ 秒前',
+      'second_in': 'あと __count__ 秒',
+      'second_in_plural': 'あと __count__ 秒',
+      'minute_ago': '__count__ 分前',
+      'minute_ago_plural': '__count__ 分前',
+      'minute_in': 'あと __count__ 分',
+      'minute_in_plural': 'あと __count__ 分',
+      'hour_ago': '__count__ 時間前',
+      'hour_ago_plural': '__count__ 時間前',
+      'hour_in': 'あと __count__ 時間',
+      'hour_in_plural': 'あと __count__ 時間',
+      'day_ago': '__count__ 日間前',
+      'day_ago_plural': '__count__ 日間前',
+      'day_in': 'あと __count__ 日間',
+      'day_in_plural': 'あと __count__ 日間'
+    }
+  },
   jp: {
     translation: {
       'now': 'たった今',
@@ -552,9 +571,9 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       promise: null
     };
 
-    this.i18next = _i18next2.default;
+    this.i18next = i18next;
     this.ea = ea;
-    this.Intl = window.Intl;
+    this.Intl = _aureliaPal.PLATFORM.global.Intl;
     this.signaler = signaler;
     this.i18nextDefered.promise = new Promise(function (resolve) {
       return _this2.i18nextDefered.resolve = resolve;
@@ -573,9 +592,13 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       debug: false
     };
 
-    _i18next2.default.init(options || defaultOptions, function (err, t) {
-      if (_i18next2.default.options.attributes instanceof String) {
-        _i18next2.default.options.attributes = [_i18next2.default.options.attributes];
+    if (options && !options.lng) {
+      throw new Error('You need to provide the lng option');
+    }
+
+    i18next.init(options || defaultOptions, function (err, t) {
+      if (i18next.options.attributes instanceof String) {
+        i18next.options.attributes = [i18next.options.attributes];
       }
 
       _this3.i18nextDefered.resolve(_this3.i18next);
@@ -785,7 +808,7 @@ var Backend = exports.Backend = (_temp2 = _class3 = function () {
   };
 
   function Backend(services) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     _classCallCheck(this, Backend);
 
@@ -794,7 +817,7 @@ var Backend = exports.Backend = (_temp2 = _class3 = function () {
   }
 
   Backend.prototype.init = function init(services) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
     this.services = services;
     this.options = defaults(options, this.options || {}, getDefaults());
@@ -898,7 +921,7 @@ var BaseI18N = exports.BaseI18N = (_temp3 = _class4 = function () {
   };
 
   return BaseI18N;
-}(), _class4.inject = [I18N, Element, _aureliaEventAggregator.EventAggregator], _temp3);
+}(), _class4.inject = [I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp3);
 
 var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
@@ -1160,7 +1183,7 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aure
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class6.inject = [Element], _temp4)) || _class5);
+}(), _class6.inject = [_aureliaPal.DOM.Element], _temp4)) || _class5);
 var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class7 = (_temp5 = _class8 = function () {
   TCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
@@ -1211,7 +1234,7 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class8.inject = [Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp5)) || _class7);
+}(), _class8.inject = [_aureliaPal.DOM.Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp5)) || _class7);
 var TBindingBehavior = exports.TBindingBehavior = (_temp6 = _class9 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     _classCallCheck(this, TBindingBehavior);
@@ -1278,7 +1301,7 @@ var RtBindingBehavior = exports.RtBindingBehavior = function () {
   }
 
   RtBindingBehavior.prototype.bind = function bind(binding, source) {
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal', 'aurelia-relativetime-signal');
 
     var sourceExpression = binding.sourceExpression;
 

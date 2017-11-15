@@ -3,7 +3,7 @@
 System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-aggregator', 'aurelia-templating-resources'], function (_export, _context) {
   "use strict";
 
-  var LogManager, i18next, DOM, EventAggregator, BindingSignaler, _class, _temp, I18N;
+  var LogManager, i18next, DOM, PLATFORM, EventAggregator, BindingSignaler, _class, _temp, I18N;
 
   
 
@@ -14,6 +14,7 @@ System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-agg
       i18next = _i18next.default;
     }, function (_aureliaPal) {
       DOM = _aureliaPal.DOM;
+      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_aureliaEventAggregator) {
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }, function (_aureliaTemplatingResources) {
@@ -35,7 +36,7 @@ System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-agg
 
           this.i18next = i18next;
           this.ea = ea;
-          this.Intl = window.Intl;
+          this.Intl = PLATFORM.global.Intl;
           this.signaler = signaler;
           this.i18nextDefered.promise = new Promise(function (resolve) {
             return _this.i18nextDefered.resolve = resolve;
@@ -53,6 +54,10 @@ System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-agg
             fallbackLng: 'en',
             debug: false
           };
+
+          if (options && !options.lng) {
+            throw new Error('You need to provide the lng option');
+          }
 
           i18next.init(options || defaultOptions, function (err, t) {
             if (i18next.options.attributes instanceof String) {

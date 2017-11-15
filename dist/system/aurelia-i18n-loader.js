@@ -36,7 +36,7 @@ System.register([], function (_export, _context) {
         };
 
         function Backend(services) {
-          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+          var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
           
 
@@ -45,7 +45,7 @@ System.register([], function (_export, _context) {
         }
 
         Backend.prototype.init = function init(services) {
-          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+          var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
           this.services = services;
           this.options = defaults(options, this.options || {}, getDefaults());
