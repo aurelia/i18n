@@ -15,7 +15,7 @@ module.exports = function(config) {
     jspm: {
       // Edit this to your needs
       loadFiles: ['test/unit/setup.js', 'test/unit/**/*.js'],
-      serveFiles: ['src/**/*.js', 'test/unit/fixtures/**/*']
+      serveFiles: ['src/**/*.js', 'test/unit/fixtures/**/*', 'test/unit/mocks/**/*-vm.*']
     },
 
 
@@ -29,7 +29,9 @@ module.exports = function(config) {
     // proxy test images, map the same placeholder to different requests
     proxies: {
       '/testimage-english.jpg': '/base/test/unit/fixtures/placeholder.jpg',
-      '/testimage-german.jpg': '/base/test/unit/fixtures/placeholder.jpg'
+      '/testimage-german.jpg': '/base/test/unit/fixtures/placeholder.jpg',
+      // redirect aurelia.feature's request of the index file to the actual setup
+      '/base/src/index.js': '/base/src/aurelia-i18n.js'
     },
 
     // list of files to exclude
