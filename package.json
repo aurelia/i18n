@@ -12,9 +12,7 @@
   "bugs": {
     "url": "https://github.com/aurelia/i18n/issues"
   },
-  "scripts": {
-
-  },
+  "scripts": {},
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-i18n.js",
@@ -58,6 +56,7 @@
       "intl": "^1.2.4"
     },
     "devDependencies": {
+      "aurelia-bootstrapper": "^2.1.1",
       "aurelia-pal-browser": "^1.0.0-rc.1.0.0",
       "aurelia-polyfills": "^1.0.0-rc.1.0.0",
       "aurelia-testing": "^0.4.0",
