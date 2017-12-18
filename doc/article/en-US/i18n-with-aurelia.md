@@ -176,7 +176,7 @@ be slight differences. The following listings show the configuration for first t
           let aliases = ['t', 'i18n'];
           // add aliases for 't' attribute
           TCustomAttribute.configureAliases(aliases);
-          
+
           // register backend plugin
           instance.i18next.use(Backend.with(aurelia.loader));
 
@@ -216,7 +216,7 @@ be slight differences. The following listings show the configuration for first t
             let aliases = ['t', 'i18n'];
             // add aliases for 't' attribute
             TCustomAttribute.configureAliases(aliases);
-            
+
             // register backend plugin
             instance.i18next.use(Backend);
 
@@ -262,7 +262,7 @@ If you are using [`reflect-metadata`](https://www.npmjs.com/package/reflect-meta
 
     <script>
       System.import('reflect-metadata').then( () => {
-        System.import('aurelia-bootstrapper');  
+        System.import('aurelia-bootstrapper');
       });
     </script>
 
@@ -394,7 +394,7 @@ property plugin `instance.setup` function parameter.
 
 <code-listing heading="Configuring translation attributes">
   <source-code lang="ES 2015">
-  
+
     ...
     .plugin("aurelia-i18n", (instance) => {
       ...
@@ -409,7 +409,7 @@ property plugin `instance.setup` function parameter.
       ...
     });
     ...
-    
+
   </source-code>
 </code-listing>
 
@@ -537,7 +537,7 @@ export class Foo {
 <foo>
   <span>[TRANSLATED VALUE OF BAR KEY]</span>
 </foo>
-```  
+```
 
 Any other values will be used as actual attributes on the element itself.
 The following example will not change the content of the element, but will set its `alt` attribute to the translated value of `title` when the locale changes.
@@ -628,7 +628,7 @@ class MyVM {
 }
 ```
 
-> The object passed to `t-params` is a complex object explained [in the next section](/doc/article/aurelia/i18n/latest/i18n-with-aurelia/5)
+> The object passed to `t-params` is a complex object explained [in the next section](/doc/article/aurelia/i18n/latest/i18n-with-aurelia/5). To use it via code, see [Complex objects for variables via code](/doc/article/en-US/i18n-with-aurelia.md#complex-objects-for-variables)
 
 ### Translating with the TValueConverter
 In order to do translations in a more declarative way from within your HTML markup you can use a custom ValueConverter named `t`. It takes exactly the same `options` as the code translation method `tr` but of course provides the key automatically.
@@ -719,7 +719,7 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
 
 > If you want to only update your relative time binding behaviors, you may use the signal `aurelia-relativetime-signal` which will only trigger those and safe unnecessary update roundtrips
 
-### Complex objects for variables
+### Complex objects for variables via code
 In some cases it might be useful to define variables via complex objects. Let's take a look at below example. It shows a validation message to hint the user that a given field should be in range of min and max.
 Now we could easily pass min and max as separate variables but on the other hand that involves more work you'd have to do manually if the source is a object.
 
@@ -786,7 +786,7 @@ Below is an example how to access the NumberFormat via code:
         var result = nf.format(123456.123);
 
         console.log(result);
-        // output => 123.456,123 €  	  
+        // output => 123.456,123 €
       }
       ...
     }
@@ -857,7 +857,7 @@ Below you'll find an example how to use those via code:
         var result = df.format(new Date(2000, 0, 1, 0,0,1));
 
         console.log(result);
-        // output => 01.01.2000 00:00:01  	  
+        // output => 01.01.2000 00:00:01
       }
       ...
     }
@@ -913,7 +913,7 @@ To use it via code get hold of the service via injection and call the method as 
         var result = relativeTime.getRelativeTime(myDate);
 
         console.log(result);
-        // output => 2 hours ago  	  
+        // output => 2 hours ago
       }
       ...
     }
@@ -973,8 +973,8 @@ If you're using JSPM as your module loader, the bundle configuration might look 
          "includes": [
            "[*.js]",
            "*.html!text",
-           "*.css!text",  
-           "*.json!text"      
+           "*.css!text",
+           "*.json!text"
          ],
 ```
 
