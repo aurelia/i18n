@@ -45,12 +45,16 @@ We'll discuss TypeScript specifics in a later section.
 
 In order to install the Plugin with a CLI Project, first install the plugin via npm, from within the root folder of your project:
 
-`npm install aurelia-i18n --save`
+```Shell
+npm install aurelia-i18n --save
+```
 
 Since Aurelia-I18N is backed by i18next, you should install it and a backend plugin of your choice. You can use the built-in backend that uses aurelia's loader or any of your choice.
 As an example we're going to leverage the i18next-xhr-backend:
 
-`npm install i18next i18next-xhr-backend --save`
+```Shell
+npm install i18next i18next-xhr-backend --save
+```
 
 After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to the section named *dependencies*. In there add the following three entries:
 
@@ -79,11 +83,15 @@ After that we need to tell our CLI App about the new dependencies. To do so we'r
 
 In your project install the plugin via `jspm` using the following command:
 
-`jspm install aurelia-i18n`
+```Shell
+jspm install aurelia-i18n
+```
 
 And optionally install the backend service using:
 
-`jspm install npm:i18next-xhr-backend`
+```Shell
+jspm install npm:i18next-xhr-backend
+```
 
 > Info
 > You can skip this part if you're planning to use the built-in aurelia-i18n-loader
@@ -92,11 +100,15 @@ And optionally install the backend service using:
 
 Install the `aurelia-i18n` plugin in your project using `npm` and the following command:
 
-`npm install aurelia-i18n --save`
+```Shell
+npm install aurelia-i18n --save
+```
 
 Also optionally install the `i18next-xhr-backend` plugin:
 
-`npm install i18next-xhr-backend --save`
+```Shell
+npm install i18next-xhr-backend --save
+```
 
 > Info
 > You can skip this part if you're planning to use the built-in aurelia-i18n-loader
@@ -269,14 +281,18 @@ should be applicable to every other backend choice.
 The way to get hold of those is using [typings](https://github.com/typings/typings).
 You can install the typings for [i18next](http://i18next.com/) using this command:
 
-`typings install dt~i18next --save --global`
+```Shell
+typings install dt~i18next --save --global
+```
 
 > Info
 > Alternatively, you can find this file in the plugins repository doc folder: `doc/i18next.d.ts`
 
 As for the XHR-Backend you'll be using:
 
-`typings install dt~i18next-xhr-backend --save --global`
+```Shell
+typings install dt~i18next-xhr-backend --save --global
+```
 
 > Info
 > Alternative, you can find this file in the plugins repository doc folder: `doc/i18next-xhr-backend.d.ts`
@@ -285,7 +301,9 @@ Note: if you decide to use the `doc/*.d.ts` files, you should copy them to anoth
 
 If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via typings as well.
 
-`typings install github:aurelia/i18n`
+```Shell
+typings install github:aurelia/i18n
+```
 
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
 
@@ -569,6 +587,7 @@ You may specify a default value for images as well. In order to do so just defin
 ```HTML
 <img data-src="path/to/image.jpg" t="home.image" />
 ```
+
 This will be picked up by the CLI when translations are extracted from the source files. (see the section on [CLI Integration](#cli-integration))
 
 #### Passing parameters to the attribute
@@ -1044,7 +1063,9 @@ have to opt-in and bundle the Polyfill manually.
 
 To do so first install the Polyfill as part of your project using npm:
 
-`npm install intl --save`
+```Shell
+npm install intl --save
+```
 
 After that open up the *aurelia_project/aurelia.json* file and add the following dependency:
 
