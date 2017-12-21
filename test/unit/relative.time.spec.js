@@ -1,15 +1,20 @@
-import {I18N} from '../../src/i18n';
-import {RelativeTime} from '../../src/relativeTime';
-import {BindingSignaler} from 'aurelia-templating-resources';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {translations} from  '../../src/defaultTranslations/relative.time';
+import { BindingSignaler } from 'aurelia-templating-resources';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { StageComponent } from 'aurelia-testing';
+import { bootstrap } from 'aurelia-bootstrapper';
+import { Container } from 'aurelia-dependency-injection';
+
+import { I18N } from '../../src/i18n';
+import { RelativeTime } from '../../src/relativeTime';
+import { translations } from '../../src/defaultTranslations/relative.time';
+import { bootstrapTestEnvironment } from './staging-helpers';
 
 describe('testing relative time support', () => {
   let sut;
   let i18n;
   let ea;
 
-  beforeEach( done => {
+  beforeEach(done => {
     ea = new EventAggregator();
     i18n = new I18N(ea, new BindingSignaler());
     sut = new RelativeTime(i18n, ea);
@@ -98,7 +103,7 @@ describe('testing relative time support', () => {
 
   describe('test i18n support', () => {
     it('should provide the translation in German', (done) => {
-      i18n.setLocale('de').then( () => {
+      i18n.setLocale('de').then(() => {
         let expectedDate = new Date();
         expectedDate.setHours(new Date().getHours() + 2);
 
@@ -108,7 +113,7 @@ describe('testing relative time support', () => {
     });
 
     it('should provide the translation in English when the locale is not present', (done) => {
-      i18n.setLocale('notPresent').then( () => {
+      i18n.setLocale('notPresent').then(() => {
         let expectedDate = new Date();
         expectedDate.setHours(new Date().getHours() + 2);
 
@@ -120,7 +125,7 @@ describe('testing relative time support', () => {
 
   it('should try to find the language of the locale when the full locale is not found', (done) => {
     expect(translations['nl-BE']).toBe(undefined); //If this fails, someone added translations for nl-BE
-    i18n.setLocale('nl-BE').then( () => {
+    i18n.setLocale('nl-BE').then(() => {
       let expectedDate = new Date();
       expectedDate.setHours(new Date().getHours() + 2);
 
@@ -130,8 +135,8 @@ describe('testing relative time support', () => {
   });
 
   it('should provide the translation for the full locale when available', (done) => {
-    translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
-    i18n.setLocale('nl-XX').then( () => {
+    translations['nl-XX'] = { translation: { 'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur' } };
+    i18n.setLocale('nl-XX').then(() => {
       let expectedDate = new Date();
       expectedDate.setHours(new Date().getHours() + 2);
 
@@ -141,8 +146,8 @@ describe('testing relative time support', () => {
   });
 
   it('should provide the translation for the base locale when a key is not found in the full locale', (done) => {
-    translations['nl-XX'] = { translation: {    'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur'} };
-    i18n.setLocale('nl-XX').then( () => {
+    translations['nl-XX'] = { translation: { 'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur' } };
+    i18n.setLocale('nl-XX').then(() => {
       let expectedDate = new Date();
       expectedDate.setMinutes(new Date().getMinutes() + 2);
 
@@ -193,5 +198,29 @@ describe('testing relative time support', () => {
 
       done();
     });
+  });
+
+  it('should update relative time bindings using custom signal', done => {
+    const target = 'relative-time-target';
+    const component = StageComponent
+      .withResources('test/unit/mocks/rt-vm')
+      .inView('<div id="' + target + '">${mydate & rt}</div>')
+      .boundTo({ mydate: new Date() });
+
+    bootstrapTestEnvironment(component);
+
+    component.create(bootstrap)
+      .then(() => {
+        let signaler = Container.instance.get(BindingSignaler);
+        const elem = document.getElementById(target);
+        expect(elem.innerHTML).toBe('just now');
+
+        setTimeout(() => {
+          signaler.signal('aurelia-relativetime-signal');
+          expect(elem.innerHTML).toBe('1 second ago');
+
+          done();
+        }, 1000);
+      });
   });
 });
