@@ -54,7 +54,7 @@ As an example we're going to leverage the i18next-xhr-backend:
 
 After that we need to tell our CLI App about the new dependencies. To do so we're going to open the file *aurelia_project/aurelia.json* and scroll down to the section named *dependencies*. In there add the following three entries:
 
-```
+```JSON
 {
   "name": "i18next",
   "path": "../node_modules/i18next/dist/umd",
@@ -72,45 +72,40 @@ After that we need to tell our CLI App about the new dependencies. To do so we'r
 }
 ```
 
-> If you're planning to use the built-in aurelia-i18n-loader there is no need for an additional configuration and you're fine with the first two entries.
+> Info
+> If you're planning to use the built-in `aurelia-i18n-loader` there is no need for an additional configuration and you're fine with the first two entries.
 
 ### JSPM
 
 In your project install the plugin via `jspm` using the following command:
 
-```shell
-jspm install aurelia-i18n
-```
+`jspm install aurelia-i18n`
 
 And optionally install the backend service using:
 
-```shell
-jspm install npm:i18next-xhr-backend
-```
+`jspm install npm:i18next-xhr-backend`
 
+> Info
 > You can skip this part if you're planning to use the built-in aurelia-i18n-loader
 
 ### Webpack
 
 Install the `aurelia-i18n` plugin in your project using `npm` and the following command:
 
-```shell
-npm install aurelia-i18n --save
-```
+`npm install aurelia-i18n --save`
 
 Also optionally install the `i18next-xhr-backend` plugin:
 
-```shell
-npm install i18next-xhr-backend --save
-```
+`npm install i18next-xhr-backend --save`
 
+> Info
 > You can skip this part if you're planning to use the built-in aurelia-i18n-loader
 
 Optionally, but recommended, add `aurelia-i18n` to your project's `Aurelia` bundles list in the `webpack.config.babel.js` (assuming you used the `skeleton-navigation` webpack build as your base). This will put the plugin in the `Aurelia` chunk, not the `App` chunk.
 
 An example based directly on `skeleton-navigation`:
 
-```shell
+```JavaScript
 const coreBundles = {
   bootstrap: [/* snip (to keep example short) */],
   aurelia: [
@@ -128,7 +123,6 @@ First, use Manual Boostrapping. Open your `index.html` and locate the element wi
 
 <code-listing heading="Setting up Aurelia Bootstrapping">
   <source-code lang="HTML">
-
     <body aurelia-app="main">
       ...
     </body>
@@ -144,31 +138,30 @@ Third, for each locale, create a new folder with it's name (e.g. `en`, `de`, ...
 
 Fourth, in those subfolders create a file named `translation.json` which contains your language specific translations. Below you can find a sample `en-EN` translation file. The full potential of i18next is achieved through a specific translation-file schema. Consult the [i18next docs](http://i18next.com/docs/) to find out more about it.
 
-```json
+```JSON
 {
-    "score": "Score: {{score}}",
-    "lives": "{{count}} life remaining",
-    "lives_plural": "{{count}} lives remaining",
-    "lives_indefinite": "a life remaining",
-    "lives_plural_indefinite": "some lives remaining",
-    "friend": "A friend",
-    "friend_male": "A boyfriend",
-    "friend_female": "A girlfriend"
+  "score": "Score: {{score}}",
+  "lives": "{{count}} life remaining",
+  "lives_plural": "{{count}} lives remaining",
+  "lives_indefinite": "a life remaining",
+  "lives_plural_indefinite": "some lives remaining",
+  "friend": "A friend",
+  "friend_male": "A boyfriend",
+  "friend_female": "A girlfriend"
 }
 ```
 
 Fifth, create (if you haven't already) a file `main.js` in your `src` folder to configure the plugin. Depending on which backend you've chosen there might
 be slight differences. The following listings show the configuration for first the built-in aurelia loader, the second using i18next-xhr-backend.
 
+> Info
 > Notice that Aurelia I18N makes use of a non-standard attributes option, which is used to define custom aliases besides the default ones, being `t` and `i18n`. Calling `TCustomAttribute.configureAliases` is currently necessary in order make sure that the aliases are defined before view templates are fully processed.
 
 <code-listing heading="Registering the Plugin - using the built-in aurelia loader backed:">
-    <source-code lang="ES 2015">
+  <source-code lang="ES 2015">
+    import {I18N, Backend, TCustomAttribute} from 'aurelia-i18n';
 
-      import {I18N, Backend, TCustomAttribute} from 'aurelia-i18n';
-
-      export function configure(aurelia) {
-
+    export function configure(aurelia) {
       aurelia.use
         .standardConfiguration()
         .developmentLogging()
@@ -176,7 +169,7 @@ be slight differences. The following listings show the configuration for first t
           let aliases = ['t', 'i18n'];
           // add aliases for 't' attribute
           TCustomAttribute.configureAliases(aliases);
-          
+
           // register backend plugin
           instance.i18next.use(Backend.with(aurelia.loader));
 
@@ -195,12 +188,11 @@ be slight differences. The following listings show the configuration for first t
 
       aurelia.start().then(a => a.setRoot());
     }
-</source-code>
+  </source-code>
 </code-listing>
 
 <code-listing heading="Registering the Plugin - using the i18next-xhr-backend">
   <source-code lang="ES 2015">
-
     import {I18N, TCustomAttribute} from 'aurelia-i18n';
     import Backend from 'i18next-xhr-backend'; // <-- your previously installed backend plugin
 
@@ -209,31 +201,31 @@ be slight differences. The following listings show the configuration for first t
     // otherwise add "allowSyntheticDefaultImports": true, to your tsconfig
 
     export function configure(aurelia) {
-        aurelia.use
-          .standardConfiguration()
-          .developmentLogging()
-          .plugin('aurelia-i18n', (instance) => {
-            let aliases = ['t', 'i18n'];
-            // add aliases for 't' attribute
-            TCustomAttribute.configureAliases(aliases);
-            
-            // register backend plugin
-            instance.i18next.use(Backend);
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin('aurelia-i18n', (instance) => {
+          let aliases = ['t', 'i18n'];
+          // add aliases for 't' attribute
+          TCustomAttribute.configureAliases(aliases);
 
-            // adapt options to your needs (see http://i18next.com/docs/options/)
-            // make sure to return the promise of the setup method, in order to guarantee proper loading
-            return instance.setup({
-              backend: {                                  // <-- configure backend settings
-                loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
-              },
-              attributes: aliases,
-              lng : 'de',
-              fallbackLng : 'en',
-              debug : false
-            });
+          // register backend plugin
+          instance.i18next.use(Backend);
+
+          // adapt options to your needs (see http://i18next.com/docs/options/)
+          // make sure to return the promise of the setup method, in order to guarantee proper loading
+          return instance.setup({
+            backend: {                                  // <-- configure backend settings
+              loadPath: './locales/{{lng}}/{{ns}}.json', // <-- XHR settings for where to get the files from
+            },
+            attributes: aliases,
+            lng : 'de',
+            fallbackLng : 'en',
+            debug : false
           });
+        });
 
-        aurelia.start().then(a => a.setRoot());
+      aurelia.start().then(a => a.setRoot());
     }
   </source-code>
 </code-listing>
@@ -244,7 +236,6 @@ defaultNS. For example `t='nav:profile'` would access the `profile` string in `n
 
 <code-listing heading="Setting up Multiple Namespaces">
   <source-code lang="ES 2015">
-
     instance.setup({
       ...
       ns: ['translation','nav'],
@@ -259,13 +250,11 @@ If you are using [`reflect-metadata`](https://www.npmjs.com/package/reflect-meta
 
 <code-listing heading="Ensuring reflect-metadata is loaded first">
   <source-code lang="HTML">
-
     <script>
       System.import('reflect-metadata').then( () => {
         System.import('aurelia-bootstrapper');  
       });
     </script>
-
   </source-code>
 </code-listing>
 
@@ -279,49 +268,39 @@ should be applicable to every other backend choice.
 The way to get hold of those is using [typings](https://github.com/typings/typings).
 You can install the typings for [i18next](http://i18next.com/) using this command:
 
-```
-typings install dt~i18next --save --global
-```
+`typings install dt~i18next --save --global`
 
+> Info
 > Alternatively, you can find this file in the plugins repository doc folder: `doc/i18next.d.ts`
 
 As for the XHR-Backend you'll be using:
 
-```
-typings install dt~i18next-xhr-backend --save --global
-```
+`typings install dt~i18next-xhr-backend --save --global`
 
+> Info
 > Alternative, you can find this file in the plugins repository doc folder: `doc/i18next-xhr-backend.d.ts`
 
 Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
 If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via typings as well.
 
-```
-typings install github:aurelia/i18n
-```
+`typings install github:aurelia/i18n`
 
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
+
 <code-listing heading="Configuring custom typings in tsconfig.json">
   <source-code lang="ES 2015">
-
-    // ... existing configuration code
+    ... existing configuration code
     "filesGlob": [
         "./typings/browser.d.ts", // this must be specified in case you use typings(https://github.com/typings/typings)
         "./your_custom_typings_folder_path/**/*.d.ts", // if you use both typings files from this repository (`doc/*.d.ts`)
       ],
-    // ... other existing configuration code
+    ... other existing configuration code
   </source-code>
 </code-listing>
 
-> Note that TypeScript will throw errors like `Module xxx not found` either for aurelia-i18n or one of the backends. This is due to the fact
-that TypeScript does not see proper ES6 exported defaults. So you can now either switch to alias imports:
-
-```
-import * as Backend from 'i18next-xhr-backend'
-```
-
-or update your tsconfig with `"allowSyntheticDefaultImports": true` to maintain the same import style.
+> Warning
+> TypeScript will throw errors like `Module xxx not found` either for aurelia-i18n or one of the backends. This is due to the fact that TypeScript does not see proper ES6 exported defaults. So you can now either switch to alias imports `import * as Backend from 'i18next-xhr-backend'` or update your tsconfig with `"allowSyntheticDefaultImports": true` to maintain the same import style.
 
 ## [Using the Plugin](aurelia-doc://section/5/version/1.0.0)
 i18next translations work by setting up an active locale, which you've setup above in the init phase with the property `lng`.
@@ -331,7 +310,6 @@ In order to change the active language you'd have to call the function `setLocal
 
 <code-listing heading="Setting the active locale with setLocale">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -354,7 +332,6 @@ To get the active locale you'd go with `getLocale()`:
 
 <code-listing heading="Getting the active locale using getLocale">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -373,7 +350,6 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 
 <code-listing heading="Translating using the i18n.tr function">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -394,7 +370,6 @@ property plugin `instance.setup` function parameter.
 
 <code-listing heading="Configuring translation attributes">
   <source-code lang="ES 2015">
-  
     ...
     .plugin("aurelia-i18n", (instance) => {
       ...
@@ -409,7 +384,6 @@ property plugin `instance.setup` function parameter.
       ...
     });
     ...
-    
   </source-code>
 </code-listing>
 
@@ -417,7 +391,6 @@ Any element in your views that has one of those attributes, will be translated w
 
 <code-listing heading="Attribute based translation with the TCustomAttribute">
   <source-code lang="HTML">
-
     <span t="title">Title</span>
   </source-code>
 </code-listing>
@@ -427,7 +400,6 @@ Other attributes, specified in the `attributes` option, may be used as well.
 
 <code-listing heading="Attribute based translation with optionally registered I18NCustomAttribute">
   <source-code lang="HTML">
-
     <span i18n="home.title">Title</span>
   </source-code>
 </code-listing>
@@ -436,7 +408,6 @@ Notice in the above example that the key was set to `home.title`. This will make
 
 <code-listing heading="Nested object translation">
   <source-code lang="ES 2015">
-
     {
       "home": {
         "title": "Title",
@@ -450,7 +421,6 @@ The following example shows how a view model can be configured to update it's co
 
 <code-listing heading="Updating translations manually">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
     import {EventAggregator} from 'aurelia-event-aggregator';
 
@@ -476,7 +446,6 @@ Alternatively you may extend your VM with the provided Base-I18N-VM, which will 
 
 <code-listing heading="Automatic locale changed subscription using the Base-I18N-VM">
   <source-code lang="ES 2015">
-
     import {BaseI18N} from 'aurelia-i18n';
 
     export class MyDemoVM extends BaseI18N {
@@ -485,6 +454,7 @@ Alternatively you may extend your VM with the provided Base-I18N-VM, which will 
   </source-code>
 </code-listing>
 
+> Info
 > Just remember in case you define your own `constructor`, to call `this.super` and pass it the instances of its
 dependencies as described in the previous example. Same applies to `attached`, although nothing needs to be passed
 in here
@@ -492,7 +462,7 @@ in here
 #### Specifying attributes
 By default the plugin will set the `textContent` property of an element.
 
-```markup
+```HTML
 //translation
 {
   "title": "Title <b>bold</b>"
@@ -505,9 +475,10 @@ By default the plugin will set the `textContent` property of an element.
 So in above example the html tags will be escaped and the output will be `&lt;b&gt;bold&lt;/b&gt;`.
 To allow html-markup to be used, the `[html]` attribute needs to be added before the translation key.
 
-```markup
+```HTML
 <span t="[html]title">Title</span>
 ```
+
 This will set the `innerHTML` of the element instead of the `textContent` property, so html-markup won't be escaped.
 There are 4 special attributes including the shown `[html]`:
 
@@ -519,7 +490,7 @@ There are 4 special attributes including the shown `[html]`:
 If the element is a custom element and the value relates to a bindable property of that, then the properties value itself will
 be updated.
 
-```markup
+```HTML
 // Custom Element ViewModel
 export class Foo {
   @bindable() mybindable = "abc";
@@ -542,7 +513,7 @@ export class Foo {
 Any other values will be used as actual attributes on the element itself.
 The following example will not change the content of the element, but will set its `alt` attribute to the translated value of `title` when the locale changes.
 
-```markup
+```HTML
 <span t="[alt]title">Title</span>
 ```
 
@@ -550,7 +521,7 @@ The following example will not change the content of the element, but will set i
 
 Multiple attributes can be specified by separating them with a semicolon.
 
-```markup
+```HTML
 <span t="[html]title;[class]title-class">Title</span>
 ```
 
@@ -560,7 +531,7 @@ When the locale changes it will set the `innerHTML` to the translated value of `
 
 In order to combine two or more translations, just include them with the `$t(yourkey)` markup
 
-```markup
+```HTML
 <span t="$t(title) $t(subtitle)">Title subtitle</span>
 ```
 
@@ -568,7 +539,6 @@ Nested keys may also be referenced and will be properly translated:
 
 <code-listing heading="Nested combined translations">
   <source-code lang="ES 2015">
-
     {
       "translation": {
         "title": "Title",
@@ -579,7 +549,7 @@ Nested keys may also be referenced and will be properly translated:
   </source-code>
 </code-listing>
 
-```markup
+```HTML
 <span t="nested_referencing">Nested text</span>
 ```
 
@@ -587,7 +557,7 @@ Nested keys may also be referenced and will be properly translated:
 
 Images can be translated as well, for when a different image needs to be displayed in another language.
 
-```markup
+```HTML
 <img t="home.image" />
 ```
 
@@ -595,7 +565,7 @@ The plugin will automatically change the `src` attribute of the image when the l
 
 You may specify a default value for images as well. In order to do so just define an attribute called `data-src` with the default value.
 
-```markup
+```HTML
 <img data-src="path/to/image.jpg" t="home.image" />
 ```
 This will be picked up by the CLI when translations are extracted from the source files. (see the section on [CLI Integration](#cli-integration))
@@ -604,7 +574,7 @@ This will be picked up by the CLI when translations are extracted from the sourc
 In order to use parameters for replaceable parts in your translation key, you can provide an additional `t-params` attribute and bind it to the object containing the replacement values.
 Also note that for whatever attribute you registered, the corresponding \*-params attribute will get registered as well automatically.
 
-```javascript
+```JavaScript
 // Translation file
 {
   "paramstest": "Some text with <strong>{{content}}</strong>"
@@ -613,13 +583,12 @@ Also note that for whatever attribute you registered, the corresponding \*-param
 
 <code-listing heading="View for parameter passing to attributes">
   <source-code lang="HTML">
-
     <!-- View -->
     <span t="[html]paramstest" t-params.bind="params"></span>
   </source-code>
 </code-listing>
 
-```javascript
+```JavaScript
 // ViewModel
 class MyVM {
   params = { content: 'ABC' }
@@ -628,16 +597,17 @@ class MyVM {
 }
 ```
 
-> The object passed to `t-params` is a complex object explained [in the next section](/doc/article/aurelia/i18n/latest/i18n-with-aurelia/5)
+> Info
+> The object passed to `t-params` is a complex object explained [in the next section](/doc/article/aurelia/i18n/latest/i18n-with-aurelia/5).
 
 ### Translating with the TValueConverter
+
 In order to do translations in a more declarative way from within your HTML markup you can use a custom ValueConverter named `t`. It takes exactly the same `options` as the code translation method `tr` but of course provides the key automatically.
 
 You will find below a few examples of the available [i18next features](http://i18next.com/translate/)
 
 <code-listing heading="Declarative translation using the TValueConverter">
   <source-code lang="HTML">
-
     <template>
       <section>
         <div class="row">
@@ -684,6 +654,7 @@ You will find below a few examples of the available [i18next features](http://i1
 </code-listing>
 
 ### Translating with the TBindingBehavior
+
 The TValueConverter is pretty useful if you prefer a declarative way to enhance DOM elements with i18n support. But it has a lack when it comes to automatically updating itself when changes happen outside, like locale switches. This is what the TBindingBehavior can do. Essentially you do the same thing like with the TValueConverter but use the `&` sign instead of `|` to indicate usage of the binding behavior.
 
 <code-listing heading="TBindingBehavior Example">
@@ -699,7 +670,6 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
 
 <code-listing heading="Signaling a change to the TBindingBehavior">
   <source-code lang="ES 2015">
-
     import {BindingSignaler} from 'aurelia-templating-resources';
     // inject signaler to constructor ...
     ...
@@ -717,15 +687,16 @@ Now aurelia-i18n will automatically emit signals when internal changes happen an
   </source-code>
 </code-listing>
 
+> Info
 > If you want to only update your relative time binding behaviors, you may use the signal `aurelia-relativetime-signal` which will only trigger those and safe unnecessary update roundtrips
 
 ### Complex objects for variables
+
 In some cases it might be useful to define variables via complex objects. Let's take a look at below example. It shows a validation message to hint the user that a given field should be in range of min and max.
 Now we could easily pass min and max as separate variables but on the other hand that involves more work you'd have to do manually if the source is a object.
 
 <code-listing heading="Complex objects for variables">
   <source-code lang="ES 2015">
-
     var resources = {
       en: {
         translation: {
@@ -741,7 +712,6 @@ You can also mix and match it with simple variables.
 
 <code-listing heading="Mixing complex and simple variables">
   <source-code lang="ES 2015">
-
     var options = {
       'threshold': {
         'min': 1,
@@ -756,6 +726,7 @@ You can also mix and match it with simple variables.
 </code-listing>
 
 ### Formatting numbers via code
+
 For displaying numbers in different formats, this plugin makes use of the [Internationalization API NumberFormat](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NumberFormat). It leverages the same locales used for the translation methods mentioned in the install process of the plugin.
 
 The API provides access to the `Intl NumberFormat` with the method `NumberFormat`. This function takes the an options object representing the formatting options as the first and the locale as the second parameter.
@@ -764,7 +735,6 @@ Below is an example how to access the NumberFormat via code:
 
 <code-listing heading="Number formatting via Code">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -795,11 +765,11 @@ Below is an example how to access the NumberFormat via code:
 
 
 ### Formatting numbers with NfValueConverter
+
 A more declarative way is to use the `nf` ValueConverter from within your HTML markup. It essentially works the same way as the code version. Take a look at the following example:
 
 <code-listing heading="Declarative formatting of numbers with the NfValueConverter">
   <source-code lang="HTML">
-
     <div class="col-md-3">
       <h3>ValueConverter Number Examples</h3>
       <ul class="list-group">
@@ -820,7 +790,8 @@ A more declarative way is to use the `nf` ValueConverter from within your HTML m
   </source-code>
 </code-listing>
 
-> Note that if you provide the active locale as a bound VM property, the ValueConverter will be re-evaluated as soon as the property value changes, resulting in automatic re-formatting of your number.
+> Info
+> If you provide the active locale as a bound VM property, the ValueConverter will be re-evaluated as soon as the property value changes, resulting in automatic re-formatting of your number.
 
 
 ### Formatting dates via code
@@ -830,7 +801,6 @@ Below you'll find an example how to use those via code:
 
 <code-listing heading="Formatting Dates via Code">
   <source-code lang="ES 2015">
-
     import {I18N} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -864,15 +834,15 @@ Below you'll find an example how to use those via code:
   </source-code>
 </code-listing>
 
+> Info
 > Remember that if you pass in `undefined` for the options parameter you'll get the default formatting options
 
 ### Formatting dates with DfValueConverter
-A more declarative way is to use the `df` ValueConverter from within your HTML markup. It essentially works the same way as the code version. Take a look at the following example, which defines a VM property myDate:
 
+A more declarative way is to use the `df` ValueConverter from within your HTML markup. It essentially works the same way as the code version. Take a look at the following example, which defines a VM property myDate:
 
 <code-listing heading="Declarative formatting of dates with the DfValueConverter">
   <source-code lang="HTML">
-
     <div class="col-md-3">
       <h3>ValueConverter Date Examples</h3>
       <ul class="list-group">
@@ -894,12 +864,12 @@ A more declarative way is to use the `df` ValueConverter from within your HTML m
 </code-listing>
 
 ### Rendering relative time
+
 In order to create a representation of relative time like `x days ago` or `in x days` you can leverage the Service relativeTime. This exposes a method `getRelativeTime` which accepts a valid JS date.
 To use it via code get hold of the service via injection and call the method as needed:
 
 <code-listing heading="Rendering relative time via Code">
   <source-code lang="ES 2015">
-
     import {RelativeTime} from 'aurelia-i18n';
 
     export class MyDemoVM {
@@ -927,7 +897,6 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
 
 <code-listing heading="Declarative relative time using the RtValueConverter">
   <source-code lang="HTML">
-
     <div class="col-md-3">
       <h3>ValueConverter Relative Time Examples</h3>
       <ul class="list-group">
@@ -944,38 +913,38 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
 
 When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module, by changing the `aurelia.json` and adding `.json` as an extension for the text plugin:
 
-```json
+```JSON
 "loader": {
-			"type": "require",
-			"configTarget": "vendor-bundle.js",
-			"includeBundleMetadataInConfig": "auto",
-			"plugins": [
-				{
-					"name": "text",
-					"extensions": [
-						".html",
-						".css",
-						".json"
-					],
-					"stub": true
-				}
-			]
-		},
+	"type": "require",
+	"configTarget": "vendor-bundle.js",
+	"includeBundleMetadataInConfig": "auto",
+	"plugins": [
+		{
+			"name": "text",
+			"extensions": [
+				".html",
+				".css",
+				".json"
+			],
+			"stub": true
+		}
+	]
+},
 ```
 
 ### Using JSPM
+
 If you're using JSPM as your module loader, the bundle configuration might look like.
 
-```json
-
-    "bundles": {
-       "dist/app-build": {
-         "includes": [
-           "[*.js]",
-           "*.html!text",
-           "*.css!text",  
-           "*.json!text"      
-         ],
+```JSON
+"bundles": {
+  "dist/app-build": {
+   "includes": [
+     "[*.js]",
+     "*.html!text",
+     "*.css!text",  
+     "*.json!text"      
+   ],
 ```
 
 ### Using Aurelia CLI
@@ -984,7 +953,6 @@ Same would apply to the Aurelia CLI. In order to tell it to process the locales 
 
 <code-listing heading="Processing locales with a custom task">
   <source-code lang="ES 2015">
-
     import gulp from 'gulp';
     import changedInPlace from 'gulp-changed-in-place';
     import project from '../aurelia.json';
@@ -1000,23 +968,21 @@ Same would apply to the Aurelia CLI. In order to tell it to process the locales 
 
 With that in place, edit your `aurelia_project/aurelia.json` file and add the task right after the `markupProcessor` configuration, where the source property should reflect your previously setup locales folder:
 
-```json
-
-    ...
-    "localesProcessor": {
-      "id": "none",
-      "displayName": "None",
-      "fileExtension": ".json",
-      "source": "src/locales/**/*.json"
-    },
-    ...
+```JSON
+...
+"localesProcessor": {
+  "id": "none",
+  "displayName": "None",
+  "fileExtension": ".json",
+  "source": "src/locales/**/*.json"
+},
+...
 ```
 
 Also, edit your `aurelia_project/tasks/run.js` (or .ts if you're using Typescript) file and add a new gulp.watch task to the `watch` function:
 
 <code-listing heading="Add a locales watch task the watch function">
   <source-code lang="ES 2015">
-
     let watch = function() {
       gulp.watch(project.transpiler.source, refresh).on('change', onChange);
       gulp.watch(project.markupProcessor.source, refresh).on('change', onChange);
@@ -1030,35 +996,36 @@ By doing this, if you're running your project with the --watch flag, your bundle
 
 Last but not least search for the build/bundles/source section for the app-bundle and update the configuration to include json files.
 
-```json
-
-    ...
-    "bundles": [
-      {
-        "name": "app-bundle.js",
-        "source": [
-          "[**/*.js]",
-          "**/*.{css,html,json}"
-        ]
-      }
-      ...
+```JSON
+...
+"bundles": [
+  {
+    "name": "app-bundle.js",
+    "source": [
+      "[**/*.js]",
+      "**/*.{css,html,json}"
+    ]
+  }
+  ...
+]
 ```
 
 and inlcude the json extension in the loader plugin part build/loader/plugins/extensions
-```json
-     ...
-     "plugins": [
-        {
-          "name": "text",
-          "extensions": [
-            ".html",
-            ".css",
-            ".json"
-          ],
-          "stub": true
-        }
-      ]
-      ...
+
+```JSON
+...
+"plugins": [
+  {
+    "name": "text",
+    "extensions": [
+      ".html",
+      ".css",
+      ".json"
+    ],
+    "stub": true
+  }
+]
+...
 ```
 
 ## [Internationalization API Polyfill](aurelia-doc://section/7/version/1.0.0)
@@ -1079,7 +1046,8 @@ To do so first install the Polyfill as part of your project using npm:
 `npm install intl --save`
 
 After that open up the *aurelia_project/aurelia.json* file and add the following dependency:
-```json
+
+```JSON
 {
   "name": "intl",
   "path": "../node_modules/intl/dist",
@@ -1087,8 +1055,9 @@ After that open up the *aurelia_project/aurelia.json* file and add the following
 },
 ````
 
+> Info
 > Instead of referencing the min file you could also reference `Intl.complete` to include the Unicode CLDR locale data. For
-more info about that consult the [official Polyfill docs](https://github.com/andyearnshaw/Intl.js/#locale-data)
+more info about that consult the [official Polyfill docs](https://github.com/andyearnshaw/Intl.js/#locale-data).
 
 
 ### Use Internationalization API Polyfill with Webpack
@@ -1097,7 +1066,6 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
 
 <code-listing heading="Using the polyfill with Webpack">
   <source-code lang="ES 2015">
-
     bootstrap(aurelia => {
         if (!global.Intl) {
             console.log('Intl not present')
@@ -1113,7 +1081,6 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
             boot(aurelia);
         }
     });
-
 
     function boot(aurelia) {
         aurelia.use
@@ -1134,7 +1101,6 @@ On top of that if you need the Intl polyfill included you have to manualy requir
 
 <code-listing heading="Manually requiering the Intl Polyfill">
   <source-code lang="ES 2015">
-
     //main.js
     import 'intl';
   </source-code>
