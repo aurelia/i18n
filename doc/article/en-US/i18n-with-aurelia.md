@@ -4,7 +4,7 @@ description: Getting Started with I18N in your Aurelia App.
 author: Vildan Softic (http://pragmatic-coder.net)
 ---
 
-## [Introduction](aurelia-doc://section/1/version/1.0.0)
+## Introduction
 
 This documentation explains how to get up and running with Aurelia-I18N
 in order to provide localization and internationalization features with your app.
@@ -14,7 +14,7 @@ open source library with an extensive set of features. By building on top of it
 not only can you reuse your work across various other platforms and frameworks
 but you are able to use an extensive eco-system full of various packages.
 
-## [Installing the Plugin](aurelia-doc://section/2/version/1.0.0)
+## Installing the Plugin
 
 There are various ways to setup your Aurelia app. It not only boils down
 to the question whether you use JavaScript or TypeScript but also which module loader
@@ -117,7 +117,7 @@ const coreBundles = {
 }
 ```
 
-## [Setting up the Plugin](aurelia-doc://section/3/version/1.0.0)
+## Setting up the Plugin
 
 Now that you have installed and configured your loader, these are the steps to get started with the plugin.
 
@@ -261,7 +261,7 @@ If you are using [`reflect-metadata`](https://www.npmjs.com/package/reflect-meta
   </source-code>
 </code-listing>
 
-## [TypeScript Support](aurelia-doc://section/4/version/1.0.0)
+## TypeScript Support
 
 In order to get proper support for autocompletion and typesafety you should install
 the necessary type definitions (d.ts) for the plugins dependencies.
@@ -311,10 +311,12 @@ The next step is to let the compiler know about your `*.d.ts` files. Add the fol
 > Warning
 > TypeScript will throw errors like `Module xxx not found` either for aurelia-i18n or one of the backends. This is due to the fact that TypeScript does not see proper ES6 exported defaults. So you can now either switch to alias imports `import * as Backend from 'i18next-xhr-backend'` or update your tsconfig with `"allowSyntheticDefaultImports": true` to maintain the same import style.
 
-## [Using the Plugin](aurelia-doc://section/5/version/1.0.0)
+## Using the Plugin
+
 i18next translations work by setting up an active locale, which you've setup above in the init phase with the property `lng`.
 
 ### Setting the active locale
+
 In order to change the active language you'd have to call the function `setLocale(localeName)` via code.
 
 <code-listing heading="Setting the active locale with setLocale">
@@ -337,6 +339,7 @@ In order to change the active language you'd have to call the function `setLocal
 </code-listing>
 
 ### Getting the active locale
+
 To get the active locale you'd go with `getLocale()`:
 
 <code-listing heading="Getting the active locale using getLocale">
@@ -355,6 +358,7 @@ To get the active locale you'd go with `getLocale()`:
 </code-listing>
 
 ### Translating via code
+
 Translating stuff via code works by using the method `tr`. You pass in the `key` as its first parameter, followed by the optional second parameter `options` to specify in detail how the translations should be performed. Please consult the [i18next docs](http://i18next.com/translate/#overrideoptions) for a detailed list of those:
 
 <code-listing heading="Translating using the i18n.tr function">
@@ -373,6 +377,7 @@ Translating stuff via code works by using the method `tr`. You pass in the `key`
 </code-listing>
 
 ### Translating via html attributes
+
 Translation in html can be done alternatively using attributes. By default the plugin is configured to use the `t` and `i18n` attributes.
 This can be configured during the plugin registration using the `TCustomAttribute.configureAliases` function and also the `attributes`
 property plugin `instance.setup` function parameter.
@@ -469,6 +474,7 @@ dependencies as described in the previous example. Same applies to `attached`, a
 in here
 
 #### Specifying attributes
+
 By default the plugin will set the `textContent` property of an element.
 
 ```HTML
@@ -581,6 +587,7 @@ You may specify a default value for images as well. In order to do so just defin
 This will be picked up by the CLI when translations are extracted from the source files. (see the section on [CLI Integration](#cli-integration))
 
 #### Passing parameters to the attribute
+
 In order to use parameters for replaceable parts in your translation key, you can provide an additional `t-params` attribute and bind it to the object containing the replacement values.
 Also note that for whatever attribute you registered, the corresponding \*-params attribute will get registered as well automatically.
 
@@ -919,7 +926,7 @@ A more declarative approach is to use the RtValueConverter directly in your HTML
   </source-code>
 </code-listing>
 
-## [Bundle Translation Files](aurelia-doc://section/6/version/1.0.0)
+## Bundle Translation Files
 
 When bundling is used, the built-in backend will read the translations from the bundle with the aurelia loader. Make sure that the `translation.json` files are packed in the bundle using the text module, by changing the `aurelia.json` and adding `.json` as an extension for the text plugin:
 
@@ -1038,7 +1045,7 @@ and inlcude the json extension in the loader plugin part build/loader/plugins/ex
 ...
 ```
 
-## [Internationalization API Polyfill](aurelia-doc://section/7/version/1.0.0)
+## Internationalization API Polyfill
 
 The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
 
