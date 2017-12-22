@@ -1,17 +1,7 @@
 ---
-{
-  "name": "I18N with Aurelia",
-  "culture": "en-US",
-  "description": "Getting Started with I18N in your Aurelia App.",
-  "engines" : { "aurelia-doc" : "^1.0.0" },
-  "author": {
-    "name": "Vildan Softic",
-  	"url": "http://pragmatic-coder.net"
-  },
-  "contributors": [],
-  "translators": [],
-  "keywords": ["I18N", "L10N", "i18next", "JavaScript", "TypeScript"]
-}
+name: I18N with Aurelia
+description: Getting Started with I18N in your Aurelia App.
+author: Vildan Softic (http://pragmatic-coder.net)
 ---
 
 ## [Introduction](aurelia-doc://section/1/version/1.0.0)
