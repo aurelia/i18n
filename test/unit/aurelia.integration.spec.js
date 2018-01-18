@@ -10,7 +10,8 @@ describe('testing aurelia configure routine', () => {
 
       },
       get: (Type) => { return new Type(); }
-    }
+    },
+    postTask: () => {}
   };
 
   it('should export configure function', () => {

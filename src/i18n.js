@@ -163,7 +163,7 @@ export class I18N {
       return;
     }
 
-    let keys = value.split(';');
+    let keys = value.toString().split(';');
     let i = keys.length;
 
     while (i--) {
