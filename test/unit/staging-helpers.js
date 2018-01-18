@@ -1,6 +1,6 @@
 import { Backend } from '../../src/aurelia-i18n-loader';
 
-export function bootstrapTestEnvironment(component) {
+export function bootstrapTestEnvironment(component, resources) {
   component.bootstrap((aurelia) => {
     aurelia.use
       .standardConfiguration()
@@ -14,12 +14,14 @@ export function bootstrapTestEnvironment(component) {
           backend: {                                  // <-- configure backend settings
             loadPath: './locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
           },
+          resources,
           interpolation: {
             prefix: '{{',
             suffix: '}}'
           },
           attributes: aliases,
           lng: 'en',
+          defaultNS: 'translation',
           fallbackLng: 'en',
           debug: false
         });
