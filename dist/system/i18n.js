@@ -167,7 +167,7 @@ System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-agg
             return;
           }
 
-          var keys = value.split(';');
+          var keys = value.toString().split(';');
           var i = keys.length;
 
           while (i--) {

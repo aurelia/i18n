@@ -173,7 +173,7 @@ var I18N = exports.I18N = (_temp = _class = function () {
       return;
     }
 
-    var keys = value.split(';');
+    var keys = value.toString().split(';');
     var i = keys.length;
 
     while (i--) {

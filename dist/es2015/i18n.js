@@ -142,7 +142,7 @@ export let I18N = (_temp = _class = class I18N {
       return;
     }
 
-    let keys = value.split(';');
+    let keys = value.toString().split(';');
     let i = keys.length;
 
     while (i--) {

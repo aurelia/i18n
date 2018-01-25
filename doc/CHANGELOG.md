@@ -1,3 +1,13 @@
+<a name="2.1.1"></a>
+## [2.1.1](https://github.com/aurelia/i18n/compare/2.1.0...2.1.1) (2018-01-25)
+
+
+### Bug Fixes
+
+* **t-attribute:** convert to string ([6d962d3](https://github.com/aurelia/i18n/commit/6d962d3))
+
+
+
 <a name="2.1.0"></a>
 # [2.1.0](https://github.com/aurelia/i18n/compare/2.0.0...2.1.0) (2017-11-15)
 

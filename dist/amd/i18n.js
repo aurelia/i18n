@@ -183,7 +183,7 @@ define(['exports', 'aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-a
         return;
       }
 
-      var keys = value.split(';');
+      var keys = value.toString().split(';');
       var i = keys.length;
 
       while (i--) {
