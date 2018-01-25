@@ -10,7 +10,7 @@ export class I18N {
 
   globalVars = {};
   params = {};
-  i18nextDefered = {
+  i18nextDeferred = {
     resolve: null,
     promise: null
   };
@@ -22,7 +22,7 @@ export class I18N {
     this.ea = ea;
     this.Intl = PLATFORM.global.Intl;
     this.signaler = signaler;
-    this.i18nextDefered.promise = new Promise((resolve) => this.i18nextDefered.resolve = resolve);
+    this.i18nextDeferred.promise = new Promise((resolve) => this.i18nextDeferred.resolve = resolve);
   }
 
   setup(options?): Promise<any> {
@@ -45,14 +45,14 @@ export class I18N {
         i18next.options.attributes = [i18next.options.attributes];
       }
 
-      this.i18nextDefered.resolve(this.i18next);
+      this.i18nextDeferred.resolve(this.i18next);
     });
 
-    return this.i18nextDefered.promise;
+    return this.i18nextDeferred.promise;
   }
 
   i18nextReady(): Promise<any> {
-    return this.i18nextDefered.promise;
+    return this.i18nextDeferred.promise;
   }
 
   setLocale(locale): Promise<any> {
