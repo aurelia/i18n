@@ -1047,7 +1047,7 @@ and inlcude the json extension in the loader plugin part build/loader/plugins/ex
 
 ## Internationalization API Polyfill
 
-The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
+The plugin leverages the JavaScript Internationalization API to perform certain tasks. Since not all browsers do fully support it ([compatibility table](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl#Browser_compatibility)) the aurelia-i18n conditionally loads the Polyfill if needed.
 
 In case of bundling your app you should thus keep in mind that it will not be automatically included into the bundle. That means you have to manually adjust the bundle config to include the polyfill as well, if you intend to have your application run on browsers without full support. [related GitHub issue](https://github.com/aurelia/i18n/issues/61#issuecomment-178801842)
 
