@@ -1105,7 +1105,7 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
       aurelia.use
         .standardConfiguration()
         .developmentLogging()
-        .plugin('aurelia-i18n', (instance) => {
+        .plugin(PLATFORM.modulename('aurelia-i18n'), (instance) => {
             // code to setup aurelia-i18n
         });
 
@@ -1113,6 +1113,24 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
     }
   </source-code>
 </code-listing>
+
+Or using TypeScript
+
+<code-listing heading="Using the polyfill with Webpack">
+  <source-code lang="TypeScript">
+ aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin(PLATFORM.moduleName('aurelia-i18n'), (instance: I18N) =>
+            // code to setup aurelia-i18n
+        });
+
+      await aurelia.start();
+      await aurelia.setRoot('app', document.body);
+    }
+      </source-code>
+</code-listing>
+
 
 More information [in the README of the Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-and-browserifywebpack).
 
