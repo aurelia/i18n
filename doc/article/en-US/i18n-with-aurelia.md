@@ -1105,6 +1105,40 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
       aurelia.use
         .standardConfiguration()
         .developmentLogging()
+        .plugin('aurelia-i18n', (instance) => {
+            // code to setup aurelia-i18n
+        });
+
+      aurelia.start().then(() => aurelia.setRoot('app', document.body));
+    }
+  </source-code>
+</code-listing>
+
+When using WebPack, one needs to add `PLATFORM.modulename` to enable [aurelia-webpack-plugin](https://www.npmjs.com/package/aurelia-webpack-plugin)
+to properly recognize the plugins. With that change, the example code looks like so:
+
+<code-listing heading="Using the polyfill with Webpack">
+  <source-code lang="ES 2015">
+    bootstrap(aurelia => {
+      if (!global.Intl) {
+        console.log('Intl not present')
+        require.ensure([
+          'intl',
+          'intl/locale-data/jsonp/en.js'
+        ], function (require) {
+          require('intl');
+          require('intl/locale-data/jsonp/en.js');
+          boot(aurelia);
+        });
+      } else {
+        boot(aurelia);
+      }
+    });
+
+    function boot(aurelia) {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
         .plugin(PLATFORM.modulename('aurelia-i18n'), (instance) => {
             // code to setup aurelia-i18n
         });
@@ -1113,6 +1147,7 @@ In order to use the Polyfill with Webpack, you will have to adapt your `bootstra
     }
   </source-code>
 </code-listing>
+
 
 Or using TypeScript
 
