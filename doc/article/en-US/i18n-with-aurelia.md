@@ -94,10 +94,22 @@ Install the `aurelia-i18n` plugin in your project using `npm` and the following 
 npm install aurelia-i18n --save
 ```
 
+or if you prefer yarn
+
+```Shell
+yarn add aurelia-i18n
+```
+
 Also optionally install the `i18next-xhr-backend` plugin:
 
 ```Shell
 npm install i18next-xhr-backend --save
+```
+
+or using yarn
+
+```Shell
+yarn add i18next-xhr-backend
 ```
 
 > Info
@@ -268,19 +280,22 @@ the necessary type definitions (d.ts) for the plugins dependencies.
 Here we show how you can do that for i18next and the i18next-xhr-backend, but this
 should be applicable to every other backend choice.
 
-The way to get hold of those is using using NPM or perhaps Yarn as with other packages.
-In this case the typinhs are at [@types/i18next](https://www.npmjs.com/package/@types/i18next),
+The way to get hold of those is using using npm or perhaps Yarn as with other packages.
+In this case the typings are at [@types/i18next](https://www.npmjs.com/package/@types/i18next),
 along with the instructions. The command is
 
 ```Shell
-npm install --save @types/i18next
+npm install --save-dev @types/i18next
 ```
+
 or if you are using Yarn
+
 ```Shell
-yarn add @types/i18next
+yarn add --dev @types/i18next
 ```
-but in case of Yarn there might be a complication as described at https://github.com/yarnpkg/yarn/issues/4226
-with a working solution.
+
+but in case of yarn there might be a complication as described at https://github.com/yarnpkg/yarn/issues/4226
+with a solution proposed to fix complications should they arise.
 
 > Info
 > Alternatively, you can find this file in the plugins repository doc folder: `doc/i18next.d.ts`
@@ -288,11 +303,13 @@ with a working solution.
 As for the XHR-Backend you'll be using:
 
 ```Shell
-npm install --save @types/i18next-xhr-backend
+npm install --save-dev @types/i18next-xhr-backend
 ```
-or for Yarn
+
+or for yarn
+
 ```Shell
-yarn add @types/i18next-xhr-backend
+yarn add --dev @types/i18next-xhr-backend
 ```
 
 > Info
@@ -300,14 +317,10 @@ yarn add @types/i18next-xhr-backend
 
 Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
-If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via npm or yarn as well.
+If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via npm:
 
 ```Shell
-npm install github:aurelia/i18n
-```
-or for Yarn
-```Shell
-yarn add @types/i18next-xhr-backend
+npm install --save-dev github:aurelia/i18n
 ```
 
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
