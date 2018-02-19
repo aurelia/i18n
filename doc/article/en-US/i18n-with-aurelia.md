@@ -94,10 +94,22 @@ Install the `aurelia-i18n` plugin in your project using `npm` and the following 
 npm install aurelia-i18n --save
 ```
 
+or if you prefer yarn
+
+```Shell
+yarn add aurelia-i18n
+```
+
 Also optionally install the `i18next-xhr-backend` plugin:
 
 ```Shell
 npm install i18next-xhr-backend --save
+```
+
+or using yarn
+
+```Shell
+yarn add i18next-xhr-backend
 ```
 
 > Info
@@ -268,12 +280,22 @@ the necessary type definitions (d.ts) for the plugins dependencies.
 Here we show how you can do that for i18next and the i18next-xhr-backend, but this
 should be applicable to every other backend choice.
 
-The way to get hold of those is using [typings](https://github.com/typings/typings).
-You can install the typings for [i18next](http://i18next.com/) using this command:
+The way to get hold of those is using using npm or perhaps Yarn as with other packages.
+In this case the typings are at [@types/i18next](https://www.npmjs.com/package/@types/i18next),
+along with the instructions. The command is
 
 ```Shell
-typings install dt~i18next --save --global
+npm install --save-dev @types/i18next
 ```
+
+or if you are using Yarn
+
+```Shell
+yarn add --dev @types/i18next
+```
+
+but in case of yarn there might be a complication as described at https://github.com/yarnpkg/yarn/issues/4226
+with a solution proposed to fix complications should they arise.
 
 > Info
 > Alternatively, you can find this file in the plugins repository doc folder: `doc/i18next.d.ts`
@@ -281,7 +303,13 @@ typings install dt~i18next --save --global
 As for the XHR-Backend you'll be using:
 
 ```Shell
-typings install dt~i18next-xhr-backend --save --global
+npm install --save-dev @types/i18next-xhr-backend
+```
+
+or for yarn
+
+```Shell
+yarn add --dev @types/i18next-xhr-backend
 ```
 
 > Info
@@ -289,10 +317,10 @@ typings install dt~i18next-xhr-backend --save --global
 
 Note: if you decide to use the `doc/*.d.ts` files, you should copy them to another folder, e.g. `custom_typings`.
 
-If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via typings as well.
+If you're running a JSPM setup, in order to properly find the `aurelia-i18n.d.ts` file, you can alternatively install it via npm:
 
 ```Shell
-typings install github:aurelia/i18n
+npm install --save-dev github:aurelia/i18n
 ```
 
 The next step is to let the compiler know about your `*.d.ts` files. Add the following section to your `tsconfig.json` file.
@@ -301,8 +329,18 @@ The next step is to let the compiler know about your `*.d.ts` files. Add the fol
   <source-code lang="ES 2015">
     ... existing configuration code
     "filesGlob": [
-        "./typings/browser.d.ts", // this must be specified in case you use typings(https://github.com/typings/typings)
+        "./typings/browser.d.ts",
         "./your_custom_typings_folder_path/**/*.d.ts", // if you use both typings files from this repository (`doc/*.d.ts`)
+      ],
+    ... other existing configuration code
+  </source-code>
+</code-listing>
+
+or if you are using TypeScript 2.0 or later, you can add them to the types section like
+<code-listing heading="Configuring custom typings in tsconfig.json">
+  <source-code lang="ES 2015">
+    ... existing configuration code
+    "types": [ "i18next", "i18next-xhr-backend" ]
       ],
     ... other existing configuration code
   </source-code>
