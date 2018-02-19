@@ -21,6 +21,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/babel-polyfill/browser.js',
       {pattern: 'test/unit/fixtures/**/*.html', included: false},
       // dont pre-load just serve if requested
       {pattern: 'test/unit/fixtures/**/*.jpg', watched: false, included: false, served: true}

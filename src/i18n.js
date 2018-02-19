@@ -35,9 +35,6 @@ export class I18N {
       debug: false
     };
 
-    if (options && !options.lng) {
-      throw new Error('You need to provide the lng option');
-    }
 
     i18next.init(options || defaultOptions, (err, t) => {
       //make sure attributes is an array in case a string was provided

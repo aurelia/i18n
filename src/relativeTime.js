@@ -1,6 +1,6 @@
-import {I18N} from './i18n';
-import {translations} from  './defaultTranslations/relative.time';
-import {EventAggregator} from 'aurelia-event-aggregator';
+import { I18N } from './i18n';
+import { translations } from './defaultTranslations/relative.time';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
 export class RelativeTime {
   static inject() { return [I18N, EventAggregator]; }
@@ -18,8 +18,17 @@ export class RelativeTime {
 
   setup(locales) {
     let trans = translations.default || translations;
-    let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.i18next.fallbackLng;
+
+    let alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
+    if (Array.isArray(alternateFb) && alternateFb.length > 0) {
+      alternateFb = alternateFb[0];
+    }
+
+    let key = ((locales && locales.newValue)
+      ? locales.newValue
+      : this.service.getLocale()) || alternateFb;
+
     let index = 0;
 
     if ((index = key.indexOf('-')) >= 0) { // eslint-disable-line no-cond-assign
