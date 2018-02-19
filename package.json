@@ -12,7 +12,10 @@
   "bugs": {
     "url": "https://github.com/aurelia/i18n/issues"
   },
-  "scripts": {},
+  "scripts": {
+    "precommit": "gulp lint",
+    "test": "karma start"
+  },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-i18n.js",
@@ -90,6 +93,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.11.6",
     "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-es2015-loose": "^7.0.0",
     "babel-preset-es2015-loose-native-modules": "^1.0.0",

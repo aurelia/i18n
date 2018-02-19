@@ -10,61 +10,70 @@ import { translations } from '../../src/defaultTranslations/relative.time';
 import { bootstrapTestEnvironment } from './staging-helpers';
 
 describe('testing relative time support', () => {
-  let sut;
-  let i18n;
-  let ea;
+  async function arrange(options) {
+    const ea = new EventAggregator();
+    const i18n = new I18N(ea, new BindingSignaler());
+    const sut = new RelativeTime(i18n, ea);
 
-  beforeEach(done => {
-    ea = new EventAggregator();
-    i18n = new I18N(ea, new BindingSignaler());
-    sut = new RelativeTime(i18n, ea);
-    i18n.setup({
+    await i18n.setup(Object.assign({
       lng: 'en',
-      fallbackLng: 'en',
       defaultNS: 'custom_default',
-      debug: false
-    }).then(() => done());
+      debug: false,
+      interpolation: {
+        prefix: '__',
+        suffix: '__'
+      }
+    }, options));
+
+    return { ea, i18n, sut };
+  }
+
+  it('should use the fallback language if no lng is provided', async () => {
+    const { sut } = await arrange({ lng: undefined });
+    let expectedDate = new Date();
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('just now');
   });
 
-  it('should provide a custom error message if lng option is not provided', () => {
-    expect(() => i18n.setup({
-      lng: undefined,
-      fallbackLng: 'en',
-      defaultNS: 'custom_default',
-      debug: false
-    })).toThrow();
-  });
-
-  it('should provide now unit', () => {
+  it('should provide now unit', async () => {
+    const { sut } = await arrange();
     let expectedDate = new Date();
 
     expect(sut.getRelativeTime(expectedDate)).toBe('just now');
   });
 
   describe('ago tests', () => {
-    it('should provide singular time unit', () => {
+    it('should provide singular time unit', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setHours(new Date().getHours() - 1);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('1 hour ago');
     });
 
-    it('should provide plural time unit', () => {
+    it('should provide plural time unit', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setHours(new Date().getHours() - 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('2 hours ago');
     });
 
-    it('should provide month ranges', () => {
+    it('should provide month ranges', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setMonth(new Date().getMonth() - 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('2 months ago');
     });
 
-    it('should provide year ranges', () => {
+    it('should provide year ranges', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setFullYear(new Date().getFullYear() - 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('2 years ago');
@@ -72,29 +81,37 @@ describe('testing relative time support', () => {
   });
 
   describe('in tests', () => {
-    it('should provide singular time unit', () => {
+    it('should provide singular time unit', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setHours(new Date().getHours() + 1);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('in 1 hour');
     });
 
-    it('should provide plural time unit', () => {
+    it('should provide plural time unit', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setHours(new Date().getHours() + 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('in 2 hours');
     });
 
-    it('should provide month ranges', () => {
+    it('should provide month ranges', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setMonth(new Date().getMonth() + 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('in 2 months');
     });
 
-    it('should provide year ranges', () => {
+    it('should provide year ranges', async () => {
+      const { sut } = await arrange();
       let expectedDate = new Date();
+
       expectedDate.setFullYear(new Date().getFullYear() + 2);
 
       expect(sut.getRelativeTime(expectedDate)).toBe('in 2 years');
@@ -102,102 +119,89 @@ describe('testing relative time support', () => {
   });
 
   describe('test i18n support', () => {
-    it('should provide the translation in German', (done) => {
-      i18n.setLocale('de').then(() => {
-        let expectedDate = new Date();
-        expectedDate.setHours(new Date().getHours() + 2);
+    it('should provide the translation in German', async () => {
+      const { sut } = await arrange({ lng: 'de', fallbackLng: 'de' });
 
-        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 Stunden');
-        done();
-      });
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() + 2);
+
+      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 Stunden');
     });
 
-    it('should provide the translation in English when the locale is not present', (done) => {
-      i18n.setLocale('notPresent').then(() => {
-        let expectedDate = new Date();
-        expectedDate.setHours(new Date().getHours() + 2);
+    it('should provide the translation in English when the locale is not present', async () => {
+      const { i18n, sut } = await arrange({ lng: 'en', fallbackLng: 'en' });
 
-        expect(sut.getRelativeTime(expectedDate)).toBe('in 2 hours');
-        done();
-      });
+      await i18n.setLocale('notPresent');
+
+      let expectedDate = new Date();
+      expectedDate.setHours(new Date().getHours() + 2);
+
+      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 hours');
     });
   });
 
-  it('should try to find the language of the locale when the full locale is not found', (done) => {
+  it('should try to find the language of the locale when the full locale is not found', async () => {
+    const { i18n, sut } = await arrange({ lng: 'en', fallbackLng: 'en' });
     expect(translations['nl-BE']).toBe(undefined); //If this fails, someone added translations for nl-BE
-    i18n.setLocale('nl-BE').then(() => {
-      let expectedDate = new Date();
-      expectedDate.setHours(new Date().getHours() + 2);
 
-      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 uren');
-      done();
-    });
+    await i18n.setLocale('nl-BE');
+    let expectedDate = new Date();
+    expectedDate.setHours(new Date().getHours() + 2);
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('in 2 uren');
   });
 
-  it('should provide the translation for the full locale when available', (done) => {
+  it('should provide the translation for the full locale when available', async () => {
+    const { i18n, sut } = await arrange({ lng: 'en', fallbackLng: 'en' });
     translations['nl-XX'] = { translation: { 'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur' } };
-    i18n.setLocale('nl-XX').then(() => {
-      let expectedDate = new Date();
-      expectedDate.setHours(new Date().getHours() + 2);
 
-      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
-      done();
-    });
+    await i18n.setLocale('nl-XX');
+    let expectedDate = new Date();
+    expectedDate.setHours(new Date().getHours() + 2);
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('in 2 periods of an hourly length');
   });
 
-  it('should provide the translation for the base locale when a key is not found in the full locale', (done) => {
+  it('should provide the translation for the base locale when a key is not found in the full locale', async () => {
+    const { i18n, sut } = await arrange({ lng: 'en', fallbackLng: 'en' });
     translations['nl-XX'] = { translation: { 'hour_in_plural': 'in __count__ periods of an hourly length', 'hour_in': 'in __count__ uur' } };
-    i18n.setLocale('nl-XX').then(() => {
-      let expectedDate = new Date();
-      expectedDate.setMinutes(new Date().getMinutes() + 2);
 
-      expect(sut.getRelativeTime(expectedDate)).toBe('in 2 minuten');
-      done();
-    });
+    await i18n.setLocale('nl-XX');
+    let expectedDate = new Date();
+    expectedDate.setMinutes(new Date().getMinutes() + 2);
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('in 2 minuten');
   });
 
-  it('should handle non-defined interpolation prefix and suffix', done => {
-    let customInterpolationSettings = new I18N(ea, new BindingSignaler());
-
-    customInterpolationSettings.setup({
+  it('should handle non-defined interpolation prefix and suffix', async () => {
+    const { sut } = await arrange({
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
-      debug: false
-    }).then((instance) => {
-      instance.options.interpolation.prefix = undefined;
-      instance.options.interpolation.suffix = undefined;
-      let customSut = new RelativeTime(customInterpolationSettings, ea);
-      let expectedDate = new Date();
-      expectedDate.setHours(new Date().getHours() - 3);
-
-      expect(customSut.getRelativeTime(expectedDate)).toBe('3 hours ago');
-
-      done();
+      interpolation: {
+        prefix: undefined,
+        suffix: undefined
+      }
     });
+
+    let expectedDate = new Date();
+    expectedDate.setHours(new Date().getHours() - 3);
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('3 hours ago');
   });
 
-  it('should respect interpolation settings', done => {
-    let customInterpolationSettings = new I18N(ea, new BindingSignaler());
-
-    customInterpolationSettings.setup({
+  it('should respect interpolation settings', async () => {
+    const { sut } = await arrange({
       lng: 'en',
-      getAsync: false,
-      sendMissing: false,
       fallbackLng: 'en',
-      debug: false
-    }).then((instance) => {
-      instance.options.interpolation.prefix = '${';
-      instance.options.interpolation.suffix = '}';
-      let customSut = new RelativeTime(customInterpolationSettings, ea);
-      let expectedDate = new Date();
-      expectedDate.setHours(new Date().getHours() - 1);
-
-      expect(customSut.getRelativeTime(expectedDate)).toBe('1 hour ago');
-
-      done();
+      interpolation: {
+        prefix: undefined,
+        suffix: undefined
+      }
     });
+    let expectedDate = new Date();
+    expectedDate.setHours(new Date().getHours() - 1);
+
+    expect(sut.getRelativeTime(expectedDate)).toBe('1 hour ago');
   });
 
   it('should update relative time bindings using custom signal', done => {
