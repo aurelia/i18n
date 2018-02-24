@@ -561,9 +561,6 @@ export class I18N {
       debug: false
     };
 
-    if (options && !options.lng) {
-      throw new Error('You need to provide the lng option');
-    }
 
     i18next.init(options || defaultOptions, (err, t) => {
       //make sure attributes is an array in case a string was provided
@@ -1065,8 +1062,17 @@ export class RelativeTime {
 
   setup(locales) {
     let trans = translations.default || translations;
-    let key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     let fallbackLng = this.service.i18next.fallbackLng;
+
+    let alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
+    if (Array.isArray(alternateFb) && alternateFb.length > 0) {
+      alternateFb = alternateFb[0];
+    }
+
+    let key = ((locales && locales.newValue)
+      ? locales.newValue
+      : this.service.getLocale()) || alternateFb;
+
     let index = 0;
 
     if ((index = key.indexOf('-')) >= 0) { // eslint-disable-line no-cond-assign

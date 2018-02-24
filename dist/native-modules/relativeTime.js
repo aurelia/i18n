@@ -27,8 +27,15 @@ export var RelativeTime = function () {
 
   RelativeTime.prototype.setup = function setup(locales) {
     var trans = translations.default || translations;
-    var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     var fallbackLng = this.service.i18next.fallbackLng;
+
+    var alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
+    if (Array.isArray(alternateFb) && alternateFb.length > 0) {
+      alternateFb = alternateFb[0];
+    }
+
+    var key = (locales && locales.newValue ? locales.newValue : this.service.getLocale()) || alternateFb;
+
     var index = 0;
 
     if ((index = key.indexOf('-')) >= 0) {

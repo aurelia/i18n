@@ -33,10 +33,6 @@ export let I18N = (_temp = _class = class I18N {
       debug: false
     };
 
-    if (options && !options.lng) {
-      throw new Error('You need to provide the lng option');
-    }
-
     i18next.init(options || defaultOptions, (err, t) => {
       if (i18next.options.attributes instanceof String) {
         i18next.options.attributes = [i18next.options.attributes];

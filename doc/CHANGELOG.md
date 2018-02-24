@@ -1,3 +1,13 @@
+<a name="2.1.2"></a>
+## [2.1.2](https://github.com/aurelia/i18n/compare/2.1.1...2.1.2) (2018-02-24)
+
+
+### Bug Fixes
+
+* **i18n:** stop forcing lng option ([#259](https://github.com/aurelia/i18n/issues/259)) ([5692e30](https://github.com/aurelia/i18n/commit/5692e30))
+
+
+
 <a name="2.1.1"></a>
 ## [2.1.1](https://github.com/aurelia/i18n/compare/2.1.0...2.1.1) (2018-01-25)
 

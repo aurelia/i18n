@@ -188,7 +188,7 @@ System.config({
       "aurelia-task-queue": "npm:aurelia-task-queue@1.2.1"
     },
     "npm:aurelia-testing@0.4.2": {
-      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-rc.1.0.1",
+      "aurelia-bootstrapper": "npm:aurelia-bootstrapper@2.1.1",
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.3.2",
       "aurelia-framework": "npm:aurelia-framework@1.1.5",
       "aurelia-logging": "npm:aurelia-logging@1.3.1",

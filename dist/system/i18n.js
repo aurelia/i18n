@@ -55,10 +55,6 @@ System.register(['aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-agg
             debug: false
           };
 
-          if (options && !options.lng) {
-            throw new Error('You need to provide the lng option');
-          }
-
           i18next.init(options || defaultOptions, function (err, t) {
             if (i18next.options.attributes instanceof String) {
               i18next.options.attributes = [i18next.options.attributes];

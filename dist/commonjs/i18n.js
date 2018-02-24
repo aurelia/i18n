@@ -61,10 +61,6 @@ var I18N = exports.I18N = (_temp = _class = function () {
       debug: false
     };
 
-    if (options && !options.lng) {
-      throw new Error('You need to provide the lng option');
-    }
-
     _i18next2.default.init(options || defaultOptions, function (err, t) {
       if (_i18next2.default.options.attributes instanceof String) {
         _i18next2.default.options.attributes = [_i18next2.default.options.attributes];

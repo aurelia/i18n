@@ -592,10 +592,6 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
       debug: false
     };
 
-    if (options && !options.lng) {
-      throw new Error('You need to provide the lng option');
-    }
-
     i18next.init(options || defaultOptions, function (err, t) {
       if (i18next.options.attributes instanceof String) {
         i18next.options.attributes = [i18next.options.attributes];
@@ -1076,8 +1072,15 @@ var RelativeTime = exports.RelativeTime = function () {
 
   RelativeTime.prototype.setup = function setup(locales) {
     var trans = translations.default || translations;
-    var key = locales && locales.newValue ? locales.newValue : this.service.getLocale();
     var fallbackLng = this.service.i18next.fallbackLng;
+
+    var alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
+    if (Array.isArray(alternateFb) && alternateFb.length > 0) {
+      alternateFb = alternateFb[0];
+    }
+
+    var key = (locales && locales.newValue ? locales.newValue : this.service.getLocale()) || alternateFb;
+
     var index = 0;
 
     if ((index = key.indexOf('-')) >= 0) {
