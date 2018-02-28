@@ -297,7 +297,15 @@ export const translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'    
     }
   },
   jp: {
@@ -318,7 +326,15 @@ export const translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   pt: {
