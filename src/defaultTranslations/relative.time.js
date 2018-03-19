@@ -18,7 +18,15 @@ export const translations = {
       'day_ago': 'منذ __count__ يوم',
       'day_ago_plural': 'منذ __count__ أيام',
       'day_in': 'في __count__ يوم',
-      'day_in_plural': 'في __count__ أيام'
+      'day_in_plural': 'في __count__ أيام',
+      'month_ago': 'منذ __count__ شهر',
+      'month_ago_plural': 'منذ __count__ أشهر',
+      'month_in': 'في __count__ شهر',
+      'month_in_plural': 'في __count__ أشهر',
+      'year_ago': 'منذ __count__ سنة',
+      'year_ago_plural': 'منذ __count__ سنوات',
+      'year_in': 'في __count__ سنة',
+      'year_in_plural': 'في __count__ سنوات'
     }
   },
   en: {
