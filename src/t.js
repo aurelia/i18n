@@ -21,7 +21,9 @@ export class TValueConverter {
 
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
-  static inject = [DOM.Element];
+  static inject() {
+    return [DOM.Element];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -40,7 +42,9 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static inject() {
+    return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
