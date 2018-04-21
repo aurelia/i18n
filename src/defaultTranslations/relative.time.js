@@ -313,7 +313,7 @@ export const translations = {
       'year_ago': '__count__ 年前',
       'year_ago_plural': '__count__ 年前',
       'year_in': 'あと __count__ 年',
-      'year_in_plural': 'あと __count__ 年'    
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   jp: {
