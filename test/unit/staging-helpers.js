@@ -1,6 +1,6 @@
 import { Backend } from '../../src/aurelia-i18n-loader';
 
-export function bootstrapTestEnvironment(component, resources) {
+export function bootstrapTestEnvironment(component, config) {
   component.bootstrap((aurelia) => {
     aurelia.use
       .standardConfiguration()
@@ -10,11 +10,11 @@ export function bootstrapTestEnvironment(component, resources) {
         // register backend plugin
         instance.i18next.use(Backend.with(aurelia.loader));
 
-        return instance.setup({
+
+        return instance.setup(Object.assign({
           backend: {                                  // <-- configure backend settings
             loadPath: './locales/{{lng}}/{{ns}}.json' // <-- XHR settings for where to get the files from
           },
-          resources,
           interpolation: {
             prefix: '{{',
             suffix: '}}'
@@ -24,7 +24,7 @@ export function bootstrapTestEnvironment(component, resources) {
           defaultNS: 'translation',
           fallbackLng: 'en',
           debug: false
-        });
+        }, config));
       });
   });
 }

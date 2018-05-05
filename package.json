@@ -13,6 +13,7 @@
     "url": "https://github.com/aurelia/i18n/issues"
   },
   "scripts": {
+    "build": "gulp build",
     "precommit": "gulp lint",
     "test": "karma start"
   },

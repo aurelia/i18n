@@ -438,6 +438,9 @@ property plugin `instance.setup` function parameter.
   </source-code>
 </code-listing>
 
+> Passing the option `skipTranslationOnMissingKey` during plugin initialization, will keep your original contents in place and instead add a warning in the console
+about trying to update an element without a matching key.
+
 Any element in your views that has one of those attributes, will be translated when the locale is changed.
 
 <code-listing heading="Attribute based translation with the TCustomAttribute">

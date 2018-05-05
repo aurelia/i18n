@@ -1,9 +1,9 @@
 /*eslint no-cond-assign: 0*/
 import * as LogManager from 'aurelia-logging';
 import i18next from 'i18next';
-import {DOM, PLATFORM} from 'aurelia-pal';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {BindingSignaler} from 'aurelia-templating-resources';
+import { DOM, PLATFORM } from 'aurelia-pal';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { BindingSignaler } from 'aurelia-templating-resources';
 
 export class I18N {
   static inject = [EventAggregator, BindingSignaler];
@@ -27,6 +27,7 @@ export class I18N {
 
   setup(options?): Promise<any> {
     const defaultOptions = {
+      skipTranslationOnMissingKey: false,
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
       lng: 'en',
@@ -53,7 +54,7 @@ export class I18N {
   }
 
   setLocale(locale): Promise<any> {
-    return new Promise( resolve => {
+    return new Promise(resolve => {
       let oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
         this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
@@ -76,7 +77,7 @@ export class I18N {
     let comparer = nf.format(10000 / 3);
 
     let thousandSeparator = comparer[1];
-    let decimalSeparator  = comparer[5];
+    let decimalSeparator = comparer[5];
 
     if (thousandSeparator === '.') {
       thousandSeparator = '\\.';
@@ -190,16 +191,23 @@ export class I18N {
       // convert to camelCase
       const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
       const reservedNames = ['prepend', 'append', 'text', 'html'];
+      const i18nLogger = LogManager.getLogger('i18n');
+
       if (reservedNames.indexOf(attr) > -1 &&
-          node.au &&
-          node.au.controller &&
-          node.au.controller.viewModel &&
-          attrCC in node.au.controller.viewModel) {
-        const i18nLogger = LogManager.getLogger('i18n');
+        node.au &&
+        node.au.controller &&
+        node.au.controller.viewModel &&
+        attrCC in node.au.controller.viewModel) {
         i18nLogger.warn(`Aurelia I18N reserved attribute name\n
 [${reservedNames.join(', ')}]\n
 Your custom element has a bindable named ${attr} which is a reserved word.\n
 If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
+      }
+
+      if (this.i18next.options.skipTranslationOnMissingKey &&
+        this.tr(key, params) === key) {
+        i18nLogger.warn(`Couldn't find translation for key: ${key}`);
+        return;
       }
 
       //handle various attributes
@@ -254,9 +262,9 @@ If you'd like Aurelia I18N to translate your bindable instead, please consider g
         break;
       default: //normal html attribute
         if (node.au &&
-            node.au.controller &&
-            node.au.controller.viewModel &&
-            attrCC in node.au.controller.viewModel) {
+          node.au.controller &&
+          node.au.controller.viewModel &&
+          attrCC in node.au.controller.viewModel) {
           node.au.controller.viewModel[attrCC] = this.tr(key, params);
         } else {
           node.setAttribute(attr, this.tr(key, params));

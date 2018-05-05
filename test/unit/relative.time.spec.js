@@ -223,6 +223,7 @@ describe('testing relative time support', () => {
           signaler.signal('aurelia-relativetime-signal');
           expect(elem.innerHTML).toBe('1 second ago');
 
+          component.dispose();
           done();
         }, 1000);
       });
