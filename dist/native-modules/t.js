@@ -1,4 +1,4 @@
-var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3;
+var _dec, _class, _dec2, _class2, _class3, _temp;
 
 
 
@@ -29,7 +29,11 @@ export var TValueConverter = function () {
   return TValueConverter;
 }();
 
-export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
+export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = function () {
+  TParamsCustomAttribute.inject = function inject() {
+    return [DOM.Element];
+  };
+
   TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -44,9 +48,13 @@ export var TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_c
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class2.inject = [DOM.Element], _temp)) || _class);
+}()) || _class);
 
-export var TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+export var TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class2 = function () {
+  TCustomAttribute.inject = function inject() {
+    return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  };
+
   TCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
@@ -96,9 +104,9 @@ export var TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_t
   };
 
   return TCustomAttribute;
-}(), _class4.inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+}()) || _class2);
 
-export var TBindingBehavior = (_temp3 = _class5 = function () {
+export var TBindingBehavior = (_temp = _class3 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     
 
@@ -124,4 +132,4 @@ export var TBindingBehavior = (_temp3 = _class5 = function () {
   };
 
   return TBindingBehavior;
-}(), _class5.inject = [SignalBindingBehavior], _temp3);
+}(), _class3.inject = [SignalBindingBehavior], _temp);

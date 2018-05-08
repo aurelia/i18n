@@ -89,7 +89,7 @@ export declare class Backend {
   create(languages?: any, namespace?: any, key?: any, fallbackValue?: any): any;
 }
 export declare class BaseI18N {
-  static inject: any;
+  static inject(): any;
   constructor(i18n?: any, element?: any, ea?: any);
   attached(): any;
   detached(): any;
@@ -130,14 +130,14 @@ export declare class TValueConverter {
   toView(value?: any, options?: any): any;
 }
 export declare class TParamsCustomAttribute {
-  static inject: any;
+  static inject(): any;
   static configureAliases(aliases?: any): any;
   service: any;
   constructor(element?: any);
   valueChanged(): any;
 }
 export declare class TCustomAttribute {
-  static inject: any;
+  static inject(): any;
   static configureAliases(aliases?: any): any;
   constructor(element?: any, i18n?: any, ea?: any, tparams?: any);
   bind(): any;

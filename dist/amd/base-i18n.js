@@ -8,9 +8,11 @@ define(['exports', './i18n', 'aurelia-pal', 'aurelia-event-aggregator'], functio
 
   
 
-  var _class, _temp;
+  var BaseI18N = exports.BaseI18N = function () {
+    BaseI18N.inject = function inject() {
+      return [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator];
+    };
 
-  var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
     function BaseI18N(i18n, element, ea) {
       var _this = this;
 
@@ -33,5 +35,5 @@ define(['exports', './i18n', 'aurelia-pal', 'aurelia-event-aggregator'], functio
     };
 
     return BaseI18N;
-  }(), _class.inject = [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp);
+  }();
 });

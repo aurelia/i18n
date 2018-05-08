@@ -34,6 +34,7 @@ export var I18N = (_temp = _class = function () {
     var _this2 = this;
 
     var defaultOptions = {
+      skipTranslationOnMissingKey: false,
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
       lng: 'en',
@@ -180,9 +181,15 @@ export var I18N = (_temp = _class = function () {
         return g[1].toUpperCase();
       });
       var reservedNames = ['prepend', 'append', 'text', 'html'];
+      var i18nLogger = LogManager.getLogger('i18n');
+
       if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
-        var i18nLogger = LogManager.getLogger('i18n');
         i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+      }
+
+      if (this.i18next.options.skipTranslationOnMissingKey && this.tr(key, params) === key) {
+        i18nLogger.warn('Couldn\'t find translation for key: ' + key);
+        return;
       }
 
       switch (attr) {

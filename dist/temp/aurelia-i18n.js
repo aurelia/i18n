@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RtBindingBehavior = exports.RtValueConverter = exports.TBindingBehavior = exports.TCustomAttribute = exports.TParamsCustomAttribute = exports.TValueConverter = exports.RelativeTime = exports.NfBindingBehavior = exports.NfValueConverter = exports.DfBindingBehavior = exports.DfValueConverter = exports.BaseI18N = exports.Backend = exports.I18N = exports.LazyOptional = exports.assignObjectToKeys = exports.isInteger = exports.extend = exports.translations = undefined;
 
-var _dec, _class, _class2, _temp, _class3, _temp2, _class4, _temp3, _dec2, _class5, _class6, _temp4, _dec3, _class7, _class8, _temp5, _class9, _temp6;
+var _dec, _class, _class2, _temp, _class3, _temp2, _dec2, _class4, _dec3, _class5, _class6, _temp3;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
@@ -54,7 +54,15 @@ var translations = exports.translations = {
       'day_ago': 'منذ __count__ يوم',
       'day_ago_plural': 'منذ __count__ أيام',
       'day_in': 'في __count__ يوم',
-      'day_in_plural': 'في __count__ أيام'
+      'day_in_plural': 'في __count__ أيام',
+      'month_ago': 'منذ __count__ شهر',
+      'month_ago_plural': 'منذ __count__ أشهر',
+      'month_in': 'في __count__ شهر',
+      'month_in_plural': 'في __count__ أشهر',
+      'year_ago': 'منذ __count__ سنة',
+      'year_ago_plural': 'منذ __count__ سنوات',
+      'year_in': 'في __count__ سنة',
+      'year_in_plural': 'في __count__ سنوات'
     }
   },
   en: {
@@ -333,7 +341,15 @@ var translations = exports.translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   jp: {
@@ -354,7 +370,15 @@ var translations = exports.translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   pt: {
@@ -584,6 +608,7 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
     var _this3 = this;
 
     var defaultOptions = {
+      skipTranslationOnMissingKey: false,
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
       lng: 'en',
@@ -730,9 +755,15 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
         return g[1].toUpperCase();
       });
       var reservedNames = ['prepend', 'append', 'text', 'html'];
+      var i18nLogger = LogManager.getLogger('i18n');
+
       if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
-        var i18nLogger = LogManager.getLogger('i18n');
         i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+      }
+
+      if (this.i18next.options.skipTranslationOnMissingKey && this.tr(key, params) === key) {
+        i18nLogger.warn('Couldn\'t find translation for key: ' + key);
+        return;
       }
 
       switch (attr) {
@@ -894,7 +925,11 @@ function defaults(obj) {
   return obj;
 }
 
-var BaseI18N = exports.BaseI18N = (_temp3 = _class4 = function () {
+var BaseI18N = exports.BaseI18N = function () {
+  BaseI18N.inject = function inject() {
+    return [I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator];
+  };
+
   function BaseI18N(i18n, element, ea) {
     var _this6 = this;
 
@@ -917,7 +952,7 @@ var BaseI18N = exports.BaseI18N = (_temp3 = _class4 = function () {
   };
 
   return BaseI18N;
-}(), _class4.inject = [I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp3);
+}();
 
 var DfValueConverter = exports.DfValueConverter = function () {
   DfValueConverter.inject = function inject() {
@@ -1171,7 +1206,11 @@ var TValueConverter = exports.TValueConverter = function () {
   return TValueConverter;
 }();
 
-var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class5 = (_temp4 = _class6 = function () {
+var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aureliaTemplating.customAttribute)('t-params'), _dec2(_class4 = function () {
+  TParamsCustomAttribute.inject = function inject() {
+    return [_aureliaPal.DOM.Element];
+  };
+
   TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -1186,8 +1225,12 @@ var TParamsCustomAttribute = exports.TParamsCustomAttribute = (_dec2 = (0, _aure
   TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
   return TParamsCustomAttribute;
-}(), _class6.inject = [_aureliaPal.DOM.Element], _temp4)) || _class5);
-var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class7 = (_temp5 = _class8 = function () {
+}()) || _class4);
+var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplating.customAttribute)('t'), _dec3(_class5 = function () {
+  TCustomAttribute.inject = function inject() {
+    return [_aureliaPal.DOM.Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  };
+
   TCustomAttribute.configureAliases = function configureAliases(aliases) {
     var r = _aureliaMetadata.metadata.getOrCreateOwn(_aureliaMetadata.metadata.resource, _aureliaTemplating.HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
@@ -1237,8 +1280,8 @@ var TCustomAttribute = exports.TCustomAttribute = (_dec3 = (0, _aureliaTemplatin
   };
 
   return TCustomAttribute;
-}(), _class8.inject = [_aureliaPal.DOM.Element, I18N, _aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp5)) || _class7);
-var TBindingBehavior = exports.TBindingBehavior = (_temp6 = _class9 = function () {
+}()) || _class5);
+var TBindingBehavior = exports.TBindingBehavior = (_temp3 = _class6 = function () {
   function TBindingBehavior(signalBindingBehavior) {
     _classCallCheck(this, TBindingBehavior);
 
@@ -1264,7 +1307,7 @@ var TBindingBehavior = exports.TBindingBehavior = (_temp6 = _class9 = function (
   };
 
   return TBindingBehavior;
-}(), _class9.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp6);
+}(), _class6.inject = [_aureliaTemplatingResources.SignalBindingBehavior], _temp3);
 
 var RtValueConverter = exports.RtValueConverter = function () {
   RtValueConverter.inject = function inject() {

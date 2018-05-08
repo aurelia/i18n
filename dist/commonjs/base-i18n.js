@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.BaseI18N = undefined;
 
-var _class, _temp;
-
 var _i18n = require('./i18n');
 
 var _aureliaPal = require('aurelia-pal');
@@ -15,7 +13,11 @@ var _aureliaEventAggregator = require('aurelia-event-aggregator');
 
 
 
-var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
+var BaseI18N = exports.BaseI18N = function () {
+  BaseI18N.inject = function inject() {
+    return [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator];
+  };
+
   function BaseI18N(i18n, element, ea) {
     var _this = this;
 
@@ -38,4 +40,4 @@ var BaseI18N = exports.BaseI18N = (_temp = _class = function () {
   };
 
   return BaseI18N;
-}(), _class.inject = [_i18n.I18N, _aureliaPal.DOM.Element, _aureliaEventAggregator.EventAggregator], _temp);
+}();

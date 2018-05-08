@@ -3,7 +3,7 @@
 System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aurelia-templating', 'aurelia-templating-resources', 'aurelia-binding', 'aurelia-pal', './utils'], function (_export, _context) {
   "use strict";
 
-  var I18N, EventAggregator, metadata, customAttribute, HtmlBehaviorResource, SignalBindingBehavior, ValueConverter, DOM, LazyOptional, _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
+  var I18N, EventAggregator, metadata, customAttribute, HtmlBehaviorResource, SignalBindingBehavior, ValueConverter, DOM, LazyOptional, _dec, _class, _dec2, _class2, _class3, _temp, TValueConverter, TParamsCustomAttribute, TCustomAttribute, TBindingBehavior;
 
   
 
@@ -47,7 +47,11 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
 
       _export('TValueConverter', TValueConverter);
 
-      _export('TParamsCustomAttribute', TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = function () {
+      _export('TParamsCustomAttribute', TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = function () {
+        TParamsCustomAttribute.inject = function inject() {
+          return [DOM.Element];
+        };
+
         TParamsCustomAttribute.configureAliases = function configureAliases(aliases) {
           var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
           r.aliases = aliases;
@@ -62,11 +66,15 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
         TParamsCustomAttribute.prototype.valueChanged = function valueChanged() {};
 
         return TParamsCustomAttribute;
-      }(), _class2.inject = [DOM.Element], _temp)) || _class));
+      }()) || _class));
 
       _export('TParamsCustomAttribute', TParamsCustomAttribute);
 
-      _export('TCustomAttribute', TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = function () {
+      _export('TCustomAttribute', TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class2 = function () {
+        TCustomAttribute.inject = function inject() {
+          return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+        };
+
         TCustomAttribute.configureAliases = function configureAliases(aliases) {
           var r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
           r.aliases = aliases;
@@ -116,11 +124,11 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
         };
 
         return TCustomAttribute;
-      }(), _class4.inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3));
+      }()) || _class2));
 
       _export('TCustomAttribute', TCustomAttribute);
 
-      _export('TBindingBehavior', TBindingBehavior = (_temp3 = _class5 = function () {
+      _export('TBindingBehavior', TBindingBehavior = (_temp = _class3 = function () {
         function TBindingBehavior(signalBindingBehavior) {
           
 
@@ -146,7 +154,7 @@ System.register(['./i18n', 'aurelia-event-aggregator', 'aurelia-metadata', 'aure
         };
 
         return TBindingBehavior;
-      }(), _class5.inject = [SignalBindingBehavior], _temp3));
+      }(), _class3.inject = [SignalBindingBehavior], _temp));
 
       _export('TBindingBehavior', TBindingBehavior);
     }

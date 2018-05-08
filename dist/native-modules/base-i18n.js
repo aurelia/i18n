@@ -1,12 +1,14 @@
-var _class, _temp;
-
 
 
 import { I18N } from './i18n';
 import { DOM } from 'aurelia-pal';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-export var BaseI18N = (_temp = _class = function () {
+export var BaseI18N = function () {
+  BaseI18N.inject = function inject() {
+    return [I18N, DOM.Element, EventAggregator];
+  };
+
   function BaseI18N(i18n, element, ea) {
     var _this = this;
 
@@ -29,4 +31,4 @@ export var BaseI18N = (_temp = _class = function () {
   };
 
   return BaseI18N;
-}(), _class.inject = [I18N, DOM.Element, EventAggregator], _temp);
+}();

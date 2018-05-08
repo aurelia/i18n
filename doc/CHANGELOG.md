@@ -1,3 +1,20 @@
+<a name="2.2.0"></a>
+# [2.2.0](https://github.com/aurelia/i18n/compare/2.1.2...2.2.0) (2018-05-08)
+
+
+### Bug Fixes
+
+* **DI:** use static method for Element ([#266](https://github.com/aurelia/i18n/issues/266)) ([71099bc](https://github.com/aurelia/i18n/commit/71099bc))
+
+
+### Features
+
+* **relative-time:** months and years to Arabic translation ([0ae50d8](https://github.com/aurelia/i18n/commit/0ae50d8))
+* **relative-time:** months and years to Japanese translation ([af2ecce](https://github.com/aurelia/i18n/commit/af2ecce)), closes [#261](https://github.com/aurelia/i18n/issues/261)
+* **t-attribute:** fallback on missing key ([976157b](https://github.com/aurelia/i18n/commit/976157b))
+
+
+
 <a name="2.1.2"></a>
 ## [2.1.2](https://github.com/aurelia/i18n/compare/2.1.1...2.1.2) (2018-02-24)
 

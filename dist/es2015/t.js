@@ -1,4 +1,4 @@
-var _dec, _class, _class2, _temp, _dec2, _class3, _class4, _temp2, _class5, _temp3;
+var _dec, _class, _dec2, _class2, _class3, _temp;
 
 import { I18N } from './i18n';
 import { EventAggregator } from 'aurelia-event-aggregator';
@@ -22,7 +22,10 @@ export let TValueConverter = class TValueConverter {
   }
 };
 
-export let TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = (_temp = _class2 = class TParamsCustomAttribute {
+export let TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_class = class TParamsCustomAttribute {
+  static inject() {
+    return [DOM.Element];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -34,9 +37,13 @@ export let TParamsCustomAttribute = (_dec = customAttribute('t-params'), _dec(_c
   }
 
   valueChanged() {}
-}, _class2.inject = [DOM.Element], _temp)) || _class);
+}) || _class);
 
-export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_temp2 = _class4 = class TCustomAttribute {
+export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class2 = class TCustomAttribute {
+
+  static inject() {
+    return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
@@ -80,9 +87,9 @@ export let TCustomAttribute = (_dec2 = customAttribute('t'), _dec2(_class3 = (_t
       this.subscription.dispose();
     }
   }
-}, _class4.inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)], _temp2)) || _class3);
+}) || _class2);
 
-export let TBindingBehavior = (_temp3 = _class5 = class TBindingBehavior {
+export let TBindingBehavior = (_temp = _class3 = class TBindingBehavior {
 
   constructor(signalBindingBehavior) {
     this.signalBindingBehavior = signalBindingBehavior;
@@ -105,4 +112,4 @@ export let TBindingBehavior = (_temp3 = _class5 = class TBindingBehavior {
   unbind(binding, source) {
     this.signalBindingBehavior.unbind(binding, source);
   }
-}, _class5.inject = [SignalBindingBehavior], _temp3);
+}, _class3.inject = [SignalBindingBehavior], _temp);

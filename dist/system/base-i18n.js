@@ -3,7 +3,7 @@
 System.register(['./i18n', 'aurelia-pal', 'aurelia-event-aggregator'], function (_export, _context) {
   "use strict";
 
-  var I18N, DOM, EventAggregator, _class, _temp, BaseI18N;
+  var I18N, DOM, EventAggregator, BaseI18N;
 
   
 
@@ -16,7 +16,11 @@ System.register(['./i18n', 'aurelia-pal', 'aurelia-event-aggregator'], function 
       EventAggregator = _aureliaEventAggregator.EventAggregator;
     }],
     execute: function () {
-      _export('BaseI18N', BaseI18N = (_temp = _class = function () {
+      _export('BaseI18N', BaseI18N = function () {
+        BaseI18N.inject = function inject() {
+          return [I18N, DOM.Element, EventAggregator];
+        };
+
         function BaseI18N(i18n, element, ea) {
           var _this = this;
 
@@ -39,7 +43,7 @@ System.register(['./i18n', 'aurelia-pal', 'aurelia-event-aggregator'], function 
         };
 
         return BaseI18N;
-      }(), _class.inject = [I18N, DOM.Element, EventAggregator], _temp));
+      }());
 
       _export('BaseI18N', BaseI18N);
     }

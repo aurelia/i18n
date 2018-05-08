@@ -23,7 +23,15 @@ define(['exports'], function (exports) {
         'day_ago': 'منذ __count__ يوم',
         'day_ago_plural': 'منذ __count__ أيام',
         'day_in': 'في __count__ يوم',
-        'day_in_plural': 'في __count__ أيام'
+        'day_in_plural': 'في __count__ أيام',
+        'month_ago': 'منذ __count__ شهر',
+        'month_ago_plural': 'منذ __count__ أشهر',
+        'month_in': 'في __count__ شهر',
+        'month_in_plural': 'في __count__ أشهر',
+        'year_ago': 'منذ __count__ سنة',
+        'year_ago_plural': 'منذ __count__ سنوات',
+        'year_in': 'في __count__ سنة',
+        'year_in_plural': 'في __count__ سنوات'
       }
     },
     en: {
@@ -302,7 +310,15 @@ define(['exports'], function (exports) {
         'day_ago': '__count__ 日間前',
         'day_ago_plural': '__count__ 日間前',
         'day_in': 'あと __count__ 日間',
-        'day_in_plural': 'あと __count__ 日間'
+        'day_in_plural': 'あと __count__ 日間',
+        'month_ago': '__count__ ヶ月前',
+        'month_ago_plural': '__count__ ヶ月前',
+        'month_in': 'あと __count__ ヶ月前',
+        'month_in_plural': 'あと __count__ ヶ月前',
+        'year_ago': '__count__ 年前',
+        'year_ago_plural': '__count__ 年前',
+        'year_in': 'あと __count__ 年',
+        'year_in_plural': 'あと __count__ 年'
       }
     },
     jp: {
@@ -323,7 +339,15 @@ define(['exports'], function (exports) {
         'day_ago': '__count__ 日間前',
         'day_ago_plural': '__count__ 日間前',
         'day_in': 'あと __count__ 日間',
-        'day_in_plural': 'あと __count__ 日間'
+        'day_in_plural': 'あと __count__ 日間',
+        'month_ago': '__count__ ヶ月前',
+        'month_ago_plural': '__count__ ヶ月前',
+        'month_in': 'あと __count__ ヶ月前',
+        'month_in_plural': 'あと __count__ ヶ月前',
+        'year_ago': '__count__ 年前',
+        'year_ago_plural': '__count__ 年前',
+        'year_in': 'あと __count__ 年',
+        'year_in_plural': 'あと __count__ 年'
       }
     },
     pt: {

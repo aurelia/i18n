@@ -28,7 +28,15 @@ export const translations = {
       'day_ago': 'منذ __count__ يوم',
       'day_ago_plural': 'منذ __count__ أيام',
       'day_in': 'في __count__ يوم',
-      'day_in_plural': 'في __count__ أيام'
+      'day_in_plural': 'في __count__ أيام',
+      'month_ago': 'منذ __count__ شهر',
+      'month_ago_plural': 'منذ __count__ أشهر',
+      'month_in': 'في __count__ شهر',
+      'month_in_plural': 'في __count__ أشهر',
+      'year_ago': 'منذ __count__ سنة',
+      'year_ago_plural': 'منذ __count__ سنوات',
+      'year_in': 'في __count__ سنة',
+      'year_in_plural': 'في __count__ سنوات'
     }
   },
   en: {
@@ -307,7 +315,15 @@ export const translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   jp: {
@@ -328,7 +344,15 @@ export const translations = {
       'day_ago': '__count__ 日間前',
       'day_ago_plural': '__count__ 日間前',
       'day_in': 'あと __count__ 日間',
-      'day_in_plural': 'あと __count__ 日間'
+      'day_in_plural': 'あと __count__ 日間',
+      'month_ago': '__count__ ヶ月前',
+      'month_ago_plural': '__count__ ヶ月前',
+      'month_in': 'あと __count__ ヶ月前',
+      'month_in_plural': 'あと __count__ ヶ月前',
+      'year_ago': '__count__ 年前',
+      'year_ago_plural': '__count__ 年前',
+      'year_in': 'あと __count__ 年',
+      'year_in_plural': 'あと __count__ 年'
     }
   },
   pt: {
@@ -553,6 +577,7 @@ export class I18N {
 
   setup(options?): Promise<any> {
     const defaultOptions = {
+      skipTranslationOnMissingKey: false,
       compatibilityAPI: 'v1',
       compatibilityJSON: 'v1',
       lng: 'en',
@@ -579,7 +604,7 @@ export class I18N {
   }
 
   setLocale(locale): Promise<any> {
-    return new Promise( resolve => {
+    return new Promise(resolve => {
       let oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
         this.ea.publish('i18n:locale:changed', { oldValue: oldLocale, newValue: locale });
@@ -602,7 +627,7 @@ export class I18N {
     let comparer = nf.format(10000 / 3);
 
     let thousandSeparator = comparer[1];
-    let decimalSeparator  = comparer[5];
+    let decimalSeparator = comparer[5];
 
     if (thousandSeparator === '.') {
       thousandSeparator = '\\.';
@@ -716,16 +741,23 @@ export class I18N {
       // convert to camelCase
       const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
       const reservedNames = ['prepend', 'append', 'text', 'html'];
+      const i18nLogger = LogManager.getLogger('i18n');
+
       if (reservedNames.indexOf(attr) > -1 &&
-          node.au &&
-          node.au.controller &&
-          node.au.controller.viewModel &&
-          attrCC in node.au.controller.viewModel) {
-        const i18nLogger = LogManager.getLogger('i18n');
+        node.au &&
+        node.au.controller &&
+        node.au.controller.viewModel &&
+        attrCC in node.au.controller.viewModel) {
         i18nLogger.warn(`Aurelia I18N reserved attribute name\n
 [${reservedNames.join(', ')}]\n
 Your custom element has a bindable named ${attr} which is a reserved word.\n
 If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
+      }
+
+      if (this.i18next.options.skipTranslationOnMissingKey &&
+        this.tr(key, params) === key) {
+        i18nLogger.warn(`Couldn't find translation for key: ${key}`);
+        return;
       }
 
       //handle various attributes
@@ -780,9 +812,9 @@ If you'd like Aurelia I18N to translate your bindable instead, please consider g
         break;
       default: //normal html attribute
         if (node.au &&
-            node.au.controller &&
-            node.au.controller.viewModel &&
-            attrCC in node.au.controller.viewModel) {
+          node.au.controller &&
+          node.au.controller.viewModel &&
+          attrCC in node.au.controller.viewModel) {
           node.au.controller.viewModel[attrCC] = this.tr(key, params);
         } else {
           node.setAttribute(attr, this.tr(key, params));
@@ -898,7 +930,9 @@ function defaults(obj) {
 
 export class BaseI18N {
 
-  static inject = [I18N, DOM.Element, EventAggregator];
+  static inject() {
+    return [I18N, DOM.Element, EventAggregator];
+  }
 
   constructor(i18n, element, ea) {
     this.i18n = i18n;
@@ -1156,7 +1190,9 @@ export class TValueConverter {
 
 @customAttribute('t-params')
 export class TParamsCustomAttribute {
-  static inject = [DOM.Element];
+  static inject() {
+    return [DOM.Element];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     r.aliases = aliases;
@@ -1175,7 +1211,9 @@ export class TParamsCustomAttribute {
 @customAttribute('t')
 export class TCustomAttribute {
 
-  static inject = [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  static inject() {
+    return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
+  }
   static configureAliases(aliases) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     r.aliases = aliases;
