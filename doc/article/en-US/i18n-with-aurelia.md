@@ -1067,7 +1067,7 @@ Last but not least search for the build/bundles/source section for the app-bundl
 ]
 ```
 
-and inlcude the json extension in the loader plugin part build/loader/plugins/extensions
+and include the json extension in the loader plugin part build/loader/plugins/extensions
 
 ```JSON
 ...
@@ -1084,6 +1084,58 @@ and inlcude the json extension in the loader plugin part build/loader/plugins/ex
 ]
 ...
 ```
+### Using Webpack
+
+As an easy starting point for getting aurelia-i18n to work with webpack or if you don't want your translations files split into several chunks, you might refrain from lazy loading them and instead bundle them all with your app.bundle. With all locales included into the app.bundle, it's size and upfront loading time will increase, but for a small amount of translations, that might not be much of an issue. To do this, you can use the [i18next-resource-store-loader](https://github.com/atroo/i18next-resource-store-loader).
+
+First install the module from within the root folder of your project:
+
+```Shell
+npm install i18next-resource-store-loader --save
+```
+
+Given following file structure:
+
+```
+└── src
+      ├── assets
+      │   └── i18n
+      │       ├── index.js //<-- add an empty index.js as root pointer
+      │       ├── de
+      │       │   └── translation.json
+      │       └── en
+      │           └── translation.json
+      └── main.js/ts
+```
+
+Configure aurelia-i18n as follows:
+
+<code-listing heading="Configuring the i18next-resource-store-loader">
+  <source-code lang="ES 2015">   
+    import {PLATFORM} from 'aurelia-pal';
+    // Pass the path to the root pointer relative to main to the loader
+    import resBundle from 'i18next-resource-store-loader!./assets/i18n/index.js';
+
+    export function configure(aurelia) {
+      aurelia.use
+        .standardConfiguration()
+        .developmentLogging()
+        .plugin(PLATFORM.moduleName('aurelia-i18n'), instance => {
+          return instance.setup({
+            resources  : resBundle, //<-- configure aurelia-i18n to use your bundled translations
+            lng        : 'de',
+            attributes : ['t'],
+            fallbackLng: 'en',
+            debug      : false,
+          });
+        });
+      
+      aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
+    }
+  </source-code>
+</code-listing>
+
+For additional information about the resource store loader please take a look at the [official repos information](https://github.com/atroo/i18next-resource-store-loader).
 
 ## Internationalization API Polyfill
 
@@ -1183,7 +1235,7 @@ to properly recognize the plugins. With that change, the example code looks like
             // code to setup aurelia-i18n
         });
 
-      aurelia.start().then(() => aurelia.setRoot('app', document.body));
+      aurelia.start().then(() => aurelia.setRoot(PLATFORM.modulename('app'), document.body));
     }
   </source-code>
 </code-listing>
@@ -1209,9 +1261,9 @@ Or using TypeScript
 
 More information [in the README of the Intl.js polyfill](https://github.com/andyearnshaw/Intl.js/#intljs-and-browserifywebpack).
 
-On top of that if you need the Intl polyfill included you have to manualy require and bundle it. To do so add the following import statement at the begin of your `main.js/ts` file:
+On top of that if you need the Intl polyfill included you have to manually require and bundle it. To do so add the following import statement at the begin of your `main.js/ts` file:
 
-<code-listing heading="Manually requiering the Intl Polyfill">
+<code-listing heading="Manually requiring the Intl Polyfill">
   <source-code lang="ES 2015">
     //main.js
     import 'intl';
