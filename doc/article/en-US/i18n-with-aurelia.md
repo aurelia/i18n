@@ -244,6 +244,20 @@ be slight differences. The following listings show the configuration for first t
   </source-code>
 </code-listing>
 
+To have `webpack` serving your translation files for `i18next-xhr-backend`, they need to be copied into the virtual (development) or actual (production) output directory. To copy them from `src/locales/` to `$outputDir$/locales/`, add the following entry under the plugins section of your `webpack.config.js`.
+
+<code-listing heading="Copy translation files for webpack and i18next-xhr-backend">
+  <source-code lang="ES 2015">
+    plugins: [
+      // ...
+      new CopyWebpackPlugin([
+        { from: 'src/locales/', to: 'locales/' }
+      ]),
+      // ...
+    ]
+  </source-code>
+</code-listing>
+
 You may also group your translations by namespaces, spread across multiple files. Say you have the standard translation.json and an additional `nav.json` for the navigation items, you can configure aurelia-i18n by passing the `ns` setting in the config object containing the different namespaces as well as the default namespace.
 When using namespaces, you will need to prepend string references with `ns:` for those strings that are not in the
 defaultNS. For example `t='nav:profile'` would access the `profile` string in `nav.json`.
