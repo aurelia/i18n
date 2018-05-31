@@ -350,6 +350,7 @@ The next step is to let the compiler know about your `*.d.ts` files. Add the fol
 </code-listing>
 
 or if you are using TypeScript 2.0 or later, you can add them to the types section like
+
 <code-listing heading="Configuring custom typings in tsconfig.json">
   <source-code lang="ES 2015">
     ... existing configuration code
@@ -1114,7 +1115,7 @@ Given following file structure:
 └── src
       ├── assets
       │   └── i18n
-      │       ├── index.js //<-- add an empty index.js as root pointer
+      │       ├── index.js // Add an empty index.js as root pointer here.
       │       ├── de
       │       │   └── translation.json
       │       └── en
