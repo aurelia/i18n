@@ -485,48 +485,7 @@ Notice in the above example that the key was set to `home.title`. This will make
   </source-code>
 </code-listing>
 
-Use `updateTranslation()` to update all translations within the children of the element that is passed to it.
-The following example shows how a view model can be configured to update it's contents when the view is attached and every time a locale is changed.
-
-<code-listing heading="Updating translations manually">
-  <source-code lang="ES 2015">
-    import {I18N} from 'aurelia-i18n';
-    import {EventAggregator} from 'aurelia-event-aggregator';
-
-    export class MyDemoVM {
-      static inject = [I18N,Element,EventAggregator];
-      constructor(i18n,element,ea) {
-        this.i18n = i18n;
-        this.element = element;
-
-        ea.subscribe('i18n:locale:changed', payload => {
-          this.i18n.updateTranslations(this.element);
-        });
-      }
-
-      attached(){
-        this.i18n.updateTranslations(this.element);
-      }
-    }
-  </source-code>
-</code-listing>
-
-Alternatively you may extend your VM with the provided Base-I18N-VM, which will set that up for you automatically.
-
-<code-listing heading="Automatic locale changed subscription using the Base-I18N-VM">
-  <source-code lang="ES 2015">
-    import {BaseI18N} from 'aurelia-i18n';
-
-    export class MyDemoVM extends BaseI18N {
-
-    }
-  </source-code>
-</code-listing>
-
-> Info
-> Just remember in case you define your own `constructor`, to call `this.super` and pass it the instances of its
-dependencies as described in the previous example. Same applies to `attached`, although nothing needs to be passed
-in here
+Use `i18n.updateTranslation()` to update all translations within the children of the element that is passed to it.
 
 #### Specifying attributes
 
