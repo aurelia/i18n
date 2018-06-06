@@ -589,7 +589,15 @@ The following example will not change the content of the element, but will set i
 
 #### Specifying multiple attributes
 
-Multiple attributes can be specified by separating them with a semicolon.
+Multiple attributes for the same key can be specified by separating them with a comma.
+
+```HTML
+<input t="[placeholder,aria-placeholder]placeholder">
+```
+
+When the locale changes it will set the `placeholder` and the `aria-placeholder` of the input element to the translated value of `placeholder`.
+
+Multiple attributes for different keys can be specified by separating them with a semicolon.
 
 ```HTML
 <span t="[html]title;[class]title-class">Title</span>
