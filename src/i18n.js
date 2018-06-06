@@ -167,7 +167,7 @@ export class I18N {
     while (i--) {
       let key = keys[i];
       // remove the optional attribute
-      let re = /\[([a-z\-]*)\]/ig;
+      let re = /\[([a-z\-, ]*)\]/ig;
 
       let m;
       let attr = 'text';
@@ -185,92 +185,99 @@ export class I18N {
         }
       }
 
-      if (!node._textContent) node._textContent = node.textContent;
-      if (!node._innerHTML) node._innerHTML = node.innerHTML;
+      let attrs = attr.split(',');
+      let j = attrs.length;
 
-      // convert to camelCase
-      const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
-      const reservedNames = ['prepend', 'append', 'text', 'html'];
-      const i18nLogger = LogManager.getLogger('i18n');
+      while (j--) {
+        attr = attrs[j].trim();
 
-      if (reservedNames.indexOf(attr) > -1 &&
-        node.au &&
-        node.au.controller &&
-        node.au.controller.viewModel &&
-        attrCC in node.au.controller.viewModel) {
-        i18nLogger.warn(`Aurelia I18N reserved attribute name\n
-[${reservedNames.join(', ')}]\n
-Your custom element has a bindable named ${attr} which is a reserved word.\n
-If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
-      }
+        if (!node._textContent) node._textContent = node.textContent;
+        if (!node._innerHTML) node._innerHTML = node.innerHTML;
 
-      if (this.i18next.options.skipTranslationOnMissingKey &&
-        this.tr(key, params) === key) {
-        i18nLogger.warn(`Couldn't find translation for key: ${key}`);
-        return;
-      }
+        // convert to camelCase
+        const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
+        const reservedNames = ['prepend', 'append', 'text', 'html'];
+        const i18nLogger = LogManager.getLogger('i18n');
 
-      //handle various attributes
-      //anything other than text,prepend,append or html will be added as an attribute on the element.
-      switch (attr) {
-      case 'text':
-        let newChild = DOM.createTextNode(this.tr(key, params));
-        if (node._newChild && node._newChild.parentNode === node) {
-          node.removeChild(node._newChild);
-        }
-
-        node._newChild = newChild;
-        while (node.firstChild) {
-          node.removeChild(node.firstChild);
-        }
-        node.appendChild(node._newChild);
-        break;
-      case 'prepend':
-        let prependParser = DOM.createElement('div');
-        prependParser.innerHTML = this.tr(key, params);
-        for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
-          if (node.childNodes[ni]._prepended) {
-            node.removeChild(node.childNodes[ni]);
-          }
-        }
-
-        for (let pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
-          prependParser.childNodes[pi]._prepended = true;
-          if (node.firstChild) {
-            node.insertBefore(prependParser.childNodes[pi], node.firstChild);
-          } else {
-            node.appendChild(prependParser.childNodes[pi]);
-          }
-        }
-        break;
-      case 'append':
-        let appendParser = DOM.createElement('div');
-        appendParser.innerHTML = this.tr(key, params);
-        for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
-          if (node.childNodes[ni]._appended) {
-            node.removeChild(node.childNodes[ni]);
-          }
-        }
-
-        while (appendParser.firstChild) {
-          appendParser.firstChild._appended = true;
-          node.appendChild(appendParser.firstChild);
-        }
-        break;
-      case 'html':
-        node.innerHTML = this.tr(key, params);
-        break;
-      default: //normal html attribute
-        if (node.au &&
+        if (reservedNames.indexOf(attr) > -1 &&
+          node.au &&
           node.au.controller &&
           node.au.controller.viewModel &&
           attrCC in node.au.controller.viewModel) {
-          node.au.controller.viewModel[attrCC] = this.tr(key, params);
-        } else {
-          node.setAttribute(attr, this.tr(key, params));
+          i18nLogger.warn(`Aurelia I18N reserved attribute name\n
+  [${reservedNames.join(', ')}]\n
+  Your custom element has a bindable named ${attr} which is a reserved word.\n
+  If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
         }
 
-        break;
+        if (this.i18next.options.skipTranslationOnMissingKey &&
+          this.tr(key, params) === key) {
+          i18nLogger.warn(`Couldn't find translation for key: ${key}`);
+          return;
+        }
+
+        //handle various attributes
+        //anything other than text,prepend,append or html will be added as an attribute on the element.
+        switch (attr) {
+        case 'text':
+          let newChild = DOM.createTextNode(this.tr(key, params));
+          if (node._newChild && node._newChild.parentNode === node) {
+            node.removeChild(node._newChild);
+          }
+
+          node._newChild = newChild;
+          while (node.firstChild) {
+            node.removeChild(node.firstChild);
+          }
+          node.appendChild(node._newChild);
+          break;
+        case 'prepend':
+          let prependParser = DOM.createElement('div');
+          prependParser.innerHTML = this.tr(key, params);
+          for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
+            if (node.childNodes[ni]._prepended) {
+              node.removeChild(node.childNodes[ni]);
+            }
+          }
+
+          for (let pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+            prependParser.childNodes[pi]._prepended = true;
+            if (node.firstChild) {
+              node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+            } else {
+              node.appendChild(prependParser.childNodes[pi]);
+            }
+          }
+          break;
+        case 'append':
+          let appendParser = DOM.createElement('div');
+          appendParser.innerHTML = this.tr(key, params);
+          for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
+            if (node.childNodes[ni]._appended) {
+              node.removeChild(node.childNodes[ni]);
+            }
+          }
+
+          while (appendParser.firstChild) {
+            appendParser.firstChild._appended = true;
+            node.appendChild(appendParser.firstChild);
+          }
+          break;
+        case 'html':
+          node.innerHTML = this.tr(key, params);
+          break;
+        default: //normal html attribute
+          if (node.au &&
+            node.au.controller &&
+            node.au.controller.viewModel &&
+            attrCC in node.au.controller.viewModel) {
+            node.au.controller.viewModel[attrCC] = this.tr(key, params);
+          } else {
+            node.setAttribute(attr, this.tr(key, params));
+          }
+
+          break;
+        }
       }
     }
   }

@@ -199,6 +199,24 @@ describe('testing i18n translation update', () => {
     });
   });
 
+  it('should set multiple attributes when separated with a comma', done => {
+    let el = template.querySelector('#test-multiple-attributes');
+    expect(el.innerHTML.trim()).toBe('Wrong Description');
+    expect(el.getAttribute('alt')).toBe(null);
+    expect(el.getAttribute('aria-label')).toBe(null);
+    sut.setLocale('de').then(() => {
+      expect(el.innerHTML.trim()).toBe('Beschreibung');
+      expect(el.getAttribute('alt')).toBe('Beschreibung');
+      expect(el.getAttribute('aria-label')).toBe('Beschreibung');
+      return sut.setLocale('en');
+    }).then(() => {
+      expect(el.innerHTML.trim()).toBe('Description');
+      expect(el.getAttribute('alt')).toBe('Description');
+      expect(el.getAttribute('aria-label')).toBe('Description');
+      done();
+    });
+  });
+
   it('should set the src attribute for images', done => {
     let el = template.querySelector('#test-img');
     expect(el.getAttribute('src')).toBeNull();
