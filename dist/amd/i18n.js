@@ -186,7 +186,7 @@ define(['exports', 'aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-a
       while (i--) {
         var key = keys[i];
 
-        var re = /\[([a-z\-]*)\]/ig;
+        var re = /\[([a-z\-, ]*)\]/ig;
 
         var m = void 0;
         var attr = 'text';
@@ -203,80 +203,87 @@ define(['exports', 'aurelia-logging', 'i18next', 'aurelia-pal', 'aurelia-event-a
           }
         }
 
-        if (!node._textContent) node._textContent = node.textContent;
-        if (!node._innerHTML) node._innerHTML = node.innerHTML;
+        var attrs = attr.split(',');
+        var j = attrs.length;
 
-        var attrCC = attr.replace(/-([a-z])/g, function (g) {
-          return g[1].toUpperCase();
-        });
-        var reservedNames = ['prepend', 'append', 'text', 'html'];
-        var i18nLogger = LogManager.getLogger('i18n');
+        while (j--) {
+          attr = attrs[j].trim();
 
-        if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
-          i18nLogger.warn('Aurelia I18N reserved attribute name\n\n[' + reservedNames.join(', ') + ']\n\nYour custom element has a bindable named ' + attr + ' which is a reserved word.\n\nIf you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
-        }
+          if (!node._textContent) node._textContent = node.textContent;
+          if (!node._innerHTML) node._innerHTML = node.innerHTML;
 
-        if (this.i18next.options.skipTranslationOnMissingKey && this.tr(key, params) === key) {
-          i18nLogger.warn('Couldn\'t find translation for key: ' + key);
-          return;
-        }
+          var attrCC = attr.replace(/-([a-z])/g, function (g) {
+            return g[1].toUpperCase();
+          });
+          var reservedNames = ['prepend', 'append', 'text', 'html'];
+          var i18nLogger = LogManager.getLogger('i18n');
 
-        switch (attr) {
-          case 'text':
-            var newChild = _aureliaPal.DOM.createTextNode(this.tr(key, params));
-            if (node._newChild && node._newChild.parentNode === node) {
-              node.removeChild(node._newChild);
-            }
+          if (reservedNames.indexOf(attr) > -1 && node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+            i18nLogger.warn('Aurelia I18N reserved attribute name\n\n  [' + reservedNames.join(', ') + ']\n\n  Your custom element has a bindable named ' + attr + ' which is a reserved word.\n\n  If you\'d like Aurelia I18N to translate your bindable instead, please consider giving it another name.');
+          }
 
-            node._newChild = newChild;
-            while (node.firstChild) {
-              node.removeChild(node.firstChild);
-            }
-            node.appendChild(node._newChild);
-            break;
-          case 'prepend':
-            var prependParser = _aureliaPal.DOM.createElement('div');
-            prependParser.innerHTML = this.tr(key, params);
-            for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
-              if (node.childNodes[ni]._prepended) {
-                node.removeChild(node.childNodes[ni]);
+          if (this.i18next.options.skipTranslationOnMissingKey && this.tr(key, params) === key) {
+            i18nLogger.warn('Couldn\'t find translation for key: ' + key);
+            return;
+          }
+
+          switch (attr) {
+            case 'text':
+              var newChild = _aureliaPal.DOM.createTextNode(this.tr(key, params));
+              if (node._newChild && node._newChild.parentNode === node) {
+                node.removeChild(node._newChild);
               }
-            }
 
-            for (var pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
-              prependParser.childNodes[pi]._prepended = true;
-              if (node.firstChild) {
-                node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+              node._newChild = newChild;
+              while (node.firstChild) {
+                node.removeChild(node.firstChild);
+              }
+              node.appendChild(node._newChild);
+              break;
+            case 'prepend':
+              var prependParser = _aureliaPal.DOM.createElement('div');
+              prependParser.innerHTML = this.tr(key, params);
+              for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
+                if (node.childNodes[ni]._prepended) {
+                  node.removeChild(node.childNodes[ni]);
+                }
+              }
+
+              for (var pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+                prependParser.childNodes[pi]._prepended = true;
+                if (node.firstChild) {
+                  node.insertBefore(prependParser.childNodes[pi], node.firstChild);
+                } else {
+                  node.appendChild(prependParser.childNodes[pi]);
+                }
+              }
+              break;
+            case 'append':
+              var appendParser = _aureliaPal.DOM.createElement('div');
+              appendParser.innerHTML = this.tr(key, params);
+              for (var _ni = node.childNodes.length - 1; _ni >= 0; _ni--) {
+                if (node.childNodes[_ni]._appended) {
+                  node.removeChild(node.childNodes[_ni]);
+                }
+              }
+
+              while (appendParser.firstChild) {
+                appendParser.firstChild._appended = true;
+                node.appendChild(appendParser.firstChild);
+              }
+              break;
+            case 'html':
+              node.innerHTML = this.tr(key, params);
+              break;
+            default:
+              if (node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
+                node.au.controller.viewModel[attrCC] = this.tr(key, params);
               } else {
-                node.appendChild(prependParser.childNodes[pi]);
+                node.setAttribute(attr, this.tr(key, params));
               }
-            }
-            break;
-          case 'append':
-            var appendParser = _aureliaPal.DOM.createElement('div');
-            appendParser.innerHTML = this.tr(key, params);
-            for (var _ni = node.childNodes.length - 1; _ni >= 0; _ni--) {
-              if (node.childNodes[_ni]._appended) {
-                node.removeChild(node.childNodes[_ni]);
-              }
-            }
 
-            while (appendParser.firstChild) {
-              appendParser.firstChild._appended = true;
-              node.appendChild(appendParser.firstChild);
-            }
-            break;
-          case 'html':
-            node.innerHTML = this.tr(key, params);
-            break;
-          default:
-            if (node.au && node.au.controller && node.au.controller.viewModel && attrCC in node.au.controller.viewModel) {
-              node.au.controller.viewModel[attrCC] = this.tr(key, params);
-            } else {
-              node.setAttribute(attr, this.tr(key, params));
-            }
-
-            break;
+              break;
+          }
         }
       }
     };

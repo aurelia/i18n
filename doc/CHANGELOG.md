@@ -1,3 +1,13 @@
+<a name="2.3.0"></a>
+# [2.3.0](https://github.com/aurelia/i18n/compare/2.2.0...2.3.0) (2018-06-21)
+
+
+### Features
+
+* **i18n:** allow multiple attributes with the same key by listing them comma-seperated ([666cfba](https://github.com/aurelia/i18n/commit/666cfba))
+
+
+
 <a name="2.2.0"></a>
 # [2.2.0](https://github.com/aurelia/i18n/compare/2.1.2...2.2.0) (2018-05-08)
 
