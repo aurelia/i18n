@@ -485,7 +485,7 @@ Notice in the above example that the key was set to `home.title`. This will make
   </source-code>
 </code-listing>
 
-Use `i18n.updateTranslation()` to update all translations within the children of the element that is passed to it.
+Use `i18n.updateTranslations()` to update all translations within the children of the element that is passed to it.
 
 #### Specifying attributes
 
