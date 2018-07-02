@@ -1,6 +1,6 @@
 {
   "name": "aurelia-i18n",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "A plugin that provides i18n support.",
   "keywords": [
     "aurelia",
@@ -33,7 +33,7 @@
       "dist": "dist/amd"
     },
     "dependencies": {
-      "aurelia-binding": "^1.0.0 || ^2.0.0",
+      "aurelia-binding": "^2.0.0",
       "aurelia-dependency-injection": "^1.0.0",
       "aurelia-event-aggregator": "^1.0.0",
       "aurelia-loader": "^1.0.0",
@@ -57,7 +57,7 @@
     }
   },
   "dependencies": {
-    "aurelia-binding": "^1.0.0 || ^2.0.0",
+    "aurelia-binding": "^2.0.0",
     "aurelia-dependency-injection": "^1.0.0",
     "aurelia-event-aggregator": "^1.0.0",
     "aurelia-loader": "^1.0.0",
