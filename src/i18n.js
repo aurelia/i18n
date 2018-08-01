@@ -143,16 +143,23 @@ export class I18N {
     for (i = 0, l = nodes.length; i < l; i++) {
       let node = nodes[i];
       let keys;
+      let params;
       //test every attribute and get the first one that has a value
       for (let i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(this.i18next.options.attributes[i2]);
+        const pname = this.i18next.options.attributes[i2] + '-params';
+
+        if (pname && node.au && node.au[pname]) {
+          params = node.au[pname].viewModel.value;
+        }
+
         if (keys) break;
       }
       //skip if nothing was found
       if (!keys) continue;
 
       //split the keys into multiple keys separated by a ;
-      this.updateValue(node, keys);
+      this.updateValue(node, keys, params);
     }
   }
 
