@@ -708,15 +708,22 @@ var I18N = exports.I18N = (_temp = _class2 = function () {
     for (i = 0, l = nodes.length; i < l; i++) {
       var node = nodes[i];
       var keys = void 0;
+      var params = void 0;
 
       for (var i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(this.i18next.options.attributes[i2]);
+        var pname = this.i18next.options.attributes[i2] + '-params';
+
+        if (pname && node.au && node.au[pname]) {
+          params = node.au[pname].viewModel.value;
+        }
+
         if (keys) break;
       }
 
       if (!keys) continue;
 
-      this.updateValue(node, keys);
+      this.updateValue(node, keys, params);
     }
   };
 

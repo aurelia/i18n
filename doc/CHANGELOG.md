@@ -1,3 +1,13 @@
+<a name="2.3.2"></a>
+## [2.3.2](https://github.com/aurelia/i18n/compare/2.3.1...2.3.2) (2018-08-01)
+
+
+### Bug Fixes
+
+* **service:** provide params on updateTranslations ([0f469ee](https://github.com/aurelia/i18n/commit/0f469ee))
+
+
+
 <a name="2.3.0"></a>
 # [2.3.0](https://github.com/aurelia/i18n/compare/2.2.0...2.3.0) (2018-06-21)
 

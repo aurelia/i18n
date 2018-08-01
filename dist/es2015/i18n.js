@@ -122,15 +122,22 @@ export let I18N = (_temp = _class = class I18N {
     for (i = 0, l = nodes.length; i < l; i++) {
       let node = nodes[i];
       let keys;
+      let params;
 
       for (let i2 = 0, l2 = this.i18next.options.attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(this.i18next.options.attributes[i2]);
+        const pname = this.i18next.options.attributes[i2] + '-params';
+
+        if (pname && node.au && node.au[pname]) {
+          params = node.au[pname].viewModel.value;
+        }
+
         if (keys) break;
       }
 
       if (!keys) continue;
 
-      this.updateValue(node, keys);
+      this.updateValue(node, keys, params);
     }
   }
 
