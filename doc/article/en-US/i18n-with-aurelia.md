@@ -28,7 +28,7 @@ Aurelia-I18N is tested and optimized to support both JS and TS, as well as the f
 
 Please continue with the section which suites your setup. In addition to this, you must
 pick your own backend service. For this guide we're going to leverage the [XHR backend plugin](https://github.com/i18next/i18next-xhr-backend),
-or a variation of this plugin — `aurelia-18n-loader` — that uses the aurelia loader, which is bundled with the aurelia-i18n plugin.
+or a variation of this plugin — `aurelia-i18n-loader` — that uses the aurelia loader, which is bundled with the aurelia-i18n plugin.
 We'll discuss TypeScript specifics in a later section.
 
 ### Aurelia CLI
