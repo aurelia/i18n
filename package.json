@@ -1,6 +1,6 @@
 {
   "name": "aurelia-i18n",
-  "version": "2.3.2",
+  "version": "3.0.0",
   "description": "A plugin that provides i18n support.",
   "keywords": [
     "aurelia",
@@ -13,14 +13,78 @@
     "url": "https://github.com/aurelia/i18n/issues"
   },
   "scripts": {
-    "build": "gulp build",
-    "precommit": "gulp lint",
-    "test": "karma start"
+    "lint": "cross-env tslint --project tsconfig.json",
+    "pretest": "cross-env npm run lint",
+    "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
+    "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu jest && cat ./test/coverage-jest/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test-watch": "concurrently \"tsc --watch\" \"jest --watch\"",
+    "build:amd": "cross-env tsc --p tsconfig-build.json --outDir dist/amd --module amd",
+    "build:commonjs": "cross-env tsc --p tsconfig-build.json --outDir dist/commonjs --module commonjs",
+    "build:es2015": "cross-env tsc --p tsconfig-build.json --outDir dist/es2015 --module es2015",
+    "build:es2017": "cross-env tsc --p tsconfig-build.json --outDir dist/es2017 --module es2015 --target es2017",
+    "build:native-modules": "cross-env tsc --p tsconfig-build.json --outDir dist/native-modules --module es2015",
+    "build:system": "cross-env tsc --p tsconfig-build.json --outDir dist/system --module system",
+    "prebuild": "cross-env rimraf dist",
+    "build": "concurrently \"npm run build:amd\" \"npm run build:commonjs\" \"npm run build:es2015\" \"npm run build:es2017\" \"npm run build:native-modules\" \"npm run build:system\"",
+    "precommit": "npm run lint",
+    "predoc": "cross-env rimraf doc/api.json && rimraf dist/doc-temp && tsc --p tsconfig-build.json --module amd --outFile dist/doc-temp/aurelia-store.js && node doc/shape-defs && copyfiles tsconfig.json dist/doc-temp",
+    "doc": "cross-env typedoc --json doc/api.json --excludeExternals --includeDeclarations --mode modules --target ES6 --name aurelia-store-docs dist/doc-temp/",
+    "postdoc": "cross-env node doc/shape-doc && rimraf dist/doc-temp",
+    "changelog": "cross-env conventional-changelog -p angular -i doc/CHANGELOG.md -s",
+    "bump-version": "npm --no-git-tag-version version",
+    "preprepare-release": "cross-env npm run test",
+    "prepare-release": "cross-env npm run changelog && npm run build && npm run doc",
+    "x": "NODE_ICU_DATA=node_modules/full-icu node test.js"
+  },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>/src",
+      "<rootDir>/node_modules"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts",
+      "html"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
+      "^.+\\.(scss|css)$": "<rootDir>/node_modules/jest-css-modules",
+      "^.+\\.html$": "<rootDir>/test/html-loader.js"
+    },
+    "testRegex": "\\.spec\\.(ts)x?$",
+    "setupFiles": [
+      "<rootDir>/test/jest-pretest.ts"
+    ],
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "src/index.*": "<rootDir>/src/aurelia-i18n.ts",
+      "src/(t|nf|df|rt)": "<rootDir>/src/$1.ts",
+      "(test\\\\unit\\\\)aurelia-(.*)": "<rootDir>/node_modules/aurelia-$2",
+      "^.+\\.(css)$": "<rootDir>/test/jest-css-stub.js"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts}",
+      "!**/*.spec.{js,ts}",
+      "!**/node_modules/**",
+      "!**/test/**"
+    ],
+    "coverageDirectory": "<rootDir>/test/coverage-jest",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "html"
+    ]
   },
   "license": "MIT",
   "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
   "main": "dist/commonjs/aurelia-i18n.js",
-  "typings": "dist/aurelia-i18n.d.ts",
+  "typings": "dist/typings/aurelia-i18n.d.ts",
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/i18n"
@@ -34,91 +98,57 @@
     },
     "dependencies": {
       "aurelia-binding": "^2.0.0",
-      "aurelia-dependency-injection": "^1.0.0",
+      "aurelia-dependency-injection": "^1.4.1",
       "aurelia-event-aggregator": "^1.0.0",
       "aurelia-loader": "^1.0.0",
-      "aurelia-logging": "^1.0.0",
-      "aurelia-metadata": "^1.0.3",
+      "aurelia-logging": "^1.5.0",
+      "aurelia-metadata": "^1.0.4",
       "aurelia-pal": "^1.3.0",
-      "aurelia-templating": "^1.4.0",
-      "aurelia-templating-resources": "^1.0.0",
+      "aurelia-templating": "^1.8.2",
+      "aurelia-templating-resources": "^1.7.1",
       "i18next": "^9.0.0",
-      "intl": "^1.2.4"
-    },
-    "devDependencies": {
-      "aurelia-bootstrapper": "^2.1.1",
-      "aurelia-pal-browser": "^1.0.0-rc.1.0.0",
-      "aurelia-polyfills": "^1.0.0-rc.1.0.0",
-      "aurelia-testing": "^0.4.0",
-      "babel": "babel-core@^5.8.24",
-      "babel-runtime": "^5.8.24",
-      "core-js": "^2.0.3",
-      "text": "github:systemjs/plugin-text@^0.0.2"
+      "intl": "^1.2.5"
     }
   },
   "dependencies": {
     "aurelia-binding": "^2.0.0",
-    "aurelia-dependency-injection": "^1.0.0",
+    "aurelia-dependency-injection": "^1.4.1",
     "aurelia-event-aggregator": "^1.0.0",
     "aurelia-loader": "^1.0.0",
-    "aurelia-logging": "^1.0.0",
-    "aurelia-metadata": "^1.0.3",
+    "aurelia-logging": "^1.5.0",
+    "aurelia-metadata": "^1.0.4",
     "aurelia-pal": "^1.3.0",
-    "aurelia-templating": "^1.4.0",
-    "aurelia-templating-resources": "^1.0.0",
+    "aurelia-templating": "^1.8.2",
+    "aurelia-templating-resources": "^1.7.1",
     "i18next": "^9.0.0",
-    "intl": "^1.2.4"
+    "intl": "^1.2.5"
   },
   "devDependencies": {
-    "aurelia-tools": "^0.2.4",
-    "babel": "^6.5.2",
-    "babel-dts-generator": "^0.6.1",
-    "babel-eslint": "^6.1.2",
-    "babel-plugin-syntax-flow": "^6.8.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-es2015-modules-amd": "^6.8.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
-    "babel-plugin-transform-es2015-modules-systemjs": "^6.11.6",
-    "babel-plugin-transform-flow-strip-types": "^6.8.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.9.0",
-    "babel-preset-es2015-loose": "^7.0.0",
-    "babel-preset-es2015-loose-native-modules": "^1.0.0",
-    "babel-preset-stage-1": "^6.5.0",
-    "del": "^2.2.1",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-bump": "^2.2.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-conventional-changelog": "^1.1.0",
-    "gulp-eslint": "^3.0.1",
-    "gulp-ignore": "^2.0.1",
-    "gulp-insert": "^0.5.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-replace": "^0.6.1",
-    "gulp-typedoc": "^2.0.0",
-    "gulp-typedoc-extractor": "0.0.8",
-    "gulp-typescript": "^2.13.6",
-    "gulp-util": "^3.0.7",
+    "@types/i18next": "^8.4.4",
+    "@types/intl": "^1.2.0",
+    "@types/jest": "^21.1.10",
+    "@types/node": "^8.10.26",
+    "aurelia-bootstrapper": "^2.3.0",
+    "aurelia-loader-nodejs": "^1.0.1",
+    "aurelia-pal-browser": "^1.8.0",
+    "aurelia-pal-nodejs": "^1.1.1",
+    "aurelia-polyfills": "^1.3.0",
+    "aurelia-testing": "^1.0.0-beta.4.0.0",
+    "concurrently": "^3.6.1",
+    "conventional-changelog-cli": "^1.3.22",
+    "copyfiles": "^2.0.0",
+    "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
+    "full-icu": "^1.2.1",
+    "html-loader": "^0.5.5",
     "husky": "^0.14.3",
-    "jasmine-core": "^2.4.1",
-    "karma": "^1.1.2",
-    "karma-babel-preprocessor": "^6.0.1",
-    "karma-chrome-launcher": "^1.0.1",
-    "karma-coverage": "^1.1.1",
-    "karma-jasmine": "^1.0.2",
-    "karma-jasmine-ajax": "^0.1.13",
-    "karma-jspm": "^2.2.0",
-    "merge2": "^1.0.2",
-    "object.assign": "^4.0.4",
-    "require-dir": "^0.3.2",
-    "run-sequence": "^1.2.2",
-    "through2": "^2.0.1",
-    "typedoc": "^0.4.4",
-    "typescript": "^1.9.0-dev.20160622-1.0",
-    "vinyl": "^1.1.1",
-    "vinyl-paths": "^2.1.0",
-    "yargs": "^4.8.1"
+    "jest": "^22.4.4",
+    "jest-css-modules": "^1.1.0",
+    "rimraf": "^2.6.1",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.11.0",
+    "typedoc": "^0.11.1",
+    "typescript": "^3.0.1"
   },
   "aurelia": {
     "build": {

@@ -1,25 +1,33 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
+    "module": "commonjs",
     "moduleResolution": "node",
-    "stripInternal": true,
-    "preserveConstEnums": true,
-    "listFiles": true,
+    "target": "es5",
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "outDir": "dist/commonjs",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
     "declaration": true,
-    "removeComments": true,
-    "lib": ["es2015", "dom"]
+    "declarationDir": "dist/typings",
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmitHelpers": false,
+    "strict": true,
+    "newLine": "LF",
+    "sourceMap": true
   },
   "exclude": [
-    "node_modules",
+    ".vscode",
     "dist",
-    "build",
     "doc",
-    "test",
-    "config.js",
-    "gulpfile.js",
-    "karma.conf.js"
+    "node_modules"
   ]
 }

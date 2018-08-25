@@ -1,6 +1,6 @@
-import {resolver} from 'aurelia-dependency-injection';
+import { resolver, Container } from "aurelia-dependency-injection";
 
-export let extend = (destination, source) => {
+export let extend = (destination: any, source: any) => {
   for (let property in source) {
     destination[property] = source[property];
   }
@@ -9,12 +9,12 @@ export let extend = (destination, source) => {
 };
 
 export const isInteger = Number.isInteger || function(value) {
-  return typeof value === 'number' &&
+  return typeof value === "number" &&
     isFinite(value) &&
     Math.floor(value) === value;
 };
 
-export let assignObjectToKeys = (root, obj) => {
+export let assignObjectToKeys = (root: any, obj: any) => {
   if (obj === undefined || obj === null) {
     return obj;
   }
@@ -22,10 +22,10 @@ export let assignObjectToKeys = (root, obj) => {
   let opts = {};
 
   Object.keys(obj).map( (key) => {
-    if (typeof obj[key] === 'object') {
+    if (typeof obj[key] === "object") {
       extend(opts, assignObjectToKeys(key, obj[key]));
     } else {
-      opts[root !== '' ? root + '.' + key : key] = obj[key];
+      (opts as any)[root !== "" ? root + "." + key : key] = obj[key];
     }
   });
 
@@ -34,11 +34,9 @@ export let assignObjectToKeys = (root, obj) => {
 
 @resolver()
 export class LazyOptional {
-  constructor(key) {
-    this.key = key;
-  }
+  constructor(private key: string) {}
 
-  get(container) {
+  get(container: Container) {
     return () => {
       if (container.hasResolver(this.key, false)) {
         return container.get(this.key);
@@ -47,7 +45,7 @@ export class LazyOptional {
     };
   }
 
-  static of(key) {
+  static of(key: any) {
     return new LazyOptional(key);
   }
 }

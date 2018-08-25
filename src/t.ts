@@ -1,84 +1,87 @@
-import {I18N} from './i18n';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {metadata} from 'aurelia-metadata';
-import {customAttribute, HtmlBehaviorResource} from 'aurelia-templating';
-import {SignalBindingBehavior} from 'aurelia-templating-resources';
-import {ValueConverter} from 'aurelia-binding';
-import {DOM} from 'aurelia-pal';
-import {LazyOptional} from './utils';
-
+import { I18N } from "./i18n";
+import { EventAggregator, Subscription } from "aurelia-event-aggregator";
+import { metadata } from "aurelia-metadata";
+import { customAttribute, HtmlBehaviorResource } from "aurelia-templating";
+import { SignalBindingBehavior } from "aurelia-templating-resources";
+import { ValueConverter } from "aurelia-binding";
+import { DOM } from "aurelia-pal";
+import { LazyOptional } from "./utils";
+import i18next from "i18next";
 
 export class TValueConverter {
   static inject() { return [I18N]; }
-  constructor(i18n) {
-    this.service = i18n;
-  }
+  constructor(private service: I18N) {}
 
-  toView(value, options) {
+  toView(value: any, options: i18next.TranslationOptions<object> | undefined) {
     return this.service.tr(value, options);
   }
 }
 
-@customAttribute('t-params')
+@customAttribute("t-params")
 export class TParamsCustomAttribute {
   static inject() {
     return [DOM.Element];
   }
-  static configureAliases(aliases) {
+  static configureAliases(aliases: string[]) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
-    r.aliases = aliases;
+    (r as any).aliases = aliases;
   }
-  service;
+  service: any;
 
-  constructor(element) {
-    this.element = element;
-  }
+  constructor(public element: Element) {}
 
   valueChanged() {
 
   }
 }
 
-@customAttribute('t')
+@customAttribute("t")
 export class TCustomAttribute {
 
   static inject() {
     return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
   }
-  static configureAliases(aliases) {
+  static configureAliases(aliases: string[]) {
     let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
-    r.aliases = aliases;
+    (r as any).aliases = aliases;
   }
 
-  constructor(element, i18n, ea, tparams) {
-    this.element = element;
-    this.service = i18n;
-    this.ea = ea;
-    this.lazyParams = tparams;
+  private params: any;
+  private lazyParams: () => any;
+  private subscription: Subscription;
+  private value: any;
+
+  constructor(
+    private element: Element & { au: any },
+    private service: I18N,
+    private ea: EventAggregator,
+    p: any
+  ) {
+    this.lazyParams = p; 
   }
 
   bind() {
     this.params = this.lazyParams();
 
     if (this.params) {
-      this.params.valueChanged = (newParams, oldParams) => {
-        this.paramsChanged(this.value, newParams, oldParams);
+      this.params.valueChanged = (newParams: any, oldParams: any) => {
+        (this.paramsChanged as any)(this.value, newParams, oldParams);
       };
     }
 
     let p = this.params !== null ? this.params.value : undefined;
-    this.subscription = this.ea.subscribe('i18n:locale:changed', () => {
+    this.subscription = this.ea.subscribe("i18n:locale:changed", () => {
       this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
     });
 
     this.service.updateValue(this.element, this.value, p);
   }
 
-  paramsChanged(newValue, newParams) {
+  paramsChanged(newValue: any, newParams: any) {
     this.service.updateValue(this.element, newValue, newParams);
   }
 
-  valueChanged(newValue) {
+  valueChanged(newValue: any) {
     let p = this.params !== null ? this.params.value : undefined;
     this.service.updateValue(this.element, newValue, p);
   }
@@ -94,13 +97,11 @@ export class TCustomAttribute {
 export class TBindingBehavior {
   static inject = [SignalBindingBehavior];
 
-  constructor(signalBindingBehavior) {
-    this.signalBindingBehavior = signalBindingBehavior;
-  }
+  constructor(private signalBindingBehavior: SignalBindingBehavior) {}
 
-  bind(binding, source) {
+  bind(binding: any, source: any) {
     // bind the signal behavior
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal');
+    (this.signalBindingBehavior.bind as any)(binding, source, "aurelia-translation-signal");
 
     // rewrite the expression to use the TValueConverter.
     // pass through any args to the binding behavior to the TValueConverter
@@ -115,12 +116,12 @@ export class TBindingBehavior {
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
-      't',
+      "t",
       sourceExpression.args,
       [expression, ...sourceExpression.args]);
   }
 
-  unbind(binding, source) {
+  unbind(binding: any, source: any) {
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }

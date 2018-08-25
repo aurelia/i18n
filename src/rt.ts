@@ -1,22 +1,20 @@
-import { RelativeTime } from './relativeTime';
-import { SignalBindingBehavior } from 'aurelia-templating-resources';
-import { ValueConverter } from 'aurelia-binding';
+import { RelativeTime } from "./relativeTime";
+import { SignalBindingBehavior } from "aurelia-templating-resources";
+import { ValueConverter } from "aurelia-binding";
 
 export class RtValueConverter {
   static inject() { return [RelativeTime]; }
-  constructor(relativeTime) {
-    this.service = relativeTime;
-  }
+  constructor(private service: RelativeTime) {}
 
-  toView(value) {
+  toView(value: any) {
     if (value === null
-      || typeof value === 'undefined'
-      || (typeof value === 'string' && value.trim() === '')
+      || typeof value === "undefined"
+      || (typeof value === "string" && value.trim() === "")
       ) {
       return value;
     }
 
-    if (typeof value === 'string' && isNaN(value) && !Number.isInteger(value)) {
+    if (typeof value === "string" && isNaN(value as any) && !Number.isInteger(value as any)) {
       value = new Date(value);
     }
 
@@ -25,15 +23,13 @@ export class RtValueConverter {
 }
 
 export class RtBindingBehavior {
-  static inject() {return [SignalBindingBehavior];}
+  static inject() {return [SignalBindingBehavior]; }
 
-  constructor(signalBindingBehavior) {
-    this.signalBindingBehavior = signalBindingBehavior;
-  }
+  constructor(private signalBindingBehavior: SignalBindingBehavior) {}
 
-  bind(binding, source) {
+  bind(binding: any, source: any) {
     // bind the signal behavior
-    this.signalBindingBehavior.bind(binding, source, 'aurelia-translation-signal', 'aurelia-relativetime-signal');
+    (this.signalBindingBehavior.bind as any)(binding, source, "aurelia-translation-signal", "aurelia-relativetime-signal");
 
     // rewrite the expression to use the RtValueConverter.
     // pass through any args to the binding behavior to the RtValueConverter
@@ -48,12 +44,12 @@ export class RtBindingBehavior {
     let expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
-      'rt',
+      "rt",
       sourceExpression.args,
       [expression, ...sourceExpression.args]);
   }
 
-  unbind(binding, source) {
+  unbind(binding: any, source: any) {
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }
