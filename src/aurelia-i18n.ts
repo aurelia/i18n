@@ -35,7 +35,12 @@ export function configure(frameworkConfig: FrameworkConfiguration, cb: (instance
     throw errorMsg;
   }
 
-  frameworkConfig.globalResources(PLATFORM.moduleName("./t"));
+  frameworkConfig.globalResources([
+    PLATFORM.moduleName("./t/t-binding-behavior"),
+    PLATFORM.moduleName("./t/t-custom-attribute"),
+    PLATFORM.moduleName("./t/t-params-custom-attribute"),
+    PLATFORM.moduleName("./t/t-value-converter")
+  ]);
   frameworkConfig.globalResources(PLATFORM.moduleName("./nf"));
   frameworkConfig.globalResources(PLATFORM.moduleName("./df"));
   frameworkConfig.globalResources(PLATFORM.moduleName("./rt"));

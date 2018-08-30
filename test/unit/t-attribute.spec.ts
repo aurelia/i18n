@@ -4,7 +4,7 @@ import { bootstrap } from "aurelia-bootstrapper";
 import { bootstrapTestEnvironment } from "./staging-helpers";
 
 describe("t-attribute", () => {
-  it("should convert bound integers to strings", done => {
+  it("should convert bound integers to strings", (done) => {
     const target = "test-target";
     const expectedValue = "Foobar";
     const component = StageComponent
@@ -14,7 +14,7 @@ describe("t-attribute", () => {
 
     bootstrapTestEnvironment(component, {
       resources: {
-        en: { translation: { "1": expectedValue } }
+        en: { translation: { 1: expectedValue } }
       }
     });
 
