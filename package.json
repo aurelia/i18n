@@ -58,11 +58,11 @@
     ],
     "testEnvironment": "node",
     "moduleNameMapper": {
-      "src/index.*": "<rootDir>/src/aurelia-i18n.ts",
-      "src/t/t-(.*)": "<rootDir>/src/t/t-$1.ts",
-      "src/nf/nf-(.*)": "<rootDir>/src/nf/nf-$1.ts",
-      "src/df/df-(.*)": "<rootDir>/src/df/df-$1.ts",
-      "src/rt/rt-(.*)": "<rootDir>/src/rt/rt-$1.ts",
+      "src(\\\\|/)index.*": "<rootDir>/src/aurelia-i18n.ts",
+      "src(\\\\|/)t(\\\\|/)t-(.*)": "<rootDir>/src/t/t-$3.ts",
+      "src(\\\\|/)nf(\\\\|/)nf-(.*)": "<rootDir>/src/nf/nf-$3.ts",
+      "src(\\\\|/)df(\\\\|/)df-(.*)": "<rootDir>/src/df/df-$3.ts",
+      "src(\\\\|/)rt(\\\\|/)rt-(.*)": "<rootDir>/src/rt/rt-$3.ts",
       "(test\\\\unit\\\\)aurelia-(.*)": "<rootDir>/node_modules/aurelia-$2",
       "^.+\\.(css)$": "<rootDir>/test/jest-css-stub.js"
     },
