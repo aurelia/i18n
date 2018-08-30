@@ -1,6 +1,6 @@
 import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
-import { DfValueConverter } from "../../src/df";
+import { DfValueConverter } from "../../src/df/df-value-converter";
 import { EventAggregator } from "aurelia-event-aggregator";
 
 describe("dfvalueconverter tests", () => {

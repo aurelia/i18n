@@ -39,14 +39,23 @@ export function configure(
   }
 
   frameworkConfig.globalResources([
-    PLATFORM.moduleName("./t/t-binding-behavior"),
+    PLATFORM.moduleName("./t/t-value-converter"),
     PLATFORM.moduleName("./t/t-custom-attribute"),
     PLATFORM.moduleName("./t/t-params-custom-attribute"),
-    PLATFORM.moduleName("./t/t-value-converter")
+    PLATFORM.moduleName("./t/t-binding-behavior")
   ]);
-  frameworkConfig.globalResources(PLATFORM.moduleName("./nf"));
-  frameworkConfig.globalResources(PLATFORM.moduleName("./df"));
-  frameworkConfig.globalResources(PLATFORM.moduleName("./rt"));
+  frameworkConfig.globalResources([
+    PLATFORM.moduleName("./nf/nf-value-converter"),
+    PLATFORM.moduleName("./nf/nf-binding-behavior")
+  ]);
+  frameworkConfig.globalResources([
+    PLATFORM.moduleName("./df/df-value-converter"),
+    PLATFORM.moduleName("./df/df-binding-behavior")
+  ]);
+  frameworkConfig.globalResources([
+    PLATFORM.moduleName("./rt/rt-value-converter"),
+    PLATFORM.moduleName("./rt/rt-binding-behavior")
+  ]);
 
   const instance = new I18N(
     frameworkConfig.container.get(EventAggregator),

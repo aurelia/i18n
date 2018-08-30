@@ -1,6 +1,6 @@
 import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
-import { NfValueConverter } from "../../src/nf";
+import { NfValueConverter } from "../../src/nf/nf-value-converter";
 import { EventAggregator } from "aurelia-event-aggregator";
 
 describe("nfvalueconverter tests", () => {
