@@ -4,18 +4,18 @@ import { DOM } from "aurelia-pal";
 
 @customAttribute("t-params")
 export class TParamsCustomAttribute {
-  static inject() {
+  public static inject() {
     return [DOM.Element];
   }
 
-  static configureAliases(aliases: string[]) {
-    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
+  public static configureAliases(aliases: string[]) {
+    const r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TParamsCustomAttribute);
     (r as any).aliases = aliases;
   }
 
-  service: any;
+  public service: any;
 
   constructor(public element: Element) { }
 
-  valueChanged() {}
+  public valueChanged() { /**/ }
 }

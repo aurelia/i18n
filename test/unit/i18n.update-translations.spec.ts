@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no-reference
 /// <reference path="../html-loader.d.ts" />
 import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
@@ -5,7 +6,7 @@ import { EventAggregator } from "aurelia-event-aggregator";
 import tpl from "./fixtures/template.html";
 
 function loadTemplate() {
-  //load the the html fixture
+  // load the the html fixture
   const existingElement = document.querySelector("#the-template");
   if (existingElement) {
     document.body.removeChild(existingElement);
@@ -27,7 +28,7 @@ describe("testing i18n translation update", () => {
   let template: HTMLElement;
   let ea: EventAggregator;
 
-  beforeEach(done => {
+  beforeEach((done) => {
     resources = {
       en: {
         translation: {
@@ -55,8 +56,8 @@ describe("testing i18n translation update", () => {
 
     ea = new EventAggregator();
     sut = new I18N(ea, new BindingSignaler());
-    let i18nextSetupPromise = sut.setup({
-      resources: resources,
+    const i18nextSetupPromise = sut.setup({
+      resources,
       lng: "en",
       attributes: ["t", "data-i18n"],
       fallbackLng: "en",
@@ -65,7 +66,7 @@ describe("testing i18n translation update", () => {
 
     template = loadTemplate();
 
-    //update the translations in the template when the locale changes
+    // update the translations in the template when the locale changes
     ea.subscribe("i18n:locale:changed", () => {
       sut.updateTranslations(template);
     });
@@ -73,13 +74,12 @@ describe("testing i18n translation update", () => {
     Promise.all([i18nextSetupPromise]).then(() => done());
   });
 
-
   describe("init locale", () => {
-    beforeEach(done => {
+    beforeEach((done) => {
       sut.setLocale("en").then(() => done());
     });
 
-    it("should translate contents of elements with a translation attribute", done => {
+    it("should translate contents of elements with a translation attribute", (done) => {
       expect(template.querySelector("#test1")!.innerHTML.trim()).toBe("Title");
       expect(template.querySelector("#test2")!.innerHTML.trim()).toBe("Description");
       sut.setLocale("de").then(() => {
@@ -89,7 +89,7 @@ describe("testing i18n translation update", () => {
       });
     });
 
-    it("should translate nested keys", done => {
+    it("should translate nested keys", (done) => {
       expect(template.querySelector("#test-nested")!.innerHTML.trim()).toBe("The Title is the header");
       sut.setLocale("de").then(() => {
         expect(template.querySelector("#test-nested")!.innerHTML.trim()).toBe("Der Titel ist der Kopf");
@@ -97,8 +97,8 @@ describe("testing i18n translation update", () => {
       });
     });
 
-    it("should work with all attributes specified in the options", done => {
-      let el = template.querySelector("#test-other-attr")!;
+    it("should work with all attributes specified in the options", (done) => {
+      const el = template.querySelector("#test-other-attr")!;
       expect(el.innerHTML.trim()).toBe("Description");
       sut.setLocale("de").then(() => {
         expect(el.innerHTML.trim()).toBe("Beschreibung");
@@ -106,8 +106,8 @@ describe("testing i18n translation update", () => {
       });
     });
 
-    it("should set the textContent when using the [text] attribute", done => {
-      let el = template.querySelector("#test-text")!;
+    it("should set the textContent when using the [text] attribute", (done) => {
+      const el = template.querySelector("#test-text")!;
       expect(el.innerHTML.trim()).toBe("Description");
       sut.setLocale("de").then(() => {
         expect(el.innerHTML.trim()).toBe("Beschreibung");
@@ -115,8 +115,8 @@ describe("testing i18n translation update", () => {
       });
     });
 
-    it("should escape html tags by default or when using [text]", done => {
-      let el = template.querySelector("#test-text-with-tags")!;
+    it("should escape html tags by default or when using [text]", (done) => {
+      const el = template.querySelector("#test-text-with-tags")!;
       expect(el.innerHTML.trim()).toBe("Description &lt;b&gt;with some bold&lt;/b&gt;");
       sut.setLocale("de").then(() => {
         expect(el.innerHTML.trim()).toBe("Beschreibung &lt;b&gt;mit Fettdruck&lt;/b&gt;");
@@ -124,8 +124,8 @@ describe("testing i18n translation update", () => {
       });
     });
 
-    it("should allow tags when using the [html] attribute", done => {
-      let el = template.querySelector("#test-html")!;
+    it("should allow tags when using the [html] attribute", (done) => {
+      const el = template.querySelector("#test-html")!;
       expect(el.innerHTML.trim()).toBe("Description <b>with some bold</b>");
       sut.setLocale("de").then(() => {
         expect(el.innerHTML.trim()).toBe("Beschreibung <b>mit Fettdruck</b>");
@@ -134,8 +134,8 @@ describe("testing i18n translation update", () => {
     });
   });
 
-  it("should prepend the translation when using the [prepend] attribute, and it allows html", done => {
-    let el = template.querySelector("#test-prepend")!;
+  it("should prepend the translation when using the [prepend] attribute, and it allows html", (done) => {
+    const el = template.querySelector("#test-prepend")!;
     expect(el.innerHTML.trim()).toBe("content");
     sut.setLocale("de").then(() => {
       expect(el.innerHTML.trim()).toBe("Beschreibung <b>mit Fettdruck</b>content");
@@ -146,8 +146,8 @@ describe("testing i18n translation update", () => {
     });
   });
 
-  it("should append the translation when using the [append] attribute, and it allows html", done => {
-    let el = template.querySelector("#test-append")!;
+  it("should append the translation when using the [append] attribute, and it allows html", (done) => {
+    const el = template.querySelector("#test-append")!;
     expect(el.innerHTML.trim()).toBe("content");
     sut.setLocale("de").then(() => {
       expect(el.innerHTML.trim()).toBe("contentBeschreibung <b>mit Fettdruck</b>");
@@ -158,8 +158,8 @@ describe("testing i18n translation update", () => {
     });
   });
 
-  it("should set multiple keys when separated with a semicolon", done => {
-    let el = template.querySelector("#test-multiple")!;
+  it("should set multiple keys when separated with a semicolon", (done) => {
+    const el = template.querySelector("#test-multiple")!;
     expect(el.innerHTML.trim()).toBe("Wrong Description <b>with some bold</b>");
     expect(el.className).toBe("");
     sut.setLocale("de").then(() => {
@@ -173,8 +173,8 @@ describe("testing i18n translation update", () => {
     });
   });
 
-  it("should set multiple attributes when separated with a comma", done => {
-    let el = template.querySelector("#test-multiple-attributes")!;
+  it("should set multiple attributes when separated with a comma", (done) => {
+    const el = template.querySelector("#test-multiple-attributes")!;
     expect(el.innerHTML.trim()).toBe("Wrong Description");
     expect(el.getAttribute("alt")).toBe(null);
     expect(el.getAttribute("aria-label")).toBe(null);
@@ -191,8 +191,8 @@ describe("testing i18n translation update", () => {
     });
   });
 
-  it("should set the src attribute for images", done => {
-    let el = template.querySelector("#test-img")!;
+  it("should set the src attribute for images", (done) => {
+    const el = template.querySelector("#test-img")!;
     expect(el.getAttribute("src")).toBeNull();
     sut.setLocale("de").then(() => {
       expect(el.getAttribute("src")).toBe("testimage-german.jpg");

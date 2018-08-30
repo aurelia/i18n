@@ -1,3 +1,4 @@
+// tslint:disable
 export const translations = {
   ar: {
     translation: {
@@ -490,3 +491,4 @@ export const translations = {
     }
   }
 };
+// tslint:enable

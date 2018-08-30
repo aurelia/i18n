@@ -29,9 +29,12 @@ export {
 } from "./t";
 export { Backend } from "./aurelia-i18n-loader";
 
-export function configure(frameworkConfig: FrameworkConfiguration, cb: (instance: I18N) => AureliaEnhancedI18Next & i18n) {
+export function configure(
+  frameworkConfig: FrameworkConfiguration,
+  cb: (instance: I18N) => AureliaEnhancedI18Next & i18n
+) {
   if (cb === undefined || typeof cb !== "function") {
-    let errorMsg = "You need to provide a callback method to properly configure the library";
+    const errorMsg = "You need to provide a callback method to properly configure the library";
     throw errorMsg;
   }
 
@@ -45,15 +48,18 @@ export function configure(frameworkConfig: FrameworkConfiguration, cb: (instance
   frameworkConfig.globalResources(PLATFORM.moduleName("./df"));
   frameworkConfig.globalResources(PLATFORM.moduleName("./rt"));
 
-  let instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
+  const instance = new I18N(
+    frameworkConfig.container.get(EventAggregator),
+    frameworkConfig.container.get(BindingSignaler)
+  );
   frameworkConfig.container.registerInstance(I18N, instance);
 
-  let ret = cb(instance);
+  const ret = cb(instance);
 
   frameworkConfig.postTask(() => {
-    let resources = frameworkConfig.container.get(ViewResources);
-    let htmlBehaviorResource = resources.getAttribute("t");
-    let htmlParamsResource = resources.getAttribute("t-params");
+    const resources = frameworkConfig.container.get(ViewResources);
+    const htmlBehaviorResource = resources.getAttribute("t");
+    const htmlParamsResource = resources.getAttribute("t-params");
     let attributes = instance.i18next.options.attributes as string[];
 
     // Register default attributes if none provided

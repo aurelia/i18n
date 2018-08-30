@@ -1,5 +1,3 @@
 export class I18N {
-  updateTranslations() {
-
-  }
+  public updateTranslations() { /**/ }
 }

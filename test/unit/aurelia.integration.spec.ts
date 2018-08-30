@@ -3,17 +3,13 @@ import { FrameworkConfiguration } from "aurelia-framework";
 import { configure, I18N } from "../../src/aurelia-i18n";
 
 describe("testing aurelia configure routine", () => {
-  let frameworkConfig = {
-    globalResources: () => {
-
-    },
+  const frameworkConfig = {
+    globalResources: () => { /**/ },
     container: {
-      registerInstance: () => {
-
-      },
-      get: (Type: any) => { return new Type(); }
+      registerInstance: () => { /**/ },
+      get: (Type: any) => new Type()
     },
-    postTask: () => {}
+    postTask: () => { /**/ }
   } as any as FrameworkConfiguration;
 
   it("should export configure function", () => {

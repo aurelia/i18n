@@ -15,10 +15,10 @@ describe("dfvalueconverter tests", () => {
       resources: {
         en: {
           translation: {
-            "lives": "__count__ life remaining",
-            "lives_plural": "__count__ lives remaining",
-            "lives_indefinite": "a life remaining",
-            "lives_plural_indefinite": "some lives remaining"
+            lives: "__count__ life remaining",
+            lives_plural: "__count__ lives remaining",
+            lives_indefinite: "a life remaining",
+            lives_plural_indefinite: "some lives remaining"
           }
         }
       },

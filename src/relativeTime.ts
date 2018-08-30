@@ -3,7 +3,7 @@ import { translations } from "./defaultTranslations/relative.time";
 import { EventAggregator } from "aurelia-event-aggregator";
 
 export class RelativeTime {
-  static inject() { return [I18N, EventAggregator]; }
+  public static inject() { return [I18N, EventAggregator]; }
   constructor(private service: I18N, private ea: EventAggregator) {
     this.service.i18nextReady().then(() => {
       this.setup();
@@ -14,23 +14,24 @@ export class RelativeTime {
     });
   }
 
-  setup(locales?: { oldValue: string, newValue: string }) {
-    let trans = (translations as any).default || translations;
-    let fallbackLng = (this.service.i18next as any).fallbackLng;
+  public setup(locales?: { oldValue: string, newValue: string }) {
+    const trans = (translations as any).default || translations;
+    const fallbackLng = (this.service.i18next as any).fallbackLng;
 
     let alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
     if (Array.isArray(alternateFb) && alternateFb.length > 0) {
       alternateFb = alternateFb[0];
     }
 
-    let key = ((locales && locales.newValue)
+    const key = ((locales && locales.newValue)
       ? locales.newValue
       : this.service.getLocale()) || alternateFb;
 
     let index = 0;
 
-    if ((index = key.indexOf("-")) >= 0) { // eslint-disable-line no-cond-assign
-      let baseLocale = key.substring(0, index);
+    // tslint:disable-next-line:no-conditional-assignment
+    if ((index = key.indexOf("-")) >= 0) {
+      const baseLocale = key.substring(0, index);
 
       if (trans[baseLocale]) {
         this.addTranslationResource(baseLocale, trans[baseLocale].translation);
@@ -45,21 +46,23 @@ export class RelativeTime {
     }
   }
 
-  addTranslationResource(key: string, translation: any) {
-    let options = this.service.i18next.options;
+  public addTranslationResource(key: string, translation: any) {
+    const options = this.service.i18next.options;
 
     if (options.interpolation && (options.interpolation.prefix !== "__" || options.interpolation.suffix !== "__")) {
-      for (let subkey in translation) {
-        translation[subkey] = translation[subkey].replace("__count__", `${options.interpolation.prefix || "{{"}count${options.interpolation.suffix || "}}"}`);
+      // tslint:disable-next-line:forin
+      for (const subkey in translation) {
+        translation[subkey] = translation[subkey]
+          .replace("__count__", `${options.interpolation.prefix || "{{"}count${options.interpolation.suffix || "}}"}`);
       }
     }
 
     this.service.i18next.addResources(key, options.defaultNS || "translation", translation);
   }
 
-  getRelativeTime(time: Date) {
-    let now = new Date();
-    let diff = now.getTime() - time.getTime();
+  public getRelativeTime(time: Date) {
+    const now = new Date();
+    const diff = now.getTime() - time.getTime();
 
     let timeDiff = this.getTimeDiffDescription(diff, "year", 31104000000);
     if (!timeDiff) {
@@ -84,12 +87,14 @@ export class RelativeTime {
     return timeDiff;
   }
 
-  getTimeDiffDescription(diff: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second", timeDivisor: number) {
-    let unitAmount = parseInt((diff / timeDivisor).toFixed(0), 10);
+  public getTimeDiffDescription(
+    diff: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second", timeDivisor: number
+  ) {
+    const unitAmount = parseInt((diff / timeDivisor).toFixed(0), 10);
     if (unitAmount > 0) {
       return this.service.tr(unit, { count: unitAmount, context: "ago" });
     } else if (unitAmount < 0) {
-      let abs = Math.abs(unitAmount);
+      const abs = Math.abs(unitAmount);
       return this.service.tr(unit, { count: abs, context: "in" });
     }
 

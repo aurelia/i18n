@@ -8,20 +8,20 @@ describe("numberformat tests", () => {
   let sut: I18N;
 
   beforeEach( () => {
-    let resources = {
+    const resources = {
       en: {
         translation: {
-          "lives": "__count__ life remaining",
-          "lives_plural": "__count__ lives remaining",
-          "lives_indefinite": "a life remaining",
-          "lives_plural_indefinite": "some lives remaining"
+          lives: "__count__ life remaining",
+          lives_plural: "__count__ lives remaining",
+          lives_indefinite: "a life remaining",
+          lives_plural_indefinite: "some lives remaining"
         }
       }
     };
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resources: resources,
+      resources,
       lng: "en",
       fallbackLng: "en",
       debug: false
@@ -29,17 +29,17 @@ describe("numberformat tests", () => {
   });
 
   it("should display number in the setup locale format by default", () => {
-    let nf = sut.nf();
-    let testNumber = 123456.789;
+    const nf = sut.nf();
+    const testNumber = 123456.789;
 
-    let result = nf.format(testNumber);
+    const result = nf.format(testNumber);
     expect(result).toEqual("123,456.789");
   });
 
   it("should display number in the previously modified locale", (done) => {
     sut.setLocale("de").then( () => {
-      let nf = sut.nf();
-      let testNumber = 123456.789;
+      const nf = sut.nf();
+      const testNumber = 123456.789;
 
       expect(nf.format(testNumber)).toEqual("123.456,789");
 
@@ -48,8 +48,8 @@ describe("numberformat tests", () => {
   });
 
   it("should display number as currency", () => {
-    let nf = sut.nf({ style: "currency", currency: "EUR" }, "de");
-    let testNumber = 123456.789;
+    const nf = sut.nf({ style: "currency", currency: "EUR" }, "de");
+    const testNumber = 123456.789;
 
     expect(nf.format(testNumber)).toBe("123.456,79 €");
   });
@@ -69,36 +69,36 @@ describe("numberformat tests", () => {
     });
 
     it("should keep the decimal separator", () => {
-      let sample = "1,234,567.89";
-      let result = sut.uf(sample);
+      const sample = "1,234,567.89";
+      const result = sut.uf(sample);
 
       expect(result).toBe(1234567.89);
     });
 
     it("should respect provided locale", () => {
-      let sample = "1.234.567,89";
-      let result = sut.uf(sample, "de");
+      const sample = "1.234.567,89";
+      const result = sut.uf(sample, "de");
 
       expect(result).toBe(1234567.89);
     });
 
     it("should remove currency symbols", () => {
-      let sample = "$ 1,234.56";
-      let result = sut.uf(sample);
+      const sample = "$ 1,234.56";
+      const result = sut.uf(sample);
 
       expect(result).toBe(1234.56);
     });
 
     it("should remove all non numeric symbols", () => {
-      let sample = "1,234.56 m/s";
-      let result = sut.uf(sample);
+      const sample = "1,234.56 m/s";
+      const result = sut.uf(sample);
 
       expect(result).toBe(1234.56);
     });
 
     it("should respect negative values", () => {
-      let sample = "-1,234.56";
-      let result = sut.uf(sample);
+      const sample = "-1,234.56";
+      const result = sut.uf(sample);
 
       expect(result).toBe(-1234.56);
     });

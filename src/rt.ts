@@ -3,10 +3,10 @@ import { SignalBindingBehavior } from "aurelia-templating-resources";
 import { ValueConverter } from "aurelia-binding";
 
 export class RtValueConverter {
-  static inject() { return [RelativeTime]; }
+  public static inject() { return [RelativeTime]; }
   constructor(private service: RelativeTime) {}
 
-  toView(value: any) {
+  public toView(value: any) {
     if (value === null
       || typeof value === "undefined"
       || (typeof value === "string" && value.trim() === "")
@@ -22,18 +22,21 @@ export class RtValueConverter {
   }
 }
 
+// tslint:disable-next-line:max-classes-per-file
 export class RtBindingBehavior {
-  static inject() {return [SignalBindingBehavior]; }
+  public static inject() {return [SignalBindingBehavior]; }
 
   constructor(private signalBindingBehavior: SignalBindingBehavior) {}
 
-  bind(binding: any, source: any) {
+  public bind(binding: any, source: any) {
     // bind the signal behavior
-    (this.signalBindingBehavior.bind as any)(binding, source, "aurelia-translation-signal", "aurelia-relativetime-signal");
+    (this.signalBindingBehavior.bind as any)(
+      binding, source, "aurelia-translation-signal", "aurelia-relativetime-signal"
+    );
 
     // rewrite the expression to use the RtValueConverter.
     // pass through any args to the binding behavior to the RtValueConverter
-    let sourceExpression = binding.sourceExpression;
+    const sourceExpression = binding.sourceExpression;
 
     // do create the sourceExpression only once
     if (sourceExpression.rewritten) {
@@ -41,7 +44,7 @@ export class RtBindingBehavior {
     }
     sourceExpression.rewritten = true;
 
-    let expression = sourceExpression.expression;
+    const expression = sourceExpression.expression;
     sourceExpression.expression = new ValueConverter(
       expression,
       "rt",
@@ -49,7 +52,7 @@ export class RtBindingBehavior {
       [expression, ...sourceExpression.args]);
   }
 
-  unbind(binding: any, source: any) {
+  public unbind(binding: any, source: any) {
     // unbind the signal behavior
     this.signalBindingBehavior.unbind(binding, source);
   }

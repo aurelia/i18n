@@ -6,42 +6,42 @@ describe("testing i18n translations", () => {
   let sut: I18N;
 
   beforeEach( () => {
-    let resources = {
+    const resources = {
       en: {
         translation: {
-          "score": "Score: {{score}}",
-          "lives": "{{count}} life remaining",
-          "lives_plural": "{{count}} lives remaining",
-          "lives_indefinite": "a life remaining",
-          "lives_plural_indefinite": "some lives remaining",
-          "friend": "A friend",
-          "friend_male": "A boyfriend",
-          "friend_female": "A girlfriend",
-          "complex": "{{field}} should be between {{threshold.min}} and {{threshold.max}}",
-          "nested_referencing": "$t(lives) in round {{round}}",
-          "statement": "{{brand}} is a next next gen JavaScript client framework",
-          "novar": "{{notexisting}} should be replaced with an empty string"
+          score: "Score: {{score}}",
+          lives: "{{count}} life remaining",
+          lives_plural: "{{count}} lives remaining",
+          lives_indefinite: "a life remaining",
+          lives_plural_indefinite: "some lives remaining",
+          friend: "A friend",
+          friend_male: "A boyfriend",
+          friend_female: "A girlfriend",
+          complex: "{{field}} should be between {{threshold.min}} and {{threshold.max}}",
+          nested_referencing: "$t(lives) in round {{round}}",
+          statement: "{{brand}} is a next next gen JavaScript client framework",
+          novar: "{{notexisting}} should be replaced with an empty string"
         }
       },
       de: {
         translation: {
-          "score": "Punktestand: {{score}}",
-          "lives": "{{count}} Lebenspunkt übrig",
-          "lives_plural": "{{count}} Lebenspunkte übrig",
-          "lives_indefinite": "ein Lebenspunkt übrig",
-          "lives_plural_indefinite": "einige Lebenspunkte übrig",
-          "friend": "Ein Freund",
-          "friend_male": "Ein Freund",
-          "friend_female": "Eine Freundin",
-          "statement": "{{brand}} ist ein JavaScript client framework der nächsten Generation",
-          "novar": "{{notexisting}} sollte mit einem Leerstring ersetzt werden"
+          score: "Punktestand: {{score}}",
+          lives: "{{count}} Lebenspunkt übrig",
+          lives_plural: "{{count}} Lebenspunkte übrig",
+          lives_indefinite: "ein Lebenspunkt übrig",
+          lives_plural_indefinite: "einige Lebenspunkte übrig",
+          friend: "Ein Freund",
+          friend_male: "Ein Freund",
+          friend_female: "Eine Freundin",
+          statement: "{{brand}} ist ein JavaScript client framework der nächsten Generation",
+          novar: "{{notexisting}} sollte mit einem Leerstring ersetzt werden"
         }
       }
     };
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resources: resources,
+      resources,
       lng: "en",
       fallbackLng: "en",
       debug: false
@@ -72,12 +72,12 @@ describe("testing i18n translations", () => {
   });
 
   it("should map complex object", () => {
-    let options = {
-      "threshold": {
-        "min": 1,
-        "max": 10
+    const options = {
+      threshold: {
+        min: 1,
+        max: 10
       },
-      "field": "Age"
+      field: "Age"
     };
 
     expect(sut.tr("complex", options)).toEqual("Age should be between 1 and 10");
@@ -96,7 +96,9 @@ describe("testing i18n translations", () => {
   it("should prefer passed in options vs. global variables", () => {
     sut.registerGlobalVariable("brand", "Aurelia");
 
-    expect(sut.tr("statement", { brand: "Aurelia.io" })).toEqual("Aurelia.io is a next next gen JavaScript client framework");
+    expect(sut.tr("statement", {
+      brand: "Aurelia.io"
+    })).toEqual("Aurelia.io is a next next gen JavaScript client framework");
   });
 
   it("should allow unregistering of global variables", () => {
@@ -112,7 +114,7 @@ describe("testing i18n translations", () => {
   });
 
   it("should trigger an event when switching locales", (done) => {
-    let subscription = (sut as any).ea.subscribe("i18n:locale:changed", (payload: I18NEventPayload) => {
+    const subscription = (sut as any).ea.subscribe("i18n:locale:changed", (payload: I18NEventPayload) => {
       subscription.dispose();
 
       expect(payload.oldValue).toBe("en");
@@ -128,7 +130,7 @@ describe("testing i18n translations", () => {
   });
 
   it("should not process comment nodes during translation updates", () => {
-    let comment = document.createComment("A DEMO COMMENT");
+    const comment = document.createComment("A DEMO COMMENT");
     expect(() => { sut.updateTranslations(comment as any); }).not.toThrow();
   });
 });

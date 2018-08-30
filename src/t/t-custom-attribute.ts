@@ -8,11 +8,11 @@ import { TParamsCustomAttribute } from "./t-params-custom-attribute";
 
 @customAttribute("t")
 export class TCustomAttribute {
-  static inject() {
+  public static inject() {
     return [DOM.Element, I18N, EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
   }
-  static configureAliases(aliases: string[]) {
-    let r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
+  public static configureAliases(aliases: string[]) {
+    const r = metadata.getOrCreateOwn(metadata.resource, HtmlBehaviorResource, TCustomAttribute);
     (r as any).aliases = aliases;
   }
 
@@ -27,10 +27,10 @@ export class TCustomAttribute {
     private ea: EventAggregator,
     p: any
   ) {
-    this.lazyParams = p; 
+    this.lazyParams = p;
   }
 
-  bind() {
+  public bind() {
     this.params = this.lazyParams();
 
     if (this.params) {
@@ -39,7 +39,7 @@ export class TCustomAttribute {
       };
     }
 
-    let p = this.params !== null ? this.params.value : undefined;
+    const p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe("i18n:locale:changed", () => {
       this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
     });
@@ -47,16 +47,16 @@ export class TCustomAttribute {
     this.service.updateValue(this.element, this.value, p);
   }
 
-  paramsChanged(newValue: any, newParams: any) {
+  public paramsChanged(newValue: any, newParams: any) {
     this.service.updateValue(this.element, newValue, newParams);
   }
 
-  valueChanged(newValue: any) {
-    let p = this.params !== null ? this.params.value : undefined;
+  public valueChanged(newValue: any) {
+    const p = this.params !== null ? this.params.value : undefined;
     this.service.updateValue(this.element, newValue, p);
   }
 
-  unbind() {
+  public unbind() {
     // If unbind is called before timeout for subscription is triggered, subscription will be undefined
     if (this.subscription) {
       this.subscription.dispose();

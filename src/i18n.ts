@@ -7,9 +7,8 @@ import { BindingSignaler } from "aurelia-templating-resources";
 import { autoinject } from "aurelia-framework";
 
 export interface AureliaAdditionalOptions {
-  attributes?: string[],
-  skipTranslationOnMissingKey?: boolean
- 
+  attributes?: string[];
+  skipTranslationOnMissingKey?: boolean;
 }
 
 export interface AureliaEnhancedI18Next {
@@ -18,8 +17,8 @@ export interface AureliaEnhancedI18Next {
 
 // tslint:disable-next-line:interface-name
 export interface I18NEventPayload {
-  oldValue: string,
-  newValue: string
+  oldValue: string;
+  newValue: string;
 }
 
 @autoinject
@@ -34,7 +33,7 @@ export class I18N {
     this.Intl = PLATFORM.global.Intl;
   }
 
-  async setup(options?: AureliaAdditionalOptions & InitOptions) {
+  public async setup(options?: AureliaAdditionalOptions & InitOptions) {
     const defaultOptions = {
       skipTranslationOnMissingKey: false,
       compatibilityAPI: "v1",
@@ -45,14 +44,13 @@ export class I18N {
       debug: false
     };
 
-
     this.i18nextDeferred = new Promise((resolve, reject) => {
       this.i18next = this.i18next.init(options || defaultOptions, (err) => {
         if (err) {
           reject(err);
         }
 
-        //make sure attributes is an array in case a string was provided
+        // make sure attributes is an array in case a string was provided
         if (this.i18next.options.attributes instanceof String) {
           this.i18next.options.attributes = [this.i18next.options.attributes as any as string];
         }
@@ -64,13 +62,13 @@ export class I18N {
     return this.i18nextDeferred;
   }
 
-  i18nextReady(): Promise<any> {
+  public i18nextReady(): Promise<any> {
     return this.i18nextDeferred;
   }
 
-  setLocale(locale: string): Promise<i18next.TranslationFunction> {
+  public setLocale(locale: string): Promise<i18next.TranslationFunction> {
     return new Promise((resolve, reject) => {
-      let oldLocale = this.getLocale();
+      const oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
         if (err) {
           reject(err);
@@ -83,27 +81,27 @@ export class I18N {
     });
   }
 
-  getLocale(): string {
+  public getLocale(): string {
     return this.i18next.language;
   }
 
-  nf(options?: Intl.NumberFormatOptions, locales?: string | string[]): any {
+  public nf(options?: Intl.NumberFormatOptions, locales?: string | string[]): any {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  uf(number: string, locale?: string): number {
-    let nf = this.nf({}, locale || this.getLocale());
-    let comparer = nf.format(10000 / 3);
+  public uf(numberLike: string, locale?: string): number {
+    const nf = this.nf({}, locale || this.getLocale());
+    const comparer = nf.format(10000 / 3);
 
     let thousandSeparator = comparer[1];
-    let decimalSeparator = comparer[5];
+    const decimalSeparator = comparer[5];
 
     if (thousandSeparator === ".") {
       thousandSeparator = "\\.";
     }
 
     // remove all thousand seperators
-    let result = number.replace(new RegExp(thousandSeparator, "g"), "")
+    const result = numberLike.replace(new RegExp(thousandSeparator, "g"), "")
       // remove non-numeric signs except -> , .
       .replace(/[^\d.,-]/g, "")
       // replace original decimalSeparator with english one
@@ -113,11 +111,11 @@ export class I18N {
     return Number(result);
   }
 
-  df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]): any {
+  public df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]): any {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  tr(key: string | string[], options?: i18next.TranslationOptions<object>): string {
+  public tr(key: string | string[], options?: i18next.TranslationOptions<object>): string {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
@@ -127,11 +125,11 @@ export class I18N {
     return this.i18next.t(key, fullOptions);
   }
 
-  registerGlobalVariable(key: string, value: any): void {
+  public registerGlobalVariable(key: string, value: any): void {
     this.globalVars[key] = value;
   }
 
-  unregisterGlobalVariable(key: string): void {
+  public unregisterGlobalVariable(key: string): void {
     delete this.globalVars[key];
   }
 
@@ -143,7 +141,7 @@ export class I18N {
    *
    * @param el    HTMLElement to search within
    */
-  updateTranslations(el: HTMLElement): void {
+  public updateTranslations(el: HTMLElement): void {
     if (!el || !el.querySelectorAll) {
       return;
     }
@@ -151,20 +149,20 @@ export class I18N {
     let i;
     let l;
 
-    //create a selector from the specified attributes to look for
-    //var selector = [].concat(this.i18next.options.attributes);
+    // create a selector from the specified attributes to look for
+    // var selector = [].concat(this.i18next.options.attributes);
     const attributes = this.i18next.options.attributes!;
     let selector = [].concat(attributes as any) as any;
-    for (i = 0, l = selector.length; i < l; i++) selector[i] = "[" + selector[i] + "]";
+    for (i = 0, l = selector.length; i < l; i++) { selector[i] = "[" + selector[i] + "]"; }
     selector = selector.join(",");
 
-    //get the nodes
-    let nodes = el.querySelectorAll(selector);
+    // get the nodes
+    const nodes = el.querySelectorAll(selector);
     for (i = 0, l = nodes.length; i < l; i++) {
-      let node = nodes[i];
+      const node = nodes[i];
       let keys;
       let params;
-      //test every attribute and get the first one that has a value
+      // test every attribute and get the first one that has a value
       for (let i2 = 0, l2 = attributes.length; i2 < l2; i2++) {
         keys = node.getAttribute(attributes[i2]);
         const pname = attributes[i2] + "-params";
@@ -173,35 +171,36 @@ export class I18N {
           params = node.au[pname].viewModel.value;
         }
 
-        if (keys) break;
+        if (keys) { break; }
       }
-      //skip if nothing was found
-      if (!keys) continue;
+      // skip if nothing was found
+      if (!keys) { continue; }
 
-      //split the keys into multiple keys separated by a ;
+      // split the keys into multiple keys separated by a ;
       this.updateValue(node, keys, params);
     }
   }
 
-  updateValue(node: Element & { au: any }, value: string, params: any) {
+  public updateValue(node: Element & { au: any }, value: string, params: any) {
     if (value === null || value === undefined) {
       return;
     }
 
-    let keys = value.toString().split(";");
+    const keys = value.toString().split(";");
     let i = keys.length;
 
     while (i--) {
       let key = keys[i];
       // remove the optional attribute
-      let re = /\[([a-z\-, ]*)\]/ig;
+      const re = /\[([a-z\-, ]*)\]/ig;
 
       let m;
       let attr = "text";
-      //set default attribute to src if this is an image node
-      if (node.nodeName === "IMG") attr = "src";
+      // set default attribute to src if this is an image node
+      if (node.nodeName === "IMG") { attr = "src"; }
 
-      //check if a attribute was specified in the key
+      // check if a attribute was specified in the key
+      // tslint:disable-next-line:no-conditional-assignment
       while ((m = re.exec(key)) !== null) {
         if (m.index === re.lastIndex) {
           re.lastIndex++;
@@ -212,17 +211,18 @@ export class I18N {
         }
       }
 
-      let attrs = attr.split(",");
+      const attrs = attr.split(",");
       let j = attrs.length;
 
       while (j--) {
         attr = attrs[j].trim();
 
-        if (!(node as any)._textContent) (node as any)._textContent = node.textContent;
-        if (!(node as any)._innerHTML) (node as any)._innerHTML = node.innerHTML;
+        if (!(node as any)._textContent) { (node as any)._textContent = node.textContent; }
+        if (!(node as any)._innerHTML) { (node as any)._innerHTML = node.innerHTML; }
 
         // convert to camelCase
-        const attrCC = attr.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+        // tslint:disable-next-line:only-arrow-functions
+        const attrCC = attr.replace(/-([a-z])/g, function(g) { return g[1].toUpperCase(); });
         const reservedNames = ["prepend", "append", "text", "html"];
         const i18nLogger = LogManager.getLogger("i18n");
 
@@ -243,11 +243,11 @@ export class I18N {
           return;
         }
 
-        //handle various attributes
-        //anything other than text,prepend,append or html will be added as an attribute on the element.
+        // handle various attributes
+        // anything other than text,prepend,append or html will be added as an attribute on the element.
         switch (attr) {
           case "text":
-            let newChild = DOM.createTextNode(this.tr(key, params));
+            const newChild = DOM.createTextNode(this.tr(key, params));
             if ((node as any)._newChild && (node as any)._newChild.parentNode === node) {
               node.removeChild((node as any)._newChild);
             }
@@ -259,7 +259,7 @@ export class I18N {
             node.appendChild((node as any)._newChild);
             break;
           case "prepend":
-            let prependParser = DOM.createElement("div");
+            const prependParser = DOM.createElement("div");
             prependParser.innerHTML = this.tr(key, params);
             for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
               if ((node.childNodes[ni] as any)._prepended) {
@@ -277,7 +277,7 @@ export class I18N {
             }
             break;
           case "append":
-            let appendParser = DOM.createElement("div");
+            const appendParser = DOM.createElement("div");
             appendParser.innerHTML = this.tr(key, params);
             for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
               if ((node.childNodes[ni] as any)._appended) {
@@ -293,7 +293,7 @@ export class I18N {
           case "html":
             node.innerHTML = this.tr(key, params);
             break;
-          default: //normal html attribute
+          default: // normal html attribute
             if (node.au &&
               node.au.controller &&
               node.au.controller.viewModel &&

@@ -6,20 +6,20 @@ describe("feature verification pluralization", () => {
   let sut: I18N;
 
   beforeEach( () => {
-    let resources = {
+    const resources = {
       en: {
         translation: {
-          "lives": "{{count}} life remaining",
-          "lives_plural": "{{count}} lives remaining",
-          "lives_indefinite": "a life remaining",
-          "lives_plural_indefinite": "some lives remaining"
+          lives: "{{count}} life remaining",
+          lives_plural: "{{count}} lives remaining",
+          lives_indefinite: "a life remaining",
+          lives_plural_indefinite: "some lives remaining"
         }
       }
     };
 
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
-      resources: resources,
+      resources,
       lng: "en",
       fallbackLng: "en",
       debug: false

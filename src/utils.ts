@@ -1,13 +1,15 @@
 import { resolver, Container } from "aurelia-dependency-injection";
 
 export let extend = (destination: any, source: any) => {
-  for (let property in source) {
+  // tslint:disable-next-line:forin
+  for (const property in source) {
     destination[property] = source[property];
   }
 
   return destination;
 };
 
+// tslint:disable-next-line:only-arrow-functions
 export const isInteger = Number.isInteger || function(value) {
   return typeof value === "number" &&
     isFinite(value) &&
@@ -19,9 +21,9 @@ export let assignObjectToKeys = (root: any, obj: any) => {
     return obj;
   }
 
-  let opts = {};
+  const opts = {};
 
-  Object.keys(obj).map( (key) => {
+  Object.keys(obj).map((key) => {
     if (typeof obj[key] === "object") {
       extend(opts, assignObjectToKeys(key, obj[key]));
     } else {
@@ -34,18 +36,18 @@ export let assignObjectToKeys = (root: any, obj: any) => {
 
 @resolver()
 export class LazyOptional {
-  constructor(private key: string) {}
+  public static of(key: any) {
+    return new LazyOptional(key);
+  }
 
-  get(container: Container) {
+  constructor(private key: string) { }
+
+  public get(container: Container) {
     return () => {
       if (container.hasResolver(this.key, false)) {
         return container.get(this.key);
       }
       return null;
     };
-  }
-
-  static of(key: any) {
-    return new LazyOptional(key);
   }
 }

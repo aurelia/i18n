@@ -6,8 +6,7 @@ import * as path from "path";
 
 Options.relativeToDir = path.join(__dirname, "unit");
 globalize();
-//global.Intl = IntlPolyfill;
-//(window as any).Intl = IntlPolyfill;
+
 global.Intl.NumberFormat   = IntlPolyfill.NumberFormat;
 global.Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
 (window as any).Intl = global.Intl;

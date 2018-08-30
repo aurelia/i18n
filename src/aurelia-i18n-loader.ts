@@ -18,7 +18,6 @@ export interface AureliaBackendOptions {
 }
 
 export class Backend {
-  public type: string = "backend";
 
   public static type: string = "backend";
   public static loader: Loader; // static loader to support passing the aurelia-loader
@@ -27,6 +26,7 @@ export class Backend {
     this.loader = loader;
     return this;
   }
+  public type: string = "backend";
 
   constructor(public services: any, public options: AureliaBackendOptions = {}) {
     this.init(services, options);
@@ -49,24 +49,26 @@ export class Backend {
       loadPath = this.options.loadPath(languages, namespaces);
     }
 
-    let url = this.services.interpolator.interpolate(loadPath, { lng: languages.join("+"), ns: namespaces.join("+") });
+    const url = this.services
+      .interpolator
+      .interpolate(loadPath, { lng: languages.join("+"), ns: namespaces.join("+") });
 
     this.loadUrl(url, callback);
   }
 
-  read(language: string, namespace: string, callback: LoadCallback) {
+  public read(language: string, namespace: string, callback: LoadCallback) {
     let loadPath = this.options.loadPath;
 
     if (typeof this.options.loadPath === "function") {
       loadPath = this.options.loadPath([language], [namespace]);
     }
 
-    let url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
+    const url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
 
     this.loadUrl(url, callback);
   }
 
-  async loadUrl(url: string, callback: LoadCallback) {
+  public async loadUrl(url: string, callback: LoadCallback) {
     try {
       const response = await Backend.loader.loadText(url);
       let ret;
@@ -83,11 +85,12 @@ export class Backend {
       callback(null, ret);
     } catch {
       callback("failed loading " + url, false /* no retry */);
-    };
+    }
   }
 
-  create(_languages: string | string[], _namespace: string, _key: string, _fallbackValue: string) {
-    // not supported 
+  // tslint:disable-next-line:variable-name
+  public create(_languages: string | string[], _namespace: string, _key: string, _fallbackValue: string) {
+    // not supported
   }
 }
 
