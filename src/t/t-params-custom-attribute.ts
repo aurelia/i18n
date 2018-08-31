@@ -1,5 +1,8 @@
+import {
+  customAttribute,
+  HtmlBehaviorResource
+} from "aurelia-templating";
 import { metadata } from "aurelia-metadata";
-import { customAttribute, HtmlBehaviorResource } from "aurelia-templating";
 import { DOM } from "aurelia-pal";
 
 @customAttribute("t-params")

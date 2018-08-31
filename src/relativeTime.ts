@@ -1,6 +1,11 @@
-import { I18N, I18NEventPayload, I18N_EA_SIGNAL } from "./i18n";
-import { translations } from "./defaultTranslations/relative.time";
 import { EventAggregator } from "aurelia-event-aggregator";
+
+import {
+  I18N,
+  I18NEventPayload,
+  I18N_EA_SIGNAL
+} from "./i18n";
+import { translations } from "./defaultTranslations/relative.time";
 
 export class RelativeTime {
   public static inject() { return [I18N, EventAggregator]; }

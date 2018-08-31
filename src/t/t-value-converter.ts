@@ -1,5 +1,6 @@
-import { I18N } from "../i18n";
 import i18next from "i18next";
+
+import { I18N } from "../i18n";
 
 export class TValueConverter {
   public static inject() { return [I18N]; }

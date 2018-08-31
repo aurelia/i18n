@@ -1,8 +1,18 @@
-import { I18N, I18N_EA_SIGNAL } from "../i18n";
-import { EventAggregator, Subscription } from "aurelia-event-aggregator";
+import {
+  customAttribute,
+  HtmlBehaviorResource
+} from "aurelia-templating";
+import {
+  EventAggregator,
+  Subscription
+} from "aurelia-event-aggregator";
 import { metadata } from "aurelia-metadata";
-import { customAttribute, HtmlBehaviorResource } from "aurelia-templating";
 import { DOM } from "aurelia-pal";
+
+import {
+  I18N,
+  I18N_EA_SIGNAL
+} from "../i18n";
 import { LazyOptional } from "../utils";
 import { TParamsCustomAttribute } from "./t-params-custom-attribute";
 

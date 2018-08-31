@@ -4,7 +4,10 @@ import { ViewResources } from "aurelia-templating";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { PLATFORM } from "aurelia-pal";
 
-import { I18N, AureliaEnhancedI18Next } from "./i18n";
+import {
+  I18N,
+  AureliaEnhancedI18Next
+} from "./i18n";
 
 export * from "./i18n";
 export * from "./relativeTime";

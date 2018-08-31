@@ -1,4 +1,5 @@
 import * as LogManager from "aurelia-logging";
+
 import { I18N } from "../i18n";
 import { isInteger } from "../utils";
 

@@ -1,7 +1,12 @@
-/*eslint no-cond-assign: 0*/
+import i18next, {
+  i18n,
+  InitOptions
+} from "i18next";
+import {
+  DOM,
+  PLATFORM
+} from "aurelia-pal";
 import * as LogManager from "aurelia-logging";
-import i18next, { i18n, InitOptions } from "i18next";
-import { DOM, PLATFORM } from "aurelia-pal";
 import { EventAggregator } from "aurelia-event-aggregator";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { autoinject } from "aurelia-framework";
@@ -28,7 +33,7 @@ export class I18N {
   public i18nextDeferred: Promise<AureliaEnhancedI18Next>;
   public i18next: AureliaEnhancedI18Next;
   public Intl: typeof Intl;
-  private globalVars: {[key: string]: any} = {};
+  private globalVars: { [key: string]: any } = {};
 
   constructor(private ea: EventAggregator, private signaler: BindingSignaler) {
     this.i18next = i18next;

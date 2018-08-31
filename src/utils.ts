@@ -1,4 +1,7 @@
-import { resolver, Container } from "aurelia-dependency-injection";
+import {
+  resolver,
+  Container
+} from "aurelia-dependency-injection";
 
 export let extend = (destination: any, source: any) => {
   // tslint:disable-next-line:forin
