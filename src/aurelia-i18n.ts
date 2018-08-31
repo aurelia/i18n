@@ -7,7 +7,8 @@ import { PLATFORM } from "aurelia-pal";
 import { I18N, AureliaEnhancedI18Next } from "./i18n";
 
 export * from "./i18n";
-export { RelativeTime } from "./relativeTime";
+export * from "./relativeTime";
+export * from "./aurelia-i18n-loader";
 export {
   DfValueConverter,
   DfBindingBehavior
@@ -26,7 +27,6 @@ export {
   TCustomAttribute,
   TParamsCustomAttribute
 } from "./t";
-export { Backend } from "./aurelia-i18n-loader";
 
 export function configure(
   frameworkConfig: FrameworkConfiguration,
