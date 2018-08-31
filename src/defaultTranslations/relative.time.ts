@@ -1,5 +1,9 @@
 // tslint:disable
-export const translations = {
+export type DefaultTranslations = {
+  [key: string]: string | DefaultTranslations
+}
+
+export const translations: DefaultTranslations = {
   ar: {
     translation: {
       "now": "الآن",

@@ -64,6 +64,7 @@
       "src(\\\\|/)df(\\\\|/)df-(.*)": "<rootDir>/src/df/df-$3.ts",
       "src(\\\\|/)rt(\\\\|/)rt-(.*)": "<rootDir>/src/rt/rt-$3.ts",
       "(test\\\\unit\\\\)aurelia-(.*)": "<rootDir>/node_modules/aurelia-$2",
+      "locales(\\\\|/)(.*)/(.*).json": "<rootDir>/test/unit/fixtures/locales/$2/$3.json",
       "^.+\\.(css)$": "<rootDir>/test/jest-css-stub.js"
     },
     "collectCoverage": true,

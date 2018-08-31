@@ -5,11 +5,14 @@ import { configure as configureTemplatingResources } from "aurelia-templating-re
 import { InitOptions } from "i18next";
 
 import { Backend } from "../../src/aurelia-i18n-loader";
-import { AureliaEnhancedI18Next, I18N } from "../../src/i18n";
+import {
+  AureliaAdditionalOptions,
+  I18N
+} from "../../src/i18n";
 
 export function bootstrapTestEnvironment(
   component: ComponentTester<any>,
-  config: AureliaEnhancedI18Next & InitOptions
+  config?: AureliaAdditionalOptions & InitOptions
 ) {
 
   component.bootstrap((aurelia: Aurelia) => {
