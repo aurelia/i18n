@@ -3,15 +3,14 @@ import { EventAggregator } from "aurelia-event-aggregator";
 import { StageComponent } from "aurelia-testing";
 import { bootstrap } from "aurelia-bootstrapper";
 import { Container } from "aurelia-dependency-injection";
-import { InitOptions } from "i18next";
 
-import { I18N, AureliaAdditionalOptions } from "../../src/i18n";
+import { I18N, AureliaEnhancedOptions } from "../../src/i18n";
 import { RelativeTime } from "../../src/relativeTime";
 import { translations } from "../../src/defaultTranslations/relative.time";
 import { bootstrapTestEnvironment } from "./staging-helpers";
 
 describe("testing relative time support", () => {
-  async function arrange(options?: AureliaAdditionalOptions & InitOptions) {
+  async function arrange(options?: AureliaEnhancedOptions) {
     const ea = new EventAggregator();
     const i18n = new I18N(ea, new BindingSignaler());
     await i18n.setup(Object.assign({

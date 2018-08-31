@@ -5,7 +5,6 @@ import { BindingSignaler } from "aurelia-templating-resources";
 import { PLATFORM } from "aurelia-pal";
 
 import { I18N, AureliaEnhancedI18Next } from "./i18n";
-import { i18n } from "i18next";
 
 export * from "./i18n";
 export { RelativeTime } from "./relativeTime";
@@ -31,7 +30,7 @@ export { Backend } from "./aurelia-i18n-loader";
 
 export function configure(
   frameworkConfig: FrameworkConfiguration,
-  cb: (instance: I18N) => AureliaEnhancedI18Next & i18n
+  cb: (instance: I18N) => AureliaEnhancedI18Next
 ) {
   if (cb === undefined || typeof cb !== "function") {
     const errorMsg = "You need to provide a callback method to properly configure the library";

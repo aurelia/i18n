@@ -6,13 +6,13 @@ import { EventAggregator } from "aurelia-event-aggregator";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { autoinject } from "aurelia-framework";
 
-export interface AureliaAdditionalOptions {
+export interface AureliaEnhancedOptions extends InitOptions {
   attributes?: string[];
   skipTranslationOnMissingKey?: boolean;
 }
 
-export interface AureliaEnhancedI18Next {
-  options?: InitOptions & AureliaAdditionalOptions;
+export interface AureliaEnhancedI18Next extends i18n {
+  options: AureliaEnhancedOptions;
 }
 
 // tslint:disable-next-line:interface-name
@@ -23,8 +23,8 @@ export interface I18NEventPayload {
 
 @autoinject
 export class I18N {
-  public i18nextDeferred: Promise<AureliaEnhancedI18Next & i18n>;
-  public i18next: AureliaEnhancedI18Next & i18n;
+  public i18nextDeferred: Promise<AureliaEnhancedI18Next>;
+  public i18next: AureliaEnhancedI18Next;
   public Intl: typeof Intl;
   private globalVars: {[key: string]: any} = {};
 
@@ -33,7 +33,7 @@ export class I18N {
     this.Intl = PLATFORM.global.Intl;
   }
 
-  public async setup(options?: AureliaAdditionalOptions & InitOptions) {
+  public async setup(options?: AureliaEnhancedOptions & InitOptions) {
     const defaultOptions = {
       skipTranslationOnMissingKey: false,
       compatibilityAPI: "v1",

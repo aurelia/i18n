@@ -2,17 +2,16 @@ import { Aurelia } from "aurelia-framework";
 import { ComponentTester } from "aurelia-testing";
 import { configure as configureTemplatingBinding } from "aurelia-templating-binding";
 import { configure as configureTemplatingResources } from "aurelia-templating-resources";
-import { InitOptions } from "i18next";
 
 import { Backend } from "../../src/aurelia-i18n-loader";
 import {
-  AureliaAdditionalOptions,
+  AureliaEnhancedOptions,
   I18N
 } from "../../src/i18n";
 
 export function bootstrapTestEnvironment(
   component: ComponentTester<any>,
-  config?: AureliaAdditionalOptions & InitOptions
+  config?: AureliaEnhancedOptions
 ) {
 
   component.bootstrap((aurelia: Aurelia) => {
