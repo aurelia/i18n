@@ -37,6 +37,11 @@
     "x": "NODE_ICU_DATA=node_modules/full-icu node test.js"
   },
   "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig-build.json"
+      }
+    },
     "modulePaths": [
       "<rootDir>/src",
       "<rootDir>/node_modules"
