@@ -91,7 +91,10 @@
     ]
   },
   "license": "MIT",
-  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "author": "Vildan Softic <zewa666@gmail.com> (http://pragmatic-coder.net)",
+  "contributors": [
+    "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
+  ],
   "main": "dist/commonjs/aurelia-i18n.js",
   "typings": "dist/typings/aurelia-i18n.d.ts",
   "repository": {
