@@ -1,6 +1,6 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="../html-loader.d.ts" />
-import { I18N } from "../../src/i18n";
+import { I18N, I18N_EA_SIGNAL } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
 import tpl from "./fixtures/template.html";
@@ -67,7 +67,7 @@ describe("testing i18n translation update", () => {
     template = loadTemplate();
 
     // update the translations in the template when the locale changes
-    ea.subscribe("i18n:locale:changed", () => {
+    ea.subscribe(I18N_EA_SIGNAL, () => {
       sut.updateTranslations(template);
     });
 

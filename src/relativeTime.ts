@@ -1,4 +1,4 @@
-import { I18N, I18NEventPayload } from "./i18n";
+import { I18N, I18NEventPayload, I18N_EA_SIGNAL } from "./i18n";
 import { translations } from "./defaultTranslations/relative.time";
 import { EventAggregator } from "aurelia-event-aggregator";
 
@@ -9,7 +9,7 @@ export class RelativeTime {
       this.setup();
     });
 
-    this.ea.subscribe("i18n:locale:changed", (locales: I18NEventPayload) => {
+    this.ea.subscribe(I18N_EA_SIGNAL, (locales: I18NEventPayload) => {
       this.setup(locales);
     });
   }

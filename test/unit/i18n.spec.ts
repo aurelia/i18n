@@ -1,4 +1,4 @@
-import { I18N, I18NEventPayload } from "../../src/i18n";
+import { I18N, I18NEventPayload, I18N_EA_SIGNAL } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
 
@@ -114,7 +114,7 @@ describe("testing i18n translations", () => {
   });
 
   it("should trigger an event when switching locales", (done) => {
-    const subscription = (sut as any).ea.subscribe("i18n:locale:changed", (payload: I18NEventPayload) => {
+    const subscription = (sut as any).ea.subscribe(I18N_EA_SIGNAL, (payload: I18NEventPayload) => {
       subscription.dispose();
 
       expect(payload.oldValue).toBe("en");

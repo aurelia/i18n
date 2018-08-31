@@ -21,6 +21,8 @@ export interface I18NEventPayload {
   newValue: string;
 }
 
+export const I18N_EA_SIGNAL = "i18n:locale:changed";
+
 @autoinject
 export class I18N {
   public i18nextDeferred: Promise<AureliaEnhancedI18Next>;
@@ -74,7 +76,7 @@ export class I18N {
           reject(err);
         }
 
-        this.ea.publish("i18n:locale:changed", { oldValue: oldLocale, newValue: locale });
+        this.ea.publish(I18N_EA_SIGNAL, { oldValue: oldLocale, newValue: locale });
         this.signaler.signal("aurelia-translation-signal");
         resolve(tr);
       });

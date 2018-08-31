@@ -1,4 +1,4 @@
-import { I18N } from "../i18n";
+import { I18N, I18N_EA_SIGNAL } from "../i18n";
 import { EventAggregator, Subscription } from "aurelia-event-aggregator";
 import { metadata } from "aurelia-metadata";
 import { customAttribute, HtmlBehaviorResource } from "aurelia-templating";
@@ -40,7 +40,7 @@ export class TCustomAttribute {
     }
 
     const p = this.params !== null ? this.params.value : undefined;
-    this.subscription = this.ea.subscribe("i18n:locale:changed", () => {
+    this.subscription = this.ea.subscribe(I18N_EA_SIGNAL, () => {
       this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
     });
 
