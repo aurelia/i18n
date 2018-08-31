@@ -218,10 +218,11 @@ describe("testing relative time support", () => {
 
     component.create(bootstrap)
       .then(() => {
-        const signaler = Container.instance.get(BindingSignaler);
         const elem = document.getElementById(target);
         expect(elem).not.toBeNull();
-        expect(elem!.innerHTML).not.toBe("2 seconds ago");
+        expect(elem!.innerHTML).toMatch(/(now|1 second ago)/);
+
+        const signaler = Container.instance.get(BindingSignaler);
 
         setTimeout(() => {
           signaler.signal("aurelia-relativetime-signal");
