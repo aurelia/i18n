@@ -221,16 +221,16 @@ describe("testing relative time support", () => {
         const signaler = Container.instance.get(BindingSignaler);
         const elem = document.getElementById(target);
         expect(elem).not.toBeNull();
-        expect(elem!.innerHTML).toBe("just now");
+        expect(elem!.innerHTML).not.toBe("2 seconds ago");
 
         setTimeout(() => {
           signaler.signal("aurelia-relativetime-signal");
           expect(elem).not.toBeNull();
-          expect(elem!.innerHTML).toBe("1 second ago");
+          expect(elem!.innerHTML).toBe("2 seconds ago");
 
           component.dispose();
           done();
-        }, 1000);
+        }, 1800);
       });
   });
 });
