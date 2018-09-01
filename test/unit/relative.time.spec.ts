@@ -8,6 +8,17 @@ import { I18N, AureliaEnhancedOptions } from "../../src/i18n";
 import { RelativeTime } from "../../src/relativeTime";
 import { translations } from "../../src/defaultTranslations/relative.time";
 import { bootstrapTestEnvironment } from "./staging-helpers";
+import { TaskQueue } from "aurelia-framework";
+
+function modifiedDateFromNow(days: number, months: number, years: number) {
+  const date = new Date();
+
+  date.setDate(date.getDate() + days);
+  date.setMonth(date.getMonth() + months);
+  date.setFullYear(date.getFullYear() + years);
+
+  return date;
+}
 
 describe("testing relative time support", () => {
   async function arrange(options?: AureliaEnhancedOptions) {
@@ -152,8 +163,9 @@ describe("testing relative time support", () => {
 
   it("should provide the translation for the full locale when available", async () => {
     const { i18n, sut } = await arrange({ lng: "en", fallbackLng: "en" });
-    translations["nl-XX"] = { translation:
-      { hour_in_plural: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
+    translations["nl-XX"] = {
+      translation:
+        { hour_in_plural: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
     };
 
     await i18n.setLocale("nl-XX");
@@ -207,31 +219,34 @@ describe("testing relative time support", () => {
     expect(sut.getRelativeTime(expectedDate)).toBe("1 hour ago");
   });
 
-  it("should update relative time bindings using custom signal", (done) => {
+  it("should update relative time bindings using custom signal", async (done) => {
     const target = "relative-time-target";
+    const viewModel = { mydate: modifiedDateFromNow(0, -1, 0) };
     const component = StageComponent
       .withResources("mocks/rt-vm")
       .inView("<div id=\"" + target + "\">${mydate & rt}</div>")
-      .boundTo({ mydate: new Date() });
+      .boundTo(viewModel);
 
     bootstrapTestEnvironment(component);
 
-    component.create(bootstrap)
-      .then(() => {
-        const elem = document.getElementById(target);
-        expect(elem).not.toBeNull();
-        expect(elem!.innerHTML).toMatch(/(now|1 second ago)/);
+    await component.create(bootstrap);
 
-        const signaler = Container.instance.get(BindingSignaler);
+    const elem = document.getElementById(target);
+    expect(elem).not.toBeNull();
+    expect(elem!.innerHTML).toBe("1 month ago");
 
-        setTimeout(() => {
-          signaler.signal("aurelia-relativetime-signal");
-          expect(elem).not.toBeNull();
-          expect(elem!.innerHTML).toBe("2 seconds ago");
+    viewModel.mydate = modifiedDateFromNow(0, 0, -1);
 
-          component.dispose();
-          done();
-        }, 1800);
-      });
+    const signaler = Container.instance.get(BindingSignaler);
+
+    const queue = Container.instance.get(TaskQueue) as TaskQueue;
+    queue.queueTask(() => {
+      signaler.signal("aurelia-relativetime-signal");
+      expect(elem).not.toBeNull();
+      expect(elem!.innerHTML).toBe("1 year ago");
+
+      component.dispose();
+      done();
+    });
   });
 });
