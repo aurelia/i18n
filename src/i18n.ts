@@ -28,7 +28,7 @@ export interface I18NEventPayload {
 
 export const I18N_EA_SIGNAL = "i18n:locale:changed";
 
-@autoinject
+@autoinject()
 export class I18N {
   public i18nextDeferred: Promise<AureliaEnhancedI18Next>;
   public i18next: AureliaEnhancedI18Next;
