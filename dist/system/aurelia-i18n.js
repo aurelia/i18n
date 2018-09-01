@@ -1,142 +1,121 @@
-'use strict';
-
-System.register(['aurelia-logging', 'aurelia-event-aggregator', 'aurelia-templating', 'aurelia-loader', 'aurelia-templating-resources', 'aurelia-pal', './i18n', './relativeTime', './df', './nf', './rt', './t', './base-i18n', './aurelia-i18n-loader'], function (_export, _context) {
-  "use strict";
-
-  var LogManager, EventAggregator, ViewResources, Loader, BindingSignaler, PLATFORM, I18N, RelativeTime, DfValueConverter, DfBindingBehavior, NfValueConverter, NfBindingBehavior, RtValueConverter, RtBindingBehavior, TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute, BaseI18N, Backend;
-
-
-  function registerI18N(frameworkConfig, cb) {
-    var instance = new I18N(frameworkConfig.container.get(EventAggregator), frameworkConfig.container.get(BindingSignaler));
-    frameworkConfig.container.registerInstance(I18N, instance);
-
-    var ret = cb(instance);
-
-    frameworkConfig.postTask(function () {
-      var resources = frameworkConfig.container.get(ViewResources);
-      var htmlBehaviorResource = resources.getAttribute('t');
-      var htmlParamsResource = resources.getAttribute('t-params');
-      var attributes = instance.i18next.options.attributes;
-
-      if (!attributes) {
-        attributes = ['t', 'i18n'];
-      }
-
-      attributes.forEach(function (alias) {
-        return resources.registerAttribute(alias, htmlBehaviorResource, 't');
-      });
-      attributes.forEach(function (alias) {
-        return resources.registerAttribute(alias + '-params', htmlParamsResource, 't-params');
-      });
-    });
-
-    return ret;
-  }
-
-  function configure(frameworkConfig, cb) {
-    if (cb === undefined || typeof cb !== 'function') {
-      var errorMsg = 'You need to provide a callback method to properly configure the library';
-      throw errorMsg;
-    }
-
-    frameworkConfig.globalResources(PLATFORM.moduleName('./t'));
-    frameworkConfig.globalResources(PLATFORM.moduleName('./nf'));
-    frameworkConfig.globalResources(PLATFORM.moduleName('./df'));
-    frameworkConfig.globalResources(PLATFORM.moduleName('./rt'));
-
-    if (PLATFORM.global.Intl === undefined) {
-      var i18nLogger = LogManager.getLogger('i18n');
-      i18nLogger.warn('Intl API is not available. Trying to load the polyfill.');
-      var loader = frameworkConfig.container.get(Loader);
-      var normalizeErrorMessage = 'Failed to normalize {module} while loading the Intl polyfill.';
-
-      return loader.normalize('aurelia-i18n').then(function (i18nName) {
-        return loader.normalize('intl', i18nName).then(function (intlName) {
-          return loader.loadModule(intlName).then(function (poly) {
-            PLATFORM.global.Intl = poly;
-            return registerI18N(frameworkConfig, cb);
-          }, function () {
-            return i18nLogger.warn('Failed to load the Intl polyfill.');
-          });
-        }, function () {
-          return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'intl'));
+System.register(["aurelia-event-aggregator", "aurelia-templating", "aurelia-templating-resources", "aurelia-pal", "./i18n", "./relativeTime", "./aurelia-i18n-loader", "./df", "./nf", "./rt", "./t"], function (exports_1, context_1) {
+    "use strict";
+    var aurelia_event_aggregator_1, aurelia_templating_1, aurelia_templating_resources_1, aurelia_pal_1, i18n_1;
+    var __moduleName = context_1 && context_1.id;
+    function configure(frameworkConfig, cb) {
+        if (cb === undefined || typeof cb !== "function") {
+            var errorMsg = "You need to provide a callback method to properly configure the library";
+            throw errorMsg;
+        }
+        frameworkConfig.globalResources([
+            aurelia_pal_1.PLATFORM.moduleName("./t/t-value-converter"),
+            aurelia_pal_1.PLATFORM.moduleName("./t/t-custom-attribute"),
+            aurelia_pal_1.PLATFORM.moduleName("./t/t-params-custom-attribute"),
+            aurelia_pal_1.PLATFORM.moduleName("./t/t-binding-behavior")
+        ]);
+        frameworkConfig.globalResources([
+            aurelia_pal_1.PLATFORM.moduleName("./nf/nf-value-converter"),
+            aurelia_pal_1.PLATFORM.moduleName("./nf/nf-binding-behavior")
+        ]);
+        frameworkConfig.globalResources([
+            aurelia_pal_1.PLATFORM.moduleName("./df/df-value-converter"),
+            aurelia_pal_1.PLATFORM.moduleName("./df/df-binding-behavior")
+        ]);
+        frameworkConfig.globalResources([
+            aurelia_pal_1.PLATFORM.moduleName("./rt/rt-value-converter"),
+            aurelia_pal_1.PLATFORM.moduleName("./rt/rt-binding-behavior")
+        ]);
+        var instance = new i18n_1.I18N(frameworkConfig.container.get(aurelia_event_aggregator_1.EventAggregator), frameworkConfig.container.get(aurelia_templating_resources_1.BindingSignaler));
+        frameworkConfig.container.registerInstance(i18n_1.I18N, instance);
+        var ret = cb(instance);
+        frameworkConfig.postTask(function () {
+            var resources = frameworkConfig.container.get(aurelia_templating_1.ViewResources);
+            var htmlBehaviorResource = resources.getAttribute("t");
+            var htmlParamsResource = resources.getAttribute("t-params");
+            var attributes = instance.i18next.options.attributes;
+            // Register default attributes if none provided
+            if (!attributes) {
+                attributes = ["t", "i18n"];
+            }
+            attributes.forEach(function (alias) { return resources.registerAttribute(alias, htmlBehaviorResource, "t"); });
+            attributes.forEach(function (alias) { return resources.registerAttribute(alias + "-params", htmlParamsResource, "t-params"); });
         });
-      }, function () {
-        return i18nLogger.warn(normalizeErrorMessage.replace('{module}', 'aurelia-i18n'));
-      });
+        return ret;
     }
-
-    return Promise.resolve(registerI18N(frameworkConfig, cb));
-  }
-
-  return {
-    setters: [function (_aureliaLogging) {
-      LogManager = _aureliaLogging;
-    }, function (_aureliaEventAggregator) {
-      EventAggregator = _aureliaEventAggregator.EventAggregator;
-    }, function (_aureliaTemplating) {
-      ViewResources = _aureliaTemplating.ViewResources;
-    }, function (_aureliaLoader) {
-      Loader = _aureliaLoader.Loader;
-    }, function (_aureliaTemplatingResources) {
-      BindingSignaler = _aureliaTemplatingResources.BindingSignaler;
-    }, function (_aureliaPal) {
-      PLATFORM = _aureliaPal.PLATFORM;
-    }, function (_i18n) {
-      I18N = _i18n.I18N;
-    }, function (_relativeTime) {
-      RelativeTime = _relativeTime.RelativeTime;
-    }, function (_df) {
-      DfValueConverter = _df.DfValueConverter;
-      DfBindingBehavior = _df.DfBindingBehavior;
-    }, function (_nf) {
-      NfValueConverter = _nf.NfValueConverter;
-      NfBindingBehavior = _nf.NfBindingBehavior;
-    }, function (_rt) {
-      RtValueConverter = _rt.RtValueConverter;
-      RtBindingBehavior = _rt.RtBindingBehavior;
-    }, function (_t) {
-      TValueConverter = _t.TValueConverter;
-      TBindingBehavior = _t.TBindingBehavior;
-      TCustomAttribute = _t.TCustomAttribute;
-      TParamsCustomAttribute = _t.TParamsCustomAttribute;
-    }, function (_baseI18n) {
-      BaseI18N = _baseI18n.BaseI18N;
-    }, function (_aureliaI18nLoader) {
-      Backend = _aureliaI18nLoader.Backend;
-    }],
-    execute: function () {
-      _export('configure', configure);
-
-      _export('I18N', I18N);
-
-      _export('RelativeTime', RelativeTime);
-
-      _export('DfValueConverter', DfValueConverter);
-
-      _export('DfBindingBehavior', DfBindingBehavior);
-
-      _export('NfValueConverter', NfValueConverter);
-
-      _export('NfBindingBehavior', NfBindingBehavior);
-
-      _export('RtValueConverter', RtValueConverter);
-
-      _export('RtBindingBehavior', RtBindingBehavior);
-
-      _export('TValueConverter', TValueConverter);
-
-      _export('TBindingBehavior', TBindingBehavior);
-
-      _export('TCustomAttribute', TCustomAttribute);
-
-      _export('TParamsCustomAttribute', TParamsCustomAttribute);
-
-      _export('BaseI18N', BaseI18N);
-
-      _export('EventAggregator', EventAggregator);
-
-      _export('Backend', Backend);
+    exports_1("configure", configure);
+    var exportedNames_1 = {
+        "configure": true,
+        "DfValueConverter": true,
+        "DfBindingBehavior": true,
+        "NfValueConverter": true,
+        "NfBindingBehavior": true,
+        "RtValueConverter": true,
+        "RtBindingBehavior": true,
+        "TValueConverter": true,
+        "TBindingBehavior": true,
+        "TCustomAttribute": true,
+        "TParamsCustomAttribute": true
+    };
+    function exportStar_1(m) {
+        var exports = {};
+        for (var n in m) {
+            if (n !== "default" && !exportedNames_1.hasOwnProperty(n)) exports[n] = m[n];
+        }
+        exports_1(exports);
     }
-  };
+    return {
+        setters: [
+            function (aurelia_event_aggregator_1_1) {
+                aurelia_event_aggregator_1 = aurelia_event_aggregator_1_1;
+            },
+            function (aurelia_templating_1_1) {
+                aurelia_templating_1 = aurelia_templating_1_1;
+            },
+            function (aurelia_templating_resources_1_1) {
+                aurelia_templating_resources_1 = aurelia_templating_resources_1_1;
+            },
+            function (aurelia_pal_1_1) {
+                aurelia_pal_1 = aurelia_pal_1_1;
+            },
+            function (i18n_1_1) {
+                i18n_1 = i18n_1_1;
+                exportStar_1(i18n_1_1);
+            },
+            function (relativeTime_1_1) {
+                exportStar_1(relativeTime_1_1);
+            },
+            function (aurelia_i18n_loader_1_1) {
+                exportStar_1(aurelia_i18n_loader_1_1);
+            },
+            function (df_1_1) {
+                exports_1({
+                    "DfValueConverter": df_1_1["DfValueConverter"],
+                    "DfBindingBehavior": df_1_1["DfBindingBehavior"]
+                });
+            },
+            function (nf_1_1) {
+                exports_1({
+                    "NfValueConverter": nf_1_1["NfValueConverter"],
+                    "NfBindingBehavior": nf_1_1["NfBindingBehavior"]
+                });
+            },
+            function (rt_1_1) {
+                exports_1({
+                    "RtValueConverter": rt_1_1["RtValueConverter"],
+                    "RtBindingBehavior": rt_1_1["RtBindingBehavior"]
+                });
+            },
+            function (t_1_1) {
+                exports_1({
+                    "TValueConverter": t_1_1["TValueConverter"],
+                    "TBindingBehavior": t_1_1["TBindingBehavior"],
+                    "TCustomAttribute": t_1_1["TCustomAttribute"],
+                    "TParamsCustomAttribute": t_1_1["TParamsCustomAttribute"]
+                });
+            }
+        ],
+        execute: function () {
+        }
+    };
 });
+//# sourceMappingURL=aurelia-i18n.js.map

@@ -1,3 +1,21 @@
+<a name="3.0.0-beta1"></a>
+# [3.0.0-beta1](https://github.com/aurelia/i18n/compare/2.3.2...3.0.0-beta1) (2018-09-01)
+
+
+### Features
+
+* switch to TypeScript ([6a4c15f](https://github.com/aurelia/i18n/commit/6a4c15f))
+
+Breaking changes:
+
+* Updated i18next to 11.x.x version
+* removed deprecated df & nf parameters
+* removed auto-loading of Intl polyfill, no longer a dependency
+  (make sure to add it by yourself if needed before the app start)
+* removed BaseI18N class in favor of composition over inheritance
+* typings are now distributed from dist/typings/...
+* removed old custom typings for i18next and i18next-xhr-backend
+
 <a name="2.3.2"></a>
 ## [2.3.2](https://github.com/aurelia/i18n/compare/2.3.1...2.3.2) (2018-08-01)
 

@@ -14,7 +14,7 @@ You can find complete documentation on setup and usage in the official [Aurelia 
 
 ## Polyfills
 
-* andyearnshaw/Intl.js
+None
 
 ## Platform Support
 
