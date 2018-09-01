@@ -7,7 +7,7 @@ import "intl/locale-data/complete";
 describe("numberformat tests", () => {
   let sut: I18N;
 
-  beforeEach( () => {
+  beforeEach(() => {
     const resources = {
       en: {
         translation: {
@@ -36,15 +36,13 @@ describe("numberformat tests", () => {
     expect(result).toEqual("123,456.789");
   });
 
-  it("should display number in the previously modified locale", (done) => {
-    sut.setLocale("de").then( () => {
-      const nf = sut.nf();
-      const testNumber = 123456.789;
+  it("should display number in the previously modified locale", async () => {
+    const testNumber = 123456.789;
 
-      expect(nf.format(testNumber)).toEqual("123.456,789");
+    await sut.setLocale("de");
+    const nf = sut.nf();
 
-      done();
-    });
+    expect(nf.format(testNumber)).toEqual("123.456,789");
   });
 
   it("should display number as currency", () => {
@@ -55,7 +53,7 @@ describe("numberformat tests", () => {
   });
 
   describe("unformating numbers", () => {
-    beforeEach( () => {
+    beforeEach(() => {
       sut = new I18N(new EventAggregator(), new BindingSignaler());
       sut.setup({
         resources: {},

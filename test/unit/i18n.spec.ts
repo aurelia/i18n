@@ -56,14 +56,13 @@ describe("testing i18n translations", () => {
     expect(sut.tr("novar")).toEqual(" should be replaced with an empty string");
   });
 
-  it("should properly switch locales", (done) => {
+  it("should properly switch locales", async () => {
     expect(sut.getLocale()).toBe("en");
 
-    sut.setLocale("de").then( () => {
-      expect(sut.getLocale()).toBe("de");
-      expect(sut.tr("friend", { count: 0 })).toEqual("Ein Freund");
-      done();
-    });
+    await sut.setLocale("de");
+
+    expect(sut.getLocale()).toBe("de");
+    expect(sut.tr("friend", { count: 0 })).toEqual("Ein Freund");
   });
 
   it("should pass on provided options", () => {
@@ -131,6 +130,7 @@ describe("testing i18n translations", () => {
 
   it("should not process comment nodes during translation updates", () => {
     const comment = document.createComment("A DEMO COMMENT");
+
     expect(() => { sut.updateTranslations(comment as any); }).not.toThrow();
   });
 });

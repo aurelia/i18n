@@ -33,17 +33,14 @@ describe("datetimeformat tests", () => {
     expect(df.format(testDate)).toEqual("1/1/2000");
   });
 
-  it("should display date in the previously modified locale", async (done) => {
+  it("should display date in the previously modified locale", async () => {
     await sut.i18nextReady();
 
-    sut.setLocale("de").then(() => {
-      const df = sut.df();
-      const testDate = new Date(2000, 0, 1, 0, 0, 1);
+    await sut.setLocale("de");
+    const df = sut.df();
+    const testDate = new Date(2000, 0, 1, 0, 0, 1);
 
-      expect(df.format(testDate)).toEqual("1.1.2000");
-
-      done();
-    });
+    expect(df.format(testDate)).toEqual("1.1.2000");
   });
 
   it("should display datetime", () => {
