@@ -69,7 +69,7 @@ export class I18N {
     return this.i18nextDeferred;
   }
 
-  public i18nextReady(): Promise<any> {
+  public i18nextReady() {
     return this.i18nextDeferred;
   }
 
@@ -88,15 +88,15 @@ export class I18N {
     });
   }
 
-  public getLocale(): string {
+  public getLocale() {
     return this.i18next.language;
   }
 
-  public nf(options?: Intl.NumberFormatOptions, locales?: string | string[]): any {
+  public nf(options?: Intl.NumberFormatOptions, locales?: string | string[]) {
     return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
   }
 
-  public uf(numberLike: string, locale?: string): number {
+  public uf(numberLike: string, locale?: string) {
     const nf = this.nf({}, locale || this.getLocale());
     const comparer = nf.format(10000 / 3);
 
@@ -118,11 +118,11 @@ export class I18N {
     return Number(result);
   }
 
-  public df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]): any {
+  public df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]) {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  public tr(key: string | string[], options?: i18next.TranslationOptions<object>): string {
+  public tr(key: string | string[], options?: i18next.TranslationOptions<object>) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
@@ -132,11 +132,11 @@ export class I18N {
     return this.i18next.t(key, fullOptions);
   }
 
-  public registerGlobalVariable(key: string, value: any): void {
+  public registerGlobalVariable(key: string, value: any) {
     this.globalVars[key] = value;
   }
 
-  public unregisterGlobalVariable(key: string): void {
+  public unregisterGlobalVariable(key: string) {
     delete this.globalVars[key];
   }
 
@@ -148,7 +148,7 @@ export class I18N {
    *
    * @param el    HTMLElement to search within
    */
-  public updateTranslations(el: HTMLElement): void {
+  public updateTranslations(el: HTMLElement) {
     if (!el || !el.querySelectorAll) {
       return;
     }

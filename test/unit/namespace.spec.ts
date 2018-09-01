@@ -1,10 +1,12 @@
-import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { Resource } from "i18next";
+
+import { I18N } from "../../src/i18n";
 
 describe("testing i18n namespaces", () => {
   let sut: I18N;
-  let resources: any;
+  let resources: Resource;
 
   beforeEach( () => {
     resources = {

@@ -1,8 +1,10 @@
 // tslint:disable-next-line:no-reference
 /// <reference path="../html-loader.d.ts" />
-import { I18N, I18N_EA_SIGNAL } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { Resource } from "i18next";
+
+import { I18N, I18N_EA_SIGNAL } from "../../src/i18n";
 import tpl from "./fixtures/template.html";
 
 function loadTemplate() {
@@ -24,7 +26,7 @@ function loadTemplate() {
 
 describe("testing i18n translation update", () => {
   let sut: I18N;
-  let resources: any;
+  let resources: Resource;
   let template: HTMLElement;
   let ea: EventAggregator;
 
