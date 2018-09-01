@@ -21,6 +21,9 @@ None
 This library can be used in the **browser** only.
 
 ## Building The Code
+This library can be used in the **browser** and **node**.
+
+## Building The Code
 
 To build the code, follow these steps.
 
@@ -30,42 +33,30 @@ To build the code, follow these steps.
   ```shell
   npm install
   ```
-3. Ensure that [Gulp](http://gulpjs.com/) is installed. If you need to install it, use the following command:
+3. To build the code, you can now run:
 
   ```shell
-  npm install -g gulp
+  npm run build
   ```
-4. To build the code, you can now run:
+4. You will find the compiled code in the `dist` folder, available in various module formats and the `typings` inside the typings subfolder.
 
-  ```shell
-  gulp build
-  ```
-5. You will find the compiled code in the `dist` folder, available in three module formats: AMD, CommonJS and ES6.
-
-6. See `gulpfile.js` for other tasks related to generating the docs and linting.
 
 ## Running The Tests
 
 To run the unit tests, first ensure that you have followed the steps above in order to install all dependencies and successfully build the library. Once you have done that, proceed with these additional steps:
 
-1. Ensure that the [Karma](http://karma-runner.github.io/) CLI is installed. If you need to install it, use the following command:
+1. For single execution run:
 
   ```shell
-  npm install -g karma-cli
+  npm run test
   ```
-2. Ensure that [jspm](http://jspm.io/) is installed. If you need to install it, use the following commnand:
+2. For continuous tdd style:
 
   ```shell
-  npm install -g jspm
+  npm run test-watch
   ```
-3. Install the client-side dependencies with jspm:
+3. You can find the coverage report built after each test run:
 
   ```shell
-  jspm install
-  ```
-
-4. You can now run the tests with this command:
-
-  ```shell
-  karma start
-  ```
+  cat /test/coverage-jest/index.html
+  ```  
