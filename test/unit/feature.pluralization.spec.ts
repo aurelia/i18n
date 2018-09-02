@@ -10,9 +10,7 @@ describe("feature verification pluralization", () => {
       en: {
         translation: {
           lives: "{{count}} life remaining",
-          lives_plural: "{{count}} lives remaining",
-          lives_indefinite: "a life remaining",
-          lives_plural_indefinite: "some lives remaining"
+          lives_plural: "{{count}} lives remaining"
         }
       }
     };

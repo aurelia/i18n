@@ -2,19 +2,8 @@ import { StageComponent } from "aurelia-testing";
 import { bootstrap } from "aurelia-bootstrapper";
 
 import { bootstrapTestEnvironment } from "./staging-helpers";
-import { TValueConverter } from "../../src/t";
-import { I18N } from "../../src/i18n";
 
 describe("t-attribute", () => {
-  it("should call underlying service tr function", () => {
-    const serviceInstance = { tr: jest.fn() } as any as I18N;
-    const tVc = new TValueConverter(serviceInstance);
-
-    tVc.toView("foobar");
-
-    expect(serviceInstance.tr).toHaveBeenCalled();
-  });
-
   it("should convert bound integers to strings", async () => {
     const target = "test-target";
     const expectedValue = "Foobar";

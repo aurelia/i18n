@@ -157,8 +157,6 @@ Fourth, in those subfolders create a file named `translation.json` which contain
   "score": "Score: {{score}}",
   "lives": "{{count}} life remaining",
   "lives_plural": "{{count}} lives remaining",
-  "lives_indefinite": "a life remaining",
-  "lives_plural_indefinite": "some lives remaining",
   "friend": "A friend",
   "friend_male": "A boyfriend",
   "friend_female": "A girlfriend"
@@ -666,16 +664,6 @@ You will find below a few examples of the available [i18next features](http://i1
               <li class="list-group-item">
                 Translation plural: <br />
                 ${ 'lives' | t: { 'count': 2 } }
-              </li>
-
-              <li class="list-group-item">
-                Translation singular indefinite: <br />
-                ${ 'lives' | t: { 'count': 1, indefinite_article: true  } }
-              </li>
-
-              <li class="list-group-item">
-                Translation plural indefinite: <br />
-                ${ 'lives' | t: { 'count': 2, indefinite_article: true } }
               </li>
 
               <li class="list-group-item">
