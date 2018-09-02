@@ -7,7 +7,7 @@ export class TValueConverter {
 
   constructor(private service: I18N) { }
 
-  public toView(value: any, options: i18next.TranslationOptions<object> | undefined) {
+  public toView(value: any, options?: i18next.TranslationOptions<object>) {
     return this.service.tr(value, options);
   }
 }

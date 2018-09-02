@@ -1,4 +1,4 @@
-import { FrameworkConfiguration } from "aurelia-framework";
+import { FrameworkConfiguration, ViewResources } from "aurelia-framework";
 
 import { configure, I18N } from "../../src/aurelia-i18n";
 
@@ -9,7 +9,7 @@ describe("testing aurelia configure routine", () => {
       registerInstance: () => { /**/ },
       get: (Type: any) => new Type()
     },
-    postTask: () => { /**/ }
+    postTask: jest.fn()
   } as any as FrameworkConfiguration;
 
   it("should export configure function", () => {
@@ -30,5 +30,33 @@ describe("testing aurelia configure routine", () => {
   it("should throw custom error message if no callback is provided", () => {
     expect(() => { (configure as any)(frameworkConfig); })
       .toThrow("You need to provide a callback method to properly configure the library");
+  });
+
+  it("should register default attributes if none provided", (done) => {
+    const instanceCreator = (instance: I18N) => {
+      return instance.i18next;
+    };
+
+    class ViewResourcesMock extends ViewResources {}
+    const vrMock = new ViewResourcesMock();
+    spyOn(vrMock, "registerAttribute");
+    frameworkConfig.container.get = (Type: any) => {
+      if (Type === ViewResources) {
+        return vrMock;
+      }
+
+      return new Type();
+    };
+
+    frameworkConfig.postTask = jest.fn((cb: () => void) => {
+      cb();
+
+      expect(frameworkConfig.postTask).toHaveBeenCalled();
+      expect(vrMock.registerAttribute).toHaveBeenCalledTimes(4);
+
+      done();
+    });
+
+    configure(frameworkConfig, instanceCreator);
   });
 });
