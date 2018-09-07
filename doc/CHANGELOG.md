@@ -1,5 +1,5 @@
-<a name="3.0.0-beta1"></a>
-# [3.0.0-beta1](https://github.com/aurelia/i18n/compare/2.3.2...3.0.0-beta1) (2018-09-01)
+<a name="3.0.0-beta.1"></a>
+# [3.0.0-beta.1](https://github.com/aurelia/i18n/compare/2.3.2...3.0.0-beta1) (2018-09-01)
 
 
 ### Features
