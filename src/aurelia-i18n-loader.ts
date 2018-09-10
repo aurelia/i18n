@@ -34,12 +34,12 @@ export class Backend {
 
   public init(services: any, options: AureliaBackendOptions = {}) {
     this.services = services;
-    this.options = Object.assign({}, options, {
+    this.options = Object.assign({}, {
       loadPath: "/locales/{{lng}}/{{ns}}.json",
       addPath: "locales/add/{{lng}}/{{ns}}",
       allowMultiLoading: false,
       parse: JSON.parse
-    });
+    }, options);
   }
 
   public readMulti(languages: string[], namespaces: string[], callback: LoadCallback) {
