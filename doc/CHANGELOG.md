@@ -1,3 +1,13 @@
+<a name="3.0.0-beta.2"></a>
+# [3.0.0-beta.2](https://github.com/aurelia/i18n/compare/3.0.0-beta.1...3.0.0-beta.2) (2018-09-11)
+
+
+### Bug Fixes
+
+* **loader:** applying default options ([2ce9dbb](https://github.com/aurelia/i18n/commit/2ce9dbb))
+
+
+
 <a name="3.0.0-beta.1"></a>
 # [3.0.0-beta.1](https://github.com/aurelia/i18n/compare/2.3.2...3.0.0-beta1) (2018-09-01)
 
