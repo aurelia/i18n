@@ -11,12 +11,12 @@ export class Backend {
     }
     init(services, options = {}) {
         this.services = services;
-        this.options = Object.assign({}, options, {
+        this.options = Object.assign({}, {
             loadPath: "/locales/{{lng}}/{{ns}}.json",
             addPath: "locales/add/{{lng}}/{{ns}}",
             allowMultiLoading: false,
             parse: JSON.parse
-        });
+        }, options);
     }
     readMulti(languages, namespaces, callback) {
         let loadPath = this.options.loadPath;

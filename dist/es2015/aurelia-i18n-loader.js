@@ -48,12 +48,12 @@ var Backend = /** @class */ (function () {
     Backend.prototype.init = function (services, options) {
         if (options === void 0) { options = {}; }
         this.services = services;
-        this.options = Object.assign({}, options, {
+        this.options = Object.assign({}, {
             loadPath: "/locales/{{lng}}/{{ns}}.json",
             addPath: "locales/add/{{lng}}/{{ns}}",
             allowMultiLoading: false,
             parse: JSON.parse
-        });
+        }, options);
     };
     Backend.prototype.readMulti = function (languages, namespaces, callback) {
         var loadPath = this.options.loadPath;
