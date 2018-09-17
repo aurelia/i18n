@@ -249,4 +249,21 @@ describe("testing relative time support", () => {
       done();
     });
   });
+
+  it("should return value space provided", async () => {
+    const target = "relative-time-target";
+    const viewModel = { mydate: " " };
+    const component = StageComponent
+      .withResources("mocks/rt-vm")
+      .inView("<div id=\"" + target + "\">${mydate & rt}</div>")
+      .boundTo(viewModel);
+
+    bootstrapTestEnvironment(component);
+
+    await component.create(bootstrap);
+
+    const elem = document.getElementById(target);
+    expect(elem).not.toBeNull();
+    expect(elem!.innerHTML).toBe(" ");
+  });
 });

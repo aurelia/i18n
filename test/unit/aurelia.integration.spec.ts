@@ -1,6 +1,8 @@
-import { FrameworkConfiguration, ViewResources } from "aurelia-framework";
+import { FrameworkConfiguration, ViewResources, Container, Aurelia } from "aurelia-framework";
+import { bootstrap } from "aurelia-bootstrapper";
 
-import { configure, I18N } from "../../src/aurelia-i18n";
+import { configure, I18N, Backend } from "../../src/aurelia-i18n";
+import { StageComponent } from "aurelia-testing";
 
 describe("testing aurelia configure routine", () => {
   const frameworkConfig = {
@@ -37,7 +39,7 @@ describe("testing aurelia configure routine", () => {
       return instance.i18next;
     };
 
-    class ViewResourcesMock extends ViewResources {}
+    class ViewResourcesMock extends ViewResources { }
     const vrMock = new ViewResourcesMock();
     spyOn(vrMock, "registerAttribute");
     frameworkConfig.container.get = (Type: any) => {
@@ -58,5 +60,39 @@ describe("testing aurelia configure routine", () => {
     });
 
     configure(frameworkConfig, instanceCreator);
+  });
+
+  it("should apply default options if none provided", async () => {
+
+    const target = "fallback-target";
+    const component = StageComponent
+      .withResources("mocks/rt-vm")
+      .inView("<h5 id=" + target + " t=\"hello\">Hello!</h5>")
+      .boundTo({ mydate: new Date() });
+
+    component.bootstrap((aurelia: Aurelia) => {
+      return aurelia.use
+        .standardConfiguration()
+        .feature("src", (instance: I18N) => {
+          // register backend plugin
+          instance.i18next.use(Backend.with(aurelia.loader));
+
+          return instance.setup();
+        });
+    });
+
+    await component.create(bootstrap);
+
+    const i18nInstance = Container.instance.get(I18N) as I18N;
+
+    expect(i18nInstance.i18next.options).toMatchObject({
+      skipTranslationOnMissingKey: false,
+      lng: "en",
+      attributes: ["t", "i18n"],
+      fallbackLng: ["en"],
+      debug: false
+    });
+
+    component.dispose();
   });
 });
