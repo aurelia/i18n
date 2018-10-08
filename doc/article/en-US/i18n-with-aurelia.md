@@ -593,7 +593,7 @@ Nested keys may also be referenced and will be properly translated:
 Images can be translated as well, for when a different image needs to be displayed in another language.
 
 ```HTML
-<img t="home.image" />
+<img t="home.image">
 ```
 
 The plugin will automatically change the `src` attribute of the image when the locale changes.
@@ -601,7 +601,7 @@ The plugin will automatically change the `src` attribute of the image when the l
 You may specify a default value for images as well. In order to do so just define an attribute called `data-src` with the default value.
 
 ```HTML
-<img data-src="path/to/image.jpg" t="home.image" />
+<img data-src="path/to/image.jpg" t="home.image">
 ```
 
 This will be picked up by the CLI when translations are extracted from the source files. (see the section on [CLI Integration](#cli-integration))
@@ -652,24 +652,24 @@ You will find below a few examples of the available [i18next features](http://i1
             <h3>ValueConverter Examples</h3>
             <ul class="list-group">
               <li class="list-group-item">
-                Translation with Variables: <br />
+                Translation with Variables: <br>
                 ${ 'score' | t: {'score': userScore}}
               </li>
 
               <li class="list-group-item">
-                Translation singular: <br />
+                Translation singular: <br>
                 ${ 'lives' | t: { 'count': 1 } }
               </li>
 
               <li class="list-group-item">
-                Translation plural: <br />
+                Translation plural: <br>
                 ${ 'lives' | t: { 'count': 2 } }
               </li>
 
               <li class="list-group-item">
-                Translation without/with context: <br />
-                ${ 'friend' | t } <br />
-                ${ 'friend' | t: { context: 'male' } } <br />
+                Translation without/with context: <br>
+                ${ 'friend' | t } <br>
+                ${ 'friend' | t: { context: 'male' } } <br>
                 ${ 'friend' | t: { context: 'female' } }
               </li>
             </ul>
@@ -687,7 +687,7 @@ The TValueConverter is pretty useful if you prefer a declarative way to enhance 
 <code-listing heading="TBindingBehavior Example">
   <source-code lang="HTML">
   <li class="list-group-item">
-    Translation with Variables: <br />
+    Translation with Variables: <br>
     ${ 'score' & t: {'score': userScore}}
   </li>
   </source-code>
@@ -1081,7 +1081,7 @@ Given following file structure:
 Configure aurelia-i18n as follows:
 
 <code-listing heading="Configuring the i18next-resource-store-loader">
-  <source-code lang="ES 2015">   
+  <source-code lang="ES 2015">
     import {PLATFORM} from 'aurelia-pal';
     // Pass the path to the root pointer relative to main to the loader
     import resBundle from 'i18next-resource-store-loader!./assets/i18n/index.js';
@@ -1099,7 +1099,7 @@ Configure aurelia-i18n as follows:
             debug      : false,
           });
         });
-      
+
       aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('app')));
     }
   </source-code>
