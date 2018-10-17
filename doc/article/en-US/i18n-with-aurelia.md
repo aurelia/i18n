@@ -1006,7 +1006,22 @@ With that in place, edit your `aurelia_project/aurelia.json` file and add the ta
 ...
 ```
 
-Also, edit your `aurelia_project/tasks/run.js` (or .ts if you're using Typescript) file and add a new gulp.watch task to the `watch` function:
+Also, edit your `aurelia_project/tasks/watch.js` (or .ts if you're using Typescript) file and add a new watch object to the `watches` array:
+
+<code-listing heading="Add a locales watch task the watch function">
+  <source-code lang="ES 2015">
+    import processLocales from './process-locales'; //<-- add this line
+    // ...
+    let watches = [
+      { name: 'transpile', callback: transpile, source: project.transpiler.source },
+      { name: 'markup', callback: processMarkup, source: project.markupProcessor.source },
+      { name: 'CSS', callback: processCSS, source: project.cssProcessor.source }
+      { name: 'locales', callback: processLocales, source: project.localesProcessor.source } //<-- and this line
+    ];
+  </source-code>
+</code-listing>
+
+On older versions of the CLI (before 1.x.x), you would need to edit your `aurelia_project/tasks/run.js` (or .ts if you're using Typescript) file instead, and add a new gulp.watch task to the `watch` function:
 
 <code-listing heading="Add a locales watch task the watch function">
   <source-code lang="ES 2015">
