@@ -1,71 +1,47 @@
 import { FrameworkConfiguration } from "aurelia-framework";
-import { EventAggregator } from "aurelia-event-aggregator";
 import { ViewResources } from "aurelia-templating";
-import { BindingSignaler } from "aurelia-templating-resources";
-import { PLATFORM } from "aurelia-pal";
 
 import {
   I18N,
   AureliaEnhancedI18Next
 } from "./i18n";
+import { TValueConverter, TBindingBehavior, TCustomAttribute, TParamsCustomAttribute } from "./t";
+import { NfValueConverter, NfBindingBehavior } from "./nf";
+import { DfValueConverter, DfBindingBehavior } from "./df";
+import { RtValueConverter, RtBindingBehavior } from "./rt";
 
 export * from "./i18n";
 export * from "./relativeTime";
 export * from "./aurelia-i18n-loader";
-export {
-  DfValueConverter,
-  DfBindingBehavior
-} from "./df";
-export {
-  NfValueConverter,
-  NfBindingBehavior
-} from "./nf";
-export {
-  RtValueConverter,
-  RtBindingBehavior
-} from "./rt";
-export {
-  TValueConverter,
-  TBindingBehavior,
-  TCustomAttribute,
-  TParamsCustomAttribute
-} from "./t";
+export * from "./t";
 
 export function configure(
   frameworkConfig: FrameworkConfiguration,
   cb: (instance: I18N) => AureliaEnhancedI18Next
 ) {
-  if (cb === undefined || typeof cb !== "function") {
+  if (typeof cb !== "function") {
     const errorMsg = "You need to provide a callback method to properly configure the library";
     throw errorMsg;
   }
 
-  frameworkConfig.globalResources([
-    PLATFORM.moduleName("./t/t-value-converter"),
-    PLATFORM.moduleName("./t/t-custom-attribute"),
-    PLATFORM.moduleName("./t/t-params-custom-attribute"),
-    PLATFORM.moduleName("./t/t-binding-behavior")
-  ]);
-  frameworkConfig.globalResources([
-    PLATFORM.moduleName("./nf/nf-value-converter"),
-    PLATFORM.moduleName("./nf/nf-binding-behavior")
-  ]);
-  frameworkConfig.globalResources([
-    PLATFORM.moduleName("./df/df-value-converter"),
-    PLATFORM.moduleName("./df/df-binding-behavior")
-  ]);
-  frameworkConfig.globalResources([
-    PLATFORM.moduleName("./rt/rt-value-converter"),
-    PLATFORM.moduleName("./rt/rt-binding-behavior")
-  ]);
-
-  const instance = new I18N(
-    frameworkConfig.container.get(EventAggregator),
-    frameworkConfig.container.get(BindingSignaler)
-  );
-  frameworkConfig.container.registerInstance(I18N, instance);
-
+  const instance: I18N = frameworkConfig.container.get(I18N);
   const ret = cb(instance);
+
+  frameworkConfig.globalResources([
+    TValueConverter,
+    TBindingBehavior,
+    TCustomAttribute,
+    TParamsCustomAttribute,
+
+    NfValueConverter,
+    NfBindingBehavior,
+
+    DfValueConverter,
+    DfBindingBehavior,
+
+    RtValueConverter,
+    RtBindingBehavior
+  ]);
 
   frameworkConfig.postTask(() => {
     const resources = frameworkConfig.container.get(ViewResources);

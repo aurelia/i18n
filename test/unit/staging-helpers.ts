@@ -27,7 +27,7 @@ export function bootstrapTestEnvironment(
 
         return instance.setup(Object.assign({
           backend: {                                  // <-- configure backend settings
-            loadPath: "./locales/{{lng}}/{{ns}}.json", // <-- XHR settings for where to get the files from
+            loadPath: "./fixtures/locales/{{lng}}/{{ns}}.json", // <-- XHR settings for where to get the files from
           },
           interpolation: {
             prefix: "{{",

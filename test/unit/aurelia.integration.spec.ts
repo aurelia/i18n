@@ -1,7 +1,7 @@
 import { FrameworkConfiguration, ViewResources, Container, Aurelia } from "aurelia-framework";
 import { bootstrap } from "aurelia-bootstrapper";
 
-import { configure, I18N, Backend } from "../../src/aurelia-i18n";
+import { configure, I18N, Backend, AureliaBackendOptions } from "../../src/aurelia-i18n";
 import { StageComponent } from "aurelia-testing";
 
 describe("testing aurelia configure routine", () => {
@@ -70,6 +70,17 @@ describe("testing aurelia configure routine", () => {
       .inView("<h5 id=" + target + " t=\"hello\">Hello!</h5>")
       .boundTo({ mydate: new Date() });
 
+    const originalInit = Backend.prototype.init;
+    Backend.prototype.init = function init(services: any, options: AureliaBackendOptions = {}) {
+      this.services = services;
+      this.options = Object.assign({}, {
+        loadPath: "./fixtures/locales/{{lng}}/{{ns}}.json",
+        addPath: "locales/add/{{lng}}/{{ns}}",
+        allowMultiLoading: false,
+        parse: JSON.parse
+      }, options);
+    };
+
     component.bootstrap((aurelia: Aurelia) => {
       return aurelia.use
         .standardConfiguration()
@@ -92,6 +103,8 @@ describe("testing aurelia configure routine", () => {
       fallbackLng: ["en"],
       debug: false
     });
+
+    Backend.prototype.init = originalInit;
 
     component.dispose();
   });

@@ -1,7 +1,10 @@
 import { RelativeTime } from "../relativeTime";
+import { valueConverter } from "aurelia-binding";
 
+@valueConverter("rt")
 export class RtValueConverter {
   public static inject() { return [RelativeTime]; }
+
   constructor(private service: RelativeTime) {}
 
   public toView(value: any) {

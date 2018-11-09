@@ -1,7 +1,10 @@
 import { I18N } from "../i18n";
+import { valueConverter } from "aurelia-binding";
 
+@valueConverter("nf")
 export class NfValueConverter {
   public static inject() { return [I18N]; }
+
   constructor(private service: I18N) {}
 
   public toView(

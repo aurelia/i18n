@@ -1,6 +1,7 @@
 import { SignalBindingBehavior } from "aurelia-templating-resources";
-import { ValueConverter } from "aurelia-binding";
+import { ValueConverter, bindingBehavior } from "aurelia-binding";
 
+@bindingBehavior("nf")
 export class NfBindingBehavior {
   public static inject() { return [SignalBindingBehavior]; }
 
