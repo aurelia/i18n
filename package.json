@@ -17,7 +17,7 @@
     "pretest": "cross-env npm run lint",
     "test": "cross-env NODE_ICU_DATA=node_modules/full-icu jest",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu jest && cat ./test/coverage-jest/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "test-watch": "concurrently \"tsc --watch\" \"jest --watch\"",
+    "test-watch": "cross-env NODE_ICU_DATA=node_modules/full-icu jest --watch",
     "prebuild": "cross-env rimraf dist",
     "build": "cross-env TS_NODE_PROJECT=build/tsconfig.json ts-node build/build.ts",
     "build:dts": "dts-bundle-generator -o dist/aurelia-i18n.d.ts src/aurelia-i18n.ts --external-types --no-check",
@@ -90,7 +90,7 @@
     "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
   ],
   "main": "dist/commonjs/aurelia-i18n.js",
-  "typings": "dist/typings/aurelia-i18n.d.ts",
+  "typings": "dist/aurelia-i18n.d.ts",
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/i18n"
