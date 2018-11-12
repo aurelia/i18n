@@ -5,6 +5,7 @@ import packageJson from '../package.json';
 import { IRollupWatchOptions } from './interfaces';
 import * as path from 'path';
 import ChildProcess from 'child_process';
+import * as fs from 'fs';
 
 const BASE_DIR = process.cwd();
 const DIST_DIR = path.join(BASE_DIR, 'dist');
@@ -131,7 +132,7 @@ if (args.dev) {
 
 async function generateDts(): Promise<void> {
   console.log('\n==============\nGenerating dts bundle...\n==============');
-  return new Promise<void>(resolve => {
+  return new Promise<void>((resolve, reject) => {
     ChildProcess.exec(`npm run build:dts`, (err, stdout, stderr) => {
       if (err || stderr) {
         console.log('Generating dts error:');
@@ -140,9 +141,23 @@ async function generateDts(): Promise<void> {
         console.log('Generated dts bundle successfully');
         console.log(stdout);
       }
+      try {
+        fixI18nDefaultImport(path.resolve(DIST_DIR, TYPE_DIST_FILE_NAME));
+      } catch (ex) {
+        console.log('Failure fixing default import.');
+        reject(ex);
+      }
       resolve();
     });
   });
+}
+
+async function fixI18nDefaultImport(typeDefFileName: string) {
+  const importDeclaration = `import i18next from "i18next";\n`;
+  const data = fs.readFileSync(typeDefFileName, 'utf-8');
+  const fd = fs.openSync(typeDefFileName, 'w+');
+  fs.writeSync(fd, Buffer.from(importDeclaration, 'utf8'), 0, importDeclaration.length, 0);
+  fs.writeSync(fd, Buffer.from(data, 'utf8'), 0, data.length, importDeclaration.length);
 }
 
 function copyToTargetProject(targetFormats: string[], targetProject: string) {
