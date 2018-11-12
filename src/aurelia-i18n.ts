@@ -13,7 +13,24 @@ import { RtValueConverter, RtBindingBehavior } from "./rt";
 export * from "./i18n";
 export * from "./relativeTime";
 export * from "./aurelia-i18n-loader";
-export * from "./t";
+export {
+  DfValueConverter,
+  DfBindingBehavior
+} from "./df";
+export {
+  NfValueConverter,
+  NfBindingBehavior
+} from "./nf";
+export {
+  RtValueConverter,
+  RtBindingBehavior
+} from "./rt";
+export {
+  TValueConverter,
+  TBindingBehavior,
+  TCustomAttribute,
+  TParamsCustomAttribute
+} from "./t";
 
 export function configure(
   frameworkConfig: FrameworkConfiguration,
