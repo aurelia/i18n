@@ -1,8 +1,9 @@
 import { SignalBindingBehavior } from "aurelia-templating-resources";
-import { ValueConverter } from "aurelia-binding";
+import { ValueConverter, bindingBehavior } from "aurelia-binding";
 
+@bindingBehavior("t")
 export class TBindingBehavior {
-  public static inject = [SignalBindingBehavior];
+  public static inject() { return [SignalBindingBehavior]; }
 
   constructor(private signalBindingBehavior: SignalBindingBehavior) { }
 

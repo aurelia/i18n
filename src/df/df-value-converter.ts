@@ -1,6 +1,8 @@
 import { I18N } from "../i18n";
 import { isInteger } from "../utils";
+import { valueConverter } from "aurelia-binding";
 
+@valueConverter("df")
 export class DfValueConverter {
   public static inject() { return [I18N]; }
 

@@ -1,7 +1,9 @@
 import i18next from "i18next";
 
 import { I18N } from "../i18n";
+import { valueConverter } from "aurelia-framework";
 
+@valueConverter("t")
 export class TValueConverter {
   public static inject() { return [I18N]; }
 

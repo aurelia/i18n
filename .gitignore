@@ -3,6 +3,7 @@ jspm_packages
 bower_components
 .idea
 .DS_STORE
+.rollupcache
 build/reports
 .vscode/
 test/coverage-jest
