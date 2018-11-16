@@ -1,3 +1,17 @@
+<a name="3.0.0-beta.3"></a>
+# [3.0.0-beta.3](https://github.com/aurelia/i18n/compare/3.0.0-beta.2...3.0.0-beta.3) (2018-11-16)
+
+
+### Bug Fixes
+
+* **build:** auto fix type def generation ([a3b9056](https://github.com/aurelia/i18n/commit/a3b9056))
+* **main:** reexport df, nf & rt ([d2a61b6](https://github.com/aurelia/i18n/commit/d2a61b6))
+* **package-json:** adjust typings path, test watch script ([42f3726](https://github.com/aurelia/i18n/commit/42f3726))
+* **relative-time:** update for da, sv, nn/no and fi, reformat and sort ([#284](https://github.com/aurelia/i18n/issues/284)) ([a1b942b](https://github.com/aurelia/i18n/commit/a1b942b))
+* **test:** path mappings for win and linux ([561c33e](https://github.com/aurelia/i18n/commit/561c33e))
+
+
+
 <a name="3.0.0-beta.2"></a>
 # [3.0.0-beta.2](https://github.com/aurelia/i18n/compare/3.0.0-beta.1...3.0.0-beta.2) (2018-09-11)
 

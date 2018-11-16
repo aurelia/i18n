@@ -1,6 +1,6 @@
 {
   "name": "aurelia-i18n",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "A plugin that provides i18n support.",
   "keywords": [
     "aurelia",
@@ -22,13 +22,10 @@
     "build": "cross-env TS_NODE_PROJECT=build/tsconfig.json ts-node build/build.ts",
     "build:dts": "dts-bundle-generator -o dist/aurelia-i18n.d.ts src/aurelia-i18n.ts --external-types --no-check",
     "precommit": "npm run lint",
-    "predoc": "cross-env rimraf doc/api.json && rimraf dist/doc-temp && tsc --p tsconfig-build.json --module amd --outFile dist/doc-temp/aurelia-store.js && node doc/shape-defs && copyfiles tsconfig.json dist/doc-temp",
-    "doc": "cross-env typedoc --json doc/api.json --excludeExternals --includeDeclarations --mode modules --target ES6 --name aurelia-store-docs dist/doc-temp/",
-    "postdoc": "cross-env node doc/shape-doc && rimraf dist/doc-temp",
     "changelog": "cross-env conventional-changelog -p angular -i doc/CHANGELOG.md -s",
     "bump-version": "npm --no-git-tag-version version",
     "preprepare-release": "cross-env npm run test",
-    "prepare-release": "cross-env npm run changelog && npm run build && npm run doc"
+    "prepare-release": "cross-env npm run changelog && npm run build"
   },
   "jest": {
     "globals": {
