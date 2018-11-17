@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import * as i18next from "i18next";
 import { Container } from 'aurelia-dependency-injection';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { FrameworkConfiguration } from 'aurelia-framework';
