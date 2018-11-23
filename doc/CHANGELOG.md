@@ -1,3 +1,14 @@
+<a name="3.0.0-beta.4"></a>
+# [3.0.0-beta.4](https://github.com/aurelia/i18n/compare/3.0.0-beta.3...3.0.0-beta.4) (2018-11-23)
+
+
+### Bug Fixes
+
+* **build:** correct d.ts import for i18next ([b43d5e0](https://github.com/aurelia/i18n/commit/b43d5e0))
+* **typings:** Updating typings.json to map aurelia-i18n.d.ts ([d55740e](https://github.com/aurelia/i18n/commit/d55740e))
+
+
+
 <a name="3.0.0-beta.3"></a>
 # [3.0.0-beta.3](https://github.com/aurelia/i18n/compare/3.0.0-beta.2...3.0.0-beta.3) (2018-11-16)
 
