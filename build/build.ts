@@ -31,7 +31,25 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
   es2015: {
     input: ENTRY_PATH,
     outputs: [
-      { file: `dist/es2015/${DIST_FILE_NAME}`, format: 'esm' }
+      { file: `dist/es2015/${DIST_FILE_NAME}`, format: 'esm' },
+      {
+        file: `dist/umd/${DIST_FILE_NAME}`,
+        format: 'umd',
+        name: 'au.i18n',
+        globals: {
+          'aurelia-framework': 'au',
+          'aurelia-binding': 'au',
+          'aurelia-metadata': 'au',
+          'aurelia-templating': 'au',
+          'aurelia-loader': 'au',
+          'aurelia-event-aggregator': 'au',
+          'aurelia-pal': 'au',
+          'aurelia-templating-resources': 'au',
+          'aurelia-logging': 'au.LogManager',
+          'aurelia-dependency-injection': 'au',
+          'i18next': 'i18next'
+        }
+      }
     ]
   },
   es5: {
