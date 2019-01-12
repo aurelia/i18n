@@ -87,6 +87,9 @@
     "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)"
   ],
   "main": "dist/commonjs/aurelia-i18n.js",
+  "module": "dist/es2015/aurelia-i18n.js",
+  "browser": "dist/umd/aurelia-i18n.js",
+  "unpkg": "dist/umd/aurelia-i18n.js",
   "typings": "dist/aurelia-i18n.d.ts",
   "repository": {
     "type": "git",
