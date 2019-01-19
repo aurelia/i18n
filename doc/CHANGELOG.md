@@ -1,3 +1,13 @@
+<a name="3.0.0-beta.5"></a>
+# [3.0.0-beta.5](https://github.com/aurelia/i18n/compare/3.0.0-beta.4...3.0.0-beta.5) (2019-01-19)
+
+
+### Bug Fixes
+
+* **typings:** proper import of i18next ([#293](https://github.com/aurelia/i18n/issues/293)) ([13a9f9d](https://github.com/aurelia/i18n/commit/13a9f9d))
+
+
+
 <a name="3.0.0-beta.4"></a>
 # [3.0.0-beta.4](https://github.com/aurelia/i18n/compare/3.0.0-beta.3...3.0.0-beta.4) (2018-11-23)
 
