@@ -7,3 +7,4 @@ bower_components
 build/reports
 .vscode/
 test/coverage-jest
+dist
