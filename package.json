@@ -24,8 +24,8 @@
     "precommit": "npm run lint",
     "changelog": "cross-env conventional-changelog -p angular -i doc/CHANGELOG.md -s",
     "bump-version": "npm --no-git-tag-version version",
-    "preprepare-release": "cross-env npm run test",
-    "prepare-release": "cross-env npm run changelog && npm run build"
+    "precut-release": "cross-env npm run test",
+    "cut-release": "cross-env npm run changelog && npm run build"
   },
   "files": [
     "dist",
