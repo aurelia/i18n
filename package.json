@@ -160,6 +160,7 @@
     "intl": "^1.2.5",
     "jest": "^22.4.4",
     "jest-css-modules": "^1.1.0",
+    "jspm": "^0.16.53",
     "rimraf": "^2.6.1",
     "rollup": "^0.67.0",
     "rollup-plugin-typescript2": "^0.17.2",
