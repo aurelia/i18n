@@ -39,9 +39,8 @@ export class I18N {
   }
 
   public async setup(options?: AureliaEnhancedOptions & i18next.InitOptions) {
-    const defaultOptions = {
+    const defaultOptions: AureliaEnhancedOptions & i18next.InitOptions = {
       skipTranslationOnMissingKey: false,
-      compatibilityAPI: "v1",
       compatibilityJSON: "v1",
       lng: "en",
       attributes: ["t", "i18n"],
@@ -50,7 +49,7 @@ export class I18N {
     };
 
     this.i18nextDeferred = new Promise((resolve, reject) => {
-      this.i18next = this.i18next.init(options || defaultOptions, (err) => {
+      this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
         if (err) {
           reject(err);
         }
@@ -71,7 +70,7 @@ export class I18N {
     return this.i18nextDeferred;
   }
 
-  public setLocale(locale: string): Promise<i18next.TranslationFunction> {
+  public setLocale(locale: string): Promise<i18next.TFunction> {
     return new Promise((resolve, reject) => {
       const oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
@@ -120,7 +119,7 @@ export class I18N {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  public tr(key: string | string[], options?: i18next.TranslationOptions<object>) {
+  public tr(key: string | string[], options?: i18next.TOptions<object>) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
