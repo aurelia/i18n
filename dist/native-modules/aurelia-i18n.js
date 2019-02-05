@@ -85,6 +85,7 @@ var I18N = /** @class */ (function () {
             return __generator(this, function (_a) {
                 defaultOptions = {
                     skipTranslationOnMissingKey: false,
+                    compatibilityAPI: "v1",
                     compatibilityJSON: "v1",
                     lng: "en",
                     attributes: ["t", "i18n"],
@@ -92,7 +93,7 @@ var I18N = /** @class */ (function () {
                     debug: false
                 };
                 this.i18nextDeferred = new Promise(function (resolve, reject) {
-                    _this.i18next = _this.i18next.createInstance(options || defaultOptions, function (err) {
+                    _this.i18next = _this.i18next.init(options || defaultOptions, function (err) {
                         if (err) {
                             reject(err);
                         }

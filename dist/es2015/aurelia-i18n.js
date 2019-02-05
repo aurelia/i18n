@@ -54,6 +54,7 @@ class I18N {
         return __awaiter(this, void 0, void 0, function* () {
             const defaultOptions = {
                 skipTranslationOnMissingKey: false,
+                compatibilityAPI: "v1",
                 compatibilityJSON: "v1",
                 lng: "en",
                 attributes: ["t", "i18n"],
@@ -61,7 +62,7 @@ class I18N {
                 debug: false
             };
             this.i18nextDeferred = new Promise((resolve, reject) => {
-                this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
+                this.i18next = this.i18next.init(options || defaultOptions, (err) => {
                     if (err) {
                         reject(err);
                     }
