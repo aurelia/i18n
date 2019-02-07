@@ -33,7 +33,7 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
     outputs: [
       { file: `dist/es2015/${DIST_FILE_NAME}`, format: 'esm' },
       {
-        file: `dist/umd/${DIST_FILE_NAME}`,
+        file: `dist/umd-es2015/${DIST_FILE_NAME}`,
         format: 'umd',
         name: 'au.i18n',
         globals: {
@@ -58,6 +58,24 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
       { file: `dist/commonjs/${DIST_FILE_NAME}`, format: 'cjs' },
       { file: `dist/amd/${DIST_FILE_NAME}`, format: 'amd', amd: { id: LIB_NAME } },
       { file: `dist/native-modules/${DIST_FILE_NAME}`, format: 'esm' },
+      { 
+        file: `dist/umd/${DIST_FILE_NAME}`,
+        format: 'umd',
+        name: 'au.i18n',
+        globals: {
+          'aurelia-framework': 'au',
+          'aurelia-binding': 'au',
+          'aurelia-metadata': 'au',
+          'aurelia-templating': 'au',
+          'aurelia-loader': 'au',
+          'aurelia-event-aggregator': 'au',
+          'aurelia-pal': 'au',
+          'aurelia-templating-resources': 'au',
+          'aurelia-logging': 'au.LogManager',
+          'aurelia-dependency-injection': 'au',
+          'i18next': 'i18next'
+        }
+      },
       { file: `dist/system/${DIST_FILE_NAME}`, format: 'system' }
     ]
   },
