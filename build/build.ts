@@ -33,7 +33,7 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
     outputs: [
       { file: `dist/es2015/${DIST_FILE_NAME}`, format: 'esm' },
       {
-        file: `dist/umd/${DIST_FILE_NAME}`,
+        file: `dist/umd-es2015/${DIST_FILE_NAME}`,
         format: 'umd',
         name: 'au.i18n',
         globals: {
@@ -58,6 +58,7 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
       { file: `dist/commonjs/${DIST_FILE_NAME}`, format: 'cjs' },
       { file: `dist/amd/${DIST_FILE_NAME}`, format: 'amd', amd: { id: LIB_NAME } },
       { file: `dist/native-modules/${DIST_FILE_NAME}`, format: 'esm' },
+      { file: `dist/umd/${DIST_FILE_NAME}`, format: 'umd', name: 'au.i18n' },
       { file: `dist/system/${DIST_FILE_NAME}`, format: 'system' }
     ]
   },
