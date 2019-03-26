@@ -189,11 +189,12 @@ async function generateDts(): Promise<void> {
 }
 
 async function fixI18nDefaultImport(typeDefFileName: string) {
-  const importDeclaration = `import * as i18next from 'i18next';\n`;
-  const data = fs.readFileSync(typeDefFileName, 'utf-8');
+  const importDeclaration = `import i18next from 'i18next';`;
+  const data = fs.readFileSync(typeDefFileName, 'utf-8')
+    .replace("import { i18next } from 'i18next';", importDeclaration);
   const fd = fs.openSync(typeDefFileName, 'w+');
-  fs.writeSync(fd, Buffer.from(importDeclaration, 'utf8'), 0, importDeclaration.length, 0);
-  fs.writeSync(fd, Buffer.from(data, 'utf8'), 0, data.length, importDeclaration.length);
+
+  fs.writeSync(fd, Buffer.from(data, 'utf8'));
 }
 
 function copyToTargetProject(targetFormats: string[], targetProject: string) {
@@ -210,4 +211,3 @@ function copyToTargetProject(targetFormats: string[], targetProject: string) {
   );
   console.log('=============\nCopied to target\n=============');
 }
-

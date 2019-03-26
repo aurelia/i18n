@@ -17,6 +17,7 @@
     "strictPropertyInitialization": false,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "noEmitHelpers": false,
     "strict": true,
     "newLine": "LF",
