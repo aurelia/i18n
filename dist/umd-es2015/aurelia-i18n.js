@@ -37,129 +37,96 @@
         });
     }
 
-    function __generator(thisArg, body) {
-        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-        function verb(n) { return function (v) { return step([n, v]); }; }
-        function step(op) {
-            if (f) throw new TypeError("Generator is already executing.");
-            while (_) try {
-                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-                if (y = 0, t) op = [op[0] & 2, t.value];
-                switch (op[0]) {
-                    case 0: case 1: t = op; break;
-                    case 4: _.label++; return { value: op[1], done: false };
-                    case 5: _.label++; y = op[1]; op = [0]; continue;
-                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                    default:
-                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                        if (t[2]) _.ops.pop();
-                        _.trys.pop(); continue;
-                }
-                op = body.call(thisArg, _);
-            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-        }
-    }
-
-    var I18N_EA_SIGNAL = "i18n:locale:changed";
-    var I18N = /** @class */ (function () {
-        function I18N(ea, signaler) {
+    const I18N_EA_SIGNAL = "i18n:locale:changed";
+    class I18N {
+        constructor(ea, signaler) {
             this.ea = ea;
             this.signaler = signaler;
             this.globalVars = {};
             this.i18next = i18next;
             this.Intl = aureliaPal.PLATFORM.global.Intl;
         }
-        I18N.inject = function () { return [aureliaEventAggregator.EventAggregator, aureliaTemplatingResources.BindingSignaler]; };
-        I18N.prototype.setup = function (options) {
-            return __awaiter(this, void 0, void 0, function () {
-                var defaultOptions;
-                var _this = this;
-                return __generator(this, function (_a) {
-                    defaultOptions = {
-                        skipTranslationOnMissingKey: false,
-                        compatibilityJSON: "v1",
-                        lng: "en",
-                        attributes: ["t", "i18n"],
-                        fallbackLng: "en",
-                        debug: false
-                    };
-                    this.i18nextDeferred = new Promise(function (resolve, reject) {
-                        _this.i18next = _this.i18next.createInstance(options || defaultOptions, function (err) {
-                            if (err) {
-                                reject(err);
-                            }
-                            // make sure attributes is an array in case a string was provided
-                            if (_this.i18next.options.attributes instanceof String) {
-                                _this.i18next.options.attributes = [_this.i18next.options.attributes];
-                            }
-                            resolve(_this.i18next);
-                        });
+        static inject() { return [aureliaEventAggregator.EventAggregator, aureliaTemplatingResources.BindingSignaler]; }
+        setup(options) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const defaultOptions = {
+                    skipTranslationOnMissingKey: false,
+                    compatibilityJSON: "v1",
+                    lng: "en",
+                    attributes: ["t", "i18n"],
+                    fallbackLng: "en",
+                    debug: false
+                };
+                this.i18nextDeferred = new Promise((resolve, reject) => {
+                    this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        // make sure attributes is an array in case a string was provided
+                        if (this.i18next.options.attributes instanceof String) {
+                            this.i18next.options.attributes = [this.i18next.options.attributes];
+                        }
+                        resolve(this.i18next);
                     });
-                    return [2 /*return*/, this.i18nextDeferred];
                 });
+                return this.i18nextDeferred;
             });
-        };
-        I18N.prototype.i18nextReady = function () {
+        }
+        i18nextReady() {
             return this.i18nextDeferred;
-        };
-        I18N.prototype.setLocale = function (locale) {
-            var _this = this;
-            return new Promise(function (resolve, reject) {
-                var oldLocale = _this.getLocale();
-                _this.i18next.changeLanguage(locale, function (err, tr) {
+        }
+        setLocale(locale) {
+            return new Promise((resolve, reject) => {
+                const oldLocale = this.getLocale();
+                this.i18next.changeLanguage(locale, (err, tr) => {
                     if (err) {
                         reject(err);
                     }
-                    _this.ea.publish(I18N_EA_SIGNAL, { oldValue: oldLocale, newValue: locale });
-                    _this.signaler.signal("aurelia-translation-signal");
+                    this.ea.publish(I18N_EA_SIGNAL, { oldValue: oldLocale, newValue: locale });
+                    this.signaler.signal("aurelia-translation-signal");
                     resolve(tr);
                 });
             });
-        };
-        I18N.prototype.getLocale = function () {
+        }
+        getLocale() {
             return this.i18next.language;
-        };
-        I18N.prototype.nf = function (options, locales) {
+        }
+        nf(options, locales) {
             return new this.Intl.NumberFormat(locales || this.getLocale(), options || {});
-        };
-        I18N.prototype.uf = function (numberLike, locale) {
-            var nf = this.nf({}, locale || this.getLocale());
-            var comparer = nf.format(10000 / 3);
-            var thousandSeparator = comparer[1];
-            var decimalSeparator = comparer[5];
+        }
+        uf(numberLike, locale) {
+            const nf = this.nf({}, locale || this.getLocale());
+            const comparer = nf.format(10000 / 3);
+            let thousandSeparator = comparer[1];
+            const decimalSeparator = comparer[5];
             if (thousandSeparator === ".") {
                 thousandSeparator = "\\.";
             }
             // remove all thousand seperators
-            var result = numberLike.replace(new RegExp(thousandSeparator, "g"), "")
+            const result = numberLike.replace(new RegExp(thousandSeparator, "g"), "")
                 // remove non-numeric signs except -> , .
                 .replace(/[^\d.,-]/g, "")
                 // replace original decimalSeparator with english one
                 .replace(decimalSeparator, ".");
             // return real number
             return Number(result);
-        };
-        I18N.prototype.df = function (options, locales) {
+        }
+        df(options, locales) {
             return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
-        };
-        I18N.prototype.tr = function (key, options) {
-            var fullOptions = this.globalVars;
+        }
+        tr(key, options) {
+            let fullOptions = this.globalVars;
             if (options !== undefined) {
                 fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
             }
             return this.i18next.t(key, fullOptions);
-        };
-        I18N.prototype.registerGlobalVariable = function (key, value) {
+        }
+        registerGlobalVariable(key, value) {
             this.globalVars[key] = value;
-        };
-        I18N.prototype.unregisterGlobalVariable = function (key) {
+        }
+        unregisterGlobalVariable(key) {
             delete this.globalVars[key];
-        };
+        }
         /**
          * Scans an element for children that have a translation attribute and
          * updates their innerHTML with the current translation values.
@@ -168,30 +135,30 @@
          *
          * @param el    HTMLElement to search within
          */
-        I18N.prototype.updateTranslations = function (el) {
+        updateTranslations(el) {
             if (!el || !el.querySelectorAll) {
                 return;
             }
-            var i;
-            var l;
+            let i;
+            let l;
             // create a selector from the specified attributes to look for
             // var selector = [].concat(this.i18next.options.attributes);
-            var attributes = this.i18next.options.attributes;
-            var selector = [].concat(attributes);
+            const attributes = this.i18next.options.attributes;
+            let selector = [].concat(attributes);
             for (i = 0, l = selector.length; i < l; i++) {
                 selector[i] = "[" + selector[i] + "]";
             }
             selector = selector.join(",");
             // get the nodes
-            var nodes = el.querySelectorAll(selector);
+            const nodes = el.querySelectorAll(selector);
             for (i = 0, l = nodes.length; i < l; i++) {
-                var node = nodes[i];
-                var keys = void 0;
-                var params = void 0;
+                const node = nodes[i];
+                let keys;
+                let params;
                 // test every attribute and get the first one that has a value
-                for (var i2 = 0, l2 = attributes.length; i2 < l2; i2++) {
+                for (let i2 = 0, l2 = attributes.length; i2 < l2; i2++) {
                     keys = node.getAttribute(attributes[i2]);
-                    var pname = attributes[i2] + "-params";
+                    const pname = attributes[i2] + "-params";
                     if (pname && node.au && node.au[pname]) {
                         params = node.au[pname].viewModel.value;
                     }
@@ -206,19 +173,19 @@
                 // split the keys into multiple keys separated by a ;
                 this.updateValue(node, keys, params);
             }
-        };
-        I18N.prototype.updateValue = function (node, value, params) {
+        }
+        updateValue(node, value, params) {
             if (value === null || value === undefined) {
                 return;
             }
-            var keys = value.toString().split(";");
-            var i = keys.length;
+            const keys = value.toString().split(";");
+            let i = keys.length;
             while (i--) {
-                var key = keys[i];
+                let key = keys[i];
                 // remove the optional attribute
-                var re = /\[([a-z\-, ]*)\]/ig;
-                var m = void 0;
-                var attr = "text";
+                const re = /\[([a-z\-, ]*)\]/ig;
+                let m;
+                let attr = "text";
                 // set default attribute to src if this is an image node
                 if (node.nodeName === "IMG") {
                     attr = "src";
@@ -234,8 +201,8 @@
                         attr = m[1];
                     }
                 }
-                var attrs = attr.split(",");
-                var j = attrs.length;
+                const attrs = attr.split(",");
+                let j = attrs.length;
                 while (j--) {
                     attr = attrs[j].trim();
                     if (!node._textContent) {
@@ -246,26 +213,29 @@
                     }
                     // convert to camelCase
                     // tslint:disable-next-line:only-arrow-functions
-                    var attrCC = attr.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-                    var reservedNames = ["prepend", "append", "text", "html"];
-                    var i18nLogger = LogManager.getLogger("i18n");
+                    const attrCC = attr.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+                    const reservedNames = ["prepend", "append", "text", "html"];
+                    const i18nLogger = LogManager.getLogger("i18n");
                     if (reservedNames.indexOf(attr) > -1 &&
                         node.au &&
                         node.au.controller &&
                         node.au.controller.viewModel &&
                         attrCC in node.au.controller.viewModel) {
-                        i18nLogger.warn("Aurelia I18N reserved attribute name\n\n  [" + reservedNames.join(", ") + "]\n\n  Your custom element has a bindable named " + attr + " which is a reserved word.\n\n  If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.");
+                        i18nLogger.warn(`Aurelia I18N reserved attribute name\n
+  [${reservedNames.join(", ")}]\n
+  Your custom element has a bindable named ${attr} which is a reserved word.\n
+  If you'd like Aurelia I18N to translate your bindable instead, please consider giving it another name.`);
                     }
                     if (this.i18next.options.skipTranslationOnMissingKey &&
                         this.tr(key, params) === key) {
-                        i18nLogger.warn("Couldn't find translation for key: " + key);
+                        i18nLogger.warn(`Couldn't find translation for key: ${key}`);
                         return;
                     }
                     // handle various attributes
                     // anything other than text,prepend,append or html will be added as an attribute on the element.
                     switch (attr) {
                         case "text":
-                            var newChild = aureliaPal.DOM.createTextNode(this.tr(key, params));
+                            const newChild = aureliaPal.DOM.createTextNode(this.tr(key, params));
                             if (node._newChild && node._newChild.parentNode === node) {
                                 node.removeChild(node._newChild);
                             }
@@ -276,14 +246,14 @@
                             node.appendChild(node._newChild);
                             break;
                         case "prepend":
-                            var prependParser = aureliaPal.DOM.createElement("div");
+                            const prependParser = aureliaPal.DOM.createElement("div");
                             prependParser.innerHTML = this.tr(key, params);
-                            for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
+                            for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
                                 if (node.childNodes[ni]._prepended) {
                                     node.removeChild(node.childNodes[ni]);
                                 }
                             }
-                            for (var pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
+                            for (let pi = prependParser.childNodes.length - 1; pi >= 0; pi--) {
                                 prependParser.childNodes[pi]._prepended = true;
                                 if (node.firstChild) {
                                     node.insertBefore(prependParser.childNodes[pi], node.firstChild);
@@ -294,9 +264,9 @@
                             }
                             break;
                         case "append":
-                            var appendParser = aureliaPal.DOM.createElement("div");
+                            const appendParser = aureliaPal.DOM.createElement("div");
                             appendParser.innerHTML = this.tr(key, params);
-                            for (var ni = node.childNodes.length - 1; ni >= 0; ni--) {
+                            for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
                                 if (node.childNodes[ni]._appended) {
                                     node.removeChild(node.childNodes[ni]);
                                 }
@@ -323,187 +293,175 @@
                     }
                 }
             }
-        };
-        return I18N;
-    }());
+        }
+    }
 
-    var TBindingBehavior = /** @class */ (function () {
-        function TBindingBehavior(signalBindingBehavior) {
+    exports.TBindingBehavior = class TBindingBehavior {
+        constructor(signalBindingBehavior) {
             this.signalBindingBehavior = signalBindingBehavior;
         }
-        TBindingBehavior.inject = function () { return [aureliaTemplatingResources.SignalBindingBehavior]; };
-        TBindingBehavior.prototype.bind = function (binding, source) {
+        static inject() { return [aureliaTemplatingResources.SignalBindingBehavior]; }
+        bind(binding, source) {
             // bind the signal behavior
             this.signalBindingBehavior.bind(binding, source, "aurelia-translation-signal");
             // rewrite the expression to use the TValueConverter.
             // pass through any args to the binding behavior to the TValueConverter
-            var sourceExpression = binding.sourceExpression;
+            const sourceExpression = binding.sourceExpression;
             // do create the sourceExpression only once
             if (sourceExpression.rewritten) {
                 return;
             }
             sourceExpression.rewritten = true;
-            var expression = sourceExpression.expression;
-            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "t", sourceExpression.args, [expression].concat(sourceExpression.args));
-        };
-        TBindingBehavior.prototype.unbind = function (binding, source) {
+            const expression = sourceExpression.expression;
+            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "t", sourceExpression.args, [expression, ...sourceExpression.args]);
+        }
+        unbind(binding, source) {
             // unbind the signal behavior
             this.signalBindingBehavior.unbind(binding, source);
-        };
-        TBindingBehavior = __decorate([
-            aureliaBinding.bindingBehavior("t")
-        ], TBindingBehavior);
-        return TBindingBehavior;
-    }());
+        }
+    };
+    exports.TBindingBehavior = __decorate([
+        aureliaBinding.bindingBehavior("t")
+    ], exports.TBindingBehavior);
 
+    var LazyOptional_1;
     // tslint:disable-next-line:only-arrow-functions
-    var isInteger = Number.isInteger || function (value) {
+    const isInteger = Number.isInteger || function (value) {
         return typeof value === "number" &&
             isFinite(value) &&
             Math.floor(value) === value;
     };
-    var LazyOptional = /** @class */ (function () {
-        function LazyOptional(key) {
+    let LazyOptional = LazyOptional_1 = class LazyOptional {
+        constructor(key) {
             this.key = key;
         }
-        LazyOptional_1 = LazyOptional;
-        LazyOptional.of = function (key) {
+        static of(key) {
             return new LazyOptional_1(key);
-        };
-        LazyOptional.prototype.get = function (container) {
-            var _this = this;
-            return function () {
-                if (container.hasResolver(_this.key, false)) {
-                    return container.get(_this.key);
+        }
+        get(container) {
+            return () => {
+                if (container.hasResolver(this.key, false)) {
+                    return container.get(this.key);
                 }
                 return null;
             };
-        };
-        var LazyOptional_1;
-        LazyOptional = LazyOptional_1 = __decorate([
-            aureliaDependencyInjection.resolver()
-        ], LazyOptional);
-        return LazyOptional;
-    }());
+        }
+    };
+    LazyOptional = LazyOptional_1 = __decorate([
+        aureliaDependencyInjection.resolver()
+    ], LazyOptional);
 
-    var TParamsCustomAttribute = /** @class */ (function () {
-        function TParamsCustomAttribute(element) {
+    var TParamsCustomAttribute_1;
+    exports.TParamsCustomAttribute = TParamsCustomAttribute_1 = class TParamsCustomAttribute {
+        constructor(element) {
             this.element = element;
         }
-        TParamsCustomAttribute_1 = TParamsCustomAttribute;
-        TParamsCustomAttribute.inject = function () {
+        static inject() {
             return [aureliaPal.DOM.Element];
-        };
-        TParamsCustomAttribute.configureAliases = function (aliases) {
-            var r = aureliaMetadata.metadata.getOrCreateOwn(aureliaMetadata.metadata.resource, aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute_1);
+        }
+        static configureAliases(aliases) {
+            const r = aureliaMetadata.metadata.getOrCreateOwn(aureliaMetadata.metadata.resource, aureliaTemplating.HtmlBehaviorResource, TParamsCustomAttribute_1);
             r.aliases = aliases;
-        };
-        TParamsCustomAttribute.prototype.valueChanged = function () { };
-        var TParamsCustomAttribute_1;
-        TParamsCustomAttribute = TParamsCustomAttribute_1 = __decorate([
-            aureliaTemplating.customAttribute("t-params")
-        ], TParamsCustomAttribute);
-        return TParamsCustomAttribute;
-    }());
+        }
+        valueChanged() { }
+    };
+    exports.TParamsCustomAttribute = TParamsCustomAttribute_1 = __decorate([
+        aureliaTemplating.customAttribute("t-params")
+    ], exports.TParamsCustomAttribute);
 
-    var TCustomAttribute = /** @class */ (function () {
-        function TCustomAttribute(element, service, ea, p) {
+    var TCustomAttribute_1;
+    exports.TCustomAttribute = TCustomAttribute_1 = class TCustomAttribute {
+        constructor(element, service, ea, p) {
             this.element = element;
             this.service = service;
             this.ea = ea;
             this.lazyParams = p;
         }
-        TCustomAttribute_1 = TCustomAttribute;
-        TCustomAttribute.inject = function () {
-            return [aureliaPal.DOM.Element, I18N, aureliaEventAggregator.EventAggregator, LazyOptional.of(TParamsCustomAttribute)];
-        };
-        TCustomAttribute.configureAliases = function (aliases) {
-            var r = aureliaMetadata.metadata.getOrCreateOwn(aureliaMetadata.metadata.resource, aureliaTemplating.HtmlBehaviorResource, TCustomAttribute_1);
+        static inject() {
+            return [aureliaPal.DOM.Element, I18N, aureliaEventAggregator.EventAggregator, LazyOptional.of(exports.TParamsCustomAttribute)];
+        }
+        static configureAliases(aliases) {
+            const r = aureliaMetadata.metadata.getOrCreateOwn(aureliaMetadata.metadata.resource, aureliaTemplating.HtmlBehaviorResource, TCustomAttribute_1);
             r.aliases = aliases;
-        };
-        TCustomAttribute.prototype.bind = function () {
-            var _this = this;
+        }
+        bind() {
             this.params = this.lazyParams();
             if (this.params) {
-                this.params.valueChanged = function (newParams, oldParams) {
-                    _this.paramsChanged(_this.value, newParams, oldParams);
+                this.params.valueChanged = (newParams, oldParams) => {
+                    this.paramsChanged(this.value, newParams, oldParams);
                 };
             }
-            var p = this.params !== null ? this.params.value : undefined;
-            this.subscription = this.ea.subscribe(I18N_EA_SIGNAL, function () {
-                _this.service.updateValue(_this.element, _this.value, _this.params !== null ? _this.params.value : undefined);
+            const p = this.params !== null ? this.params.value : undefined;
+            this.subscription = this.ea.subscribe(I18N_EA_SIGNAL, () => {
+                this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
             });
             this.service.updateValue(this.element, this.value, p);
-        };
-        TCustomAttribute.prototype.paramsChanged = function (newValue, newParams) {
+        }
+        paramsChanged(newValue, newParams) {
             this.service.updateValue(this.element, newValue, newParams);
-        };
-        TCustomAttribute.prototype.valueChanged = function (newValue) {
-            var p = this.params !== null ? this.params.value : undefined;
+        }
+        valueChanged(newValue) {
+            const p = this.params !== null ? this.params.value : undefined;
             this.service.updateValue(this.element, newValue, p);
-        };
-        TCustomAttribute.prototype.unbind = function () {
+        }
+        unbind() {
             // If unbind is called before timeout for subscription is triggered, subscription will be undefined
             if (this.subscription) {
                 this.subscription.dispose();
             }
-        };
-        var TCustomAttribute_1;
-        TCustomAttribute = TCustomAttribute_1 = __decorate([
-            aureliaTemplating.customAttribute("t")
-        ], TCustomAttribute);
-        return TCustomAttribute;
-    }());
+        }
+    };
+    exports.TCustomAttribute = TCustomAttribute_1 = __decorate([
+        aureliaTemplating.customAttribute("t")
+    ], exports.TCustomAttribute);
 
-    var TValueConverter = /** @class */ (function () {
-        function TValueConverter(service) {
+    exports.TValueConverter = class TValueConverter {
+        constructor(service) {
             this.service = service;
         }
-        TValueConverter.inject = function () { return [I18N]; };
-        TValueConverter.prototype.toView = function (value, options) {
+        static inject() { return [I18N]; }
+        toView(value, options) {
             return this.service.tr(value, options);
-        };
-        TValueConverter = __decorate([
-            aureliaFramework.valueConverter("t")
-        ], TValueConverter);
-        return TValueConverter;
-    }());
+        }
+    };
+    exports.TValueConverter = __decorate([
+        aureliaFramework.valueConverter("t")
+    ], exports.TValueConverter);
 
-    var NfBindingBehavior = /** @class */ (function () {
-        function NfBindingBehavior(signalBindingBehavior) {
+    exports.NfBindingBehavior = class NfBindingBehavior {
+        constructor(signalBindingBehavior) {
             this.signalBindingBehavior = signalBindingBehavior;
         }
-        NfBindingBehavior.inject = function () { return [aureliaTemplatingResources.SignalBindingBehavior]; };
-        NfBindingBehavior.prototype.bind = function (binding, source) {
+        static inject() { return [aureliaTemplatingResources.SignalBindingBehavior]; }
+        bind(binding, source) {
             // bind the signal behavior
             this.signalBindingBehavior.bind(binding, source, "aurelia-translation-signal");
             // rewrite the expression to use the NfValueConverter.
             // pass through any args to the binding behavior to the NfValueConverter
-            var sourceExpression = binding.sourceExpression;
+            const sourceExpression = binding.sourceExpression;
             // do create the sourceExpression only once
             if (sourceExpression.rewritten) {
                 return;
             }
             sourceExpression.rewritten = true;
-            var expression = sourceExpression.expression;
-            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "nf", sourceExpression.args, [expression].concat(sourceExpression.args));
-        };
-        NfBindingBehavior.prototype.unbind = function (binding, source) {
+            const expression = sourceExpression.expression;
+            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "nf", sourceExpression.args, [expression, ...sourceExpression.args]);
+        }
+        unbind(binding, source) {
             // unbind the signal behavior
             this.signalBindingBehavior.unbind(binding, source);
-        };
-        NfBindingBehavior = __decorate([
-            aureliaBinding.bindingBehavior("nf")
-        ], NfBindingBehavior);
-        return NfBindingBehavior;
-    }());
+        }
+    };
+    exports.NfBindingBehavior = __decorate([
+        aureliaBinding.bindingBehavior("nf")
+    ], exports.NfBindingBehavior);
 
-    var NfValueConverter = /** @class */ (function () {
-        function NfValueConverter(service) {
+    exports.NfValueConverter = class NfValueConverter {
+        constructor(service) {
             this.service = service;
         }
-        NfValueConverter.inject = function () { return [I18N]; };
-        NfValueConverter.prototype.toView = function (value, nfOrOptions, locale) {
+        static inject() { return [I18N]; }
+        toView(value, nfOrOptions, locale) {
             if (value === null
                 || typeof value === "undefined"
                 || (typeof value === "string" && value.trim() === "")) {
@@ -512,50 +470,48 @@
             if (nfOrOptions && (nfOrOptions instanceof Intl.NumberFormat && typeof nfOrOptions.format === "function")) {
                 return nfOrOptions.format(value);
             }
-            var nf = this.service.nf(nfOrOptions, locale || this.service.getLocale());
+            const nf = this.service.nf(nfOrOptions, locale || this.service.getLocale());
             return nf.format(value);
-        };
-        NfValueConverter = __decorate([
-            aureliaBinding.valueConverter("nf")
-        ], NfValueConverter);
-        return NfValueConverter;
-    }());
+        }
+    };
+    exports.NfValueConverter = __decorate([
+        aureliaBinding.valueConverter("nf")
+    ], exports.NfValueConverter);
 
-    var DfBindingBehavior = /** @class */ (function () {
-        function DfBindingBehavior(signalBindingBehavior) {
+    exports.DfBindingBehavior = class DfBindingBehavior {
+        constructor(signalBindingBehavior) {
             this.signalBindingBehavior = signalBindingBehavior;
         }
-        DfBindingBehavior.inject = function () { return [aureliaTemplatingResources.SignalBindingBehavior]; };
-        DfBindingBehavior.prototype.bind = function (binding, source) {
+        static inject() { return [aureliaTemplatingResources.SignalBindingBehavior]; }
+        bind(binding, source) {
             // bind the signal behavior
             this.signalBindingBehavior.bind(binding, source, "aurelia-translation-signal");
             // rewrite the expression to use the DfValueConverter.
             // pass through any args to the binding behavior to the DfValueConverter
-            var sourceExpression = binding.sourceExpression;
+            const sourceExpression = binding.sourceExpression;
             // do create the sourceExpression only once
             if (sourceExpression.rewritten) {
                 return;
             }
             sourceExpression.rewritten = true;
-            var expression = sourceExpression.expression;
-            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "df", sourceExpression.args, [expression].concat(sourceExpression.args));
-        };
-        DfBindingBehavior.prototype.unbind = function (binding, source) {
+            const expression = sourceExpression.expression;
+            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "df", sourceExpression.args, [expression, ...sourceExpression.args]);
+        }
+        unbind(binding, source) {
             // unbind the signal behavior
             this.signalBindingBehavior.unbind(binding, source);
-        };
-        DfBindingBehavior = __decorate([
-            aureliaBinding.bindingBehavior("df")
-        ], DfBindingBehavior);
-        return DfBindingBehavior;
-    }());
+        }
+    };
+    exports.DfBindingBehavior = __decorate([
+        aureliaBinding.bindingBehavior("df")
+    ], exports.DfBindingBehavior);
 
-    var DfValueConverter = /** @class */ (function () {
-        function DfValueConverter(service) {
+    exports.DfValueConverter = class DfValueConverter {
+        constructor(service) {
             this.service = service;
         }
-        DfValueConverter.inject = function () { return [I18N]; };
-        DfValueConverter.prototype.toView = function (value, dfOrOptions, locale) {
+        static inject() { return [I18N]; }
+        toView(value, dfOrOptions, locale) {
             if (value === null
                 || typeof value === "undefined"
                 || (typeof value === "string" && value.trim() === "")) {
@@ -567,45 +523,43 @@
             if (dfOrOptions && (dfOrOptions instanceof Intl.DateTimeFormat && typeof dfOrOptions.format === "function")) {
                 return dfOrOptions.format(value);
             }
-            var df = this.service.df(dfOrOptions, locale || this.service.getLocale());
+            const df = this.service.df(dfOrOptions, locale || this.service.getLocale());
             return df.format(value);
-        };
-        DfValueConverter = __decorate([
-            aureliaBinding.valueConverter("df")
-        ], DfValueConverter);
-        return DfValueConverter;
-    }());
+        }
+    };
+    exports.DfValueConverter = __decorate([
+        aureliaBinding.valueConverter("df")
+    ], exports.DfValueConverter);
 
-    var RtBindingBehavior = /** @class */ (function () {
-        function RtBindingBehavior(signalBindingBehavior) {
+    exports.RtBindingBehavior = class RtBindingBehavior {
+        constructor(signalBindingBehavior) {
             this.signalBindingBehavior = signalBindingBehavior;
         }
-        RtBindingBehavior.inject = function () { return [aureliaTemplatingResources.SignalBindingBehavior]; };
-        RtBindingBehavior.prototype.bind = function (binding, source) {
+        static inject() { return [aureliaTemplatingResources.SignalBindingBehavior]; }
+        bind(binding, source) {
             // bind the signal behavior
             this.signalBindingBehavior.bind(binding, source, "aurelia-translation-signal", "aurelia-relativetime-signal");
             // rewrite the expression to use the RtValueConverter.
             // pass through any args to the binding behavior to the RtValueConverter
-            var sourceExpression = binding.sourceExpression;
+            const sourceExpression = binding.sourceExpression;
             // do create the sourceExpression only once
             if (sourceExpression.rewritten) {
                 return;
             }
             sourceExpression.rewritten = true;
-            var expression = sourceExpression.expression;
-            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "rt", sourceExpression.args, [expression].concat(sourceExpression.args));
-        };
-        RtBindingBehavior.prototype.unbind = function (binding, source) {
+            const expression = sourceExpression.expression;
+            sourceExpression.expression = new aureliaBinding.ValueConverter(expression, "rt", sourceExpression.args, [expression, ...sourceExpression.args]);
+        }
+        unbind(binding, source) {
             // unbind the signal behavior
             this.signalBindingBehavior.unbind(binding, source);
-        };
-        RtBindingBehavior = __decorate([
-            aureliaBinding.bindingBehavior("rt")
-        ], RtBindingBehavior);
-        return RtBindingBehavior;
-    }());
+        }
+    };
+    exports.RtBindingBehavior = __decorate([
+        aureliaBinding.bindingBehavior("rt")
+    ], exports.RtBindingBehavior);
 
-    var translations = {
+    const translations = {
         ar: {
             translation: {
                 now: 'الآن',
@@ -1152,33 +1106,32 @@
     };
     // tslint:enable
 
-    var RelativeTime = /** @class */ (function () {
-        function RelativeTime(service, ea) {
-            var _this = this;
+    class RelativeTime {
+        constructor(service, ea) {
             this.service = service;
             this.ea = ea;
-            this.service.i18nextReady().then(function () {
-                _this.setup();
+            this.service.i18nextReady().then(() => {
+                this.setup();
             });
-            this.ea.subscribe(I18N_EA_SIGNAL, function (locales) {
-                _this.setup(locales);
+            this.ea.subscribe(I18N_EA_SIGNAL, (locales) => {
+                this.setup(locales);
             });
         }
-        RelativeTime.inject = function () { return [I18N, aureliaEventAggregator.EventAggregator]; };
-        RelativeTime.prototype.setup = function (locales) {
-            var trans = translations;
-            var fallbackLng = this.service.i18next.fallbackLng;
-            var alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
+        static inject() { return [I18N, aureliaEventAggregator.EventAggregator]; }
+        setup(locales) {
+            const trans = translations;
+            const fallbackLng = this.service.i18next.fallbackLng;
+            let alternateFb = fallbackLng || this.service.i18next.options.fallbackLng;
             if (Array.isArray(alternateFb) && alternateFb.length > 0) {
                 alternateFb = alternateFb[0];
             }
-            var key = ((locales && locales.newValue)
+            const key = ((locales && locales.newValue)
                 ? locales.newValue
                 : this.service.getLocale()) || alternateFb;
-            var index = 0;
+            let index = 0;
             // tslint:disable-next-line:no-conditional-assignment
             if ((index = key.indexOf("-")) >= 0) {
-                var baseLocale = key.substring(0, index);
+                const baseLocale = key.substring(0, index);
                 if (trans[baseLocale]) {
                     this.addTranslationResource(baseLocale, trans[baseLocale].translation);
                 }
@@ -1189,22 +1142,22 @@
             if (trans[fallbackLng]) {
                 this.addTranslationResource(key, trans[fallbackLng].translation);
             }
-        };
-        RelativeTime.prototype.addTranslationResource = function (key, translation) {
-            var options = this.service.i18next.options;
+        }
+        addTranslationResource(key, translation) {
+            const options = this.service.i18next.options;
             if (options.interpolation && (options.interpolation.prefix !== "__" || options.interpolation.suffix !== "__")) {
                 // tslint:disable-next-line:forin
-                for (var subkey in translation) {
+                for (const subkey in translation) {
                     translation[subkey] = translation[subkey]
-                        .replace("__count__", (options.interpolation.prefix || "{{") + "count" + (options.interpolation.suffix || "}}"));
+                        .replace("__count__", `${options.interpolation.prefix || "{{"}count${options.interpolation.suffix || "}}"}`);
                 }
             }
             this.service.i18next.addResources(key, options.defaultNS || "translation", translation);
-        };
-        RelativeTime.prototype.getRelativeTime = function (time) {
-            var now = new Date();
-            var diff = now.getTime() - time.getTime();
-            var timeDiff = this.getTimeDiffDescription(diff, "year", 31104000000);
+        }
+        getRelativeTime(time) {
+            const now = new Date();
+            const diff = now.getTime() - time.getTime();
+            let timeDiff = this.getTimeDiffDescription(diff, "year", 31104000000);
             if (!timeDiff) {
                 timeDiff = this.getTimeDiffDescription(diff, "month", 2592000000);
                 if (!timeDiff) {
@@ -1224,27 +1177,26 @@
                 }
             }
             return timeDiff;
-        };
-        RelativeTime.prototype.getTimeDiffDescription = function (diff, unit, timeDivisor) {
-            var unitAmount = parseInt((diff / timeDivisor).toFixed(0), 10);
+        }
+        getTimeDiffDescription(diff, unit, timeDivisor) {
+            const unitAmount = parseInt((diff / timeDivisor).toFixed(0), 10);
             if (unitAmount > 0) {
                 return this.service.tr(unit, { count: unitAmount, context: "ago" });
             }
             else if (unitAmount < 0) {
-                var abs = Math.abs(unitAmount);
+                const abs = Math.abs(unitAmount);
                 return this.service.tr(unit, { count: abs, context: "in" });
             }
             return null;
-        };
-        return RelativeTime;
-    }());
+        }
+    }
 
-    var RtValueConverter = /** @class */ (function () {
-        function RtValueConverter(service) {
+    exports.RtValueConverter = class RtValueConverter {
+        constructor(service) {
             this.service = service;
         }
-        RtValueConverter.inject = function () { return [RelativeTime]; };
-        RtValueConverter.prototype.toView = function (value) {
+        static inject() { return [RelativeTime]; }
+        toView(value) {
             if (value === null
                 || typeof value === "undefined"
                 || (typeof value === "string" && value.trim() === "")) {
@@ -1254,27 +1206,24 @@
                 value = new Date(value);
             }
             return this.service.getRelativeTime(value);
-        };
-        RtValueConverter = __decorate([
-            aureliaBinding.valueConverter("rt")
-        ], RtValueConverter);
-        return RtValueConverter;
-    }());
+        }
+    };
+    exports.RtValueConverter = __decorate([
+        aureliaBinding.valueConverter("rt")
+    ], exports.RtValueConverter);
 
-    var Backend = /** @class */ (function () {
-        function Backend(services, options) {
-            if (options === void 0) { options = {}; }
+    class Backend {
+        constructor(services, options = {}) {
             this.services = services;
             this.options = options;
             this.type = "backend";
             this.init(services, options);
         }
-        Backend.with = function (loader) {
+        static with(loader) {
             this.loader = loader;
             return this;
-        };
-        Backend.prototype.init = function (services, options) {
-            if (options === void 0) { options = {}; }
+        }
+        init(services, options = {}) {
             this.services = services;
             this.options = Object.assign({}, {
                 loadPath: "/locales/{{lng}}/{{ns}}.json",
@@ -1282,110 +1231,89 @@
                 allowMultiLoading: false,
                 parse: JSON.parse
             }, options);
-        };
-        Backend.prototype.readMulti = function (languages, namespaces, callback) {
-            var loadPath = this.options.loadPath;
+        }
+        readMulti(languages, namespaces, callback) {
+            let loadPath = this.options.loadPath;
             if (typeof this.options.loadPath === "function") {
                 loadPath = this.options.loadPath(languages, namespaces);
             }
-            var url = this.services
+            const url = this.services
                 .interpolator
                 .interpolate(loadPath, { lng: languages.join("+"), ns: namespaces.join("+") });
             this.loadUrl(url, callback);
-        };
-        Backend.prototype.read = function (language, namespace, callback) {
-            var loadPath = this.options.loadPath;
+        }
+        read(language, namespace, callback) {
+            let loadPath = this.options.loadPath;
             if (typeof this.options.loadPath === "function") {
                 loadPath = this.options.loadPath([language], [namespace]);
             }
-            var url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
+            const url = this.services.interpolator.interpolate(loadPath, { lng: language, ns: namespace });
             this.loadUrl(url, callback);
-        };
-        Backend.prototype.loadUrl = function (url, callback) {
-            return __awaiter(this, void 0, void 0, function () {
-                var response, ret, err, _a;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
-                        case 0:
-                            _b.trys.push([0, 2, , 3]);
-                            return [4 /*yield*/, Backend.loader.loadText(url)];
-                        case 1:
-                            response = _b.sent();
-                            ret = void 0;
-                            err = void 0;
-                            try {
-                                ret = (response instanceof Object) ? response : this.options.parse(response, url);
-                            }
-                            catch (e) {
-                                err = "failed parsing " + url + " to json";
-                            }
-                            if (err) {
-                                return [2 /*return*/, callback(err, false)];
-                            }
-                            callback(null, ret);
-                            return [3 /*break*/, 3];
-                        case 2:
-                            _a = _b.sent();
-                            callback("failed loading " + url, false /* no retry */);
-                            return [3 /*break*/, 3];
-                        case 3: return [2 /*return*/];
+        }
+        loadUrl(url, callback) {
+            return __awaiter(this, void 0, void 0, function* () {
+                try {
+                    const response = yield Backend.loader.loadText(url);
+                    let ret;
+                    let err;
+                    try {
+                        ret = (response instanceof Object) ? response : this.options.parse(response, url);
                     }
-                });
+                    catch (e) {
+                        err = "failed parsing " + url + " to json";
+                    }
+                    if (err) {
+                        return callback(err, false);
+                    }
+                    callback(null, ret);
+                }
+                catch (_a) {
+                    callback("failed loading " + url, false /* no retry */);
+                }
             });
-        };
+        }
         // tslint:disable-next-line:variable-name
-        Backend.prototype.create = function (_languages, _namespace, _key, _fallbackValue) {
+        create(_languages, _namespace, _key, _fallbackValue) {
             // not supported
-        };
-        Backend.type = "backend";
-        return Backend;
-    }());
+        }
+    }
+    Backend.type = "backend";
 
     function configure(frameworkConfig, cb) {
         if (typeof cb !== "function") {
-            var errorMsg = "You need to provide a callback method to properly configure the library";
+            const errorMsg = "You need to provide a callback method to properly configure the library";
             throw errorMsg;
         }
-        var instance = frameworkConfig.container.get(I18N);
-        var ret = cb(instance);
+        const instance = frameworkConfig.container.get(I18N);
+        const ret = cb(instance);
         frameworkConfig.globalResources([
-            TValueConverter,
-            TBindingBehavior,
-            TCustomAttribute,
-            TParamsCustomAttribute,
-            NfValueConverter,
-            NfBindingBehavior,
-            DfValueConverter,
-            DfBindingBehavior,
-            RtValueConverter,
-            RtBindingBehavior
+            exports.TValueConverter,
+            exports.TBindingBehavior,
+            exports.TCustomAttribute,
+            exports.TParamsCustomAttribute,
+            exports.NfValueConverter,
+            exports.NfBindingBehavior,
+            exports.DfValueConverter,
+            exports.DfBindingBehavior,
+            exports.RtValueConverter,
+            exports.RtBindingBehavior
         ]);
-        frameworkConfig.postTask(function () {
-            var resources = frameworkConfig.container.get(aureliaTemplating.ViewResources);
-            var htmlBehaviorResource = resources.getAttribute("t");
-            var htmlParamsResource = resources.getAttribute("t-params");
-            var attributes = instance.i18next.options.attributes;
+        frameworkConfig.postTask(() => {
+            const resources = frameworkConfig.container.get(aureliaTemplating.ViewResources);
+            const htmlBehaviorResource = resources.getAttribute("t");
+            const htmlParamsResource = resources.getAttribute("t-params");
+            let attributes = instance.i18next.options.attributes;
             // Register default attributes if none provided
             if (!attributes) {
                 attributes = ["t", "i18n"];
             }
-            attributes.forEach(function (alias) { return resources.registerAttribute(alias, htmlBehaviorResource, "t"); });
-            attributes.forEach(function (alias) { return resources.registerAttribute(alias + "-params", htmlParamsResource, "t-params"); });
+            attributes.forEach((alias) => resources.registerAttribute(alias, htmlBehaviorResource, "t"));
+            attributes.forEach((alias) => resources.registerAttribute(alias + "-params", htmlParamsResource, "t-params"));
         });
         return ret;
     }
 
     exports.configure = configure;
-    exports.DfValueConverter = DfValueConverter;
-    exports.DfBindingBehavior = DfBindingBehavior;
-    exports.NfValueConverter = NfValueConverter;
-    exports.NfBindingBehavior = NfBindingBehavior;
-    exports.RtValueConverter = RtValueConverter;
-    exports.RtBindingBehavior = RtBindingBehavior;
-    exports.TValueConverter = TValueConverter;
-    exports.TBindingBehavior = TBindingBehavior;
-    exports.TCustomAttribute = TCustomAttribute;
-    exports.TParamsCustomAttribute = TParamsCustomAttribute;
     exports.I18N_EA_SIGNAL = I18N_EA_SIGNAL;
     exports.I18N = I18N;
     exports.RelativeTime = RelativeTime;

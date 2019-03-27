@@ -1,3 +1,14 @@
+<a name="3.0.0-beta.6"></a>
+# [3.0.0-beta.6](https://github.com/aurelia/i18n/compare/3.0.0-beta.5...3.0.0-beta.6) (2019-03-27)
+
+
+### Bug Fixes
+
+* **build:** adjust umd build for IE11 compat, add umd-es2015 ([0bd542a](https://github.com/aurelia/i18n/commit/0bd542a))
+* **dist:** adjust unpkg field ([9974b62](https://github.com/aurelia/i18n/commit/9974b62))
+
+
+
 <a name="3.0.0-beta.5"></a>
 # [3.0.0-beta.5](https://github.com/aurelia/i18n/compare/3.0.0-beta.4...3.0.0-beta.5) (2019-01-19)
 

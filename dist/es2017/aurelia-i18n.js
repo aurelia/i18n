@@ -22,7 +22,6 @@ class I18N {
     async setup(options) {
         const defaultOptions = {
             skipTranslationOnMissingKey: false,
-            compatibilityAPI: "v1",
             compatibilityJSON: "v1",
             lng: "en",
             attributes: ["t", "i18n"],
@@ -30,7 +29,7 @@ class I18N {
             debug: false
         };
         this.i18nextDeferred = new Promise((resolve, reject) => {
-            this.i18next = this.i18next.init(options || defaultOptions, (err) => {
+            this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
                 if (err) {
                     reject(err);
                 }

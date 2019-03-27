@@ -1,9 +1,9 @@
-import i18next from 'i18next';
 import { Container } from 'aurelia-dependency-injection';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { FrameworkConfiguration } from 'aurelia-framework';
 import { Loader } from 'aurelia-loader';
 import { BindingSignaler, SignalBindingBehavior } from 'aurelia-templating-resources';
+import i18next from 'i18next';
 
 export interface AureliaEnhancedOptions extends i18next.InitOptions {
 	attributes?: string[];
@@ -28,12 +28,12 @@ export declare class I18N {
 	constructor(ea: EventAggregator, signaler: BindingSignaler);
 	setup(options?: AureliaEnhancedOptions & i18next.InitOptions): Promise<AureliaEnhancedI18Next>;
 	i18nextReady(): Promise<AureliaEnhancedI18Next>;
-	setLocale(locale: string): Promise<i18next.TranslationFunction>;
+	setLocale(locale: string): Promise<i18next.TFunction>;
 	getLocale(): string;
 	nf(options?: Intl.NumberFormatOptions, locales?: string | string[]): Intl.NumberFormat;
 	uf(numberLike: string, locale?: string): number;
 	df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]): Intl.DateTimeFormat;
-	tr(key: string | string[], options?: i18next.TranslationOptions<object>): any;
+	tr(key: string | string[], options?: i18next.TOptions<object>): string;
 	registerGlobalVariable(key: string, value: any): void;
 	unregisterGlobalVariable(key: string): void;
 	/**
@@ -59,8 +59,8 @@ export declare class RelativeTime {
 		newValue: string;
 	}): void;
 	addTranslationResource(key: string, translation: any): void;
-	getRelativeTime(time: Date): any;
-	getTimeDiffDescription(diff: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second", timeDivisor: number): any;
+	getRelativeTime(time: Date): string;
+	getTimeDiffDescription(diff: number, unit: "year" | "month" | "day" | "hour" | "minute" | "second", timeDivisor: number): string | null;
 }
 export declare type LoadPathOption = string | ((lngs: string[], namespaces: string[]) => string);
 export declare type LoadCallback = (error: any, result: string | false | undefined) => void;
@@ -170,6 +170,6 @@ export declare class TValueConverter {
 	private service;
 	static inject(): (typeof I18N)[];
 	constructor(service: I18N);
-	toView(value: any, options?: i18next.TranslationOptions<object>): any;
+	toView(value: any, options?: i18next.TOptions<object>): string;
 }
 export declare function configure(frameworkConfig: FrameworkConfiguration, cb: (instance: I18N) => AureliaEnhancedI18Next): AureliaEnhancedI18Next;
