@@ -85,7 +85,7 @@ define('aurelia-i18n', ['exports', 'i18next', 'aurelia-logging', 'aurelia-depend
                         debug: false
                     };
                     this.i18nextDeferred = new Promise(function (resolve, reject) {
-                        _this.i18next = _this.i18next.createInstance(options || defaultOptions, function (err) {
+                        _this.i18next.init(options || defaultOptions, function (err) {
                             if (err) {
                                 reject(err);
                             }

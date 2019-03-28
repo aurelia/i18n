@@ -98,7 +98,7 @@ var I18N = /** @class */ (function () {
                     debug: false
                 };
                 this.i18nextDeferred = new Promise(function (resolve, reject) {
-                    _this.i18next = _this.i18next.createInstance(options || defaultOptions, function (err) {
+                    _this.i18next.init(options || defaultOptions, function (err) {
                         if (err) {
                             reject(err);
                         }

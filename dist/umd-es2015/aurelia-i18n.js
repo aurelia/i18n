@@ -58,7 +58,7 @@
                     debug: false
                 };
                 this.i18nextDeferred = new Promise((resolve, reject) => {
-                    this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
+                    this.i18next.init(options || defaultOptions, (err) => {
                         if (err) {
                             reject(err);
                         }
