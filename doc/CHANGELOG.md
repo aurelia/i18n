@@ -1,3 +1,13 @@
+<a name="3.0.0-beta.7"></a>
+# [3.0.0-beta.7](https://github.com/aurelia/i18n/compare/3.0.0-beta.6...3.0.0-beta.7) (2019-03-28)
+
+
+### Bug Fixes
+
+* **setup:** adjust i18next init; skip 404 errors ([d2256b9](https://github.com/aurelia/i18n/commit/d2256b9))
+
+
+
 <a name="3.0.0-beta.6"></a>
 # [3.0.0-beta.6](https://github.com/aurelia/i18n/compare/3.0.0-beta.5...3.0.0-beta.6) (2019-03-27)
 

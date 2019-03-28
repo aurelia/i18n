@@ -58,8 +58,8 @@
                     debug: false
                 };
                 this.i18nextDeferred = new Promise((resolve, reject) => {
-                    this.i18next = this.i18next.createInstance(options || defaultOptions, (err) => {
-                        if (err) {
+                    this.i18next.init(options || defaultOptions, (err) => {
+                        if (err && !Array.isArray(err)) {
                             reject(err);
                         }
                         // make sure attributes is an array in case a string was provided
