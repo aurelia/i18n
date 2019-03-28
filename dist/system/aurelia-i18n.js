@@ -117,7 +117,7 @@ System.register(['i18next', 'aurelia-logging', 'aurelia-dependency-injection', '
                             };
                             this.i18nextDeferred = new Promise(function (resolve, reject) {
                                 _this.i18next.init(options || defaultOptions, function (err) {
-                                    if (err) {
+                                    if (err && !Array.isArray(err)) {
                                         reject(err);
                                     }
                                     // make sure attributes is an array in case a string was provided

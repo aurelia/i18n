@@ -62,7 +62,7 @@ class I18N {
             };
             this.i18nextDeferred = new Promise((resolve, reject) => {
                 this.i18next.init(options || defaultOptions, (err) => {
-                    if (err) {
+                    if (err && !Array.isArray(err)) {
                         reject(err);
                     }
                     // make sure attributes is an array in case a string was provided
