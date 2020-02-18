@@ -26,4 +26,38 @@ describe("t-attribute", () => {
 
     component.dispose();
   });
+
+  it("should convert bound integers to strings", async () => {
+    const expectedValue = "";
+    const component = StageComponent
+      .withResources("mocks/rt-vm")
+      .inView(`<p t.bind="undef" id="undefined">
+        Undefined value
+      </p>
+      <p t.bind="nullul" id="null">
+        Null value
+      </p>
+      <p t.bind="zero" id="zero">
+        Zero value
+      </p>`)
+      .boundTo({
+        undef: undefined,
+        nullul: null,
+        zero: 0
+      });
+
+    bootstrapTestEnvironment(component, {
+      resources: {
+        en: { translation: { 1: expectedValue } }
+      }
+    });
+
+    await component.create(bootstrap);
+
+    expect(document.getElementById("undefined")!.innerHTML).toBe("");
+    expect(document.getElementById("null")!.innerHTML).toBe("");
+    expect(document.getElementById("zero")!.innerHTML).toBe("0");
+
+    component.dispose();
+  });
 });
