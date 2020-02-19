@@ -187,7 +187,7 @@ export class I18N {
 
   public updateValue(node: Element & { au: any }, value: string, params: any) {
     if (value === null || value === undefined) {
-      return;
+      value = "";
     }
 
     const keys = value.toString().split(";");
