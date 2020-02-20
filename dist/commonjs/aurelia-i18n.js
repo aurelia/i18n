@@ -218,7 +218,7 @@ var I18N = /** @class */ (function () {
     };
     I18N.prototype.updateValue = function (node, value, params) {
         if (value === null || value === undefined) {
-            return;
+            value = "";
         }
         var keys = value.toString().split(";");
         var i = keys.length;

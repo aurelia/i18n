@@ -1,3 +1,13 @@
+<a name="3.0.0"></a>
+# [3.0.0](https://github.com/aurelia/i18n/compare/3.0.0-beta.7...3.0.0) (2020-02-20)
+
+
+### Bug Fixes
+
+* **t-attribute:** undefined and null bound values ([#314](https://github.com/aurelia/i18n/issues/314)) ([2a61ee7](https://github.com/aurelia/i18n/commit/2a61ee7))
+
+
+
 <a name="3.0.0-beta.7"></a>
 # [3.0.0-beta.7](https://github.com/aurelia/i18n/compare/3.0.0-beta.6...3.0.0-beta.7) (2019-03-28)
 

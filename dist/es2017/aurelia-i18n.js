@@ -146,7 +146,7 @@ class I18N {
     }
     updateValue(node, value, params) {
         if (value === null || value === undefined) {
-            return;
+            value = "";
         }
         const keys = value.toString().split(";");
         let i = keys.length;
