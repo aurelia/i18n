@@ -383,7 +383,7 @@ export const translations: DefaultTranslations = {
   },
   pl: {
     translation: {
-      now: 'neste exato momento',
+      now: 'teraz',
       second_ago: '__count__ s temu',
       second_ago_plural: '__count__ s temu',
       second_in: 'za __count__ s',
