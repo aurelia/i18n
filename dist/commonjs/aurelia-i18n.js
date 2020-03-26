@@ -876,6 +876,35 @@ var translations = {
             year_in_plural: 'あと __count__ 年'
         }
     },
+    lt: {
+        translation: {
+            now: 'šiuo metu',
+            second_ago: 'prieš __count__ sekundę',
+            second_ago_plural: 'prieš __count__ sekundes',
+            second_in: 'po __count__ sekundės',
+            second_in_plural: 'po __count__ sekundžių',
+            minute_ago: 'prieš __count__ minutę',
+            minute_ago_plural: 'prieš __count__ minutes',
+            minute_in: 'po __count__ minutės',
+            minute_in_plural: 'po __count__ minučių',
+            hour_ago: 'prieš __count__ valandą',
+            hour_ago_plural: 'prieš __count__ valandas',
+            hour_in: 'po __count__ valandos',
+            hour_in_plural: 'po __count__ valandų',
+            day_ago: 'prieš __count__ dieną',
+            day_ago_plural: 'prieš __count__ dienas',
+            day_in: 'po __count__ dienos',
+            day_in_plural: 'po __count__ dienų',
+            month_ago: 'prieš __count__ mėnesį',
+            month_ago_plural: 'prieš __count__ mėnesius',
+            month_in: 'po __count__ mėnesio',
+            month_in_plural: 'po __count__ mėnesių',
+            year_ago: 'prieš __count__ metus',
+            year_ago_plural: 'prieš __count__ metus',
+            year_in: 'po __count__ metų',
+            year_in_plural: 'po __count__ metų'
+        }
+    },
     nl: {
         translation: {
             now: 'zonet',
@@ -961,6 +990,35 @@ var translations = {
             year_ago_plural: '__count__ flere å siden',
             year_in: 'I løpet av ett år __count__ år',
             year_in_plural: 'på flere __count__ år'
+        }
+    },
+    pl: {
+        translation: {
+            now: 'teraz',
+            second_ago: '__count__ s temu',
+            second_ago_plural: '__count__ s temu',
+            second_in: 'za __count__ s',
+            second_in_plural: 'za __count__ s',
+            minute_ago: '__count__ min temu',
+            minute_ago_plural: '__count__ min temu',
+            minute_in: 'za __count__ min',
+            minute_in_plural: 'za __count__ min',
+            hour_ago: '__count__ h temu',
+            hour_ago_plural: '__count__ h temu',
+            hour_in: 'za __count__ h',
+            hour_in_plural: 'za __count__ h',
+            day_ago: '__count__ dzień temu',
+            day_ago_plural: '__count__ dias atrás',
+            day_in: 'za __count__ dni',
+            day_in_plural: 'za __count__ dni',
+            month_ago: '__count__ miesiąc temu',
+            month_ago_plural: '__count__ mies. temu',
+            month_in: 'za __count__ miesiąc',
+            month_in_plural: 'za __count__ mies.',
+            year_ago: '__count__ rok temu',
+            year_ago_plural: '__count__ lata/lat temu',
+            year_in: 'za __count__ rok',
+            year_in_plural: '__count__ lata/lat'
         }
     },
     pt: {

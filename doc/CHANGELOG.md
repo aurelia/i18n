@@ -1,3 +1,13 @@
+<a name="3.1.0"></a>
+# [3.1.0](https://github.com/aurelia/i18n/compare/3.0.0...3.1.0) (2020-03-26)
+
+
+### Features
+
+* **rt:** translations for lt and pl ([#317](https://github.com/aurelia/i18n/issues/317)) ([4a516ff](https://github.com/aurelia/i18n/commit/4a516ff))
+
+
+
 <a name="3.0.0"></a>
 # [3.0.0](https://github.com/aurelia/i18n/compare/3.0.0-beta.7...3.0.0) (2020-02-20)
 
