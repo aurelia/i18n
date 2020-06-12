@@ -1,3 +1,10 @@
+<a name="3.1.1"></a>
+## [3.1.1](https://github.com/aurelia/i18n/compare/3.1.0...3.1.1) (2020-06-12)
+
+### Bug Fixes
+
+* typo in Japanese translation
+
 <a name="3.1.0"></a>
 # [3.1.0](https://github.com/aurelia/i18n/compare/3.0.0...3.1.0) (2020-03-26)
 
