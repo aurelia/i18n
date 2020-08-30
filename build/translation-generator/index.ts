@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as process from "process";
-import { generateTranslations } from "./generate-translations";
+import { generateTranslations, TranslationData } from "./generate-translations";
 
 /**
  * Generates translations file by using Intl.RelativeTimeFormat with node full-icu
@@ -14,18 +14,33 @@ if (!outFile || !fs.existsSync(path.dirname(outFile))) {
   throw new Error("Invalid or missing output file argument");
 }
 
-const translations = generateTranslations(require("./supported-locales"));
-const transJs = JSON.stringify(translations, null, 2)
-  .replace(/"([^"-]+)":/g, (_, g) => `${g}:`)
-  .replace(/"/g, "'");
+function toTsCode(data: TranslationData): string {
+  const transJs = JSON.stringify(data, null, 2)
+    .replace(/"([^"-]+)":/g, (_, g) => `${g}:`)
+    .replace(/"/g, "'");
 
-fs.writeFileSync(
-  outFile,
-  `// tslint:disable
+  return `// tslint:disable
 export type DefaultTranslations = {
   [key: string]: string | DefaultTranslations
 }
 
 export const translations: DefaultTranslations = ${transJs};
 // tslint:enable
-`);
+`;
+}
+
+// Get list of locales to generate translations for.
+const locales = require("./supported-locales");
+
+// Generate translations for specified list of locales, use "__" as count interpolation prefix/suffix:
+const translations = generateTranslations(locales, "__", "__");
+
+// Convert to TS file similar to "src/defaultTranslations/relative.time.ts":
+const content = toTsCode(translations);
+
+// Alternatively convert to JSON
+//const content = JSON.stringify(translations, null, 2);
+
+console.log("[translationgen] Writing generated output file...");
+fs.writeFileSync(outFile, content);
+console.log("[translationgen] Done!");

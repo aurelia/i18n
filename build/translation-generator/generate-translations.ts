@@ -111,7 +111,7 @@ function getRuntimeSupportedLocales(list: string[]): string[] {
   return result;
 }
 
-function buildCompleteTranslations(locales: string[]): TranslationData {
+function buildCompleteTranslations(locales: string[], interpolationPrefix: string, interpolationSuffix: string): TranslationData {
 
   const allTranslations: TranslationData = {};
 
@@ -128,7 +128,7 @@ function buildCompleteTranslations(locales: string[]): TranslationData {
         if (!["literal", "integer"].includes(part.type)) {
           throw new Error(`Unexpected part! locale ${locale}, key: ${key}, type: ${part.type}`);
         }
-        return part.type === "integer" ? "__count__" : part.value;
+        return part.type === "integer" ? `${interpolationPrefix}count${interpolationSuffix}` : part.value;
       }).join("");
 
       translation[key] = val;
@@ -158,29 +158,36 @@ function areEqual(tr1: Translation, tr2: Translation): boolean {
   return result;
 }
 
-function removeRedundantTranslations(trData: TranslationData): void {
+function removeRedundantSubLocaleTranslations(trData: TranslationData): string[] {
   const subLocales = Object.keys(trData).filter(k => k.includes("-"));
+  const redundantSubLocales: string[] = [];
   for (const sl of subLocales) {
     const mainLocale = sl.split("-")[0];
     if (trData[mainLocale] && areEqual(trData[mainLocale].translation, trData[sl].translation)) {
+      redundantSubLocales.push(sl);
       delete trData[sl];
     }
   }
+  return redundantSubLocales;
 }
 
-export function generateTranslations(locales: string[]): TranslationData {
-  console.log(locales);
+export function generateTranslations(
+  locales: string[],
+  interpolationPrefix: string = "__",
+  interpolationSuffix: string = "__"
+): TranslationData {
+
   const runtimeSupportedLocales = getRuntimeSupportedLocales(locales);
 
   // Getting a list of the unsupported locales for debugging
-  const unsupportedLocales = locales.filter(l => !runtimeSupportedLocales.includes(l));
-  console.log("Ignoring following unsupported locales:", unsupportedLocales);
+  const runtimeNonSupportedLocales = locales.filter(l => !runtimeSupportedLocales.includes(l));
+  console.log("[translationgen] Ignoring following runtime unsupported locales:", runtimeNonSupportedLocales);
 
-  console.log("Building translations...");
-  const translations = buildCompleteTranslations(runtimeSupportedLocales);
+  console.log("[translationgen] Generating translations for the following runtime supported locales:", runtimeSupportedLocales);
+  const translations = buildCompleteTranslations(runtimeSupportedLocales, interpolationPrefix, interpolationSuffix);
 
-  console.log("Removing redundant translations...");
-  removeRedundantTranslations(translations);
+  const redundant = removeRedundantSubLocaleTranslations(translations);
+  console.log("[translationgen] Removing the following redundant (identical) sub-locale translations:", redundant);
 
   return translations;
 }
