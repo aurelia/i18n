@@ -35,7 +35,7 @@ export const translations: DefaultTranslations = {
   },
   da: {
     translation: {
-      now: 'lige nu',
+      now: 'nu',
       second_ago: 'for __count__ sekund siden',
       second_ago_plural: 'for __count__ sekunder siden',
       second_in: 'om __count__ sekund',
@@ -64,7 +64,7 @@ export const translations: DefaultTranslations = {
   },
   de: {
     translation: {
-      now: 'jetzt gerade',
+      now: 'jetzt',
       second_ago: 'vor __count__ Sekunde',
       second_ago_plural: 'vor __count__ Sekunden',
       second_in: 'in __count__ Sekunde',
@@ -93,7 +93,7 @@ export const translations: DefaultTranslations = {
   },
   en: {
     translation: {
-      now: 'just now',
+      now: 'now',
       second_ago: '__count__ second ago',
       second_ago_plural: '__count__ seconds ago',
       second_in: 'in __count__ second',
@@ -122,7 +122,7 @@ export const translations: DefaultTranslations = {
   },
   es: {
     translation: {
-      now: 'ahora mismo',
+      now: 'ahora',
       second_ago: 'hace __count__ segundo',
       second_ago_plural: 'hace __count__ segundos',
       second_in: 'dentro de __count__ segundo',
@@ -151,7 +151,7 @@ export const translations: DefaultTranslations = {
   },
   fi: {
     translation: {
-      now: 'Nyt',
+      now: 'nyt',
       second_ago: '__count__ sekunti sitten',
       second_ago_plural: '__count__ sekuntia sitten',
       second_in: '__count__ sekunnin päästä',
@@ -209,7 +209,7 @@ export const translations: DefaultTranslations = {
   },
   it: {
     translation: {
-      now: 'adesso',
+      now: 'ora',
       second_ago: '__count__ secondo fa',
       second_ago_plural: '__count__ secondi fa',
       second_in: 'tra __count__ secondo',
@@ -238,7 +238,7 @@ export const translations: DefaultTranslations = {
   },
   ja: {
     translation: {
-      now: 'たった今',
+      now: '今',
       second_ago: '__count__ 秒前',
       second_ago_plural: '__count__ 秒前',
       second_in: '__count__ 秒後',
@@ -267,7 +267,7 @@ export const translations: DefaultTranslations = {
   },
   lt: {
     translation: {
-      now: 'šiuo metu',
+      now: 'dabar',
       second_ago: 'prieš __count__ sekundę',
       second_ago_plural: 'prieš __count__ sekundes',
       second_in: 'po __count__ sekundės',
@@ -296,7 +296,7 @@ export const translations: DefaultTranslations = {
   },
   nl: {
     translation: {
-      now: 'zonet',
+      now: 'nu',
       second_ago: '__count__ seconde geleden',
       second_ago_plural: '__count__ seconden geleden',
       second_in: 'over __count__ seconde',
@@ -325,7 +325,7 @@ export const translations: DefaultTranslations = {
   },
   nn: {
     translation: {
-      now: 'akkurat no',
+      now: 'no',
       second_ago: 'for __count__ sekund sidan',
       second_ago_plural: 'for __count__ sekund sidan',
       second_in: 'om __count__ sekund',
@@ -354,7 +354,7 @@ export const translations: DefaultTranslations = {
   },
   nb: {
     translation: {
-      now: 'akkurat nå',
+      now: 'nå',
       second_ago: 'for __count__ sekund siden',
       second_ago_plural: 'for __count__ sekunder siden',
       second_in: 'om __count__ sekund',
@@ -412,7 +412,7 @@ export const translations: DefaultTranslations = {
   },
   pt: {
     translation: {
-      now: 'neste exato momento',
+      now: 'agora',
       second_ago: 'há __count__ segundo',
       second_ago_plural: 'há __count__ segundos',
       second_in: 'em __count__ segundo',
@@ -441,7 +441,7 @@ export const translations: DefaultTranslations = {
   },
   sv: {
     translation: {
-      now: 'just nu',
+      now: 'nu',
       second_ago: 'för __count__ sekund sedan',
       second_ago_plural: 'för __count__ sekunder sedan',
       second_in: 'om __count__ sekund',
@@ -470,7 +470,7 @@ export const translations: DefaultTranslations = {
   },
   th: {
     translation: {
-      now: 'เมื่อกี้',
+      now: 'ขณะนี้',
       second_ago: '__count__ วินาทีที่ผ่านมา',
       second_ago_plural: '__count__ วินาทีที่ผ่านมา',
       second_in: 'ในอีก __count__ วินาที',
@@ -499,7 +499,7 @@ export const translations: DefaultTranslations = {
   },
   zh: {
     translation: {
-      now: '刚才',
+      now: '现在',
       second_ago: '__count__秒钟前',
       second_ago_plural: '__count__秒钟前',
       second_in: '__count__秒钟后',
@@ -526,38 +526,9 @@ export const translations: DefaultTranslations = {
       year_in_plural: '__count__年后'
     }
   },
-  'zh-CN': {
-    translation: {
-      now: '刚才',
-      second_ago: '__count__ 秒钟前',
-      second_ago_plural: '__count__ 秒钟前',
-      second_in: '__count__ 秒内',
-      second_in_plural: '__count__ 秒内',
-      minute_ago: '__count__ 分钟前',
-      minute_ago_plural: '__count__ 分钟前',
-      minute_in: '__count__ 分钟内',
-      minute_in_plural: '__count__ 分钟内',
-      hour_ago: '__count__ 小时前',
-      hour_ago_plural: '__count__ 小时前',
-      hour_in: '__count__ 小时内',
-      hour_in_plural: '__count__ 小时内',
-      day_ago: '__count__ 天前',
-      day_ago_plural: '__count__ 天前',
-      day_in: '__count__ 天内',
-      day_in_plural: '__count__ 天内',
-      month_ago: '__count__ 月前',
-      month_ago_plural: '__count__ 月前',
-      month_in: '__count__ 月内',
-      month_in_plural: '__count__ 月内',
-      year_ago: '__count__ 年前',
-      year_ago_plural: '__count__ 年前',
-      year_in: '__count__ 年内',
-      year_in_plural: '__count__ 年内'
-    }
-  },
   'zh-HK': {
     translation: {
-      now: '剛才',
+      now: '現在',
       second_ago: '__count__ 秒前',
       second_ago_plural: '__count__ 秒前',
       second_in: '__count__ 秒後',

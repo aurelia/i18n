@@ -41,14 +41,14 @@ describe("testing relative time support", () => {
     const { sut } = await arrange({ lng: undefined, fallbackLng: "en" });
     const expectedDate = new Date();
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("just now");
+    expect(sut.getRelativeTime(expectedDate)).toBe("now");
   });
 
   it("should provide now unit", async () => {
     const { sut } = await arrange();
     const expectedDate = new Date();
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("just now");
+    expect(sut.getRelativeTime(expectedDate)).toBe("now");
   });
 
   describe("ago tests", () => {

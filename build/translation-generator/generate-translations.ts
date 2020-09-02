@@ -69,6 +69,7 @@ export interface TranslationTemplate<T> extends Record<string, T> {
 export type Translation = TranslationTemplate<string>;
 
 const template: TranslationTemplate<[number, Intl.RelativeTimeUnit]> = {
+  now: [0, "second"],
   second_ago: [-1, "second"],
   second_ago_plural: [-53, "second"],
   second_in: [1, "second"],
@@ -118,11 +119,13 @@ function buildCompleteTranslations(locales: string[], interpolationPrefix: strin
   for (const locale of locales) {
     const translation: Partial<Translation> = {};
 
-    const relTime = new Intl.RelativeTimeFormat(locale, { numeric: "always", style: "long" });
+    const numericRelTime = new Intl.RelativeTimeFormat(locale, { numeric: "always", style: "long" });
+    const autoNumericRelTime = new Intl.RelativeTimeFormat(locale, { numeric: "auto", style: "long" });
 
     Object.keys(template).forEach(key => {
       const params = template[key];
-      const parts = relTime.formatToParts(...params);
+      const rt = params[0] === 0 ? autoNumericRelTime : numericRelTime;
+      const parts = rt.formatToParts(...params);
 
       const val = parts.map(part => {
         if (!["literal", "integer"].includes(part.type)) {
