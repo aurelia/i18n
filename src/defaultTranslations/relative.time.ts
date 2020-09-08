@@ -553,35 +553,35 @@ export const translations: DefaultTranslations = {
       year_ago_plural: '__count__ 年前',
       year_in: '__count__ 年後',
       year_in_plural: '__count__ 年後'
-    },
-    'zh-TW': {
-      translation: {
-        now: '剛才',
-        second_ago: '__count__ 秒鐘前',
-        second_ago_plural: '__count__ 秒鐘前',
-        second_in: '__count__ 秒內',
-        second_in_plural: '__count__ 秒內',
-        minute_ago: '__count__ 分鐘前',
-        minute_ago_plural: '__count__ 分鐘前',
-        minute_in: '__count__ 分鐘內',
-        minute_in_plural: '__count__ 分鐘內',
-        hour_ago: '__count__ 小時前',
-        hour_ago_plural: '__count__ 小時前',
-        hour_in: '__count__ 小時內',
-        hour_in_plural: '__count__ 小時內',
-        day_ago: '__count__ 天前',
-        day_ago_plural: '__count__ 天前',
-        day_in: '__count__ 天內',
-        day_in_plural: '__count__ 天內',
-        month_ago: '__count__ 月前',
-        month_ago_plural: '__count__ 月前',
-        month_in: '__count__ 月內',
-        month_in_plural: '__count__ 月內',
-        year_ago: '__count__ 年前',
-        year_ago_plural: '__count__ 年前',
-        year_in: '__count__ 年內',
-        year_in_plural: '__count__ 年內'
-      }
+    }
+  },
+  'zh-TW': {
+    translation: {
+      now: '剛才',
+      second_ago: '__count__ 秒鐘前',
+      second_ago_plural: '__count__ 秒鐘前',
+      second_in: '__count__ 秒內',
+      second_in_plural: '__count__ 秒內',
+      minute_ago: '__count__ 分鐘前',
+      minute_ago_plural: '__count__ 分鐘前',
+      minute_in: '__count__ 分鐘內',
+      minute_in_plural: '__count__ 分鐘內',
+      hour_ago: '__count__ 小時前',
+      hour_ago_plural: '__count__ 小時前',
+      hour_in: '__count__ 小時內',
+      hour_in_plural: '__count__ 小時內',
+      day_ago: '__count__ 天前',
+      day_ago_plural: '__count__ 天前',
+      day_in: '__count__ 天內',
+      day_in_plural: '__count__ 天內',
+      month_ago: '__count__ 月前',
+      month_ago_plural: '__count__ 月前',
+      month_in: '__count__ 月內',
+      month_in_plural: '__count__ 月內',
+      year_ago: '__count__ 年前',
+      year_ago_plural: '__count__ 年前',
+      year_in: '__count__ 年內',
+      year_in_plural: '__count__ 年內'
     }
   }
 };
