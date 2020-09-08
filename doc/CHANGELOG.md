@@ -1,3 +1,13 @@
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/aurelia/i18n/compare/3.1.1...3.1.2) (2020-09-08)
+
+
+### Bug Fixes
+
+* **rt:** wrong nesting for zh-TW ([3bd0792](https://github.com/aurelia/i18n/commit/3bd0792))
+
+
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/aurelia/i18n/compare/3.1.0...3.1.1) (2020-06-12)
 
