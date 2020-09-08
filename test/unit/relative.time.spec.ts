@@ -42,14 +42,14 @@ describe("testing relative time support", () => {
     const { sut } = await arrange({ lng: undefined, fallbackLng: "en" });
     const expectedDate = new Date();
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("just now");
+    expect(sut.getRelativeTime(expectedDate)).toBe("now");
   });
 
   it("should provide now unit", async () => {
     const { sut } = await arrange();
     const expectedDate = new Date();
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("just now");
+    expect(sut.getRelativeTime(expectedDate)).toBe("now");
   });
 
   describe("ago tests", () => {
@@ -158,7 +158,7 @@ describe("testing relative time support", () => {
     const expectedDate = new Date();
     expectedDate.setHours(new Date().getHours() + 2);
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("in 2 uren");
+    expect(sut.getRelativeTime(expectedDate)).toBe("over 2 uur");
   });
 
   it("should provide the translation for the full locale when available", async () => {
@@ -185,7 +185,7 @@ describe("testing relative time support", () => {
     const expectedDate = new Date();
     expectedDate.setMinutes(new Date().getMinutes() + 2);
 
-    expect(sut.getRelativeTime(expectedDate)).toBe("in 2 minuten");
+    expect(sut.getRelativeTime(expectedDate)).toBe("over 2 minuten");
   });
 
   it("should handle non-defined interpolation prefix and suffix", async () => {
