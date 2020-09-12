@@ -58,7 +58,7 @@ const configs: Record<IBuildTargetFormat, { input: string; outputs: rollup.Outpu
       { file: `dist/commonjs/${DIST_FILE_NAME}`, format: 'cjs' },
       { file: `dist/amd/${DIST_FILE_NAME}`, format: 'amd', amd: { id: LIB_NAME } },
       { file: `dist/native-modules/${DIST_FILE_NAME}`, format: 'esm' },
-      { 
+      {
         file: `dist/umd/${DIST_FILE_NAME}`,
         format: 'umd',
         name: 'au.i18n',
@@ -168,7 +168,7 @@ if (args.dev) {
 
 async function generateDts(): Promise<void> {
   console.log('\n==============\nGenerating dts bundle...\n==============');
-  return new Promise<void>((resolve, reject) => {
+  return new Promise<void>(resolve => {
     ChildProcess.exec(`npm run build:dts`, (err, stdout, stderr) => {
       if (err || stderr) {
         console.log('Generating dts error:');
@@ -177,24 +177,9 @@ async function generateDts(): Promise<void> {
         console.log('Generated dts bundle successfully');
         console.log(stdout);
       }
-      try {
-        fixI18nDefaultImport(path.resolve(DIST_DIR, TYPE_DIST_FILE_NAME));
-      } catch (ex) {
-        console.log('Failure fixing default import.');
-        reject(ex);
-      }
       resolve();
     });
   });
-}
-
-async function fixI18nDefaultImport(typeDefFileName: string) {
-  const importDeclaration = `import i18next from 'i18next';`;
-  const data = fs.readFileSync(typeDefFileName, 'utf-8')
-    .replace("import { i18next } from 'i18next';", importDeclaration);
-  const fd = fs.openSync(typeDefFileName, 'w+');
-
-  fs.writeSync(fd, Buffer.from(data, 'utf8'));
 }
 
 function copyToTargetProject(targetFormats: string[], targetProject: string) {
