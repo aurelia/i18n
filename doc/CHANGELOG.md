@@ -1,3 +1,8 @@
+<a name="3.1.3"></a>
+## [3.1.3](https://github.com/aurelia/i18n/compare/3.1.2...3.1.3) (2020-09-14)
+
+
+
 <a name="3.1.2"></a>
 ## [3.1.2](https://github.com/aurelia/i18n/compare/3.1.1...3.1.2) (2020-09-08)
 

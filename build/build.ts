@@ -5,7 +5,6 @@ import packageJson from '../package.json';
 import { IRollupWatchOptions } from './interfaces';
 import * as path from 'path';
 import ChildProcess from 'child_process';
-import * as fs from 'fs';
 
 const BASE_DIR = process.cwd();
 const DIST_DIR = path.join(BASE_DIR, 'dist');
