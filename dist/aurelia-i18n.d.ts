@@ -3,7 +3,7 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { FrameworkConfiguration } from 'aurelia-framework';
 import { Loader } from 'aurelia-loader';
 import { BindingSignaler, SignalBindingBehavior } from 'aurelia-templating-resources';
-import { i18next } from 'i18next';
+import i18next from 'i18next';
 
 export interface AureliaEnhancedOptions extends i18next.InitOptions {
 	attributes?: string[];
