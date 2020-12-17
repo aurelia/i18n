@@ -49,12 +49,17 @@ export class TCustomAttribute {
       };
     }
 
-    const p = this.params !== null ? this.params.value : undefined;
     this.subscription = this.ea.subscribe(I18N_EA_SIGNAL, () => {
       this.service.updateValue(this.element, this.value, this.params !== null ? this.params.value : undefined);
     });
 
-    this.service.updateValue(this.element, this.value, p);
+    // Don’t update the translation if params are given, but not yet bound.
+    // (Otherwise, we’ll get warnings about missing variables during interpolation.)
+    // In that case, the initial translation will happen via the paramsChanged handler.
+    if (!this.params || this.params.value !== undefined) {
+      const p = this.params ? this.params.value : undefined;
+      this.service.updateValue(this.element, this.value, p);
+    }
   }
 
   public paramsChanged(newValue: any, newParams: any) {
@@ -62,7 +67,7 @@ export class TCustomAttribute {
   }
 
   public valueChanged(newValue: any) {
-    const p = this.params !== null ? this.params.value : undefined;
+    const p = this.params ? this.params.value : undefined;
     this.service.updateValue(this.element, newValue, p);
   }
 
