@@ -4,37 +4,38 @@ import { EventAggregator } from "aurelia-event-aggregator";
 
 describe("testing i18n translations", () => {
   let sut: I18N;
+  const resources = {
+    en: {
+      translation: {
+        score: "Score: {{score}}",
+        lives: "{{count}} life remaining",
+        lives_plural: "{{count}} lives remaining",
+        friend: "A friend",
+        friend_male: "A boyfriend",
+        friend_female: "A girlfriend",
+        complex: "{{field}} should be between {{threshold.min}} and {{threshold.max}}",
+        nested_referencing: "$t(lives) in round {{round}}",
+        statement: "{{brand}} is a next next gen JavaScript client framework",
+        novar: "{{notexisting}} should be replaced with an empty string",
+        weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+      }
+    },
+    de: {
+      translation: {
+        score: "Punktestand: {{score}}",
+        lives: "{{count}} Lebenspunkt übrig",
+        lives_plural: "{{count}} Lebenspunkte übrig",
+        friend: "Ein Freund",
+        friend_male: "Ein Freund",
+        friend_female: "Eine Freundin",
+        statement: "{{brand}} ist ein JavaScript client framework der nächsten Generation",
+        novar: "{{notexisting}} sollte mit einem Leerstring ersetzt werden",
+        weekdays: ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"]
+      }
+    }
+  };
 
   beforeEach( () => {
-    const resources = {
-      en: {
-        translation: {
-          score: "Score: {{score}}",
-          lives: "{{count}} life remaining",
-          lives_plural: "{{count}} lives remaining",
-          friend: "A friend",
-          friend_male: "A boyfriend",
-          friend_female: "A girlfriend",
-          complex: "{{field}} should be between {{threshold.min}} and {{threshold.max}}",
-          nested_referencing: "$t(lives) in round {{round}}",
-          statement: "{{brand}} is a next next gen JavaScript client framework",
-          novar: "{{notexisting}} should be replaced with an empty string"
-        }
-      },
-      de: {
-        translation: {
-          score: "Punktestand: {{score}}",
-          lives: "{{count}} Lebenspunkt übrig",
-          lives_plural: "{{count}} Lebenspunkte übrig",
-          friend: "Ein Freund",
-          friend_male: "Ein Freund",
-          friend_female: "Eine Freundin",
-          statement: "{{brand}} ist ein JavaScript client framework der nächsten Generation",
-          novar: "{{notexisting}} sollte mit einem Leerstring ersetzt werden"
-        }
-      }
-    };
-
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     sut.setup({
       resources,
@@ -50,6 +51,17 @@ describe("testing i18n translations", () => {
 
   it("should replace a not provided variable with an empty string", () => {
     expect(sut.tr("novar")).toEqual(" should be replaced with an empty string");
+  });
+
+  it("should support returnObjects option", async () => {
+    await sut.setLocale("de");
+    expect(sut.tr("weekdays", { returnObjects: true })).toEqual(resources.de.translation.weekdays);
+    expect(sut.tr("weekdays", { returnObjects: false })).toEqual(undefined);
+  });
+
+  it("should support array joins option", async () => {
+    await sut.setLocale("de");
+    expect(sut.tr("weekdays", { joinArrays: "FOO" })).toEqual(resources.de.translation.weekdays.join("FOO"));
   });
 
   it("should properly switch locales", async () => {
