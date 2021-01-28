@@ -81,7 +81,7 @@ export class RelativeTime {
             if (!timeDiff) {
               timeDiff = this.getTimeDiffDescription(diff, "second", 1000);
               if (!timeDiff) {
-                timeDiff = this.service.tr("now");
+                timeDiff = this.service.tr<string>("now");
               }
             }
           }
