@@ -55,7 +55,9 @@ describe("testing i18n translations", () => {
 
   it("should support returnObjects option", async () => {
     await sut.setLocale("de");
-    expect(sut.tr("weekdays", { returnObjects: true })).toEqual(resources.de.translation.weekdays);
+    const asArray: string[] = sut.tr("weekdays", { returnObjects: true });
+
+    expect(asArray).toEqual(resources.de.translation.weekdays);
     expect(sut.tr("weekdays", { returnObjects: false })).toEqual(undefined);
   });
 

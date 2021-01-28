@@ -23,7 +23,6 @@ export interface I18NEventPayload {
 }
 
 export const I18N_EA_SIGNAL = "i18n:locale:changed";
-export type TrResult = string | object | Array<string | object> | undefined;
 export class I18N {
 
   public static inject() { return [EventAggregator, BindingSignaler]; }
@@ -119,14 +118,15 @@ export class I18N {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  public tr(key: string | string[], options?: i18next.TOptions<object>): TrResult {
+  // tslint:disable-next-line: max-line-length
+  public tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: i18next.TOptions<object>) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, fullOptions);
+    return this.i18next.t<TResult>(key, fullOptions);
   }
 
   public registerGlobalVariable(key: string, value: any) {
