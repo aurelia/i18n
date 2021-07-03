@@ -1,5 +1,4 @@
 import * as rollup from 'rollup';
-import type { RollupOptions, OutputOptions } from 'rollup';
 import typescript from 'rollup-plugin-typescript2';
 import rimraf from 'rimraf';
 import { IRollupWatchOptions } from './interfaces';
@@ -10,8 +9,8 @@ export type IBuildTargetFormat = 'es5' | 'es2015' | 'es2017' | 'amd' | 'system' 
 
 export async function build(
   target: IBuildTargetFormat,
-  options: RollupOptions,
-  outputs: OutputOptions[]
+  options: rollup.RollupFileOptions,
+  outputs: rollup.OutputOptionsFile[]
 ): Promise<void> {
   return rollup
     .rollup({
@@ -62,13 +61,13 @@ export async function watchAndReBuild(
       console.log('Error:', e);
       return;
     }
-    // if (e.code === 'FATAL') {
-    //   console.log('===============');
-    //   console.error('FATAL:', e);
-    //   console.log('===============');
-    //   // rollup will exit
-    //   return;
-    // }
+    if (e.code === 'FATAL') {
+      console.log('===============');
+      console.error('FATAL:', e);
+      console.log('===============');
+      // rollup will exit
+      return;
+    }
     if (e.code === 'END') {
       onBundleChanged(e);
       return;
