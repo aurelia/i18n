@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import { TOptions } from "i18next";
 
 import { I18N } from "../i18n";
 import { valueConverter } from "aurelia-framework";
@@ -9,7 +9,7 @@ export class TValueConverter {
 
   constructor(private service: I18N) { }
 
-  public toView(value: any, options?: i18next.TOptions<object>) {
+  public toView(value: any, options?: TOptions<object>) {
     return this.service.tr(value, options);
   }
 }
