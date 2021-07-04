@@ -152,7 +152,7 @@ if (args.dev) {
   Promise
     .all(targetFormats.map(target => {
       const { outputs, tsConfig, ...options } = configs[target];
-      return build(target, { ...options, external: EXTERNAL_LIBS }, outputs as rollup.OutputOptionsFile[]);
+      return build(target, { ...options, external: EXTERNAL_LIBS }, outputs);
     }))
     .then(() => generateDts())
     .then(() => {
