@@ -95,6 +95,9 @@
     "type": "git",
     "url": "http://github.com/aurelia/i18n"
   },
+  "engines": {
+    "node": ">=16.4.1"
+  },
   "jspm": {
     "registry": "npm",
     "main": "aurelia-i18n",
