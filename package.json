@@ -30,7 +30,7 @@
   "jest": {
     "globals": {
       "ts-jest": {
-        "tsConfigFile": "tsconfig-build.json"
+        "tsConfig": "tsconfig-build.json"
       }
     },
     "modulePaths": [
@@ -44,9 +44,8 @@
       "html"
     ],
     "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js",
-      "^.+\\.(scss|css)$": "<rootDir>/node_modules/jest-css-modules",
-      "^.+\\.html$": "<rootDir>/test/html-loader.js"
+      "^.+\\.(ts|tsx)$": "ts-jest",
+      "^.+\\.html$": "html-loader-jest"
     },
     "testRegex": "\\.spec\\.(ts)x?$",
     "setupFiles": [
@@ -61,7 +60,7 @@
       "src(\\\\|/)rt(\\\\|/)rt-(.*)": "<rootDir>/src/rt/rt-$3.ts",
       "(test\\\\unit\\\\)aurelia-(.*)": "<rootDir>/node_modules/aurelia-$2",
       "locales(\\\\|/)(.*)(\\\\|/)(.*).json": "<rootDir>/test/unit/fixtures/locales/$2/$4.json",
-      "^.+\\.(css)$": "<rootDir>/test/jest-css-stub.js"
+      "^.+\\.(css)$": "identity-obj-proxy"
     },
     "collectCoverage": true,
     "collectCoverageFrom": [
@@ -134,7 +133,7 @@
   },
   "devDependencies": {
     "@types/intl": "^1.2.0",
-    "@types/jest": "^21.1.10",
+    "@types/jest": "^26.0.23",
     "@types/node": "^16.0.0",
     "@types/rimraf": "^3.0.0",
     "@types/yargs": "^17.0.1",
@@ -151,16 +150,16 @@
     "cross-env": "^7.0.3",
     "dts-bundle-generator": "^5.9.0",
     "full-icu": "^1.3.4",
-    "html-loader": "^0.5.5",
+    "html-loader-jest": "^0.2.1",
     "husky": "^7.0.0",
     "i18next": ">=20.3.2",
+    "identity-obj-proxy": "^3.0.0",
     "intl": "^1.2.5",
-    "jest": "^22.4.4",
-    "jest-css-modules": "^1.1.0",
+    "jest": "^27.0.6",
     "rimraf": "^3.0.2",
     "rollup": "^2.52.7",
     "rollup-plugin-typescript2": "^0.30.0",
-    "ts-jest": "^22.4.6",
+    "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
     "tslint": "^6.1.3",
     "typedoc": "^0.21.2",
