@@ -2,6 +2,7 @@ import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { DfValueConverter } from "../../src/df/df-value-converter";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { DateTimeFormatOptions } from "intl";
 
 describe("dfvalueconverter tests", () => {
   let sut: I18N;
@@ -33,7 +34,7 @@ describe("dfvalueconverter tests", () => {
   });
 
   it("should display datetime", () => {
-    const options = {
+    const options: DateTimeFormatOptions = {
       year: "numeric", month: "2-digit", day: "2-digit",
       hour: "2-digit", minute: "2-digit", second: "2-digit",
       hour12: false
@@ -95,7 +96,7 @@ describe("dfvalueconverter tests", () => {
 
   it("should return formated string if ISO8601 date string value given LOCAL time AU", async () => {
     const val = "2016-09-05";
-    const options = {
+    const options: DateTimeFormatOptions = {
       year: "numeric", month: "2-digit", day: "2-digit", timeZone: "UTC"
     };
 

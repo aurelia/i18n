@@ -1,19 +1,18 @@
 import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { DateTimeFormatOptions } from "intl";
 
 describe("datetimeformat tests", () => {
   let sut: I18N;
 
-  beforeEach(async (done) => {
+  beforeEach(async () => {
     sut = new I18N(new EventAggregator(), new BindingSignaler());
     await sut.setup({
       lng: "en",
       fallbackLng: "en",
       debug: false
     });
-
-    done();
   });
 
   it("should display only the date in the setup locale format by default", () => {
@@ -34,7 +33,7 @@ describe("datetimeformat tests", () => {
   });
 
   it("should display datetime", () => {
-    const options = {
+    const options: DateTimeFormatOptions = {
       year: "numeric", month: "2-digit", day: "2-digit",
       hour: "2-digit", minute: "2-digit", second: "2-digit",
       hour12: false

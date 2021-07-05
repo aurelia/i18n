@@ -1,6 +1,7 @@
 import { I18N } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { TOptions } from "i18next";
 
 describe("feature verification placeholders", () => {
   let sut: I18N;
@@ -29,7 +30,7 @@ describe("feature verification placeholders", () => {
     expect(sut.tr("demo", {
       framework: "Aurelia",
       quality: "best"
-    })).toEqual("Aurelia is the best framework in the world");
+    } as TOptions)).toEqual("Aurelia is the best framework in the world");
   });
 
   it("should use single-curly variable handles", () => {

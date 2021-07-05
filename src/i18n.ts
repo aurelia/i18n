@@ -1,4 +1,4 @@
-import i18next from "i18next";
+import i18next, { InitOptions, i18n, TFunction, TOptions } from "i18next";
 import {
   DOM,
   PLATFORM
@@ -7,12 +7,12 @@ import * as LogManager from "aurelia-logging";
 import { EventAggregator } from "aurelia-event-aggregator";
 import { BindingSignaler } from "aurelia-templating-resources";
 
-export interface AureliaEnhancedOptions extends i18next.InitOptions {
+export interface AureliaEnhancedOptions extends InitOptions {
   attributes?: string[];
   skipTranslationOnMissingKey?: boolean;
 }
 
-export interface AureliaEnhancedI18Next extends i18next.i18n {
+export interface AureliaEnhancedI18Next extends i18n {
   options: AureliaEnhancedOptions;
 }
 
@@ -38,8 +38,8 @@ export class I18N {
     this.Intl = PLATFORM.global.Intl;
   }
 
-  public async setup(options?: AureliaEnhancedOptions & i18next.InitOptions) {
-    const defaultOptions: AureliaEnhancedOptions & i18next.InitOptions = {
+  public async setup(options?: AureliaEnhancedOptions & InitOptions) {
+    const defaultOptions: AureliaEnhancedOptions & InitOptions = {
       skipTranslationOnMissingKey: false,
       compatibilityJSON: "v1",
       lng: "en",
@@ -70,7 +70,7 @@ export class I18N {
     return this.i18nextDeferred;
   }
 
-  public setLocale(locale: string): Promise<i18next.TFunction> {
+  public setLocale(locale: string): Promise<TFunction> {
     return new Promise((resolve, reject) => {
       const oldLocale = this.getLocale();
       this.i18next.changeLanguage(locale, (err, tr) => {
@@ -119,7 +119,7 @@ export class I18N {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  public tr(key: string | string[], options?: i18next.TOptions<object>) {
+  public tr(key: string | string[], options?: TOptions<object>) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {

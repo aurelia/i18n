@@ -219,7 +219,7 @@ describe("testing relative time support", () => {
     expect(sut.getRelativeTime(expectedDate)).toBe("1 hour ago");
   });
 
-  it("should update relative time bindings using custom signal", async (done) => {
+  it("should update relative time bindings using custom signal", async () => {
     const target = "relative-time-target";
     const viewModel = { mydate: modifiedDateFromNow(0, -1, 0) };
     const component = StageComponent
@@ -246,8 +246,8 @@ describe("testing relative time support", () => {
       expect(elem!.innerHTML).toBe("1 year ago");
 
       component.dispose();
-      done();
     });
+    queue.flushTaskQueue();
   });
 
   it("should return value space provided", async () => {
