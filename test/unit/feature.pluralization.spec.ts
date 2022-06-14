@@ -10,7 +10,7 @@ describe("feature verification pluralization", () => {
       en: {
         translation: {
           lives: "{{count}} life remaining",
-          lives_plural: "{{count}} lives remaining"
+          lives_other: "{{count}} lives remaining"
         }
       }
     };

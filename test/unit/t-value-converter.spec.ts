@@ -10,7 +10,7 @@ const resources = {
     translation: {
       score: "Score: {{score}}",
       lives: "{{count}} life remaining",
-      lives_plural: "{{count}} lives remaining",
+      lives_other: "{{count}} lives remaining",
       friend: "A friend",
       friend_male: "A boyfriend",
       friend_female: "A girlfriend"
@@ -83,7 +83,7 @@ describe("TValueConverter", () => {
 
     expect(elem).not.toBeNull();
     expect(elem!.innerHTML).toBe(
-      resources.en.translation.lives_plural.replace("{{count}}", expectedValue.toString())
+      resources.en.translation.lives_other.replace("{{count}}", expectedValue.toString())
     );
 
     component.dispose();

@@ -34,7 +34,7 @@ export class I18N {
   private globalVars: { [key: string]: any } = {};
 
   constructor(private ea: EventAggregator, private signaler: BindingSignaler) {
-    this.i18next = i18next;
+    this.i18next = i18next as unknown as i18n;
     this.Intl = PLATFORM.global.Intl;
   }
 
@@ -45,7 +45,10 @@ export class I18N {
       lng: "en",
       attributes: ["t", "i18n"],
       fallbackLng: "en",
-      debug: false
+      debug: false,
+      interpolation: {
+        skipOnVariables: false
+      }
     };
 
     this.i18nextDeferred = new Promise((resolve, reject) => {

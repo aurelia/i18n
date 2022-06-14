@@ -12,7 +12,7 @@ describe("testing i18n translations", () => {
         translation: {
           score: "Score: {{score}}",
           lives: "{{count}} life remaining",
-          lives_plural: "{{count}} lives remaining",
+          lives_other: "{{count}} lives remaining",
           friend: "A friend",
           friend_male: "A boyfriend",
           friend_female: "A girlfriend",
@@ -26,7 +26,7 @@ describe("testing i18n translations", () => {
         translation: {
           score: "Punktestand: {{score}}",
           lives: "{{count}} Lebenspunkt übrig",
-          lives_plural: "{{count}} Lebenspunkte übrig",
+          lives_other: "{{count}} Lebenspunkte übrig",
           friend: "Ein Freund",
           friend_male: "Ein Freund",
           friend_female: "Eine Freundin",
@@ -41,7 +41,10 @@ describe("testing i18n translations", () => {
       resources,
       lng: "en",
       fallbackLng: "en",
-      debug: false
+      debug: false,
+      interpolation: {
+        skipOnVariables: false
+      }
     });
   });
 
