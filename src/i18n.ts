@@ -23,7 +23,6 @@ export interface I18NEventPayload {
 }
 
 export const I18N_EA_SIGNAL = "i18n:locale:changed";
-
 export class I18N {
 
   public static inject() { return [EventAggregator, BindingSignaler]; }
@@ -119,14 +118,15 @@ export class I18N {
     return new this.Intl.DateTimeFormat(locales || this.getLocale(), options);
   }
 
-  public tr(key: string | string[], options?: TOptions<object>) {
+  // tslint:disable-next-line: max-line-length
+  public tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: TOptions<object>) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
       fullOptions = Object.assign(Object.assign({}, this.globalVars), options);
     }
 
-    return this.i18next.t(key, fullOptions);
+    return this.i18next.t<TResult>(key, fullOptions);
   }
 
   public registerGlobalVariable(key: string, value: any) {
@@ -249,9 +249,10 @@ export class I18N {
 
         // handle various attributes
         // anything other than text,prepend,append or html will be added as an attribute on the element.
+        const translatedResult = (this.tr(key, params) || "").toString();
         switch (attr) {
           case "text":
-            const newChild = DOM.createTextNode(this.tr(key, params));
+            const newChild = DOM.createTextNode(translatedResult);
             if ((node as any)._newChild && (node as any)._newChild.parentNode === node) {
               node.removeChild((node as any)._newChild);
             }
@@ -264,7 +265,7 @@ export class I18N {
             break;
           case "prepend":
             const prependParser = DOM.createElement("div");
-            prependParser.innerHTML = this.tr(key, params);
+            prependParser.innerHTML = translatedResult;
             for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
               if ((node.childNodes[ni] as any)._prepended) {
                 node.removeChild(node.childNodes[ni]);
@@ -282,7 +283,7 @@ export class I18N {
             break;
           case "append":
             const appendParser = DOM.createElement("div");
-            appendParser.innerHTML = this.tr(key, params);
+            appendParser.innerHTML = translatedResult;
             for (let ni = node.childNodes.length - 1; ni >= 0; ni--) {
               if ((node.childNodes[ni] as any)._appended) {
                 node.removeChild(node.childNodes[ni]);
@@ -295,7 +296,7 @@ export class I18N {
             }
             break;
           case "html":
-            node.innerHTML = this.tr(key, params);
+            node.innerHTML = translatedResult;
             break;
           default: // normal html attribute
             if (node.au &&
@@ -304,7 +305,7 @@ export class I18N {
               attrCC in node.au.controller.viewModel) {
               node.au.controller.viewModel[attrCC] = this.tr(key, params);
             } else {
-              node.setAttribute(attr, this.tr(key, params));
+              node.setAttribute(attr, translatedResult);
             }
 
             break;
