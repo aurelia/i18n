@@ -165,7 +165,7 @@ describe("testing relative time support", () => {
     const { i18n, sut } = await arrange({ lng: "en", fallbackLng: "en" });
     translations["nl-XX"] = {
       translation:
-        { hour_in_plural: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
+        { hour_in_other: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
     };
 
     await i18n.setLocale("nl-XX");
@@ -178,7 +178,7 @@ describe("testing relative time support", () => {
   it("should provide the translation for the base locale when a key is not found in the full locale", async () => {
     const { i18n, sut } = await arrange({ lng: "en", fallbackLng: "en" });
     translations["nl-XX"] = {
-      translation: { hour_in_plural: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
+      translation: { hour_in_other: "in __count__ periods of an hourly length", hour_in: "in __count__ uur" }
     };
 
     await i18n.setLocale("nl-XX");

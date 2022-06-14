@@ -14,7 +14,7 @@ describe("testing i18n namespaces", () => {
         translation: {
           score: "Score: {{score}}",
           lives: "{{count}} life remaining",
-          lives_plural: "{{count}} lives remaining",
+          lives_other: "{{count}} lives remaining",
           friend: "A friend",
           friend_male: "A boyfriend",
           friend_female: "A girlfriend",
@@ -28,7 +28,7 @@ describe("testing i18n namespaces", () => {
         translation: {
           score: "Punktestand: {{score}}",
           lives: "{{count}} Lebenspunkt übrig",
-          lives_plural: "{{count}} Lebenspunkte übrig",
+          lives_other: "{{count}} Lebenspunkte übrig",
           friend: "Ein Freund",
           friend_male: "Ein Freund",
           friend_female: "Eine Freundin",
