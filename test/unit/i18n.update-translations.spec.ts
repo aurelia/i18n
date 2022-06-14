@@ -2,10 +2,10 @@
 /// <reference path="../html-loader.d.ts" />
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
-import { Resource } from "i18next";
 
 import { I18N, I18N_EA_SIGNAL } from "../../src/i18n";
 import tpl from "./fixtures/template.html";
+import { Resource } from "i18next";
 
 function loadTemplate() {
   // load the the html fixture
