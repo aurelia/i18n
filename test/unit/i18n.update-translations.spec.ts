@@ -2,10 +2,10 @@
 /// <reference path="../html-loader.d.ts" />
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
-import i18next from "i18next";
 
 import { I18N, I18N_EA_SIGNAL } from "../../src/i18n";
 import tpl from "./fixtures/template.html";
+import { Resource } from "i18next";
 
 function loadTemplate() {
   // load the the html fixture
@@ -26,7 +26,7 @@ function loadTemplate() {
 
 describe("testing i18n translation update", () => {
   let sut: I18N;
-  let resources: i18next.Resource;
+  let resources: Resource;
   let template: HTMLElement;
   let ea: EventAggregator;
 

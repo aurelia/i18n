@@ -41,15 +41,16 @@ describe("numberformat tests", () => {
   });
 
   describe("unformating numbers", () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       sut = new I18N(new EventAggregator(), new BindingSignaler());
-      sut.setup({
+      await sut.setup({
         resources: {},
         lng: "en",
         fallbackLng: "en",
         debug: false
       });
 
+      await sut.setLocale("en");
       (window as any).Intl.NumberFormat = Intl.NumberFormat;
       sut.Intl.NumberFormat = Intl.NumberFormat;
     });

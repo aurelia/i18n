@@ -1,6 +1,7 @@
 import { I18N, I18NEventPayload, I18N_EA_SIGNAL } from "../../src/i18n";
 import { BindingSignaler } from "aurelia-templating-resources";
 import { EventAggregator } from "aurelia-event-aggregator";
+import { TOptions } from "i18next";
 
 describe("testing i18n translations", () => {
   let sut: I18N;
@@ -58,7 +59,6 @@ describe("testing i18n translations", () => {
     const asArray: string[] = sut.tr("weekdays", { returnObjects: true });
 
     expect(asArray).toEqual(resources.de.translation.weekdays);
-    expect(sut.tr("weekdays", { returnObjects: false })).toEqual(undefined);
   });
 
   it("should support array joins option", async () => {
@@ -93,7 +93,7 @@ describe("testing i18n translations", () => {
   });
 
   it("should support nested translations", () => {
-    expect(sut.tr("nested_referencing", { count: 1, round: 1 })).toEqual("1 life remaining in round 1");
+    expect(sut.tr("nested_referencing", { count: 1, round: 1 } as TOptions)).toEqual("1 life remaining in round 1");
   });
 
   it("should automatically add global variables as options if none provided", () => {
@@ -107,7 +107,7 @@ describe("testing i18n translations", () => {
 
     expect(sut.tr("statement", {
       brand: "Aurelia.io"
-    })).toEqual("Aurelia.io is a next next gen JavaScript client framework");
+    } as TOptions)).toEqual("Aurelia.io is a next next gen JavaScript client framework");
   });
 
   it("should allow unregistering of global variables", () => {
@@ -119,7 +119,7 @@ describe("testing i18n translations", () => {
   });
 
   it("should rewrite undefined options with empty string", () => {
-    expect(sut.tr("nested_referencing", { count: 1, round: undefined })).toEqual("1 life remaining in round ");
+    expect(sut.tr("nested_referencing", { count: 1, round: undefined } as TOptions)).toEqual("1 life remaining in round ");
   });
 
   it("should trigger an event when switching locales", (done) => {

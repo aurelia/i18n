@@ -11,6 +11,7 @@
     "ordered-imports": [
       false
     ],
+    "array-type": false,
     "whitespace": [
       false,
       "check-branch",

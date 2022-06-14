@@ -1,4 +1,5 @@
 import { Loader } from "aurelia-loader";
+import { Module } from "i18next";
 
 // aurelia-i18n-loader
 // an implementation of an i18next Backend that uses the aurelia loader to load the json translation files
@@ -17,16 +18,16 @@ export interface AureliaBackendOptions {
   parse?(data: string, url: string): string;
 }
 
-export class Backend {
+export class Backend implements Module {
 
-  public static type: string = "backend";
+  public static type: "backend" = "backend";
   public static loader: Loader; // static loader to support passing the aurelia-loader
 
   public static with(loader: Loader) {
     this.loader = loader;
     return this;
   }
-  public type: string = "backend";
+  public type: "backend" = "backend";
 
   constructor(public services: any, public options: AureliaBackendOptions = {}) {
     this.init(services, options);

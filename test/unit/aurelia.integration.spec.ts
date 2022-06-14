@@ -1,7 +1,7 @@
 import { FrameworkConfiguration, ViewResources, Container, Aurelia } from "aurelia-framework";
 import { bootstrap } from "aurelia-bootstrapper";
 
-import { configure, I18N, Backend, AureliaBackendOptions } from "../../src/aurelia-i18n";
+import { configure, I18N, Backend } from "../../src/aurelia-i18n";
 import { StageComponent } from "aurelia-testing";
 
 describe("testing aurelia configure routine", () => {
@@ -41,7 +41,7 @@ describe("testing aurelia configure routine", () => {
 
     class ViewResourcesMock extends ViewResources { }
     const vrMock = new ViewResourcesMock();
-    spyOn(vrMock, "registerAttribute");
+    vrMock.registerAttribute = jest.fn();
     frameworkConfig.container.get = (Type: any) => {
       if (Type === ViewResources) {
         return vrMock;
@@ -57,6 +57,7 @@ describe("testing aurelia configure routine", () => {
       expect(vrMock.registerAttribute).toHaveBeenCalledTimes(4);
 
       done();
+      return frameworkConfig;
     });
 
     configure(frameworkConfig, instanceCreator);
