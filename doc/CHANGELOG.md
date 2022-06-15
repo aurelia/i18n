@@ -1,4 +1,4 @@
-# [4.0.0](https://github.com/aurelia/i18n/compare/3.1.4...4.0.0) (2022-06-14)
+# [4.0.1](https://github.com/aurelia/i18n/compare/3.1.4...4.0.0) (2022-06-14)
 
 
 ### Bug Fixes
