@@ -1,6 +1,6 @@
 {
   "name": "aurelia-i18n",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "A plugin that provides i18n support.",
   "keywords": [
     "aurelia",
@@ -166,6 +166,7 @@
     "rollup-plugin-typescript2": "^0.32.1",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.8.1",
+    "tslib": "^2.4.0",
     "tslint": "^6.1.3",
     "typedoc": "^0.22.17",
     "typescript": "^4.7.3",
