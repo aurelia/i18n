@@ -1,3 +1,50 @@
+# [4.0.0](https://github.com/aurelia/i18n/compare/3.1.4...4.0.0) (2022-06-14)
+
+
+### Bug Fixes
+
+* **tr:** result of tr ([#332](https://github.com/aurelia/i18n/issues/332)) ([fcd249b](https://github.com/aurelia/i18n/commit/fcd249b8359163f60c5c9baf3832037b46f0ea9d))
+
+
+### chore
+
+* i18next version upgrade ([#341](https://github.com/aurelia/i18n/issues/341)) ([a54729a](https://github.com/aurelia/i18n/commit/a54729a02934d2bf1fd513f9f351bf9a2b1d4b58))
+
+
+### BREAKING CHANGES
+
+* as i18next is declared as peer dependency as compared to a direct dependency. This should give more freedom to the devs in terms of updating the i18next version in their individual packages.
+
+* chore: updated dependencies
+
+* Revert "chore: updated dependencies"
+
+This reverts commit 8e68f4d179bd60ca3b3d7c61f94aa70fb4401d42.
+
+* chore: node image upgrade
+
+* chore: cleanup
+
+* chore: added node engine restriction
+
+* chore: added i18next to devdep
+
+* chore: updated deps
+
+* chore: used npm ci for CI
+
+* chore: reverted html-loader version
+
+* chore: updated jest setup
+
+* chore: runInBand for jest ci
+
+* chore: bumped jspm deps
+
+Co-authored-by: Sayan Pal <spal@netatwork.de>
+
+
+
 <a name="3.1.3"></a>
 ## [3.1.3](https://github.com/aurelia/i18n/compare/3.1.2...3.1.3) (2020-09-14)
 
