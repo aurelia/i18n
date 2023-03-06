@@ -35,7 +35,7 @@ export declare class I18N {
 	nf(options?: Intl.NumberFormatOptions, locales?: string | string[]): Intl.NumberFormat;
 	uf(numberLike: string, locale?: string): number;
 	df(options?: Intl.DateTimeFormatOptions, locales?: string | string[]): Intl.DateTimeFormat;
-	tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: TOptions<object>): TResult;
+	tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: TOptions): TResult;
 	registerGlobalVariable(key: string, value: any): void;
 	unregisterGlobalVariable(key: string): void;
 	/**

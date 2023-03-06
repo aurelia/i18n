@@ -84,6 +84,11 @@ describe("testing i18n translations", () => {
     expect(sut.i18next.options.fallbackLng).toEqual(["en"]);
   });
 
+  it("should have proper overload types for tr", () => {
+    const value = 1;
+    sut.tr("key", {score: value});
+  });
+
   it("should map complex object", () => {
     const options = {
       threshold: {
