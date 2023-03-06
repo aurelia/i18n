@@ -122,7 +122,7 @@ export class I18N {
   }
 
   // tslint:disable-next-line: max-line-length
-  public tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: TOptions<object>) {
+  public tr<TResult extends string | object | Array<string | object> | undefined = string>(key: string | string[], options?: TOptions) {
     let fullOptions = this.globalVars;
 
     if (options !== undefined) {
